@@ -1,6 +1,6 @@
 package data;
 
-public class Wood extends Resource {
+public class Stone extends Resource {
 	int variation () {
 		return 0;
 	}

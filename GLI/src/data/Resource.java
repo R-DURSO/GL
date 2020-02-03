@@ -1,7 +1,7 @@
 package data;
 
-public  abstract class  Resource {
-private int valeur;
+public abstract class Resource {
+	private int valeur;
 
 	
 }
