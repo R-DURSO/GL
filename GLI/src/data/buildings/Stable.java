@@ -1,4 +1,4 @@
-package data;
+package data.buildings;
 
 public class Stable extends Building {
 

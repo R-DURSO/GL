@@ -1,4 +1,4 @@
-package data;
+package data.ressources;
 
 public class Stone extends Resource {
 	int variation () {

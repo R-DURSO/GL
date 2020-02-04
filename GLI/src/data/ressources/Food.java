@@ -1,4 +1,4 @@
-package data;
+package data.ressources;
 
 public class Food extends Resource {
 	int variation() {
