@@ -8,7 +8,7 @@ import data.ressource.Resource;
 public class Power {
 private String name;
 private  ArrayList<Case> territory;
-private  HashMap<String,Resource> 	ressource;
+private  HashMap<String,Resource> ressource;
 	public Power() {
 		// TODO Auto-generated constructor stub
 	}

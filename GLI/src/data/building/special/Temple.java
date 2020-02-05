@@ -1,11 +1,11 @@
-package data.building.construct;
+package data.building.special;
 
 import data.building.Building;
 
 public class Temple extends Building {
 
 	public Temple() {
-		super();
+		super(50, 10, 3);
 	}
 
 }
