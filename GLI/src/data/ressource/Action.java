@@ -1,4 +1,4 @@
-package data.ressources;
+package data.ressource;
 
 public class Action extends Resource {
 	int variation () {

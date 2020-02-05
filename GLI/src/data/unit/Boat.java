@@ -1,12 +1,12 @@
 package data.unit;
 
-public class Boat extends Unit {
+public class Boat extends Units {
 
 	public Boat() {
-		super();
+		super(1, 1, 5, 0, 0, 10);
 		// TODO Auto-generated constructor stub
 	}
-	@Override
+	
 	public String toString() {
 		return super.toString() ;
 	}

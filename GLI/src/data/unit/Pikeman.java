@@ -1,9 +1,9 @@
 package data.unit;
 
-public class Piquer extends Unit {
+public class Pikeman extends Units {
 
-	public Piquer() {
-		super();
+	public Pikeman () {
+		super(5, 1, 1, 0, 0, 10);
 		// TODO Auto-generated constructor stub
 	}
 	@Override

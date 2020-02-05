@@ -1,7 +1,7 @@
 package data.ressource;
 
-public class Score  extends Resource{
-	int variation() {
+public class Score extends Resource {
+	int variation () {
 		return 0;
 	}
 

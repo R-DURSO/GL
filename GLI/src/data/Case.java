@@ -1,16 +1,17 @@
 package data;
 
 import data.building.Building;
-import data.unit.Unit;
+import data.unit.Units;
 
 public class Case {
 	private String ressource;
 	private Building building;
-	private Unit unit;
+	private Units unit;
 	//mettre ici la position ?
 	
 	public Case() {
-		// TODO Auto-generated constructor stub
+		// Reçoit une ressource aléatoire (dont null)
+		// Comment organiser les cases ??...
 	}
 
 }
