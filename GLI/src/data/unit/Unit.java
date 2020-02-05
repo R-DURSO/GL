@@ -1,4 +1,4 @@
-package unit;
+package data.unit;
 
 public  abstract class Unit {
 private int cost ;

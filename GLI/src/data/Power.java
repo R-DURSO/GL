@@ -1,7 +1,9 @@
+package data;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ressource.Resource;
+import data.ressource.Resource;
 
 public class Power {
 private String name;

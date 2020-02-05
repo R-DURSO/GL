@@ -1,8 +1,8 @@
-package unit;
+package data.unit;
 
-public class Rider  extends Unit{
+public class Boat extends Unit {
 
-	public Rider() {
+	public Boat() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

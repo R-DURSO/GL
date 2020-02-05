@@ -1,4 +1,4 @@
-package building;
+package data.building;
 
 public abstract class Building {
 private int cost ;

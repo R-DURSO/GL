@@ -1,8 +1,8 @@
-package unit;
+package data.unit;
 
-public class Archer  extends Unit{
+public class Piquer extends Unit {
 
-	public Archer() {
+	public Piquer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

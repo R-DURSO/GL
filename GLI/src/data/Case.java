@@ -1,5 +1,7 @@
-import building.Building;
-import unit.Unit;
+package data;
+
+import data.building.Building;
+import data.unit.Unit;
 
 public class Case {
 private String ressource ;

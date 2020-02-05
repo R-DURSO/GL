@@ -1,4 +1,4 @@
-package building;
+package data.building;
 
 public class swamill extends Building {
 

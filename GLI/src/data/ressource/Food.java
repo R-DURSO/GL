@@ -1,4 +1,4 @@
-package ressource;
+package data.ressource;
 
 public class Food extends Resource {
 

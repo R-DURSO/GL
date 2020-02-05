@@ -1,6 +1,6 @@
-package building.construct;
+package data.building.construct;
 
-import building.Building;
+import data.building.Building;
 
 public class Capital extends Building {
 
