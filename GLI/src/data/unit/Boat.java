@@ -3,7 +3,7 @@ package data.unit;
 public class Boat extends Units {
 
 	public Boat() {
-		super(1, 1, 5, 0, 0, 10);
+		super(1, 1, 5, 0, 0);
 		// TODO Auto-generated constructor stub
 	}
 	

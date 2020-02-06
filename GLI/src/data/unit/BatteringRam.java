@@ -3,7 +3,7 @@ package data.unit;
 public class BatteringRam extends Units {
 
 	public BatteringRam() {
-		super(10, 1, 1, 0, 0, 10);
+		super(10, 1, 1, 0, 0);
 		// TODO Auto-generated constructor stub
 	}
 	@Override
