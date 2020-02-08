@@ -1,18 +1,20 @@
 package data.unit;
 
 public  abstract class Units {
-	private int hp;
+	private int health;
 	private int range;
 	private int movement;
 	private int number;
 	private int damage;
+	private int defense;
 	
-	public Units(int hp, int range, int move, int num, int dmg) {
-		this.hp = hp;
+	public Units(int health, int range, int move, int number, int damage, int defense) {
+		this.health = health;
 		this.range = range;
 		this.movement = move;
-		this.number = num;
-		this.damage = dmg;
+		this.number = number;
+		this.damage = damage;
+		this.defense = defense;
 	}
 	
 	

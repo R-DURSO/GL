@@ -3,8 +3,8 @@ import data.building.Building;
 
 public class BuildingArmy extends Building{
 
-	public BuildingArmy(int cost, int buildTime, int hp) {
-		super(cost, buildTime, hp);
+	public BuildingArmy(int buildTime, int health) {
+		super(buildTime, health);
 		// TODO Auto-generated constructor stub
 	}
 

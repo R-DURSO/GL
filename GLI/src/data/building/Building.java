@@ -2,13 +2,11 @@ package data.building;
 
 public abstract class Building {
 	
-	private int cost;
-	private int buildTime;
-	private int hp;
+	private int buildTime; //when buildTime == 0, this building can be used
+	private int health;
 	
-	public Building(int cost, int buildTime, int hp) {
-		this.cost = cost;
+	public Building(int buildTime, int health) {
 		this.buildTime = buildTime;
-		this.hp = hp;
+		this.health = health;
 	}
 }
