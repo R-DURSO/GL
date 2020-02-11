@@ -1,5 +1,6 @@
 package data.building.special;
 
+import process.visitor.building_visitor.BuildingVisitor;
 
 public class Capital extends BuildingSpecial {
 	private static final int BUILD_TIME = 0;
@@ -23,6 +24,11 @@ public class Capital extends BuildingSpecial {
 	
 	public Capital() {
 		super(BUILD_TIME, BASE_HEALTH);
+	}
+	
+	@Override
+	public <B> B accept(BuildingVisitor<B> visitor) {
+		return visitor.visit(this);
 	}
 
 }

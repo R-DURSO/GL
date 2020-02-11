@@ -1,5 +1,7 @@
 package data.unit;
 
+import process.visitor.unit_visitor.UnitVisitor;
+
 public class Boat extends Units {
 	private static final int BASE_HEALTH = 1;
 	private static final int RANGE = 0;
@@ -17,6 +19,11 @@ public class Boat extends Units {
 	public Boat (Units containedUnits) {
 		super(BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE);
 		this.containedUnits = containedUnits;
+	}
+	
+	@Override
+	public <U> U accept(UnitVisitor<U> visitor) {
+		return visitor.visit(this);
 	}
 	
 	public String toString() {

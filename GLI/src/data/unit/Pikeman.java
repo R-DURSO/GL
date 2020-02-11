@@ -1,5 +1,7 @@
 package data.unit;
 
+import process.visitor.unit_visitor.UnitVisitor;
+
 public class Pikeman extends Units {
 	private static final int BASE_HEALTH = 5;
 	private static final int RANGE = 0;
@@ -21,6 +23,12 @@ public class Pikeman extends Units {
 		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public <U> U accept(UnitVisitor<U> visitor) {
+		return visitor.visit(this);
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString() ;

@@ -1,5 +1,7 @@
 package data.unit;
 
+import process.visitor.unit_visitor.UnitVisitor;
+
 public class Trebuchet  extends Units {
 	
 	private static final int BASE_HEALTH = 5;
@@ -30,6 +32,11 @@ public class Trebuchet  extends Units {
 	//always 1 Trebuchet per Unit "stack"
 	public Trebuchet() {
 		super(BASE_HEALTH, RANGE_MOVING, MOVEMENT_MOVING, 1, DAMAGE_MOVING, DEFENSE);
+	}
+	
+	@Override
+	public <U> U accept(UnitVisitor<U> visitor) {
+		return visitor.visit(this);
 	}
 
 	public String toString() {

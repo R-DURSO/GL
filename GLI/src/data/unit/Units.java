@@ -1,6 +1,8 @@
 package data.unit;
 
-public  abstract class Units {
+import process.visitor.unit_visitor.UnitVisitor;
+
+public abstract class Units {
 	private int health;
 	private int range;
 	private int movement;
@@ -16,6 +18,9 @@ public  abstract class Units {
 		this.damage = damage;
 		this.defense = defense;
 	}
+	
+	
+	public abstract <U> U accept(UnitVisitor<U> visitor);
 	
 	
 	

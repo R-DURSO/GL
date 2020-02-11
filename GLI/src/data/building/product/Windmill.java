@@ -1,6 +1,7 @@
 package data.building.product;
 
 import data.building.Building;
+import process.visitor.building_visitor.BuildingVisitor;
 
 public class Windmill extends Building {
 	private static final int BUILD_TIME = 0;
@@ -11,6 +12,11 @@ public class Windmill extends Building {
 	
 	public Windmill() {
 		super(BUILD_TIME, BASE_HEALTH);
+	}
+	
+	@Override
+	public <B> B accept(BuildingVisitor<B> visitor) {
+		return visitor.visit(this);
 	}
 
 

@@ -1,6 +1,6 @@
 package data.building.army;
 
-import data.building.Building;
+import process.visitor.building_visitor.BuildingVisitor;
 
 public class Barrack extends BuildingArmy {
 	private static final int BUILD_TIME = 0;
@@ -9,6 +9,11 @@ public class Barrack extends BuildingArmy {
 	
 	public Barrack() {
 		super(BUILD_TIME, BASE_HEALTH);
+	}
+	
+	@Override
+	public <B> B accept(BuildingVisitor<B> visitor) {
+		return visitor.visit(this);
 	}
 
 }

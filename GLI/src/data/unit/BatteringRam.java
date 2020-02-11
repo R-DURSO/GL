@@ -1,5 +1,7 @@
 package data.unit;
 
+import process.visitor.unit_visitor.UnitVisitor;
+
 public class BatteringRam extends Units {
 	private static final int BASE_HEALTH = 2;
 	private static final int RANGE = 0;
@@ -12,6 +14,11 @@ public class BatteringRam extends Units {
 	
 	public BatteringRam (int numberUnits) {
 		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE);
+	}
+	
+	@Override
+	public <U> U accept(UnitVisitor<U> visitor) {
+		return visitor.visit(this);
 	}
 	
 	@Override

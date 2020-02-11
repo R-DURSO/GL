@@ -1,7 +1,7 @@
 package data.building.product;
 import data.building.Building;
 
-public class BuildingProduct extends Building{
+public abstract class BuildingProduct extends Building{
 
 	public BuildingProduct(int buildTime, int health) {
 		super(buildTime, health);
