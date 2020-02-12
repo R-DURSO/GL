@@ -1,6 +1,6 @@
 package process.visitor.ressource_visitor;
 
-import data.ressource.Action;
+import data.ressource.ActionPoints;
 import data.ressource.Food;
 import data.ressource.Gold;
 import data.ressource.Score;
@@ -16,7 +16,7 @@ import data.ressource.Wood;
 public class TestVisitor implements RessourceVisitor<Void>{
 
 	@Override
-	public Void visit(Action node) {
+	public Void visit(ActionPoints node) {
 		System.out.println("This is Action ressource. Value = "+ node.getAmount());
 		return null;
 	}

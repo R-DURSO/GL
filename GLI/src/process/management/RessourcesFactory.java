@@ -1,6 +1,6 @@
 package process.management;
 
-import data.ressource.Action;
+import data.ressource.ActionPoints;
 import data.ressource.Food;
 import data.ressource.Gold;
 import data.ressource.Score;
@@ -9,8 +9,8 @@ import data.ressource.Wood;
 
 public class RessourcesFactory {
 
-	public static Action createAction() {
-		return new Action();
+	public static ActionPoints createAction() {
+		return new ActionPoints();
 	}
 	
 	public static Food createFood() {
