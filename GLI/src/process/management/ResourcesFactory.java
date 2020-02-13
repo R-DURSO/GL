@@ -7,7 +7,7 @@ import data.ressource.Score;
 import data.ressource.Stone;
 import data.ressource.Wood;
 
-public class RessourcesFactory {
+public class ResourcesFactory {
 
 	public static ActionPoints createAction() {
 		return new ActionPoints();
