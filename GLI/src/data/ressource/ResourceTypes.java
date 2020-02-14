@@ -8,7 +8,10 @@ public class ResourceTypes {
 	public static final int RESOURCE_STONE = 3;
 	public static final int RESOURCE_WOOD = 4;
 	
-	public static final int NUMBER_TYPE_RESOURCES = 5;
+	public static final int NUMBER_TYPE_GROUND_RESOURCES = 5;
+	
+	public static final int RESOURCE_ACTIONS = 5;
+	public static final int RESOURCE_SCORE = 6;
 	
 	
 	private ResourceTypes() {}

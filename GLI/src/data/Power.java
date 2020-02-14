@@ -8,10 +8,9 @@ import data.ressource.*;;
 
 public class Power {
 	private String name;
-	private ArrayList<Box> territory;
-	//Transformer l'ArrayListe en HashMap<Position,Case> ????
-	private HashMap<String,Resource> ressource;
-	//sinon private Ressource[] ressources = new Ressource[6];
+	private ArrayList<Box> territory = new ArrayList<>();
+	private Resource[] ressources = new Resource[6];
+	private Power allied;
 	
 	public Power(String name) {
 		this.name = name;

@@ -1,15 +1,15 @@
 package process.management;
-import java.util.Iterator;
-import java.awt.Point;
-import java.util.*;
+
 import java.util.Random;
 
 import data.Map;
+import data.Power;
 import data.boxes.*;
+import data.building.special.Capital;
 import data.ressource.ResourceTypes;
 
 /**
- * Builder based on the Conway's game of life
+ * Map generator
  * @author Aldric Vitali Silvestre
  *
  */
@@ -18,9 +18,11 @@ public class MapBuilder {
 	private int size;
 	private Random random = new Random();
 	private boolean map[][];
+	private Power powers[];
 	
 	
-	public MapBuilder(int size, int waterAmount) {
+	public MapBuilder(int size, int waterAmount, Power powers[]) {
+		this.powers = powers;
 		this.size = size;
 		map = new boolean[size][size];
 		int nbWaterPoints = size*size * waterAmount /7 / 100;
@@ -110,9 +112,25 @@ public class MapBuilder {
 				boxes[i][j] = box;
 			}
 		}
+		//'install' powers 
+		installPowers(boxes);
 		
 		return new Map(boxes);
 	}
+
+	private void installPowers(Box boxes[][]) {
+		boxes[size - 1][size - 1].setOwner(powers[0]);
+		boxes[0][size - 1].setOwner(powers[0]);
+		boxes[size - 1][0].setOwner(powers[0]);
+		boxes[0][0].setOwner(powers[0]);
+		
+		boxes[size - 1][size - 1].setBuilding(new Capital());
+		boxes[0][size - 1].setBuilding(new Capital());
+		boxes[size - 1][0].setBuilding(new Capital());
+		boxes[0][0].setBuilding(new Capital());
+	}
+
+
 
 	/*Non définitif*/
 	private int defineRessourceType() {
@@ -131,6 +149,8 @@ public class MapBuilder {
 	}
 	
 	public static void main(String[] args) {
+		Power powers[] = new Power[4];
+		Power p1 = new Power();
 		MapBuilder mb = new MapBuilder(20, 20);
 		mb.buildMap();
 		mb.displayMap();

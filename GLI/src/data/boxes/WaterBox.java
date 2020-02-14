@@ -1,5 +1,7 @@
 package data.boxes;
 
+import data.building.Building;
+
 public class WaterBox extends Box{
 
 	public WaterBox() {
@@ -10,5 +12,13 @@ public class WaterBox extends Box{
 	public String toString() {
 		return "WaterBox " + super.toString();
 	}
+
+	@Override
+	public Building getBuilding() {
+		return null;
+	}
+
+	@Override
+	public void setBuilding(Building building) {}
 
 }
