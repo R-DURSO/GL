@@ -30,9 +30,14 @@ public abstract class Box {
 	public abstract Building getBuilding();
 	public abstract void setBuilding(Building building);
 
-	@Override
 	public String toString() {
-		return " unit=" + unit + ", owner=" + owner;
+		String s = "";
+		s += " Unit=" + unit;
+		if (owner!=null) {
+			s+= ", Owner="+ owner.getName();
+		}
+		s+="\n";
+		return s;
 	}
 	
 

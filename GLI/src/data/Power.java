@@ -17,7 +17,6 @@ public class Power {
 	}
 	public String getName() {
 		return name;
-		
 	}
 
 }

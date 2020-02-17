@@ -1,6 +1,7 @@
 package process.management;
 import data.boxes.GroundBox;
 import data.building.Building;
+import data.building.BuildingTypes;
 import data.building.army.*;
 
 import data.building.product.*;
@@ -25,36 +26,28 @@ public class BuildingFactory {
 	}
 	public Building construction(boolean r, int cons) {
 		if(r==true) {
+			Building b = null;
 			switch(cons) {
-			case 1:
-				Building b = new Barrack();
-				return b;
-			case 2 :
-				Building a= new Stable();
-				return a;
-			case 3:
-				Building c = new Dock();
-				return c;
-			case 4:
-				Building e = new Mine();
-				return e;
-			case 5:
-				Building f = new Sawmill();
-				return f;
-			case 6:
-				Building  g = new Windmill();
-				return g;
-			case 7:
-				Building h = new Door();
-				return h;
-			case 8:
-				Building i= new Temple();
-				return i;
-			case 9:
-				Building j= new Wall();
-				return j;
+			case BuildingTypes.BUILDING_BARRACK:
+				b = new Barrack();
+			case BuildingTypes.BUILDING_STABLE:
+				b = new Stable();
+			case BuildingTypes.BUILDING_DOCK:
+				b = new Dock();
+			case BuildingTypes.BUILDING_MINE:
+				b = new Mine();
+			case BuildingTypes.BUILDING_SAWMILL:
+				b = new Sawmill();
+			case BuildingTypes.BUILDING_WINDMILL:
+				b = new Windmill();
+			case BuildingTypes.BUILDING_DOOR:
+				b = new Door();
+			case BuildingTypes.BUILDING_WALL:
+				b = new Wall();
+			case BuildingTypes.BUILDING_TEMPLE:
+				b = new Temple();
 			}
-			
+			return b;
 		}
 		return null;
 	}

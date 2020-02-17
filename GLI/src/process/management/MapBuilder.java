@@ -43,7 +43,6 @@ public class MapBuilder {
 	}
 	
 	
-	
 	private void setRandomPatternWater(int randX, int randY) {
 		switch (random.nextInt(3)) {
 		case 0:
@@ -62,7 +61,6 @@ public class MapBuilder {
 	}
 
 
-
 	private void makeSquareWater(int randX, int randY) {
 		int x,y;
 		for (int i = -1; i < 2; i++) {
@@ -76,7 +74,6 @@ public class MapBuilder {
 	}
 
 
-
 	private void makeCircleWater(int randX, int randY) {
 		makeSquareWater(randX, randY);
 		map[randX + 2][randY] = true;
@@ -84,7 +81,6 @@ public class MapBuilder {
 		map[randX][randY + 2] = true;
 		map[randX][randY - 2] = true;
 	}
-
 
 
 	private void makeCrossWater(int randX, int randY) {
@@ -98,9 +94,8 @@ public class MapBuilder {
 	}
 
 
-
 	public Map buildMap() {
-		data.boxes.Box[][] boxes = new Box[size][size];
+		Box[][] boxes = new Box[size][size];
 		Box box;
 		for(int i = 0; i < size; i++){
 			for(int j = 0; j < size; j++){
@@ -119,24 +114,22 @@ public class MapBuilder {
 	}
 
 	private void installPowers(Box boxes[][]) {
-		boxes[size - 1][size - 1].setOwner(powers[0]);
-		boxes[0][size - 1].setOwner(powers[0]);
-		boxes[size - 1][0].setOwner(powers[0]);
 		boxes[0][0].setOwner(powers[0]);
-		
-		boxes[size - 1][size - 1].setBuilding(new Capital());
+		boxes[0][size - 1].setOwner(powers[1]);
+		boxes[size - 1][0].setOwner(powers[2]);
+		boxes[size - 1][size - 1].setOwner(powers[3]);
+
+		boxes[0][0].setBuilding(new Capital());
 		boxes[0][size - 1].setBuilding(new Capital());
 		boxes[size - 1][0].setBuilding(new Capital());
-		boxes[0][0].setBuilding(new Capital());
+		boxes[size - 1][size - 1].setBuilding(new Capital());
 	}
-
 
 
 	/*Non définitif*/
 	private int defineRessourceType() {
 		return random.nextInt(ResourceTypes.NUMBER_TYPE_RESOURCES);
 	}
-
 
 
 	public void displayMap() {
@@ -147,13 +140,4 @@ public class MapBuilder {
 			System.out.println();
 		}
 	}
-	
-	public static void main(String[] args) {
-		Power powers[] = new Power[4];
-		Power p1 = new Power();
-		MapBuilder mb = new MapBuilder(20, 20);
-		mb.buildMap();
-		mb.displayMap();
-	}
-
 }
