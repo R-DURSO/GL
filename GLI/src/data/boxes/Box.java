@@ -30,9 +30,6 @@ public abstract class Box {
 	public void setOwner(Power owner) {
 		this.owner = owner;
 	}
-	
-	public abstract Building getBuilding();
-	public abstract void setBuilding(Building building);
 
 	public String toString() {
 		String s = "";
