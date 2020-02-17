@@ -114,27 +114,40 @@ public class MapBuilder {
 		}
 		//'install' powers 
 		installPowers(boxes);
-		
 		return new Map(boxes);
 	}
 
 	private void installPowers(Box boxes[][]) {
-		boxes[size - 1][size - 1].setOwner(powers[0]);
-		boxes[0][size - 1].setOwner(powers[0]);
-		boxes[size - 1][0].setOwner(powers[0]);
+		//player 1 on top-left side
 		boxes[0][0].setOwner(powers[0]);
-		
-		boxes[size - 1][size - 1].setBuilding(new Capital());
-		boxes[0][size - 1].setBuilding(new Capital());
-		boxes[size - 1][0].setBuilding(new Capital());
-		boxes[0][0].setBuilding(new Capital());
+		installCapital(powers[0], boxes[0][0]);
+		//player 2 on bottom-right side
+		boxes[size - 1][size - 1].setOwner(powers[1]);
+		installCapital(powers[1], boxes[0][0]);
+		if(powers.length > 2) {
+			//player 3 (if exists) on bottom-left side
+			boxes[0][size - 1].setOwner(powers[2]);
+			installCapital(powers[2], boxes[0][0]);
+		}
+		if(powers.length > 3) {
+			//player 4 (if exists) on top-right side
+			boxes[size - 1][0].setOwner(powers[3]);
+			installCapital(powers[3], boxes[0][0]);
+		}
+	}
+
+
+
+	private void installCapital(Power power, Box box) {
+		//We are sure that this box is a grounded box (because specified it before)
+		((GroundBox) box).setBuilding(new Capital());
 	}
 
 
 
 	/*Non définitif*/
 	private int defineRessourceType() {
-		return random.nextInt(ResourceTypes.NUMBER_TYPE_RESOURCES);
+		return random.nextInt(ResourceTypes.NUMBER_TYPE_GROUND_RESOURCES);
 	}
 
 
@@ -146,14 +159,6 @@ public class MapBuilder {
 			}
 			System.out.println();
 		}
-	}
-	
-	public static void main(String[] args) {
-		Power powers[] = new Power[4];
-		Power p1 = new Power();
-		MapBuilder mb = new MapBuilder(20, 20);
-		mb.buildMap();
-		mb.displayMap();
 	}
 
 }

@@ -19,7 +19,7 @@ public class Map {
 		String result = "Map Boxes:\n";
 		for(int i = 0; i < boxes.length; i++){
 			for (int j = 0; j < boxes[0].length; j++) {
-				result += getBox(i, j).toString();
+				result += getBox(i, j).toString() + "| ";
 			}
 			result += "\n";
 		}

@@ -18,6 +18,10 @@ public abstract class Box {
 	public Power getOwner() {
 		return owner;
 	}
+	
+	public boolean hasOwner() {
+		return owner != null;
+	}
 
 	public void setUnit(Units unit) {
 		this.unit = unit;
@@ -27,12 +31,12 @@ public abstract class Box {
 		this.owner = owner;
 	}
 	
-	public abstract Building getBuilding();
-	public abstract void setBuilding(Building building);
-
 	@Override
 	public String toString() {
-		return " unit=" + unit + ", owner=" + owner;
+		if(hasOwner())
+			return " unit=" + unit + ", owner=" + owner.getName() + " ";
+		else
+			return " unit=" + unit + ", owner= no owner ";
 	}
 	
 

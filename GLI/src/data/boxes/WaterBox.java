@@ -13,12 +13,4 @@ public class WaterBox extends Box{
 		return "WaterBox " + super.toString();
 	}
 
-	@Override
-	public Building getBuilding() {
-		return null;
-	}
-
-	@Override
-	public void setBuilding(Building building) {}
-
 }
