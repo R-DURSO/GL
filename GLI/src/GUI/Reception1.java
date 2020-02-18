@@ -145,4 +145,10 @@ public class Reception1 extends JFrame implements Runnable {
 		contentPane.add(resume);
 		
 	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 }
