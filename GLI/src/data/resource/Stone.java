@@ -1,8 +1,8 @@
-package data.ressource;
+package data.resource;
 
 import process.visitor.ressource_visitor.RessourceVisitor;
 
-public class ActionPoints extends Resource {
+public class Stone extends Resource {
 	int variation () {
 		return 0;
 	}

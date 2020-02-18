@@ -1,11 +1,11 @@
 package process.visitor.ressource_visitor;
 
-import data.ressource.ActionPoints;
-import data.ressource.Food;
-import data.ressource.Gold;
-import data.ressource.Score;
-import data.ressource.Stone;
-import data.ressource.Wood;
+import data.resource.ActionPoints;
+import data.resource.Food;
+import data.resource.Gold;
+import data.resource.Score;
+import data.resource.Stone;
+import data.resource.Wood;
 
 /**
  * Useless visitor for the project, just for testing visitor implementation

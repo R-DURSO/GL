@@ -1,7 +1,7 @@
 package test;
 
-import data.ressource.Gold;
-import data.ressource.Wood;
+import data.resource.Gold;
+import data.resource.Wood;
 import process.visitor.ressource_visitor.RessourceVisitor;
 import process.visitor.ressource_visitor.TestVisitor;
 

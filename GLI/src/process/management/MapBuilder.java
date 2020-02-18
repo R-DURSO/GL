@@ -6,7 +6,7 @@ import data.GameMap;
 import data.Power;
 import data.boxes.*;
 import data.building.special.Capital;
-import data.ressource.ResourceTypes;
+import data.resource.ResourceTypes;
 
 /**
  * Map generator

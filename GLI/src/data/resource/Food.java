@@ -1,4 +1,4 @@
-package data.ressource;
+package data.resource;
 
 import process.visitor.ressource_visitor.RessourceVisitor;
 
