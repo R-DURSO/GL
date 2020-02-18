@@ -40,5 +40,4 @@ public abstract class Box {
 		s+="\n";
 		return s;
 	}
-
 }

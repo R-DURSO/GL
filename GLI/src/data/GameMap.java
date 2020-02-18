@@ -2,10 +2,10 @@ package data;
 
 import data.boxes.*;
 
-public class Map {
+public class GameMap {
 	private Box boxes[][]; 
 	
-	public Map(Box boxes[][]) {
+	public GameMap(Box boxes[][]) {
 		this.boxes = boxes;
 	}
 	

@@ -1,6 +1,6 @@
 package test;
 
-import data.Map;
+import data.GameMap;
 import data.Power;
 import process.management.MapBuilder;
 import process.management.PowerFactory;
@@ -15,7 +15,7 @@ public class MapBuilderTest {
 		}
 		MapBuilder mb = new MapBuilder(20, 20, powers);
 		mb.displayMap();
-		Map map = mb.buildMap();
+		GameMap map = mb.buildMap();
 		
 		System.out.println(map);
 	}

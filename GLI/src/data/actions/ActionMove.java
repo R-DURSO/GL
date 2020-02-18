@@ -2,18 +2,16 @@ package data.actions;
 
 import data.Power;
 
-public class ActionCreateUnit extends Action{
+public class ActionMove extends Action {
 	private int positionX;
 	private int positionY;
-	private int unitType;
 
-	public ActionCreateUnit(Power powerConcerned, int unitType, int positionX, int positionY) {
+	public ActionMove(Power powerConcerned, int positionX, int positionY) {
 		super(powerConcerned);
 		this.positionX = positionX;
 		this.positionY = positionY;
-		this.unitType = unitType;
 	}
-
+	
 	public int getPositionX() {
 		return positionX;
 	}
@@ -22,7 +20,4 @@ public class ActionCreateUnit extends Action{
 		return positionY;
 	}
 
-	public int getUnitType() {
-		return unitType;
-	}
 }

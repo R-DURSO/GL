@@ -1,9 +1,15 @@
 package data.actions;
 
-public class Action {
+import data.Power;
 
-	public Action() {
-		// TODO Auto-generated constructor stub
+public abstract class Action {
+	private Power power;
+	
+	public Action(Power powerConcerned) {
+		this.power = powerConcerned;
 	}
 
+	public Power getPower() {
+		return power;
+	}
 }

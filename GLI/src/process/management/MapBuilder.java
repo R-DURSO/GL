@@ -2,7 +2,7 @@ package process.management;
 
 import java.util.Random;
 
-import data.Map;
+import data.GameMap;
 import data.Power;
 import data.boxes.*;
 import data.building.special.Capital;
@@ -94,7 +94,7 @@ public class MapBuilder {
 	}
 
 
-	public Map buildMap() {
+	public GameMap buildMap() {
 		Box[][] boxes = new Box[size][size];
 		Box box;
 		for(int i = 0; i < size; i++){
@@ -109,7 +109,7 @@ public class MapBuilder {
 		}
 		//'install' powers 
 		installPowers(boxes);
-		return new Map(boxes);
+		return new GameMap(boxes);
 	}
 
 	private void installPowers(Box boxes[][]) {
