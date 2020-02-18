@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Reception1 extends JFrame {
+public class Reception1 extends JFrame implements Runnable {
 
 	private JPanel contentPane;
 
