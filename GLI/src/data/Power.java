@@ -31,16 +31,21 @@ public class Power {
 		return resources[resourceType];
 	}
 	
-	public void setAllied(Power ally) {
-		this.ally = ally;
-	}
-	
 	public boolean isAllied() {
 		return ally != null;
 	}
 	
 	public Power getAllied() {
 		return ally;
+	}
+	
+	
+	public void setAllied(Power ally) {
+		this.ally = ally;
+	}
+	
+	public void removeActionPoint() {
+		resources[ResourceTypes.RESOURCE_ACTIONS - 1].addValue(-1);
 	}
 	
 	public void addBox(Box box) {
