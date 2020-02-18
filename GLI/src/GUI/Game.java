@@ -20,19 +20,19 @@ public class Game extends JFrame {
 * 
 */
 	private static final Dimension IDEAL_MAIN_DIMENSION = new Dimension(800,400);
-	JLabel position = new JLabel("position");
-	JLabel Action = new JLabel("action");
-	JLabel gold = new JLabel("or");
-	JLabel wood = new JLabel("bois");
-	JButton EndButton = new JButton("Quitter la partie");	
-	JLabel Stone = new JLabel("pierre");
-	JLabel food = new JLabel("nouriture");	
-	JLabel action_ReadyComboBox = new JLabel("on en fait des liste avec bouton ou bien un menu ?");	
-	JLabel label = new JLabel("New label");	
-	JLabel table = new JLabel("tableau ou le r\u00E9sumer et marquer");
-	JLabel action_doComboBox = new JLabel("on en fait des liste avec bouton ou bien un menu ?");
-	JLabel cost = new JLabel("cout btaiment/unit\u00E9");		
-	JButton end_TurnButton = new JButton("fin de tour");	
+	private JLabel position = new JLabel("position");
+	private	JLabel Action = new JLabel("action");
+	private	JLabel gold = new JLabel("or");
+	private	JLabel wood = new JLabel("bois");
+	private	JButton QuitButton = new JButton("Quitter la partie");	
+	private	JLabel Stone = new JLabel("pierre");
+	private	JLabel food = new JLabel("nouriture");	
+	private	JLabel action_ReadyComboBox = new JLabel("on en fait des liste avec bouton ou bien un menu ?");	
+	private	JLabel label = new JLabel("New label");	
+	private	JLabel table = new JLabel("tableau ou le r\u00E9sumer et marquer");
+	private	JLabel action_doComboBox = new JLabel("on en fait des liste avec bouton ou bien un menu ?");
+	private	JLabel cost = new JLabel("cout btaiment/unit\u00E9");		
+	private	JButton end_TurnButton = new JButton("fin de tour");	
 	
 	/**
 	 * Create the frame.
@@ -99,8 +99,8 @@ public class Game extends JFrame {
 		contentPane.add(action_doComboBox);
 		
 
-		EndButton.setBounds(700, 356, 246, 112);
-		contentPane.add(EndButton);
+		QuitButton.setBounds(700, 356, 246, 112);
+		contentPane.add(QuitButton);
 		setVisible(true);
 	}
 	private void udapteValues() {
