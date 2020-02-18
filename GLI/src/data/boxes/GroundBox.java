@@ -1,7 +1,7 @@
 package data.boxes;
 
 import data.building.Building;
-import data.ressource.ResourceTypes;
+import data.resource.ResourceTypes;
 import data.unit.Units;
 
 public class GroundBox extends Box{

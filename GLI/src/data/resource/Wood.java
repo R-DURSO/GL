@@ -1,8 +1,8 @@
-package data.ressource;
+package data.resource;
 
 import process.visitor.ressource_visitor.RessourceVisitor;
 
-public class Score extends Resource {
+public class Wood extends Resource {
 	int variation () {
 		return 0;
 	}
@@ -11,5 +11,4 @@ public class Score extends Resource {
 	public <R> R accept(RessourceVisitor<R> visitor) {
 		return visitor.visit(this);
 	}
-
 }
