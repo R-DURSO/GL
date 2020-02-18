@@ -11,7 +11,7 @@ public class Power {
 	private String name;
 	private ArrayList<Box> territory = new ArrayList<>();
 	private Resource[] resources = new Resource[ResourceTypes.NUMBER_PLAYER_RESOURCES];
-	private Power allied;
+	private Power ally;
 	
 	public Power(String name) {
 		this.name = name;
@@ -31,16 +31,16 @@ public class Power {
 		return resources[resourceType];
 	}
 	
-	public void setAllied(Power allied) {
-		this.allied = allied;
+	public void setAllied(Power ally) {
+		this.ally = ally;
 	}
 	
-	public boolean hasAllied() {
-		return allied != null;
+	public boolean isAllied() {
+		return ally != null;
 	}
 	
 	public Power getAllied() {
-		return allied;
+		return ally;
 	}
 	
 	public void addBox(Box box) {
