@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -35,7 +35,8 @@ public class Reception extends JFrame {
 	private	JLabel IA3TextArea = new JLabel("ia 3");		
 	private	JLabel waterTextArea = new JLabel("eau");
 	private	JComboBox howwaterBombox = new JComboBox();
-	
+	JButton ResumeBouton = new JButton("charger la derni\u00E8re partie ");	
+	JButton StartBouton = new JButton("Comencer une nouvelle partie");	
 	
 	public Reception() {
 		super("Conquête acceuille");
@@ -126,15 +127,33 @@ private void init() {
 	howwaterBombox.addItem("normal");
 	howwaterBombox.addItem("beacoup");
 	contentPaneBombox.add(howwaterBombox);
-	
-	JButton StartBouton = new JButton("Comencer une nouvelle partie");
+
 	StartBouton.setBounds(74, 267, 225, 53);
+	StartBouton.addActionListener(new CreatGame());
 	contentPaneBombox.add(StartBouton);
 	
-	JButton resumeBouton = new JButton("charger la derni\u00E8re partie ");
-	resumeBouton.setBounds(459, 264, 275, 58);
-	contentPaneBombox.add(resumeBouton);
+
+	ResumeBouton.setBounds(459, 264, 275, 58);
+	ResumeBouton.addActionListener(new test());
+	contentPaneBombox.add(ResumeBouton);
 	setVisible(true);	
+}
+private class CreatGame implements ActionListener {
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		new Game();
+		
+	}
+	private class test implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new Game(); // on a pas encore crée la possibilité de sauvegarde 
+			
+		}
+	
+}
 }
 
 }
