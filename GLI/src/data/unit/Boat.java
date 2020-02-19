@@ -41,6 +41,10 @@ public class Boat extends Units {
 	public int getTypes() {
 		return UnitTypes.UNIT_BOAT;
 	}
+
+	public int getCost() {
+		return COST;
+	}
 	
 	public String toString() {
 		return super.toString() ;

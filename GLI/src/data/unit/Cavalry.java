@@ -26,6 +26,10 @@ public class Cavalry extends Units {
 	public int getTypes() {
 		return UnitTypes.UNIT_CAVALRY;
 	}
+
+	public int getCost() {
+		return COST;
+	}
 	
 	public String toString() {
 		return super.toString() ;

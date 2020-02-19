@@ -22,6 +22,7 @@ public abstract class Units {
 	
 	public abstract <U> U accept(UnitVisitor<U> visitor);
 	public abstract int getTypes();
+	public abstract int getCost();
 	
 	
 	public int getNumber() {

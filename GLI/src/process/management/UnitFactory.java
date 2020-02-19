@@ -1,5 +1,6 @@
 package process.management;
 import data.boxes.*;
+import data.resource.ResourceTypes;
 import data.unit.*;
 import data.Power;
 
@@ -51,5 +52,14 @@ public class UnitFactory {
 			}
 		}
 		return 0;
+	}
+	
+	public boolean canAfford (Power pow, int type, int nb) {
+		if (pow.getResource(ResourceTypes.RESOURCE_GOLD).getAmount() >= (createUnit(type,nb).getCost() * nb)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

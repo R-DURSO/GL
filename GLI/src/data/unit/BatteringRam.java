@@ -24,6 +24,10 @@ public class BatteringRam extends Units {
 	public int getTypes() {
 		return UnitTypes.UNIT_BATTERING_RAM;
 	}
+
+	public int getCost() {
+		return COST;
+	}
 	
 	@Override
 	public String toString() {

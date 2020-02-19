@@ -42,6 +42,10 @@ public class Trebuchet  extends Units {
 	public int getTypes() {
 		return UnitTypes.UNIT_TREBUCHET;
 	}
+
+	public int getCost() {
+		return COST;
+	}
 	
 	public String toString() {
 		return super.toString() ;

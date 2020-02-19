@@ -25,6 +25,10 @@ public class Archer extends Units {
 		return UnitTypes.UNIT_ARCHER;
 	}
 	
+	public int getCost() {
+		return COST;
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString() ;

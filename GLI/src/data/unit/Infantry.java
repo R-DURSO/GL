@@ -26,6 +26,10 @@ public class Infantry extends Units {
 	public int getTypes() {
 		return UnitTypes.UNIT_INFANTRY;
 	}
+
+	public int getCost() {
+		return COST;
+	}
 	
 	public String toString() {
 		return super.toString() ;

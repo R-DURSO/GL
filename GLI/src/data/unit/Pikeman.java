@@ -27,6 +27,10 @@ public class Pikeman extends Units {
 	public int getTypes() {
 		return UnitTypes.UNIT_PIKEMAN;
 	}
+
+	public int getCost() {
+		return COST;
+	}
 	
 	@Override
 	public <U> U accept(UnitVisitor<U> visitor) {
