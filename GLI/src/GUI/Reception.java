@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
@@ -36,6 +37,7 @@ public class Reception extends JFrame {
 	private	JLabel waterTextArea = new JLabel("eau");
 	private	JComboBox howwaterBombox = new JComboBox();
 	private int value;
+	private int newGame;
 	private JFrame game = new Game();
 	JButton ResumeBouton = new JButton("charger la derni\u00E8re partie ");	
 	JButton StartBouton = new JButton("Comencer une nouvelle partie");	
@@ -80,6 +82,7 @@ public class Reception extends JFrame {
 	
 
 		lessBouton.setBounds(127, 190, 41, 23);
+		lessBouton.addActionListener(new lessAction());
 		contentPaneBombox.add(lessBouton);
 	
 		value=20; 
@@ -132,15 +135,18 @@ public class Reception extends JFrame {
 	
 
 		ResumeBouton.setBounds(459, 264, 275, 58);
-		//ResumeBouton.addActionListener(new test());
+		ResumeBouton.addActionListener(new test());
 		contentPaneBombox.add(ResumeBouton);
 		setVisible(true);	
 	}
 	
 	private class ActionCreatGame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			game.setVisible(true);
-			setVisible(false);
+			 newGame = JOptionPane.showConfirmDialog(null, "crée une nouvelle partie superimera l'ancienne");
+			 if(newGame==0) {
+				 game.setVisible(true);
+				 setVisible(false);
+			 }
 		}
 	}
 	private class test implements ActionListener {
@@ -153,5 +159,15 @@ public class Reception extends JFrame {
 			value++;
 			sizeTextArea.setText(Integer.toString(value));
 		}
+	}
+	private class lessAction implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			value--;
+			sizeTextArea.setText(Integer.toString(value));
+			
+		}
+		
 	}
 }
