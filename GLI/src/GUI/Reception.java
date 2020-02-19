@@ -24,7 +24,7 @@ public class Reception extends JFrame {
 	private	JLabel MapTextArea = new JLabel("creation de la carte");
 	private	JComboBox number = new JComboBox();
 	private	JButton lessBouton = new JButton("-");
-	private	JTextArea sideTextArea = new JTextArea();
+	private	JTextArea sizeTextArea = new JTextArea();
 	private	JButton moreButon = new JButton("+");
 	private	JComboBox levelIa1Bombox= new  JComboBox(aiLevels);
 	private	JComboBox levelIa2Bombox = new  JComboBox(aiLevels);
@@ -82,14 +82,14 @@ public class Reception extends JFrame {
 		lessBouton.setBounds(127, 190, 41, 23);
 		contentPaneBombox.add(lessBouton);
 	
-		value=0; 
-		sideTextArea.setText("0");
-		sideTextArea.setBounds(178, 189, 51, 24);
-		contentPaneBombox.add(sideTextArea);
+		value=20; 
+		sizeTextArea.setText(Integer.toString(value));
+		sizeTextArea.setBounds(178, 189, 51, 24);
+		contentPaneBombox.add(sizeTextArea);
 	
 
 		moreButon.setBounds(248, 190, 51, 23);
-		//moreButon.addActionListener(new moreAction());
+		moreButon.addActionListener(new moreAction());
 		contentPaneBombox.add(moreButon);
 	
 
@@ -142,15 +142,16 @@ public class Reception extends JFrame {
 			game.setVisible(true);
 			setVisible(false);
 		}
-		private class test implements ActionListener {
-			public void actionPerformed(ActionEvent e) {
-				game.setVisible(true); // on a pas encore crée la possibilité de sauvegarde 
-			}
+	}
+	private class test implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			game.setVisible(true); // on a pas encore crée la possibilité de sauvegarde 
 		}
-		private class moreAction implements ActionListener{
-			public void actionPerformed(ActionEvent e) {
-				value++;
-			}
+	}
+	private class moreAction implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			value++;
+			sizeTextArea.setText(Integer.toString(value));
 		}
 	}
 }
