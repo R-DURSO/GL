@@ -4,7 +4,7 @@ import process.visitor.unit_visitor.UnitVisitor;
 
 public class Infantry extends Units {
 	private static final int BASE_HEALTH = 2;
-	private static final int RANGE = 0;
+	private static final int RANGE = 1;
 	private static final int MOVEMENT = 1;
 	private static final int DAMAGE = 0;
 	private static final int DEFENSE = 1;
