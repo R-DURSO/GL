@@ -59,16 +59,17 @@ public class ActionManager {
 			throw new IllegalArgumentException("Les unités sont trop loin de la cible");
 		
 		//check if there is units on target, in this case, check the owner of those units
-		if(targetBox) {
-			
-		}
+		//if player himself or his ally, no attack
+		if(targetBox.hasUnit() || targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAllied())
+			throw new IllegalArgumentException("Vous ne pouvez pas attaquer ici");
 		
 		return new ActionAttack(powerConcerned, from, target);
 	}
 
 
 	public ActionMove createActionMove(Power powerConcerned, Position from, Position target) throws IllegalArgumentException{
-		
+		Box fromBox = getBoxFromMap(from);
+		Box targetBox = getBoxFromMap(target);
 	}
 	
 	public ActionConstruct createActionConstruct(Power powerConcerned, int buildingType, Position target) throws IllegalArgumentException{
