@@ -11,6 +11,7 @@ public class Infantry extends Units {
 	
 	private static final int COST = 10;
 	private static final int COST_PER_TURN = 3;
+	private static final int NUMBER_MAX_UNITS = 20;
 	
 
 	public Infantry (int numberUnits) {
