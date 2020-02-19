@@ -37,9 +37,9 @@ public abstract class Box {
 
 	public String toString() {
 		String s = "";
-		s += " Unit =" + unit;
+		s += " Unit=" + unit;
 		if (hasOwner()) {
-			s+= ", Owner ="+ owner.getName();
+			s+= ", Owner="+ owner.getName();
 		}
 		s+="\n";
 		return s;
