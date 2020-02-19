@@ -15,15 +15,31 @@ public class Boat extends Units {
 	
 	/* specific to Boat : can contain Units*/
 	private Units containedUnits;
+
+	public Boat () {
+		super(BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE);
+		this.containedUnits = null;
+	}
 	
 	public Boat (Units containedUnits) {
 		super(BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE);
 		this.containedUnits = containedUnits;
 	}
 	
-	@Override
+	public Units getContainedUnits() {
+		return containedUnits;
+	}
+
+	public void setContainedUnits(Units containedUnits) {
+		this.containedUnits = containedUnits;
+	}
+
 	public <U> U accept(UnitVisitor<U> visitor) {
 		return visitor.visit(this);
+	}
+
+	public int getTypes() {
+		return UnitTypes.UNIT_BOAT;
 	}
 	
 	public String toString() {

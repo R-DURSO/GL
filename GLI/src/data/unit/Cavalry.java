@@ -23,6 +23,10 @@ public class Cavalry extends Units {
 		return visitor.visit(this);
 	}
 
+	public int getTypes() {
+		return UnitTypes.UNIT_CAVALRY;
+	}
+	
 	public String toString() {
 		return super.toString() ;
 	}

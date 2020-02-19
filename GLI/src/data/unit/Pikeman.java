@@ -23,6 +23,10 @@ public class Pikeman extends Units {
 		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE);
 		// TODO Auto-generated constructor stub
 	}
+
+	public int getTypes() {
+		return UnitTypes.UNIT_PIKEMAN;
+	}
 	
 	@Override
 	public <U> U accept(UnitVisitor<U> visitor) {

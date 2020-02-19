@@ -20,6 +20,10 @@ public class BatteringRam extends Units {
 	public <U> U accept(UnitVisitor<U> visitor) {
 		return visitor.visit(this);
 	}
+
+	public int getTypes() {
+		return UnitTypes.UNIT_BATTERING_RAM;
+	}
 	
 	@Override
 	public String toString() {

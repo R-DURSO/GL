@@ -20,6 +20,10 @@ public class Archer extends Units {
 	public <U> U accept(UnitVisitor<U> visitor) {
 		return visitor.visit(this);
 	}
+
+	public int getTypes() {
+		return UnitTypes.UNIT_ARCHER;
+	}
 	
 	@Override
 	public String toString() {

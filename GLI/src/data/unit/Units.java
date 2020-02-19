@@ -21,9 +21,18 @@ public abstract class Units {
 	
 	
 	public abstract <U> U accept(UnitVisitor<U> visitor);
+	public abstract int getTypes();
 	
 	
-	
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+
 	public String toString() {
 		return "unit"; // TODO methode a remplir 
 	}

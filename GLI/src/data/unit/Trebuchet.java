@@ -39,6 +39,10 @@ public class Trebuchet  extends Units {
 		return visitor.visit(this);
 	}
 
+	public int getTypes() {
+		return UnitTypes.UNIT_TREBUCHET;
+	}
+	
 	public String toString() {
 		return super.toString() ;
 	}

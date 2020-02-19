@@ -23,7 +23,12 @@ public class Infantry extends Units {
 		return visitor.visit(this);
 	}
 
+	public int getTypes() {
+		return UnitTypes.UNIT_INFANTRY;
+	}
+	
 	public String toString() {
 		return super.toString() ;
 	}
+
 }
