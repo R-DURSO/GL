@@ -22,6 +22,10 @@ public abstract class Box {
 	public boolean hasOwner() {
 		return owner != null;
 	}
+	
+	public boolean hasUnit() {
+		return unit != null;
+	}
 
 	public void setUnit(Units unit) {
 		this.unit = unit;

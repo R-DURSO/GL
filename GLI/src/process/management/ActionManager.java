@@ -1,6 +1,7 @@
 package process.management;
 
 import data.GameMap;
+import data.Position;
 import data.Power;
 import data.actions.ActionAttack;
 import data.actions.ActionBreakAlliance;
@@ -10,7 +11,14 @@ import data.actions.ActionDestroyBuilding;
 import data.actions.ActionDestroyUnits;
 import data.actions.ActionMakeAlliance;
 import data.actions.ActionMove;
+import data.boxes.Box;
+import data.unit.Units;
 
+/**
+ * 
+ * @author Aldric Vitali Silvestre
+ *
+ */
 public class ActionManager {
 	private GameMap map;
 
@@ -40,28 +48,55 @@ public class ActionManager {
 		return new ActionBreakAlliance(powerConcerned);
 	}
 	
-	public ActionAttack createActionAttack(Power powerConcerned, int positionX, int positionY) throws IllegalArgumentException{
+	public ActionAttack createActionAttack(Power powerConcerned, Position from,  Position target) throws IllegalArgumentException{
+		Box fromBox = getBoxFromMap(from);
+		Box targetBox = getBoxFromMap(target);
+		//check if from Box is powerConcerned's
+		if(fromBox.getOwner() != powerConcerned)
+			throw new IllegalArgumentException("Cette case n'appartient pas à " + powerConcerned.getName());
+		//check if units are on range
+		if(!isUnitsOnRange(from, target))
+			throw new IllegalArgumentException("Les unités sont trop loin de la cible");
+		
+		//check if there is units on target, in this case, check the owner of those units
+		if(targetBox) {
+			
+		}
+		
+		return new ActionAttack(powerConcerned, from, target);
+	}
+
+
+	public ActionMove createActionMove(Power powerConcerned, Position from, Position target) throws IllegalArgumentException{
 		
 	}
 	
-	public ActionMove createActionMove(Power powerConcerned, int positionX, int positionY) throws IllegalArgumentException{
+	public ActionConstruct createActionConstruct(Power powerConcerned, int buildingType, Position target) throws IllegalArgumentException{
 		
 	}
 	
-	public ActionConstruct createActionConstruct(Power powerConcerned, int buildingType, int positionX, int positionY) throws IllegalArgumentException{
+	public ActionCreateUnit createActionCreateUnit(Power powerConcerned, int unitType, int numberUnits, Position target) throws IllegalArgumentException{
 		
 	}
 	
-	public ActionCreateUnit createActionCreateUnit(Power powerConcerned, int unitType, int numberUnits, int positionX, int positionY) throws IllegalArgumentException{
+	public ActionDestroyBuilding createActionDestroyBuilding(Power powerConcerned, Position target) throws IllegalArgumentException{
 		
 	}
 	
-	public ActionDestroyBuilding createActionDestroyBuilding(Power powerConcerned, int positionX, int positionY) throws IllegalArgumentException{
-		
+	public ActionDestroyUnits createActionDestroyUnits(Power powerConcerned, Position target) throws IllegalArgumentException{
+	
 	}
 	
-	public ActionDestroyUnits createActionDestroyUnits(Power powerConcerned, int positionX, int positionY) throws IllegalArgumentException{
+	private Box getBoxFromMap(Position position) {
+		return map.getBox(position.getX(), position.getY());
+	}
 	
+	private Units getUnitFromMap(Position position) {
+		return getBoxFromMap(position).getUnit(); 
+	}
+	
+	private boolean isUnitsOnRange(Position from, Position target) {
+		return false;
 	}
 
 }
