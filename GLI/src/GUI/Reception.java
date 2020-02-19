@@ -35,6 +35,8 @@ public class Reception extends JFrame {
 	private	JLabel IA3TextArea = new JLabel("ia 3");		
 	private	JLabel waterTextArea = new JLabel("eau");
 	private	JComboBox howwaterBombox = new JComboBox();
+	private int value;
+	private JFrame game= new Game();
 	JButton ResumeBouton = new JButton("charger la derni\u00E8re partie ");	
 	JButton StartBouton = new JButton("Comencer une nouvelle partie");	
 	
@@ -43,6 +45,7 @@ public class Reception extends JFrame {
 		init();
 	}
 private void init() {
+	game.setVisible(false);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setPreferredSize(IDEAL_MAIN_DIMENSION);
 	setBounds(100, 100, 856, 376);
@@ -81,13 +84,14 @@ private void init() {
 	lessBouton.setBounds(127, 190, 41, 23);
 	contentPaneBombox.add(lessBouton);
 	
-
+	value=0; 
 	sideTextArea.setText("0");
 	sideTextArea.setBounds(178, 189, 51, 24);
 	contentPaneBombox.add(sideTextArea);
 	
 
 	moreButon.setBounds(248, 190, 51, 23);
+//	moreButon.addActionListener(new moreAction());
 	contentPaneBombox.add(moreButon);
 	
 
@@ -129,30 +133,38 @@ private void init() {
 	contentPaneBombox.add(howwaterBombox);
 
 	StartBouton.setBounds(74, 267, 225, 53);
-	StartBouton.addActionListener(new CreatGame());
+	StartBouton.addActionListener(new ActionCreatGame());
 	contentPaneBombox.add(StartBouton);
 	
 
 	ResumeBouton.setBounds(459, 264, 275, 58);
-	ResumeBouton.addActionListener(new test());
+//	ResumeBouton.addActionListener(new test());
 	contentPaneBombox.add(ResumeBouton);
 	setVisible(true);	
 }
-private class CreatGame implements ActionListener {
+private class ActionCreatGame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		new Game();
+		game.setVisible(true);
 		
 	}
 	private class test implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			new Game(); // on a pas encore crée la possibilité de sauvegarde 
+			game.setVisible(true); // on a pas encore crée la possibilité de sauvegarde 
 			
 		}
+private class moreAction implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		value++;
+		
+	}
 	
+}
 }
 }
 
