@@ -15,7 +15,7 @@ public class UnitFactory {
 			box.setUnit(unit);
 		case 2:
 			unit = box.getUnit();
-			unit.setNumber(unit.getNumber()+nb);
+			unit.addNumber(nb);
 			box.setUnit(unit);
 		}
 	}
