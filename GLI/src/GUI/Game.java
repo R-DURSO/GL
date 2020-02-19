@@ -3,11 +3,14 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
@@ -33,7 +36,7 @@ public class Game extends JFrame {
 	private	JLabel action_doComboBox = new JLabel("on en fait des liste avec bouton ou bien un menu ?");
 	private	JLabel cost = new JLabel("cout btaiment/unit\u00E9");		
 	private	JButton end_TurnButton = new JButton("fin de tour");	
-	
+	private  int saveGame;
 	/**
 	 * Create the frame.
 	 */
@@ -100,6 +103,7 @@ public class Game extends JFrame {
 		
 
 		QuitButton.setBounds(700, 356, 246, 112);
+		QuitButton.addActionListener(new quitAction());
 		contentPane.add(QuitButton);
 		setVisible(true);
 	}
@@ -107,5 +111,14 @@ public class Game extends JFrame {
 		/*
 		 * on écrira ici les modfication des valeur de ressource ect ....
 		 */
+	}
+	private class quitAction implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			 saveGame = JOptionPane.showConfirmDialog(null, "Voulez-vous sauvegarder la partie ? ");
+			
+		}
+		
 	}
 }
