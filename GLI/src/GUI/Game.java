@@ -116,7 +116,7 @@ public class Game extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			 saveGame = JOptionPane.showConfirmDialog(null, "voulais vous sauvegarder la partie ? ");
+			 saveGame = JOptionPane.showConfirmDialog(null, "Voulez-vous sauvegarder la partie ? ");
 			
 		}
 		
