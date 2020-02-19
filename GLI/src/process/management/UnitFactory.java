@@ -5,48 +5,48 @@ import data.Power;
 
 public class UnitFactory {
 
-	public UnitFactory(Power pow, Box b, int type, int nb) {
-		Units u;
-		switch(canTrain(pow, b, type)) {
+	public UnitFactory(Power pow, Box box, int type, int nb) {
+		Units unit;
+		switch(canTrain(pow, box, type)) {
 		case 0:
 			//Cas vide, on ne peut pas entrainer d'unité
 		case 1:
-			u = createUnit(type,nb);
-			b.setUnit(u);
+			unit = createUnit(type,nb);
+			box.setUnit(unit);
 		case 2:
-			u = b.getUnit();
-			u.setNumber(u.getNumber()+nb);
-			b.setUnit(u);
+			unit = box.getUnit();
+			unit.setNumber(unit.getNumber()+nb);
+			box.setUnit(unit);
 		}
 	}
 	
 	public Units createUnit(int type, int nb) {
-		Units u = null;
+		Units unit = null;
 		switch(type) {
 		case UnitTypes.UNIT_INFANTRY:
-			u = new Infantry(nb);
+			unit = new Infantry(nb);
 		case UnitTypes.UNIT_ARCHER:
-			u = new Archer(nb);
+			unit = new Archer(nb);
 		case UnitTypes.UNIT_CAVALRY:
-			u = new Cavalry(nb);
+			unit = new Cavalry(nb);
 		case UnitTypes.UNIT_PIKEMAN:
-			u = new Pikeman(nb);
+			unit = new Pikeman(nb);
 		case UnitTypes.UNIT_BATTERING_RAM:
-			u = new BatteringRam(nb);
+			unit = new BatteringRam(nb);
 		case UnitTypes.UNIT_TREBUCHET:
-			u = new Trebuchet();
+			unit = new Trebuchet();
 		case UnitTypes.UNIT_BOAT:
-			u = new Boat();
+			unit = new Boat();
 		}
-		return u;
+		return unit;
 	}
 	
-	public int canTrain (Power pow, Box b, int type) {
-		if (b.getOwner().equals(pow)) {
-			if (b.getUnit() == null) {
+	public int canTrain (Power pow, Box box, int type) {
+		if (box.getOwner().equals(pow)) {
+			if (box.getUnit() == null) {
 				return 1;
 			}
-			else if (b.getUnit().getTypes() == type) {
+			else if (box.getUnit().getTypes() == type) {
 				return 2;
 			}
 		}
