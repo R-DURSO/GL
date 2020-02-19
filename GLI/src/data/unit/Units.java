@@ -31,6 +31,10 @@ public abstract class Units {
 	public void setNumber(int number) {
 		this.number = number;
 	}
+	
+	public void addNumber (int number) {
+		this.number += number;
+	}
 
 
 	public String toString() {
