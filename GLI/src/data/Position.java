@@ -25,5 +25,19 @@ public class Position {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	@Override
+	public boolean equals(Object object) throws IllegalArgumentException{
+		if (this == object) {
+			return true;
+		} else if (object != null) {
+			if (object instanceof Position) {
+				Position position = (Position) object;
+				//Two Positions are equal when they have the same coordinates.
+				return position.getX() == x && position.getY() == y;
+			}
+		}
+		return false;
+	}
 
 }
