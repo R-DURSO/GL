@@ -4,7 +4,7 @@ public class CircleTest {
 
 	public static void main(String[] args) {
 		boolean tab[][] = new boolean[20][20];
-		drawTriangle(tab, 10, 10, 4);
+		drawDiamond(tab, 10, 10, 4);
 		displayCircle(tab);
 	}
 	
@@ -66,6 +66,20 @@ public class CircleTest {
 		double A3 = area(ax, ay, bx, by, x, y);
 		
 		return (A == A1 + A2 + A3);
+	}
+	
+	public static void drawDiamond(boolean tab[][], int cX, int cY, int radius) {
+		int C = cX + cY;
+		for(int i = 0; i < tab.length; i++) {
+			for(int j = 0; j < tab[0].length; j++) {
+				int A = i + j;
+				int dist = Math.abs(A - C);
+				if(dist <= radius) {
+					System.out.println(i + " et " + j);
+					tab[i][j] = true;
+				}
+			}
+		}
 	}
 
 }
