@@ -5,7 +5,7 @@ import data.boxes.*;
 import data.building.BuildingTypes;
 import data.resource.*;
 import data.unit.UnitTypes;
-import process.management.BuildingFactory;
+import process.management.BuildingManager;
 import process.management.UnitFactory;
 
 public class ResourceTest {
@@ -19,7 +19,7 @@ public class ResourceTest {
 		box.setOwner(pow);
 		System.out.println(box);
 		
-		new BuildingFactory(pow, BuildingTypes.BUILDING_MINE, (GroundBox)box);
+		BuildingManager.getInstance().addNewBuilding(pow, BuildingTypes.BUILDING_MINE, (GroundBox)box);
 		System.out.println(box);
 		
 		System.out.println(box.getUnit());

@@ -14,4 +14,5 @@ public class ActionDestroyBuilding extends Action{
 	public Position getTarget() {
 		return target;
 	}
+	
 }

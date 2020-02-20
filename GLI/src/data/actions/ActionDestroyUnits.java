@@ -10,6 +10,7 @@ public class ActionDestroyUnits extends Action {
 		super(powerConcerned);
 		this.target = target;
 	}
+
 	public Position getTarget() {
 		return target;
 	}

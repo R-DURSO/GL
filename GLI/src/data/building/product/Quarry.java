@@ -1,5 +1,6 @@
 package data.building.product;
 
+import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
@@ -23,6 +24,11 @@ public class Quarry extends BuildingProduct{
 	
 	public int getProductionTypes() {
 		return ResourceTypes.RESOURCE_STONE;
+	}
+	
+	@Override
+	public int getType() {
+		return BuildingTypes.BUILDING_QUARRY;
 	}
 	
 	@Override

@@ -15,7 +15,7 @@ public class GroundBox extends Box{
 	}
 	
 	public boolean hasBuilding() {
-		return building != null;
+		return building != null; 
 	}
 
 	public Building getBuilding() {

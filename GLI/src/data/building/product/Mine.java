@@ -1,5 +1,6 @@
 package data.building.product;
 
+import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
@@ -24,6 +25,11 @@ public class Mine  extends BuildingProduct{
 	
 	public int getProductionTypes() {
 		return ResourceTypes.RESOURCE_GOLD;
+	}
+	
+	@Override
+	public int getType() {
+		return BuildingTypes.BUILDING_MINE;
 	}
 	
 	@Override

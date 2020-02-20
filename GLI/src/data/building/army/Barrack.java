@@ -1,5 +1,6 @@
 package data.building.army;
 
+import data.building.BuildingTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
 public class Barrack extends BuildingArmy {
@@ -14,6 +15,11 @@ public class Barrack extends BuildingArmy {
 	@Override
 	public <B> B accept(BuildingVisitor<B> visitor) {
 		return visitor.visit(this);
+	}
+
+	@Override
+	public int getType() {
+		return BuildingTypes.BUILDING_BARRACK;
 	}
 
 }

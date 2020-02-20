@@ -1,5 +1,6 @@
 package data.building.product;
 
+import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
@@ -24,6 +25,12 @@ public class Windmill extends BuildingProduct {
 
 	public int getProductionTypes() {
 		return ResourceTypes.RESOURCE_FOOD;
+	}
+	
+
+	@Override
+	public int getType() {
+		return BuildingTypes.BUILDING_WINDMILL;
 	}
 	
 	@Override

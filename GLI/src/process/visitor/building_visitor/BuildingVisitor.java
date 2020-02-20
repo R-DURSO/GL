@@ -10,7 +10,7 @@ public interface BuildingVisitor<T> {
 	
 	T visit(Dock node);
 	
-	T visit(Stable node);
+	T visit(Workshop node);
 	
 	T visit(Mine node);
 	

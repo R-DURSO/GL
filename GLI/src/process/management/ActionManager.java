@@ -14,7 +14,9 @@ import data.actions.ActionMove;
 import data.boxes.Box;
 import data.boxes.GroundBox;
 import data.boxes.WaterBox;
+import data.building.Building;
 import data.building.BuildingTypes;
+import data.building.army.BuildingArmy;
 import data.building.special.Door;
 import data.building.special.Wall;
 import data.unit.UnitTypes;
@@ -184,21 +186,57 @@ public class ActionManager {
 		GroundBox groundBox = (GroundBox) targetBox;
 		//check if there is already a building on this box
 		if(groundBox.hasBuilding())
-			throw new IllegalArgumentException("Impossible de construire sur une case qui possède déjà un batiment");
-		
-		
+			throw new IllegalArgumentException("Impossible de construire sur une case qui possède déjà un batiment"); 
 		
 		powerConcerned.removeActionPoint();
 		return new ActionConstruct(powerConcerned, buildingType, target);
 	}
 	
 	public ActionCreateUnit createActionCreateUnit(Power powerConcerned, int unitType, int numberUnits, Position target) throws IllegalArgumentException{
+		//check if target belongs to powerConcerned
+		Box targetBox = getBoxFromMap(target);
+		if(targetBox.getOwner() == powerConcerned) {
+			throw new IllegalArgumentException("Impossible de créer des unités sur une case étrangère");
+		}
+		
+		//check if not in water
+		if(targetBox instanceof WaterBox)
+			throw new IllegalArgumentException("Impossible de créer des unités sur une case d'eau");
+		
+		GroundBox groundBox = (GroundBox) targetBox;
+		//check if this box has a building
+		if(!groundBox.hasBuilding())
+			throw new IllegalArgumentException("La création d'unités demande la présence d'un batiment spécifique");
+		
+		Building building = groundBox.getBuilding();
+		
+		//check if thoses units can be created here
+		if(! (building instanceof BuildingArmy))
+			throw new IllegalArgumentException("Impossible de créer des unités dans un batiment comme ceci");
+		else
+			switch(building.getType()) {
+			case BuildingTypes.BUILDING_BARRACK:
+				if(unitType >= UnitTypes.UNITS_IN_BARRACK)
+					throw new IllegalArgumentException("Ces unités ne sont pas créées dans des casernes");
+				break;
+			case BuildingTypes.BUILDING_WORKSHOP:
+				if(unitType < UnitTypes.UNITS_IN_BARRACK || unitType >= UnitTypes.UNITS_IN_WORKSHOP)
+					throw new IllegalArgumentException("Ces unités ne sont pas créées dans des ateliers");
+				break;
+			case BuildingTypes.BUILDING_DOCK:
+				if(unitType < UnitTypes.UNITS_IN_WORKSHOP)
+					throw new IllegalArgumentException("Ces unités ne sont pas créées dans des ports");
+				break;
+			}
+		
 		
 		powerConcerned.removeActionPoint();
 		return new ActionCreateUnit(powerConcerned, unitType, numberUnits, target);
 	}
 	
 	public ActionDestroyBuilding createActionDestroyBuilding(Power powerConcerned, Position target) throws IllegalArgumentException{
+		
+		
 		
 		powerConcerned.removeActionPoint();
 		return new ActionDestroyBuilding(powerConcerned, target);
