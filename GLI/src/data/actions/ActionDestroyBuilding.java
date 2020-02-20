@@ -1,22 +1,18 @@
 package data.actions;
 
+import data.Position;
 import data.Power;
 
 public class ActionDestroyBuilding extends Action{
-	private int positionX;
-	private int positionY;
-
-	public ActionDestroyBuilding(Power powerConcerned, int positionX, int positionY) {
+	private Position target;
+	
+	public ActionDestroyBuilding(Power powerConcerned, Position target) {
 		super(powerConcerned);
-		this.positionX = positionX;
-		this.positionY = positionY;
+		this.target = target;
 	}
 
-	public int getPositionX() {
-		return positionX;
+	public Position getTarget() {
+		return target;
 	}
-
-	public int getPositionY() {
-		return positionY;
-	}
+	
 }

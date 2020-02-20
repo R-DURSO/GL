@@ -5,9 +5,8 @@ import process.visitor.ressource_visitor.RessourceVisitor;
 public abstract class Resource {
 	private int amount = 0;
 	
-	//int variation (int nombre, <T> Ressource)
-	// On pourrait le formuler comme ça ?
-	
+	public Resource () {
+	}
 	
 	public void addValue(int value) {
 		this.amount += value;

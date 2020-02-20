@@ -25,20 +25,43 @@ public abstract class Units {
 	public abstract int getCost();
 	
 	
+	
 	public int getNumber() {
 		return number;
-	}
-
-	public void setNumber(int number) {
-		this.number = number;
 	}
 	
 	public void addNumber (int number) {
 		this.number += number;
+		if (this.number <= 0) {
+			this.number = 0;
+		}
+	}
+
+	public int getHealth() {
+		return health;
 	}
 
 
+	public int getRange() {
+		return range;
+	}
+
+
+	public int getMovement() {
+		return movement;
+	}
+
+
+	public int getDamage() {
+		return damage;
+	}
+
+
+	public int getDefense() {
+		return defense;
+	}
+
 	public String toString() {
-		return "unit"; // TODO methode a remplir 
+		return ": "+number+", atk:"+damage+" def:"+defense;
 	}
 }

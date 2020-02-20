@@ -13,6 +13,10 @@ public class GroundBox extends Box{
 		super();
 		this.resourceType = resourceType;
 	}
+	
+	public boolean hasBuilding() {
+		return building != null; 
+	}
 
 	public Building getBuilding() {
 		return building;
@@ -45,7 +49,7 @@ public class GroundBox extends Box{
 
 	@Override
 	public String toString() {
-		return "GroundBox : ressource = " + getResourceTypeName() + " " + super.toString();
+		return "GroundBox : building = " + getBuilding() + ", ressource = " + getResourceTypeName() + " " + super.toString();
 	}
 	
 	

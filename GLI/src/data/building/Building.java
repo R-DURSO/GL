@@ -12,6 +12,27 @@ public abstract class Building {
 		this.buildTime = buildTime;
 		this.health = health;
 	}
+		
+	public int getBuildTime() {
+		return buildTime;
+	}
+
+	public int getHealth() {
+		return health;
+	}
 	
+	public abstract int getType();
+
+	public void decreaseBuildTime() {
+		buildTime--;
+	}
+
+	public void applyDamage(int damage) {
+		this.health -= damage;
+	}
+
+
+
 	public abstract <B> B accept(BuildingVisitor<B> visitor);
+	//public abstract int getCost();
 }

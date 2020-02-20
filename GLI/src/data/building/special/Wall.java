@@ -1,5 +1,6 @@
 package data.building.special;
 
+import data.building.BuildingTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
 public class Wall extends BuildingSpecial{
@@ -9,6 +10,12 @@ public class Wall extends BuildingSpecial{
 	
 	public Wall() {
 		super(BUILD_TIME, BASE_HEALTH);
+	}
+	
+
+	@Override
+	public int getType() {
+		return BuildingTypes.BUILDING_WALL;
 	}
 	
 	@Override

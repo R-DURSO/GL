@@ -16,7 +16,6 @@ public class Infantry extends Units {
 
 	public Infantry (int numberUnits) {
 		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -33,7 +32,7 @@ public class Infantry extends Units {
 	}
 	
 	public String toString() {
-		return super.toString() ;
+		return "Infantry " + super.toString() ;
 	}
 
 }

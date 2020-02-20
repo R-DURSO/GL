@@ -4,14 +4,13 @@ import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
-public class Windmill extends BuildingProduct {
+public class Quarry extends BuildingProduct{
 	private static final int BUILD_TIME = 0;
 	private static final int COST = 100;
 	private static final int BASE_HEALTH = 3;
 	private static final int PRODUCTION_PER_TURN = 20;
 	
-	
-	public Windmill() {
+	public Quarry() {
 		super(BUILD_TIME, BASE_HEALTH);
 	}
 	
@@ -22,15 +21,14 @@ public class Windmill extends BuildingProduct {
 	public int getRevenue() {
 		return PRODUCTION_PER_TURN;
 	}
-
+	
 	public int getProductionTypes() {
-		return ResourceTypes.RESOURCE_FOOD;
+		return ResourceTypes.RESOURCE_STONE;
 	}
 	
-
 	@Override
 	public int getType() {
-		return BuildingTypes.BUILDING_WINDMILL;
+		return BuildingTypes.BUILDING_QUARRY;
 	}
 	
 	@Override
@@ -39,6 +37,6 @@ public class Windmill extends BuildingProduct {
 	}
 	
 	public String toString() {
-		return "Windmill";
+		return "Quarry";
 	}
 }

@@ -1,6 +1,7 @@
 package data.building.army;
 
 import data.building.Building;
+import data.building.BuildingTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
 public class Dock extends BuildingArmy {
@@ -10,6 +11,11 @@ public class Dock extends BuildingArmy {
 	
 	public Dock() {
 		super(BUILD_TIME, BASE_HEALTH);
+	}
+	
+	@Override
+	public int getType() {
+		return BuildingTypes.BUILDING_DOCK;
 	}
 	
 	@Override

@@ -19,5 +19,4 @@ public class MapBuilderTest {
 		
 		System.out.println(map);
 	}
-
 }

@@ -32,6 +32,6 @@ public class Archer extends Units {
 	
 	@Override
 	public String toString() {
-		return super.toString() ;
+		return "Archer" + super.toString() ;
 	}
 }

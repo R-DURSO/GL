@@ -18,7 +18,7 @@ public abstract class Box {
 	public Power getOwner() {
 		return owner;
 	}
-	
+
 	public boolean hasOwner() {
 		return owner != null;
 	}

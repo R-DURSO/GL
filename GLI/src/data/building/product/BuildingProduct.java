@@ -5,7 +5,9 @@ public abstract class BuildingProduct extends Building{
 
 	public BuildingProduct(int buildTime, int health) {
 		super(buildTime, health);
-		// TODO Auto-generated constructor stub
 	}
 
+	public abstract int getRevenue();
+	public abstract int getProductionTypes();
+	
 }

@@ -1,6 +1,7 @@
 package data.building.product;
 
-import data.building.Building;
+import data.building.BuildingTypes;
+import data.resource.ResourceTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
 public class Mine  extends BuildingProduct{
@@ -14,9 +15,29 @@ public class Mine  extends BuildingProduct{
 		super(BUILD_TIME, BASE_HEALTH);
 	}
 	
+	public int getCost() {
+		return COST;
+	}
+	
+	public int getRevenue() {
+		return PRODUCTION_PER_TURN;
+	}
+	
+	public int getProductionTypes() {
+		return ResourceTypes.RESOURCE_GOLD;
+	}
+	
+	@Override
+	public int getType() {
+		return BuildingTypes.BUILDING_MINE;
+	}
+	
 	@Override
 	public <B> B accept(BuildingVisitor<B> visitor) {
 		return visitor.visit(this);
 	}
-
+	
+	public String toString() {
+		return "Mine";
+	}
 }

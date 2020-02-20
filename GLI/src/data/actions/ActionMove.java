@@ -1,23 +1,24 @@
 package data.actions;
 
+import data.Position;
 import data.Power;
 
 public class ActionMove extends Action {
-	private int positionX;
-	private int positionY;
+	private Position from;
+	private Position target;
 
-	public ActionMove(Power powerConcerned, int positionX, int positionY) {
+	public ActionMove(Power powerConcerned, Position from, Position target) {
 		super(powerConcerned);
-		this.positionX = positionX;
-		this.positionY = positionY;
-	}
-	
-	public int getPositionX() {
-		return positionX;
+		this.from = from;
+		this.target = target;
 	}
 
-	public int getPositionY() {
-		return positionY;
+	public Position getFrom() {
+		return from;
+	}
+
+	public Position getTarget() {
+		return target;
 	}
 
 }
