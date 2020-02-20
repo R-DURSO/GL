@@ -25,6 +25,7 @@ public abstract class Units {
 	public abstract int getCost();
 	
 	
+	
 	public int getNumber() {
 		return number;
 	}
@@ -40,5 +41,30 @@ public abstract class Units {
 
 	public String toString() {
 		return "unit"; // TODO methode a remplir 
+	}
+
+
+	public int getHealth() {
+		return health;
+	}
+
+
+	public int getRange() {
+		return range;
+	}
+
+
+	public int getMovement() {
+		return movement;
+	}
+
+
+	public int getDamage() {
+		return damage;
+	}
+
+
+	public int getDefense() {
+		return defense;
 	}
 }

@@ -12,6 +12,7 @@ import data.actions.ActionDestroyUnits;
 import data.actions.ActionMakeAlliance;
 import data.actions.ActionMove;
 import data.boxes.Box;
+import data.boxes.WaterBox;
 import data.unit.Units;
 
 /**
@@ -49,13 +50,22 @@ public class ActionManager {
 	}
 	
 	public ActionAttack createActionAttack(Power powerConcerned, Position from,  Position target) throws IllegalArgumentException{
+		if(from.equals(target))
+			throw new IllegalArgumentException("On ne peut pas attaquer sur sa propre case");
+		
 		Box fromBox = getBoxFromMap(from);
 		Box targetBox = getBoxFromMap(target);
+		
 		//check if from Box is powerConcerned's
 		if(fromBox.getOwner() != powerConcerned)
 			throw new IllegalArgumentException("Cette case n'appartient pas à " + powerConcerned.getName());
+		
+		//check if there is any unit on the fromBox
+		if(!fromBox.hasUnit())
+			throw new IllegalArgumentException("Il n'y a pas d'unité à déplacer ici");
+		
 		//check if units are on range
-		if(!isUnitsOnRange(from, target))
+		if(!isUnitsOnRange(from, fromBox.getUnit(), target))
 			throw new IllegalArgumentException("Les unités sont trop loin de la cible");
 		
 		//check if there is units on target, in this case, check the owner of those units
@@ -68,8 +78,65 @@ public class ActionManager {
 
 
 	public ActionMove createActionMove(Power powerConcerned, Position from, Position target) throws IllegalArgumentException{
+		if(from.equals(target))
+			throw new IllegalArgumentException("On ne peut pas se déplacer la ou on est déjà");
+		
 		Box fromBox = getBoxFromMap(from);
 		Box targetBox = getBoxFromMap(target);
+		
+		//check if from Box is powerConcerned's
+		if(fromBox.getOwner() != powerConcerned)
+			throw new IllegalArgumentException("Cette case n'appartient pas à " + powerConcerned.getName());
+		
+		//check if there is any unit on the fromBox
+		if(!fromBox.hasUnit())
+			throw new IllegalArgumentException("Il n'y a pas d'unité à déplacer ici");
+		
+		//check if units are on range
+		if(!isUnitsOnRange(from, fromBox.getUnit(), target))
+			throw new IllegalArgumentException("Les unités sont trop loin de la cible");
+		
+		//check if unit can go on this box (water or ground)
+		if(targetBox instanceof GroundWater) {
+		}
+		
+		
+		//check if there "obstacle" on target : either wall / ennemy door, or units 
+		if(targetBox.getOwner() == powerConcerned) {
+			
+		}else {
+			if(targetBox.hasUnit())
+				throw new IllegalArgumentException("Il y a des unités ennemies sur la case cible");
+			}else {
+				
+			}
+		}
+	}
+	
+	private boolean isUnitsOnRange(Position from, Units units, Position target) {
+		int aX = from.getX() - units.getRange();
+		int aY = from.getY();
+		int bX = from.getX();
+		int bY = from.getY() - units.getRange();
+		int bYPrime = from.getY() + units.getRange();
+		int cX = from.getX() + units.getRange();
+		int cY = from.getY();
+		
+		return isInTriangle(aX, aY, bX, bY, cX, cY, target.getX(), target.getY())
+				|| isInTriangle(aX, aY, bX, bYPrime, cX, cY, target.getX(), target.getY());
+	}
+	
+	private double calculateArea(int aX, int aY, int bX, int bY, int cX, int cY) {
+		return Math.abs((aX*(bY-cY) + bX*(cY-aY) + cX*(aY-bY) ) / 2.0);
+	}
+	
+	private boolean isInTriangle(int aX, int aY, int bX, int bY, int cX, int cY, int posX, int posY) {
+		double ABCTriangle = calculateArea(aX, aY, bX, bY, cX, cY);
+		double PBCTriangle = calculateArea(posX, posY, bX, bY, cX, cY);
+		double APCTriangle = calculateArea(aX, aY, posX, posY, cX, cY);
+		double ABPTriangle = calculateArea(aX, aY, bX, bY, posX, posY);
+		
+		return (ABCTriangle == PBCTriangle + APCTriangle + ABPTriangle);
 	}
 	
 	public ActionConstruct createActionConstruct(Power powerConcerned, int buildingType, Position target) throws IllegalArgumentException{
@@ -95,9 +162,6 @@ public class ActionManager {
 	private Units getUnitFromMap(Position position) {
 		return getBoxFromMap(position).getUnit(); 
 	}
-	
-	private boolean isUnitsOnRange(Position from, Position target) {
-		return false;
-	}
+
 
 }
