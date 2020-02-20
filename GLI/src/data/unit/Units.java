@@ -29,20 +29,13 @@ public abstract class Units {
 	public int getNumber() {
 		return number;
 	}
-
-	public void setNumber(int number) {
-		this.number = number;
-	}
 	
 	public void addNumber (int number) {
 		this.number += number;
+		if (this.number <= 0) {
+			this.number = 0;
+		}
 	}
-
-
-	public String toString() {
-		return ": "+number+", atk:"+damage+" def:"+defense;
-	}
-
 
 	public int getHealth() {
 		return health;
@@ -66,5 +59,9 @@ public abstract class Units {
 
 	public int getDefense() {
 		return defense;
+	}
+
+	public String toString() {
+		return ": "+number+", atk:"+damage+" def:"+defense;
 	}
 }

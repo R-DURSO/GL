@@ -30,6 +30,8 @@ public class Windmill extends BuildingProduct {
 	public <B> B accept(BuildingVisitor<B> visitor) {
 		return visitor.visit(this);
 	}
-
-
+	
+	public String toString() {
+		return "Windmill";
+	}
 }

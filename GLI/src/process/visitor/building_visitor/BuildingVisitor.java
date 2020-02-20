@@ -1,15 +1,8 @@
 package process.visitor.building_visitor;
 
-import data.building.army.Barrack;
-import data.building.army.Dock;
-import data.building.army.Stable;
-import data.building.product.Mine;
-import data.building.product.Sawmill;
-import data.building.product.Windmill;
-import data.building.special.Capital;
-import data.building.special.Door;
-import data.building.special.Temple;
-import data.building.special.Wall;
+import data.building.army.*;
+import data.building.product.*;
+import data.building.special.*;
 
 public interface BuildingVisitor<T> {
 
@@ -20,6 +13,8 @@ public interface BuildingVisitor<T> {
 	T visit(Stable node);
 	
 	T visit(Mine node);
+	
+	T visit(Quarry node);
 	
 	T visit(Sawmill node);
 

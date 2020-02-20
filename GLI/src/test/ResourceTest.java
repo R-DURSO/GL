@@ -19,7 +19,7 @@ public class ResourceTest {
 		box.setOwner(pow);
 		System.out.println(box);
 		
-		new BuildingFactory(pow, BuildingTypes.BUILDING_WALL, (GroundBox)box);
+		new BuildingFactory(pow, BuildingTypes.BUILDING_MINE, (GroundBox)box);
 		System.out.println(box);
 		
 		System.out.println(box.getUnit());

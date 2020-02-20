@@ -30,5 +30,8 @@ public class Mine  extends BuildingProduct{
 	public <B> B accept(BuildingVisitor<B> visitor) {
 		return visitor.visit(this);
 	}
-
+	
+	public String toString() {
+		return "Mine";
+	}
 }

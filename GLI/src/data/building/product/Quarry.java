@@ -3,14 +3,13 @@ package data.building.product;
 import data.resource.ResourceTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
-public class Sawmill extends BuildingProduct {
+public class Quarry extends BuildingProduct{
 	private static final int BUILD_TIME = 0;
 	private static final int COST = 100;
 	private static final int BASE_HEALTH = 3;
 	private static final int PRODUCTION_PER_TURN = 20;
 	
-	
-	public Sawmill() {
+	public Quarry() {
 		super(BUILD_TIME, BASE_HEALTH);
 	}
 	
@@ -21,9 +20,9 @@ public class Sawmill extends BuildingProduct {
 	public int getRevenue() {
 		return PRODUCTION_PER_TURN;
 	}
-
+	
 	public int getProductionTypes() {
-		return ResourceTypes.RESOURCE_WOOD;
+		return ResourceTypes.RESOURCE_STONE;
 	}
 	
 	@Override
@@ -32,6 +31,6 @@ public class Sawmill extends BuildingProduct {
 	}
 	
 	public String toString() {
-		return "Sawmill";
+		return "Quarry";
 	}
 }
