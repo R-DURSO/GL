@@ -27,31 +27,24 @@ public class UnitFactory {
 	}
 	
 	public Units createUnit(int type, int nb) {
-		Units unit = null;
 		switch(type) {
 		case UnitTypes.UNIT_INFANTRY:
-			unit = new Infantry(nb);
-			break;
+			return new Infantry(nb);
 		case UnitTypes.UNIT_ARCHER:
-			unit = new Archer(nb);
-			break;
+			return new Archer(nb);
 		case UnitTypes.UNIT_CAVALRY:
-			unit = new Cavalry(nb);
-			break;
+			return new Cavalry(nb);
 		case UnitTypes.UNIT_PIKEMAN:
-			unit = new Pikeman(nb);
-			break;
+			return new Pikeman(nb);
 		case UnitTypes.UNIT_BATTERING_RAM:
-			unit = new BatteringRam(nb);
-			break;
+			return new BatteringRam(nb);
 		case UnitTypes.UNIT_TREBUCHET:
-			unit = new Trebuchet();
-			break;
+			return new Trebuchet();
 		case UnitTypes.UNIT_BOAT:
-			unit = new Boat();
-			break;
+			return new Boat();
+		default:
+			return null;
 		}
-		return unit;
 	}
 	
 	public int canTrain (Power pow, Box box, int type) {
