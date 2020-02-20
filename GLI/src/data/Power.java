@@ -60,4 +60,8 @@ public class Power {
 	public ArrayList<Box> getTerritory() {
 		return territory;
 	}
+	
+	public String toString() {
+		return "Puissance "+name+": ";
+	}
 }

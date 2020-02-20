@@ -48,6 +48,6 @@ public class Boat extends Units {
 	}
 	
 	public String toString() {
-		return super.toString() ;
+		return "Boat: contain "+containedUnits+super.toString();
 	}
 }

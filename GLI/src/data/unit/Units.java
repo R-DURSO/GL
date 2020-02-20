@@ -39,6 +39,6 @@ public abstract class Units {
 
 
 	public String toString() {
-		return "unit"; // TODO methode a remplir 
+		return ": "+number+", atk:"+damage+" def:"+defense;
 	}
 }
