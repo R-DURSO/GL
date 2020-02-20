@@ -76,7 +76,7 @@ public class CircleTest {
 				int dist = Math.abs(A - C);
 				if(dist <= radius) {
 					System.out.println(i + " et " + j);
-					tab[i][j] = true;
+					tab[i][j] = true; 
 				}
 			}
 		}
