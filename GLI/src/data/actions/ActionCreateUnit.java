@@ -1,30 +1,29 @@
 package data.actions;
 
+import data.Position;
 import data.Power;
 
 public class ActionCreateUnit extends Action{
-	private int positionX;
-	private int positionY;
+	private Position target;
 	private int unitType;
 	private int numberUnits;
 
-	public ActionCreateUnit(Power powerConcerned, int unitType, int numberUnits, int positionX, int positionY) {
+	public ActionCreateUnit(Power powerConcerned, int unitType, int numberUnits, Position target) {
 		super(powerConcerned);
-		this.positionX = positionX;
-		this.positionY = positionY;
+		this.target = target;
 		this.unitType = unitType;
 		this.numberUnits = numberUnits;
 	}
 
-	public int getPositionX() {
-		return positionX;
-	}
-
-	public int getPositionY() {
-		return positionY;
+	public Position getTarget() {
+		return target;
 	}
 
 	public int getUnitType() {
 		return unitType;
+	}
+	
+	public int getNumberUnits() {
+		return numberUnits;
 	}
 }

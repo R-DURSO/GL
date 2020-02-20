@@ -13,6 +13,10 @@ public class GroundBox extends Box{
 		super();
 		this.resourceType = resourceType;
 	}
+	
+	public boolean hasBuilding() {
+		return building != null;
+	}
 
 	public Building getBuilding() {
 		return building;

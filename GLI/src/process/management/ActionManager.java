@@ -12,7 +12,12 @@ import data.actions.ActionDestroyUnits;
 import data.actions.ActionMakeAlliance;
 import data.actions.ActionMove;
 import data.boxes.Box;
+import data.boxes.GroundBox;
 import data.boxes.WaterBox;
+import data.building.BuildingTypes;
+import data.building.special.Door;
+import data.building.special.Wall;
+import data.unit.UnitTypes;
 import data.unit.Units;
 
 /**
@@ -73,6 +78,7 @@ public class ActionManager {
 		if(targetBox.hasUnit() || targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAllied())
 			throw new IllegalArgumentException("Vous ne pouvez pas attaquer ici");
 		
+		powerConcerned.removeActionPoint();
 		return new ActionAttack(powerConcerned, from, target);
 	}
 
@@ -88,29 +94,54 @@ public class ActionManager {
 		if(fromBox.getOwner() != powerConcerned)
 			throw new IllegalArgumentException("Cette case n'appartient pas à " + powerConcerned.getName());
 		
+		
 		//check if there is any unit on the fromBox
 		if(!fromBox.hasUnit())
 			throw new IllegalArgumentException("Il n'y a pas d'unité à déplacer ici");
 		
-		//check if units are on range
-		if(!isUnitsOnRange(from, fromBox.getUnit(), target))
-			throw new IllegalArgumentException("Les unités sont trop loin de la cible");
+		Units movingUnits = fromBox.getUnit();
 		
-		//check if unit can go on this box (water or ground)
-		if(targetBox instanceof GroundWater) {
+		//check if unit can go on this box (water or ground) 
+		//only a boat can go on water
+		if(targetBox instanceof WaterBox && movingUnits.getTypes() != UnitTypes.UNIT_BOAT
+			|| targetBox instanceof GroundBox && movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
+			
+			throw new IllegalArgumentException("Cette unité ne peut pas aller sur ce type de case");
 		}
 		
+		//check if units are on range
+		if(!isUnitsOnRange(from, movingUnits, target))
+			throw new IllegalArgumentException("Les unités sont trop loin de la cible");
 		
-		//check if there "obstacle" on target : either wall / ennemy door, or units 
+		
+		//check if there is "obstacle" on target : either wall / ennemy door, or units 
 		if(targetBox.getOwner() == powerConcerned) {
+			if(targetBox.hasUnit()) {
+				Units unitsOnTarget = targetBox.getUnit();
+				if(movingUnits.getTypes() != unitsOnTarget.getTypes())
+					throw new IllegalArgumentException("Des unités d'un type différent sont sur le lieu ciblé");
+			}
 			
+			if(targetBox instanceof GroundBox) {
+				GroundBox groundBox = (GroundBox) targetBox;
+				if(groundBox.getBuilding() instanceof Wall)
+					throw new IllegalArgumentException("Les unités ne peuvent pas aller dans un mur");
+			}
 		}else {
 			if(targetBox.hasUnit())
 				throw new IllegalArgumentException("Il y a des unités ennemies sur la case cible");
-			}else {
-				
+			if(targetBox instanceof GroundBox) {
+				GroundBox groundBox = (GroundBox) targetBox;
+				if(groundBox.getBuilding() instanceof Wall)
+					throw new IllegalArgumentException("Les unités ne peuvent pas aller dans un mur");
+				//units can go through "allied" doors
+				if(groundBox.getBuilding() instanceof Door && groundBox.getOwner() == powerConcerned.getAllied())
+					throw new IllegalArgumentException("Les unités ne peuvent pas aller dans une porte ennemie");
 			}
 		}
+		
+		powerConcerned.removeActionPoint();
+		return new ActionMove(powerConcerned, from, target);
 	}
 	
 	private boolean isUnitsOnRange(Position from, Units units, Position target) {
@@ -140,19 +171,43 @@ public class ActionManager {
 	}
 	
 	public ActionConstruct createActionConstruct(Power powerConcerned, int buildingType, Position target) throws IllegalArgumentException{
+		//check if target belongs to powerConcerned
+		Box targetBox = getBoxFromMap(target);
+		if(targetBox.getOwner() == powerConcerned) {
+			throw new IllegalArgumentException("Impossible de construire sur une case étrangère");
+		}
 		
+		//check if targetBox is a WaterBox or not
+		if(targetBox instanceof WaterBox)
+			throw new IllegalArgumentException("Impossible de construire sur une case d'eau");
+		
+		GroundBox groundBox = (GroundBox) targetBox;
+		//check if there is already a building on this box
+		if(groundBox.hasBuilding())
+			throw new IllegalArgumentException("Impossible de construire sur une case qui possède déjà un batiment");
+		
+		
+		
+		powerConcerned.removeActionPoint();
+		return new ActionConstruct(powerConcerned, buildingType, target);
 	}
 	
 	public ActionCreateUnit createActionCreateUnit(Power powerConcerned, int unitType, int numberUnits, Position target) throws IllegalArgumentException{
 		
+		powerConcerned.removeActionPoint();
+		return new ActionCreateUnit(powerConcerned, unitType, numberUnits, target);
 	}
 	
 	public ActionDestroyBuilding createActionDestroyBuilding(Power powerConcerned, Position target) throws IllegalArgumentException{
 		
+		powerConcerned.removeActionPoint();
+		return new ActionDestroyBuilding(powerConcerned, target);
 	}
 	
 	public ActionDestroyUnits createActionDestroyUnits(Power powerConcerned, Position target) throws IllegalArgumentException{
-	
+		
+		powerConcerned.removeActionPoint();
+		return new ActionDestroyUnits(powerConcerned, target);
 	}
 	
 	private Box getBoxFromMap(Position position) {
