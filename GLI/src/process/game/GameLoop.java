@@ -5,23 +5,29 @@ import data.actions.*;
 import data.GameMap;
 import data.Power;
 import data.resource.*;
+import process.management.ActionManager;
 public class GameLoop {
 	private ArrayList<Action> action[]= new ArrayList[8] ; 
-
+	private ActionManager useAction;
 	// constante temporaire 
-	private ActionPoints nbaction = new ActionPoints();
-	private Power power1 = new Power("player1");
-	private Power power2 = new Power("player2");
+
 	
 	
 	public   GameLoop( Power[] powers,  GameMap  map ) {
 		InitTurn();
+		useAction = new ActionManager(map);
 		for( int i=0 ; i<powers.length ;  i++) {
 
 			while(wouldturn((ActionPoints) powers[i].getResource(4))) {
 				// test des action possible 
 
-				
+				useAction.createActionMakeAlliance(powers[i], powers[i+1]);
+				if(useAction != null) {
+					System.out.println(useAction);
+					powers[i].removeActionPoint();
+				}else {
+					System.out.println("test");
+				}
 			}
 		}
 	}
