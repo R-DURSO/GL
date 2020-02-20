@@ -1,6 +1,6 @@
 package data.building.product;
 
-import data.building.Building;
+import data.resource.ResourceTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
 public class Mine  extends BuildingProduct{
@@ -12,6 +12,18 @@ public class Mine  extends BuildingProduct{
 	
 	public Mine() {
 		super(BUILD_TIME, BASE_HEALTH);
+	}
+	
+	public int getCost() {
+		return COST;
+	}
+	
+	public int getRevenue() {
+		return PRODUCTION_PER_TURN;
+	}
+	
+	public int getProductionTypes() {
+		return ResourceTypes.RESOURCE_GOLD;
 	}
 	
 	@Override

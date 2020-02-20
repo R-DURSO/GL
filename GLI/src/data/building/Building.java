@@ -14,4 +14,5 @@ public abstract class Building {
 	}
 	
 	public abstract <B> B accept(BuildingVisitor<B> visitor);
+	//public abstract int getCost();
 }
