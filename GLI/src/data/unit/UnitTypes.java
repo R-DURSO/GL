@@ -1,5 +1,10 @@
 package data.unit;
 
+/**
+ * Class of constants related to units
+ * @author Aldric Vitali Silvestre [aldric.silvestre@outlook.fr]
+ *
+ */
 public class UnitTypes {
 	public static final int UNIT_INFANTRY = 0;
 	public static final int UNIT_ARCHER = 1;

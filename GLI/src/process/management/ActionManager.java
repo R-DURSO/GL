@@ -23,17 +23,33 @@ import data.unit.UnitTypes;
 import data.unit.Units;
 
 /**
- * 
- * @author Aldric Vitali Silvestre
+ * This class ensures that every action the player does is possible 
+ * and allows to create Actions to be performed at the end of the turn in the game.
+ * No data class is modified here.
+ * @author Aldric Vitali Silvestre <aldric.vitali@outlook.fr>
+ * @see data.actions.Action
  *
  */
 public class ActionManager {
 	private GameMap map;
 
+	/**
+	 * ActionManager just needs to have access to the game map
+	 * @param map The game map
+	 */
 	public ActionManager(GameMap map) {
 		this.map = map;
 	}
 	
+	/**
+	 * Check if one of the two powers has already gone to someone before returning the ActionMakeAlliance
+	 * 
+	 * @param powerConcerned The player who in hand
+	 * @param potentialAlly The power which the player wants to ally with
+	 * @return ActionMakeAlliance
+	 * @see data.actions.ActionMakeAlliance
+	 * @throws IllegalArgumentException If the conditions are not met 
+	 */
 	public ActionMakeAlliance createActionMakeAlliance(Power powerConcerned, Power potentialAlly) throws IllegalArgumentException{
 		//check if one of players has already an allied
 		if (powerConcerned.isAllied() || potentialAlly.isAllied()) {
@@ -44,7 +60,15 @@ public class ActionManager {
 		return new ActionMakeAlliance(powerConcerned, potentialAlly);
 	}
 	
-	public ActionBreakAlliance createActionBreakAlliance(Power powerConcerned, Power formerAlly) {
+	/**
+	 * Check if powers are allied before returning the ActionBreakAlliace
+	 * @param powerConcerned The player who in hand
+	 * @param formerAlly
+	 * @return ActionBreakAlliance
+	 * @see data.actions.ActionBreakAlliance
+	 * @throws IllegalArgumentException If the conditions are not met 
+	 */
+	public ActionBreakAlliance createActionBreakAlliance(Power powerConcerned, Power formerAlly) throws IllegalArgumentException{
 		//check if player has ally and if this ally is the right Power
 		if(!powerConcerned.isAllied())
 			throw new IllegalArgumentException(powerConcerned.getName() + " n'a pas d'allié");
@@ -56,6 +80,22 @@ public class ActionManager {
 		return new ActionBreakAlliance(powerConcerned);
 	}
 	
+	/**
+	 * Check if:
+	 * <ul>
+	 * 	<li>from position belongs to powerConcerned</li>
+	 * 	<li>from position has any unit to attack with</li>
+	 * 	<li>units in from position are in range to attack (they can't move diagonally)</li>
+	 * 	<li>target position has ennemy units to attack</li>
+	 * </ul>
+	 * Before returning the ActionAttack
+	 * @param powerConcerned The player who in hand
+	 * @param from The position where player's units will attack
+	 * @param target Where player's units will attack
+	 * @return ActionAttack
+	 * @see data.actions.ActionAttack
+	 * @throws IllegalArgumentException If the conditions are not met
+	 */
 	public ActionAttack createActionAttack(Power powerConcerned, Position from,  Position target) throws IllegalArgumentException{
 		if(from.equals(target))
 			throw new IllegalArgumentException("On ne peut pas attaquer sur sa propre case");
@@ -85,6 +125,22 @@ public class ActionManager {
 	}
 
 
+	/**
+	 * Check if:
+	 * <ul>
+	 * 	<li>from position belongs to powerConcerned</li>
+	 * 	<li>from position has any unit to move</li>
+	 * 	<li>units in from position are in range to move (they can't move diagonally)</li>
+	 * 	<li>target position can go on the target position (infantry can't go in water or on boxes where there is Archers for instance)</li>
+	 * </ul>
+	 * Before returning the ActionMove
+	 * @param powerConcerned The player who in hand
+	 * @param from The position where player's units will move
+	 * @param target Where player's units will move
+	 * @return ActionMove
+	 * @see data.actions.ActionMove
+	 * @throws IllegalArgumentException If the conditions are not met
+	 */
 	public ActionMove createActionMove(Power powerConcerned, Position from, Position target) throws IllegalArgumentException{
 		if(from.equals(target))
 			throw new IllegalArgumentException("On ne peut pas se déplacer la ou on est déjà");
@@ -172,6 +228,23 @@ public class ActionManager {
 		return (ABCTriangle == PBCTriangle + APCTriangle + ABPTriangle);
 	}
 	
+	
+	/**
+	 * Check if:
+	 * <ul>
+	 * 	<li>target position belongs to powerConcerned</li>
+	 * 	<li>target position is not a water box</li>
+	 * 	<li>target position has no building yet</li>
+	 * </ul>
+	 * Before returning the ActionConstruct
+	 * @param powerConcerned The player who in hand
+	 * @param buildingType The ID of the wanted building (can be found as constant in BuildingTypes)
+	 * @param target Where player want to construct
+	 * @return ActionConstruct
+	 * @see data.actions.ActionConstruct
+	 * @see data.building.BuildingTypes
+	 * @throws IllegalArgumentException If the conditions are not met
+	 */
 	public ActionConstruct createActionConstruct(Power powerConcerned, int buildingType, Position target) throws IllegalArgumentException{
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
@@ -192,6 +265,23 @@ public class ActionManager {
 		return new ActionConstruct(powerConcerned, buildingType, target);
 	}
 	
+	/**
+	 * Check if:
+	 * <ul>
+	 * 	<li>target position belongs to powerConcerned</li>
+	 * 	<li>target position is not a water box</li>
+	 * 	<li>target position has the right building to create units (for exemple, Archer can be created only in Barracks</li>
+	 * </ul>
+	 * Before returning the ActionCreateUnit
+	 * @param powerConcerned The player who in hand
+	 * @param unitType The ID of the wanted unit type (can be found as constant in UnitTypes)
+	 * @param numberUnits the number of units the player want to create
+	 * @param target Where player want to create units
+	 * @return ActionCreateUnit
+	 * @see data.actions.ActionCreateUnit
+	 * @see data.unit.UnitTypes
+	 * @throws IllegalArgumentException If the conditions are not met
+	 */
 	public ActionCreateUnit createActionCreateUnit(Power powerConcerned, int unitType, int numberUnits, Position target) throws IllegalArgumentException{
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
@@ -234,15 +324,64 @@ public class ActionManager {
 		return new ActionCreateUnit(powerConcerned, unitType, numberUnits, target);
 	}
 	
+	/**
+	 * Check if:
+	 * <ul>
+	 * 	<li>target position belongs to powerConcerned</li>
+	 * 	<li>target position is not a water box</li>
+	 * 	<li>target position has a building to destroy</li>
+	 * </ul>
+	 * Before returning the ActionDestroyBuilding
+	 * @param powerConcerned The player who in hand
+	 * @param target Where player want to destroy a building
+	 * @return ActionDestroyBuilding
+	 * @see data.actions.ActionDestroyBuilding
+	 * @throws IllegalArgumentException If the conditions are not met
+	 */
 	public ActionDestroyBuilding createActionDestroyBuilding(Power powerConcerned, Position target) throws IllegalArgumentException{
+		//check if target belongs to powerConcerned
+		Box targetBox = getBoxFromMap(target);
+		if(targetBox.getOwner() == powerConcerned) {
+			throw new IllegalArgumentException("Impossible de faire une destruction sur une case qui ne nous appartient pas");
+		}
 		
+		//check if there is indeed a building here
+		//we first need to know the type of the box
+		if(targetBox instanceof WaterBox)
+			throw new IllegalArgumentException("Il n'y a rien à détruire sur une case d'eau");
+		else {
+			GroundBox groundBox = (GroundBox) targetBox;
+			if(!groundBox.hasBuilding())
+				throw new IllegalArgumentException("Il n'y a pas de building sur cette case");
+		}
 		
 		
 		powerConcerned.removeActionPoint();
 		return new ActionDestroyBuilding(powerConcerned, target);
 	}
 	
+	/**
+	 * Check if:
+	 * <ul>
+	 * 	<li>target position belongs to powerConcerned</li>
+	 * 	<li>target position has units to destroy</li>
+	 * </ul>
+	 * Before returning the ActionDestroyUnits
+	 * @param powerConcerned The player who in hand
+	 * @param target Where player want to destroy units
+	 * @return ActionDestroyUnits
+	 * @see data.actions.ActionDestroyUnits
+	 * @throws IllegalArgumentException If the conditions are not met
+	 */
 	public ActionDestroyUnits createActionDestroyUnits(Power powerConcerned, Position target) throws IllegalArgumentException{
+		//check if target belongs to powerConcerned
+		Box targetBox = getBoxFromMap(target);
+		if(targetBox.getOwner() == powerConcerned)
+			throw new IllegalArgumentException("Impossible de faire une suppression d'unité sur une case qui ne nous appartient pas");
+		
+		//check if there is any unit on this box
+		if(!targetBox.hasUnit())
+			throw new IllegalArgumentException("Il n'y a pas d'unités à supprimer ici");
 		
 		powerConcerned.removeActionPoint();
 		return new ActionDestroyUnits(powerConcerned, target);
@@ -251,10 +390,4 @@ public class ActionManager {
 	private Box getBoxFromMap(Position position) {
 		return map.getBox(position.getX(), position.getY());
 	}
-	
-	private Units getUnitFromMap(Position position) {
-		return getBoxFromMap(position).getUnit(); 
-	}
-
-
 }
