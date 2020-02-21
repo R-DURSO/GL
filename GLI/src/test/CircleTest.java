@@ -68,12 +68,24 @@ public class CircleTest {
 		return (A == A1 + A2 + A3);
 	}
 	
+	public static void drawCircle2(boolean tab[][], int cX, int cY, int radius) {
+		for(int i = 0; i < tab.length; i++) {
+			for(int j = 0; j < tab[0].length; j++) {
+				int dist = (int)Math.floor(Math.sqrt(( Math.pow(i - cX, 2) + Math.pow(j - cY, 2) )));
+				if(dist <= radius) {
+					System.out.println(i + " et " + j);
+					tab[i][j] = true; 
+				}
+			}
+		}
+	}
+	
 	public static void drawDiamond(boolean tab[][], int cX, int cY, int radius) {
 		int C = cX + cY;
 		for(int i = 0; i < tab.length; i++) {
 			for(int j = 0; j < tab[0].length; j++) {
 				int A = i + j;
-				int dist = Math.abs(A - C);
+				int dist = Math.abs(C - A);
 				if(dist <= radius) {
 					System.out.println(i + " et " + j);
 					tab[i][j] = true; 
