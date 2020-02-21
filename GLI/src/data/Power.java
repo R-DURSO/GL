@@ -31,6 +31,10 @@ public class Power {
 		return resources[resourceType];
 	}
 	
+	public int getResourceAmount(int resourceType) {
+		return resources[resourceType].getAmount();
+	}
+	
 	public boolean isAllied() {
 		return ally != null;
 	}

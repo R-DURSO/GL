@@ -16,9 +16,26 @@ import data.boxes.GroundBox;
 import data.boxes.WaterBox;
 import data.building.Building;
 import data.building.BuildingTypes;
+import data.building.army.Barrack;
 import data.building.army.BuildingArmy;
+import data.building.army.Dock;
+import data.building.army.Workshop;
+import data.building.product.Mine;
+import data.building.product.Quarry;
+import data.building.product.Sawmill;
+import data.building.product.Windmill;
 import data.building.special.Door;
+import data.building.special.Temple;
 import data.building.special.Wall;
+import data.resource.ResourceCost;
+import data.resource.ResourceTypes;
+import data.unit.Archer;
+import data.unit.BatteringRam;
+import data.unit.Boat;
+import data.unit.Cavalry;
+import data.unit.Infantry;
+import data.unit.Pikeman;
+import data.unit.Trebuchet;
 import data.unit.UnitTypes;
 import data.unit.Units;
 
@@ -233,6 +250,7 @@ public class ActionManager {
 	 * Check if:
 	 * <ul>
 	 * 	<li>target position belongs to powerConcerned</li>
+	 *  <li>powerConcerned has enough resources to build</li>
 	 * 	<li>target position is not a water box</li>
 	 * 	<li>target position has no building yet</li>
 	 * </ul>
@@ -252,6 +270,11 @@ public class ActionManager {
 			throw new IllegalArgumentException("Impossible de construire sur une case étrangère");
 		}
 		
+		//check if have enough resources to build
+		ResourceCost neededResource = getBuildingCost(buildingType); 
+		if(checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
+			throw new IllegalArgumentException("Pas assez de ressources pour construire ceci");
+		
 		//check if targetBox is a WaterBox or not
 		if(targetBox instanceof WaterBox)
 			throw new IllegalArgumentException("Impossible de construire sur une case d'eau");
@@ -262,9 +285,41 @@ public class ActionManager {
 			throw new IllegalArgumentException("Impossible de construire sur une case qui possède déjà un batiment"); 
 		
 		powerConcerned.removeActionPoint();
+		//remove building cost
+		powerConcerned.getResource(neededResource.getType()).addValue(-neededResource.getCost());
 		return new ActionConstruct(powerConcerned, buildingType, target);
 	}
 	
+	private ResourceCost getBuildingCost(int buildingType) {
+		switch(buildingType) {
+		case BuildingTypes.BUILDING_BARRACK:
+			return new ResourceCost(Barrack.COST, ResourceTypes.RESOURCE_WOOD);
+		case BuildingTypes.BUILDING_WORKSHOP:
+			return new ResourceCost(Workshop.COST, ResourceTypes.RESOURCE_STONE);
+		case BuildingTypes.BUILDING_DOCK:
+			return new ResourceCost(Dock.COST, ResourceTypes.RESOURCE_WOOD);
+		case BuildingTypes.BUILDING_MINE:
+			return new ResourceCost(Mine.COST, ResourceTypes.RESOURCE_WOOD);
+		case BuildingTypes.BUILDING_SAWMILL:
+			return new ResourceCost(Sawmill.COST, ResourceTypes.RESOURCE_WOOD);
+		case BuildingTypes.BUILDING_WINDMILL:
+			return new ResourceCost(Windmill.COST, ResourceTypes.RESOURCE_WOOD);
+		case BuildingTypes.BUILDING_QUARRY:
+			return new ResourceCost(Quarry.COST, ResourceTypes.RESOURCE_WOOD);
+		case BuildingTypes.BUILDING_DOOR:
+			return new ResourceCost(Door.COST, ResourceTypes.RESOURCE_STONE);
+		case BuildingTypes.BUILDING_TEMPLE:
+			return new ResourceCost(Temple.COST, ResourceTypes.RESOURCE_STONE);
+		case BuildingTypes.BUILDING_WALL:			
+			return new ResourceCost(Wall.COST, ResourceTypes.RESOURCE_STONE);
+		}
+		return new ResourceCost(0, ResourceTypes.RESOURCE_WOOD);
+	}
+
+	private boolean checkPrice(int resourceAmount, int cost) {
+		return resourceAmount >= cost;
+	}
+
 	/**
 	 * Check if:
 	 * <ul>
@@ -282,12 +337,19 @@ public class ActionManager {
 	 * @see data.unit.UnitTypes
 	 * @throws IllegalArgumentException If the conditions are not met
 	 */
+	
 	public ActionCreateUnit createActionCreateUnit(Power powerConcerned, int unitType, int numberUnits, Position target) throws IllegalArgumentException{
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() == powerConcerned) {
 			throw new IllegalArgumentException("Impossible de créer des unités sur une case étrangère");
 		}
+		
+		//check if have enough gold to create units 
+		ResourceCost neededResource = getUnitCost(powerConcerned, unitType, numberUnits);
+		if(checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
+			throw new IllegalArgumentException("Pas assez de ressources pour construire ceci");
+				
 		
 		//check if not in water
 		if(targetBox instanceof WaterBox)
@@ -321,9 +383,32 @@ public class ActionManager {
 		
 		
 		powerConcerned.removeActionPoint();
+		//remove units cost
+		powerConcerned.getResource(neededResource.getType()).addValue(-neededResource.getCost());
 		return new ActionCreateUnit(powerConcerned, unitType, numberUnits, target);
 	}
 	
+	private ResourceCost getUnitCost(Power powerConcerned, int unitType, int numberUnits) {
+		switch (unitType) {
+		case UnitTypes.UNIT_ARCHER:
+			return new ResourceCost(Archer.COST * numberUnits, ResourceTypes.RESOURCE_GOLD);
+		case UnitTypes.UNIT_INFANTRY:
+			return new ResourceCost(Infantry.COST * numberUnits, ResourceTypes.RESOURCE_GOLD);
+		case UnitTypes.UNIT_CAVALRY:
+			return new ResourceCost(Cavalry.COST * numberUnits, ResourceTypes.RESOURCE_GOLD);
+		case UnitTypes.UNIT_PIKEMAN:
+			return new ResourceCost(Pikeman.COST * numberUnits, ResourceTypes.RESOURCE_GOLD);
+		case UnitTypes.UNIT_BATTERING_RAM:
+			return new ResourceCost(BatteringRam.COST * numberUnits, ResourceTypes.RESOURCE_GOLD);
+		case UnitTypes.UNIT_TREBUCHET:
+			return new ResourceCost(Trebuchet.COST * numberUnits, ResourceTypes.RESOURCE_GOLD);
+		case UnitTypes.UNIT_BOAT:
+			return new ResourceCost(Boat.COST * numberUnits, ResourceTypes.RESOURCE_GOLD);
+		default:
+			return new ResourceCost(0, ResourceTypes.RESOURCE_GOLD);
+		}
+	}
+
 	/**
 	 * Check if:
 	 * <ul>

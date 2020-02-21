@@ -9,9 +9,9 @@ public class BatteringRam extends Units {
 	private static final int DAMAGE = 0;
 	private static final int DEFENSE = 1;
 	
-	private static final int COST = 10;
-	private static final int COST_PER_TURN = 3;
-	private static final int NUMBER_MAX_UNITS = 20;
+	public static final int COST = 10;
+	public static final int COST_PER_TURN = 3;
+	public static final int NUMBER_MAX_UNITS = 20;
 	
 	public BatteringRam (int numberUnits) {
 		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE);

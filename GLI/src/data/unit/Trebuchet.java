@@ -16,9 +16,9 @@ public class Trebuchet  extends Units {
 	private static final int DAMAGE_INSTALLED = 3;
 	
 	private static final int DEFENSE = 0;
-	private static final int COST = 10;
-	private static final int COST_PER_TURN = 3;
-	private static final int NUMBER_MAX_UNITS = 1;
+	public static final int COST = 10;
+	public static final int COST_PER_TURN = 3;
+	public static final int NUMBER_MAX_UNITS = 1;
 	
 	
 	/*specific to Trebuchet : 2 states (moving and installed)
