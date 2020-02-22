@@ -188,6 +188,7 @@ public class ActionManager {
 		if(!isUnitsOnRange(from, movingUnits, target))
 			throw new IllegalArgumentException("Les unités sont trop loin de la cible");
 		
+		// TODO vérify that no obstable on path (between from and target)
 		
 		//check if there is "obstacle" on target : either wall / ennemy door, or units 
 		if(targetBox.getOwner() == powerConcerned) {
@@ -266,13 +267,13 @@ public class ActionManager {
 	public ActionConstruct createActionConstruct(Power powerConcerned, int buildingType, Position target) throws IllegalArgumentException{
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
-		if(targetBox.getOwner() == powerConcerned) {
+		if(targetBox.getOwner() != powerConcerned) {
 			throw new IllegalArgumentException("Impossible de construire sur une case étrangère");
 		}
 		
 		//check if have enough resources to build
 		ResourceCost neededResource = getBuildingCost(buildingType); 
-		if(checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
+		if(!checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
 			throw new IllegalArgumentException("Pas assez de ressources pour construire ceci");
 		
 		//check if targetBox is a WaterBox or not
@@ -341,14 +342,14 @@ public class ActionManager {
 	public ActionCreateUnit createActionCreateUnit(Power powerConcerned, int unitType, int numberUnits, Position target) throws IllegalArgumentException{
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
-		if(targetBox.getOwner() == powerConcerned) {
+		if(targetBox.getOwner() != powerConcerned) {
 			throw new IllegalArgumentException("Impossible de créer des unités sur une case étrangère");
 		}
 		
 		//check if have enough gold to create units 
 		ResourceCost neededResource = getUnitCost(powerConcerned, unitType, numberUnits);
-		if(checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
-			throw new IllegalArgumentException("Pas assez de ressources pour construire ceci");
+		if(!checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
+			throw new IllegalArgumentException("Pas assez de ressources pour créer ces unités");
 				
 		
 		//check if not in water
@@ -426,7 +427,7 @@ public class ActionManager {
 	public ActionDestroyBuilding createActionDestroyBuilding(Power powerConcerned, Position target) throws IllegalArgumentException{
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
-		if(targetBox.getOwner() == powerConcerned) {
+		if(targetBox.getOwner() != powerConcerned) {
 			throw new IllegalArgumentException("Impossible de faire une destruction sur une case qui ne nous appartient pas");
 		}
 		
@@ -461,7 +462,7 @@ public class ActionManager {
 	public ActionDestroyUnits createActionDestroyUnits(Power powerConcerned, Position target) throws IllegalArgumentException{
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
-		if(targetBox.getOwner() == powerConcerned)
+		if(targetBox.getOwner() != powerConcerned)
 			throw new IllegalArgumentException("Impossible de faire une suppression d'unité sur une case qui ne nous appartient pas");
 		
 		//check if there is any unit on this box

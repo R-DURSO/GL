@@ -23,20 +23,20 @@ public class Game extends JFrame {
 * 
 */
 	private static final Dimension IDEAL_MAIN_DIMENSION = new Dimension(800,400);
-	private JLabel position = new JLabel("position");
-	private	JLabel Action = new JLabel("action");
-	private	JLabel gold = new JLabel("or");
-	private	JLabel wood = new JLabel("bois");
-	private	JButton QuitButton = new JButton("Quitter la partie");	
-	private	JLabel Stone = new JLabel("pierre");
-	private	JLabel food = new JLabel("nouriture");	
-	private	JLabel action_ReadyComboBox = new JLabel("on en fait des liste avec bouton ou bien un menu ?");	
+	private JLabel positionLabel = new JLabel("position");
+	private	JLabel actionLabel = new JLabel("action");
+	private	JLabel goldLabel = new JLabel("or");
+	private	JLabel woodLabel = new JLabel("bois");
+	private	JButton quitButton = new JButton("Quitter la partie");	
+	private	JLabel stoneLabel = new JLabel("pierre");
+	private	JLabel foodLabel = new JLabel("nouriture");	
+	private	JLabel actionReadyComboBox = new JLabel("on en fait des liste avec bouton ou bien un menu ?");	
 	private	JLabel label = new JLabel("New label");	
 	private	JLabel table = new JLabel("tableau ou le r\u00E9sumer et marquer");
 	private	JLabel action_doComboBox = new JLabel("on en fait des liste avec bouton ou bien un menu ?");
-	private	JLabel cost = new JLabel("cout btaiment/unit\u00E9");		
-	private	JButton end_TurnButton = new JButton("fin de tour");	
-	private  int saveGame;
+	private	JLabel costLabel = new JLabel("cout btaiment/unit\u00E9");		
+	private	JButton endTurnButton = new JButton("fin de tour");	
+	private int saveGame;
 	/**
 	 * Create the frame.
 	 */
@@ -54,31 +54,31 @@ public class Game extends JFrame {
 		contentPane.setLayout(null);
 		
 		
-		position.setBounds(0, 0, 77, 40);
-		contentPane.add(position);
+		positionLabel.setBounds(0, 0, 77, 40);
+		contentPane.add(positionLabel);
 		
 		
-		Action.setBounds(85, 0, 54, 40);
-		contentPane.add(Action);
-		
-
-		gold.setBounds(138, 0, 54, 40);
-		contentPane.add(gold);
+		actionLabel.setBounds(85, 0, 54, 40);
+		contentPane.add(actionLabel);
 		
 
-		wood.setBounds(194, 0, 54, 40);
-		contentPane.add(wood);
-		
-		
-		Stone.setBounds(252, 0, 54, 40);
-		contentPane.add(Stone);
-
-		food.setBounds(313, 0, 54, 40);
-		contentPane.add(food);
+		goldLabel.setBounds(138, 0, 54, 40);
+		contentPane.add(goldLabel);
 		
 
-		action_ReadyComboBox.setBounds(368, 0, 578, 40);
-		contentPane.add(action_ReadyComboBox);
+		woodLabel.setBounds(194, 0, 54, 40);
+		contentPane.add(woodLabel);
+		
+		
+		stoneLabel.setBounds(252, 0, 54, 40);
+		contentPane.add(stoneLabel);
+
+		foodLabel.setBounds(313, 0, 54, 40);
+		contentPane.add(foodLabel);
+		
+
+		actionReadyComboBox.setBounds(368, 0, 578, 40);
+		contentPane.add(actionReadyComboBox);
 		
 
 		label.setBounds(-20, 26, 17, 14);
@@ -92,19 +92,19 @@ public class Game extends JFrame {
 		table.setBounds(775, 36, 171, 303);
 		contentPane.add(table);
 
-		end_TurnButton.setBounds(0, 356, 209, 101);
-		contentPane.add(end_TurnButton);
+		endTurnButton.setBounds(0, 356, 209, 101);
+		contentPane.add(endTurnButton);
 		
 
-		cost.setBounds(538, 356, 161, 101);
-		contentPane.add(cost);
+		costLabel.setBounds(538, 356, 161, 101);
+		contentPane.add(costLabel);
 		action_doComboBox.setBounds(219, 363, 290, 86);
 		contentPane.add(action_doComboBox);
 		
 
-		QuitButton.setBounds(700, 356, 246, 112);
-		QuitButton.addActionListener(new quitAction());
-		contentPane.add(QuitButton);
+		quitButton.setBounds(700, 356, 246, 112);
+		quitButton.addActionListener(new quitAction());
+		contentPane.add(quitButton);
 		setVisible(true);
 	}
 	private void udapteValues() {

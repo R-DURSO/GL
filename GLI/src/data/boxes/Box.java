@@ -36,12 +36,20 @@ public abstract class Box {
 	}
 
 	public String toString() {
-		String s = "";
-		s += " Unit=" + unit;
+		String string = "";
+		string += " Unit=" + unit;
 		if (hasOwner()) {
-			s+= ", Owner="+ owner.getName();
+			string += ", Owner="+ owner.getName();
 		}
-		s+="\n";
-		return s;
+		return string + " | " ;
+	}
+	
+	/**
+	 * permits to have same String length for all boxes toString() return 
+	 * @return a String with more spaces, if necessary
+	 */
+	private String padString(String strToPad, int desiredLength) {
+		String result = new String(new char[desiredLength - strToPad.length()]);
+		return result.replace('\0', ' ') + strToPad;
 	}
 }

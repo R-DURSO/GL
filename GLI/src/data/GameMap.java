@@ -3,6 +3,8 @@ package data;
 import data.boxes.*;
 
 public class GameMap {
+	/*you have to be careful: the first entry is that of the ordinate, 
+	and the second that of the abscissa*/
 	private Box boxes[][]; 
 	
 	public GameMap(Box boxes[][]) {
@@ -10,7 +12,8 @@ public class GameMap {
 	}
 	
 	public Box getBox(int positionX, int positionY){
-		return boxes[positionX][positionY];
+		//abscissa and ordinate inverted
+		return boxes[positionY][positionX];
 	}
 	
 	public String toString() {
@@ -19,6 +22,7 @@ public class GameMap {
 			for (int j = 0; j < boxes[0].length; j++) {
 				result += getBox(i, j).toString();
 			}
+			result += "\n";
 		}
 		return result;
 	}

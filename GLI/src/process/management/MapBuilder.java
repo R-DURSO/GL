@@ -3,6 +3,7 @@ package process.management;
 import java.util.Random;
 
 import data.GameMap;
+import data.Position;
 import data.Power;
 import data.boxes.*;
 import data.building.special.Capital;
@@ -114,26 +115,42 @@ public class MapBuilder {
 
 	private void installPowers(Box boxes[][]) {
 		//player 1 on top-left side
-		installCapital(powers[0], boxes[0][0]);
+		establishInitialTerritory(powers[0], new Position(0,0), boxes);
 		//player 2 on bottom-right side
-		boxes[size - 1][size - 1].setOwner(powers[1]);
-		installCapital(powers[1], boxes[0][0]);
+		establishInitialTerritory(powers[1], new Position(size-1, size-1), boxes);
+		//installCapital(powers[1], boxes[size - 1][size - 1]);
 		if (powers.length > 2) {
 			//player 3 (if exists) on bottom-left side
-			boxes[0][size - 1].setOwner(powers[2]);
-			installCapital(powers[2], boxes[0][0]);
+			//installCapital(powers[2], boxes[0][size - 1]);
+			establishInitialTerritory(powers[2], new Position(0, size-1), boxes);
 		}
 		if (powers.length > 3) {
 			//player 4 (if exists) on top-right side
-			boxes[size - 1][0].setOwner(powers[3]);
-			installCapital(powers[3], boxes[0][0]);
+			//installCapital(powers[3], boxes[size - 1][0]);
+			establishInitialTerritory(powers[3], new Position(size-1, 0), boxes);
 		}
 	}
 
 
 
+	private void establishInitialTerritory(Power power, Position position, Box[][] boxes) {
+		Box currentBox;
+		installCapital(power, boxes[position.getX()][position.getY()]);
+		for(int i = position.getX() - 1; i <= position.getX() + 1; i++){
+			for(int j = position.getY() - 1; j <= position.getY() + 1; j++){
+				if(i >= 0 && i < size && j >= 0 && j < size) {
+					currentBox = boxes[i][j];
+				    currentBox.setOwner(power);
+				    power.addBox(currentBox);
+				}
+			}
+		}
+	}
+
+
 	private void installCapital(Power power, Box box) {
 		//We are sure that this box is a grounded box (because specified it before)
+		box.setOwner(power);
 		((GroundBox) box).setBuilding(new Capital());
 	}
 

@@ -16,6 +16,10 @@ public class GameLoop {
 	public   GameLoop( Power[] powers,  GameMap  map ) {
 		InitTurn();
 		useAction = new ActionManager(map);
+		
+		
+		
+		
 		for( int i=0 ; i<powers.length ;  i++) {
 
 			while(wouldturn((ActionPoints) powers[i].getResource(4))) {
@@ -33,7 +37,7 @@ public class GameLoop {
 	}
 	
 	public void InitTurn() {
-		for (int i=0; i<8; i++) {
+		for (int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
 			action[i]= new ArrayList<Action>();
 		}
 

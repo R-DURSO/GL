@@ -49,7 +49,12 @@ public class GroundBox extends Box{
 
 	@Override
 	public String toString() {
-		return "GroundBox : building = " + getBuilding() + ", ressource = " + getResourceTypeName() + " " + super.toString();
+		if (hasBuilding()) {
+			return "GroundBox : building = " + getBuilding().getClass().getSimpleName()
+					+ ", ressource = " + getResourceTypeName() + " " + super.toString();
+		}
+		return "GroundBox : building = none , ressource = " + getResourceTypeName() 
+			+ " " + super.toString();
 	}
 	
 	
