@@ -47,14 +47,14 @@ import data.unit.Units;
  * @see data.actions.Action
  *
  */
-public class ActionManager {
+public class ActionValidator {
 	private GameMap map;
 
 	/**
 	 * ActionManager just needs to have access to the game map
 	 * @param map The game map
 	 */
-	public ActionManager(GameMap map) {
+	public ActionValidator(GameMap map) {
 		this.map = map;
 	}
 	

@@ -10,7 +10,7 @@ import data.building.army.Barrack;
 import data.resource.ResourceTypes;
 import data.unit.Archer;
 import data.unit.UnitTypes;
-import process.management.ActionManager;
+import process.management.ActionValidator;
 import process.management.MapBuilder;
 
 public class ActionManagerTest {
@@ -30,7 +30,7 @@ public class ActionManagerTest {
 		
 		/*someTests on ActionManager*/
 		
-		ActionManager actionManager = new ActionManager(map);
+		ActionValidator actionManager = new ActionValidator(map);
 		
 		//make alliance
 		try {

@@ -1,8 +1,6 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -15,27 +13,34 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 public class Reception extends JFrame {
-	private String aiLevels[] = {"facile", "moyen", "difficile"};
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1732173298441163253L;
+	private static final String aiLevelsList[] = {"facile", "moyen", "difficile"};
+	private static final String waterAmountsList[] = {"Un peu", "Normal", "Beaucoup"};
+	private static final Integer playerNumbersList[] = {1, 2, 3};
+	
 	private static final Dimension IDEAL_MAIN_DIMENSION = new Dimension(800,400);
 	private JPanel contentPaneBombox;
 	private	JPanel titleTextArea = new JPanel();
 	private	JLabel Conquête = new JLabel("Conquête");
 	private	JLabel creationTextArea = new JLabel("Creation de la partie ");
-	private	JLabel numberOfPlayerTextArea = new JLabel("nombre de joueurs");
+	private	JLabel playerNumberLabel = new JLabel("nombre de joueurs");
 	private	JLabel MapTextArea = new JLabel("creation de la carte");
-	private	JComboBox number = new JComboBox();
+	private	JComboBox<Integer> playerNumberComboBox = new JComboBox<>(playerNumbersList);
 	private	JButton lessBouton = new JButton("-");
 	private	JTextArea sizeTextArea = new JTextArea();
 	private	JButton moreButon = new JButton("+");
-	private	JComboBox levelIa1Bombox= new  JComboBox(aiLevels);
-	private	JComboBox levelIa2Bombox = new  JComboBox(aiLevels);
-	private	JComboBox levelIa3Bombox = new  JComboBox(aiLevels);
-	private	JLabel levelOfIaTextArea = new JLabel("niveau des ia ");
-	private	JLabel IA1TextArea = new JLabel("ia 1");
-	private	JLabel IA2TextArea = new JLabel("ia 2");
-	private	JLabel IA3TextArea = new JLabel("ia 3");		
-	private	JLabel waterTextArea = new JLabel("eau");
-	private	JComboBox howwaterBombox = new JComboBox();
+	private	JComboBox<String> levelIa1Bombox= new  JComboBox<>(aiLevelsList);
+	private	JComboBox<String> levelIa2Bombox = new  JComboBox<>(aiLevelsList);
+	private	JComboBox<String> levelIa3Bombox = new  JComboBox<>(aiLevelsList);
+	private	JLabel LevelIaLabel = new JLabel("niveau des ia ");
+	private	JLabel IA1TextArea = new JLabel("IA 1");
+	private	JLabel IA2TextArea = new JLabel("IA 2");
+	private	JLabel IA3TextArea = new JLabel("IA 3");		
+	private	JLabel waterTextArea = new JLabel("quantité d'eau");
+	private	JComboBox<String> waterAmountBombox = new JComboBox<>(waterAmountsList);
 	private int value;
 	private int newGame;
 	private JFrame game = new Game();
@@ -66,15 +71,12 @@ public class Reception extends JFrame {
 		contentPaneBombox.add(creationTextArea);
 	
 
-		numberOfPlayerTextArea.setBounds(0, 103, 146, 58);
-		contentPaneBombox.add(numberOfPlayerTextArea);
+		playerNumberLabel.setBounds(0, 103, 146, 58);
+		contentPaneBombox.add(playerNumberLabel);
 	
 
-		number.setBounds(156, 111, 38, 42);
-		number.addItem("1");
-		number.addItem("2");
-		number.addItem("3");
-		contentPaneBombox.add(number);
+		playerNumberComboBox.setBounds(156, 111, 38, 42);
+		contentPaneBombox.add(playerNumberComboBox);
 	
 
 		MapTextArea.setBounds(0, 175, 117, 53);
@@ -96,8 +98,8 @@ public class Reception extends JFrame {
 		contentPaneBombox.add(moreButon);
 	
 
-		levelOfIaTextArea.setBounds(442, 111, 116, 42);
-		contentPaneBombox.add(levelOfIaTextArea);
+		LevelIaLabel.setBounds(442, 111, 116, 42);
+		contentPaneBombox.add(LevelIaLabel);
 
 		levelIa1Bombox.setBounds(688, 118, 78, 28);
 		contentPaneBombox.add(levelIa1Bombox);
@@ -123,11 +125,8 @@ public class Reception extends JFrame {
 		contentPaneBombox.add(waterTextArea);
 	
 
-		howwaterBombox.setBounds(388, 190, 78, 32);
-		howwaterBombox.addItem("un peu");
-		howwaterBombox.addItem("normal");
-		howwaterBombox.addItem("beacoup");
-		contentPaneBombox.add(howwaterBombox);
+		waterAmountBombox.setBounds(388, 190, 78, 32);
+		contentPaneBombox.add(waterAmountBombox);
 
 		StartBouton.setBounds(74, 267, 225, 53);
 		StartBouton.addActionListener(new ActionCreatGame());
