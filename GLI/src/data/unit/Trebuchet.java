@@ -32,7 +32,7 @@ public class Trebuchet  extends Units {
 	
 	//always 1 Trebuchet per Unit "stack"
 	public Trebuchet() {
-		super(BASE_HEALTH, RANGE_MOVING, MOVEMENT_MOVING, 1, DAMAGE_MOVING, DEFENSE);
+		super(BASE_HEALTH, RANGE_MOVING, MOVEMENT_MOVING, 1, DAMAGE_MOVING, DEFENSE, NUMBER_MAX_UNITS);
 	}
 	
 	@Override

@@ -12,16 +12,9 @@ public class Pikeman extends Units {
 	public static final int COST = 10;
 	public static final int COST_PER_TURN = 3;
 	public static final int NUMBER_MAX_UNITS = 20;
-	
-	
-	//pas utile je pense (le joueur créera directement un stack d'unités)
-	public Pikeman () {
-		super(BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE);
-		// TODO Auto-generated constructor stub
-	}
-	
+
 	public Pikeman (int numberUnits) {
-		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE);
+		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
 		// TODO Auto-generated constructor stub
 	}
 

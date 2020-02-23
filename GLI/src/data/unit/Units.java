@@ -9,14 +9,16 @@ public abstract class Units {
 	private int number;
 	private int damage;
 	private int defense;
+	private int maxNumber;
 	
-	public Units(int health, int range, int move, int number, int damage, int defense) {
+	public Units(int health, int range, int move, int number, int damage, int defense, int maxNumber) {
 		this.health = health;
 		this.range = range;
 		this.movement = move;
 		this.number = number;
 		this.damage = damage;
 		this.defense = defense;
+		this.maxNumber = maxNumber;
 	}
 	
 	
@@ -59,6 +61,10 @@ public abstract class Units {
 
 	public int getDefense() {
 		return defense;
+	}
+	
+	public int getMaxNumber() {
+		return maxNumber;
 	}
 
 	public String toString() {

@@ -14,7 +14,7 @@ public class BatteringRam extends Units {
 	public static final int NUMBER_MAX_UNITS = 20;
 	
 	public BatteringRam (int numberUnits) {
-		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE);
+		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
 	}
 	
 	@Override

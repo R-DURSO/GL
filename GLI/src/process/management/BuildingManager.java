@@ -41,6 +41,8 @@ public class BuildingManager {
 				return new Dock();
 			case BuildingTypes.BUILDING_MINE:
 				return new Mine();
+			case BuildingTypes.BUILDING_QUARRY:
+				return new Quarry();
 			case BuildingTypes.BUILDING_SAWMILL:
 				return new Sawmill();
 			case BuildingTypes.BUILDING_WINDMILL:

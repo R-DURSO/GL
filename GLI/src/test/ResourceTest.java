@@ -6,7 +6,7 @@ import data.building.BuildingTypes;
 import data.resource.*;
 import data.unit.UnitTypes;
 import process.management.BuildingManager;
-import process.management.UnitFactory;
+import process.management.UnitManager;
 
 public class ResourceTest {
 
@@ -23,7 +23,7 @@ public class ResourceTest {
 		System.out.println(box);
 		
 		System.out.println(box.getUnit());
-		new UnitFactory(pow, box, UnitTypes.UNIT_ARCHER, 10);
+		UnitManager.getInstance().addUnits(pow, box, UnitTypes.UNIT_ARCHER, 10);
 		System.out.println(box);
 	}
 

@@ -18,12 +18,12 @@ public class Boat extends Units {
 	private Units containedUnits;
 
 	public Boat () {
-		super(BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE);
+		super(BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
 		this.containedUnits = null;
 	}
 	
 	public Boat (Units containedUnits) {
-		super(BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE);
+		super(BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
 		this.containedUnits = containedUnits;
 	}
 	

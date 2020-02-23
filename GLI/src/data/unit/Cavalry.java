@@ -15,7 +15,7 @@ public class Cavalry extends Units {
 	
 
 	public Cavalry (int numberUnits) {
-		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE);
+		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
 		// TODO Auto-generated constructor stub
 	}
 	
