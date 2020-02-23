@@ -39,12 +39,23 @@ public class Power {
 		return ally != null;
 	}
 	
-	public Power getAllied() {
+	public Power getAlly() {
 		return ally;
 	}
 	
+	public int getResourceProductionPerTurn(int resourceType) {
+		return resources[resourceType].getProductionPerTurn();
+	}
 	
-	public void setAllied(Power ally) {
+	public void addResourcesProductionPerTurn(int resourceType, int amount) {
+		resources[resourceType].addProductionPerTurn(amount);
+	}
+	
+	public void substractResourcesProductionPerTurn(int resourceType, int amount) {
+		resources[resourceType].substractProductionPerTurn(amount);
+	}
+
+	public void setAlly(Power ally) {
 		this.ally = ally;
 	}
 	
@@ -66,6 +77,6 @@ public class Power {
 	}
 	
 	public String toString() {
-		return "Puissance "+name+": ";
+		return "Power "+name+": ";
 	}
 }

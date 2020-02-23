@@ -31,6 +31,11 @@ public class Infantry extends Units {
 		return COST;
 	}
 	
+	@Override
+	public int getFoodCost() {
+		return COST_PER_TURN;
+	}
+	
 	public String toString() {
 		return "Infantry " + super.toString() ;
 	}

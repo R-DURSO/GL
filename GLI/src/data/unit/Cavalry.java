@@ -32,6 +32,11 @@ public class Cavalry extends Units {
 		return COST;
 	}
 	
+	@Override
+	public int getFoodCost() {
+		return COST_PER_TURN;
+	}
+	
 	public String toString() {
 		return super.toString() ;
 	}

@@ -30,8 +30,8 @@ public class BuildingManager {
 		box.setBuilding(building);
 	}
 	
-	//vérifications déjà faites dans ActionManager
-	public Building construction(int buildingType) {
+	//vérifications already done in ActionValidator
+	private Building construction(int buildingType) {
 			switch(buildingType) {
 			case BuildingTypes.BUILDING_BARRACK:
 				return new Barrack();
@@ -57,4 +57,6 @@ public class BuildingManager {
 				return null;
 			}
 	}
+	
+	
 }

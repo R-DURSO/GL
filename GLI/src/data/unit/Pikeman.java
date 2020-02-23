@@ -27,6 +27,11 @@ public class Pikeman extends Units {
 	}
 	
 	@Override
+	public int getFoodCost() {
+		return COST_PER_TURN;
+	}
+	
+	@Override
 	public <U> U accept(UnitVisitor<U> visitor) {
 		return visitor.visit(this);
 	}

@@ -1,12 +1,13 @@
 package process.management;
 import data.boxes.*;
+import data.building.product.BuildingProduct;
 import data.resource.ResourceTypes;
 import data.unit.*;
 import data.Power;
 
 /**
  * Singleton class to manipulate units : creation, update and deletion
- * No much verification made here, they are principally made in {@link ActionValidator}
+ * <b>Do not use this class without {@link ActionValidator}, which mades most of importants verfications</b>
  */
 public class UnitManager {
 	
@@ -20,13 +21,34 @@ public class UnitManager {
 			Units unitsOnBox = box.getUnit();
 			int numberUnitsOnBox = unitsOnBox.getNumber();
 			int numberUnitsNeeded = numberUnits + numberUnitsOnBox;
-			if(numberUnitsNeeded <= unitsOnBox.getMaxNumber())
-				unitsOnBox.addNumber(numberUnits);
-			else
-				// à changer car faux
-				unitsOnBox.addNumber(20);
-		}else
-			box.setUnit(createUnit(unitType, numberUnits));
+			//if the number of units we want to add is less than the max number, we simply add thoses new units
+			if(numberUnitsNeeded <= unitsOnBox.getMaxNumber()) {
+				unitsOnBox.addNumber(numberUnitsNeeded);
+				//modify amount of food earned between each turn
+				int foodCostToRemove = numberUnits * unitsOnBox.getFoodCost();
+				power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
+			}
+			else {
+				//else, we have to add to max number
+				int numberExcessUnits = numberUnitsNeeded - unitsOnBox.getMaxNumber();
+				unitsOnBox.addNumber(numberUnitsNeeded - numberExcessUnits);
+				int foodCostToRemove = (numberUnitsNeeded - numberExcessUnits) * unitsOnBox.getFoodCost();
+				power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
+				//and refound gold 
+				power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(unitsOnBox.getCost() * numberExcessUnits); 
+			}	
+		}else {
+			Units units = createUnit(unitType, numberUnits);
+			if(units.getNumber() > units.getMaxNumber()) {
+				int numberExcessUnits = numberUnits - units.getMaxNumber();
+				units.addNumber(numberExcessUnits);
+				power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(units.getCost() * numberExcessUnits); 
+			}
+			box.setUnit(units);
+			int foodCostToRemove = units.getNumber() * units.getFoodCost();
+			power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
+			
+		}
 	}
 	
 	private Units createUnit(int type, int nb) {
@@ -50,16 +72,49 @@ public class UnitManager {
 		}
 	}
 	
-	public boolean hasAlreadyUnits (Power pow, Box box) {
-		return box.hasUnit();
+	public void removeUnits(Power power, Box box, int numberUnits) {
+		Units units = box.getUnit();
+		int numberUnitsRemoved = units.getNumber() - numberUnits;
+		if(numberUnitsRemoved <= 0) {
+			deleteUnits(power, box);
+		}else
+			units.substractNumber(numberUnitsRemoved);
 	}
 	
-	public boolean canAfford (Power pow, int type, int nb) {
-		if (pow.getResource(ResourceTypes.RESOURCE_GOLD).getAmount() >= (createUnit(type,nb).getCost() * nb)) {
-			return true;
-		}
-		else {
-			return false;
+	public void deleteUnits(Power power, Box box) {
+		int foodProdToAdd = box.getUnit().getFoodCost() * box.getUnit().getNumber();
+		power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
+		box.setUnit(null);
+	}
+	
+	public void moveUnits(Power powerConcerned, Box fromBox, Box targetBox) {
+		Units movingUnits = fromBox.getUnit();
+		targetBox.setUnit(movingUnits);
+		fromBox.setUnit(null);
+		
+		//if targetBox is in ennemy's territory
+		Power targetBoxPower = targetBox.getOwner();
+		if(targetBoxPower != powerConcerned && targetBoxPower.getAlly() != powerConcerned) {
+			//powerConcerned will take this territory, and ressource gain per turn if have (inderictly, will have building on it too)  
+			powerConcerned.addBox(targetBox);
+			targetBox.setOwner(powerConcerned);
+			
+			/*Special case for buildingProducts, if takes up territory/box with a production building, 
+			 powerConcerned will 'steal' targetBoxPower's production*/
+			if(targetBox instanceof GroundBox && ((GroundBox)targetBox).getBuilding() instanceof BuildingProduct) {
+				BuildingProduct buildingProduct = (BuildingProduct) ((GroundBox)targetBox).getBuilding();
+				//a building product can be on a non-compatible resource 
+				//(Quarry on box which have Wood resource will do nothing for example)
+				if (buildingProduct.isOnRightResource()) {
+					int productionType = buildingProduct.getProductionType();
+					int productionPerTurn = buildingProduct.getProductionPerTurn();
+					powerConcerned.addResourcesProductionPerTurn(productionType, productionPerTurn);
+					targetBoxPower.substractResourcesProductionPerTurn(productionType, productionPerTurn);
+				}
+			}
+			//obviously, targetBoxPower will lose what powerConcernced earned
+			targetBoxPower.removeBox(targetBox);
 		}
 	}
+
 }

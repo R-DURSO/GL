@@ -25,6 +25,7 @@ public abstract class Units {
 	public abstract <U> U accept(UnitVisitor<U> visitor);
 	public abstract int getTypes();
 	public abstract int getCost();
+	public abstract int getFoodCost();
 	
 	
 	
@@ -34,6 +35,13 @@ public abstract class Units {
 	
 	public void addNumber (int number) {
 		this.number += number;
+		if (this.number <= 0) {
+			this.number = 0;
+		}
+	}
+	
+	public void substractNumber (int number) {
+		this.number -= number;
 		if (this.number <= 0) {
 			this.number = 0;
 		}

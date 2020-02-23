@@ -3,8 +3,12 @@ package data.resource;
 import process.visitor.ressource_visitor.RessourceVisitor;
 
 public class ActionPoints extends Resource {
-	private int action_Number = 3; 
+	private static final int ACTIONS_NUMBER = 3; 
 	private static final int MAX_ACTIONS = 6 ; 
+	
+	public ActionPoints() {
+		super(ACTIONS_NUMBER);
+	}
 	
 	int variation () {
 		return 0;

@@ -22,12 +22,19 @@ public class Archer extends Units {
 		return visitor.visit(this);
 	}
 
+	@Override
 	public int getTypes() {
 		return UnitTypes.UNIT_ARCHER;
 	}
 	
+	@Override
 	public int getCost() {
 		return COST;
+	}
+	
+	@Override
+	public int getFoodCost() {
+		return COST_PER_TURN;
 	}
 	
 	@Override

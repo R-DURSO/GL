@@ -19,11 +19,11 @@ public class Windmill extends BuildingProduct {
 		return COST;
 	}
 	
-	public int getRevenue() {
+	public int getProductionPerTurn() {
 		return PRODUCTION_PER_TURN;
 	}
 
-	public int getProductionTypes() {
+	public int getProductionType() {
 		return ResourceTypes.RESOURCE_FOOD;
 	}
 	

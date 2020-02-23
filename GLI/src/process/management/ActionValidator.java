@@ -42,7 +42,7 @@ import data.unit.Units;
 /**
  * This class ensures that every action the player does is possible 
  * and allows to create Actions to be performed at the end of the turn in the game.
- * No data class is modified here.
+ * No data class is modified here (except for resource values, including actions points)
  * @author Aldric Vitali Silvestre <aldric.vitali@outlook.fr>
  * @see data.actions.Action
  *
@@ -89,7 +89,7 @@ public class ActionValidator {
 		//check if player has ally and if this ally is the right Power
 		if(!powerConcerned.isAllied())
 			throw new IllegalArgumentException(powerConcerned.getName() + " n'a pas d'allié");
-		if(powerConcerned.getAllied() != formerAlly) {
+		if(powerConcerned.getAlly() != formerAlly) {
 			throw new IllegalArgumentException(powerConcerned.getName() + " n'est pas en alliance avec " + formerAlly.getName());
 		}
 		
@@ -134,7 +134,7 @@ public class ActionValidator {
 		
 		//check if there is units on target, in this case, check the owner of those units
 		//if player himself or his ally, no attack
-		if(targetBox.hasUnit() || targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAllied())
+		if(targetBox.hasUnit() || targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAlly())
 			throw new IllegalArgumentException("Vous ne pouvez pas attaquer ici");
 		
 		powerConcerned.removeActionPoint();
@@ -211,7 +211,7 @@ public class ActionValidator {
 				if(groundBox.getBuilding() instanceof Wall)
 					throw new IllegalArgumentException("Les unités ne peuvent pas aller dans un mur");
 				//units can go through "allied" doors
-				if(groundBox.getBuilding() instanceof Door && groundBox.getOwner() == powerConcerned.getAllied())
+				if(groundBox.getBuilding() instanceof Door && groundBox.getOwner() == powerConcerned.getAlly())
 					throw new IllegalArgumentException("Les unités ne peuvent pas aller dans une porte ennemie");
 			}
 		}

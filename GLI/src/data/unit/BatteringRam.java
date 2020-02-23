@@ -31,6 +31,11 @@ public class BatteringRam extends Units {
 	}
 	
 	@Override
+	public int getFoodCost() {
+		return COST_PER_TURN;
+	}
+	
+	@Override
 	public String toString() {
 		return super.toString() ;
 	}
