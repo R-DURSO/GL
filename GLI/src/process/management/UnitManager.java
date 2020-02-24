@@ -72,13 +72,15 @@ public class UnitManager {
 		}
 	}
 	
-	public void removeUnits(Power power, Box box, int numberUnits) {
+	public void removeUnits(Power power, Box box, int numberUnitsRemoved) {
 		Units units = box.getUnit();
-		int numberUnitsRemoved = units.getNumber() - numberUnits;
-		if(numberUnitsRemoved <= 0) {
+		int numberUnits = units.getNumber() - numberUnitsRemoved;
+		if (numberUnits <= 0) {
 			deleteUnits(power, box);
-		}else
+		}
+		else {
 			units.substractNumber(numberUnitsRemoved);
+		}
 	}
 	
 	public void deleteUnits(Power power, Box box) {
@@ -132,22 +134,21 @@ public class UnitManager {
 		/**
 		 * place attack
 		 * -if def is ranged, no counter
-		 * -if def is dead, minor counter
 		 * -else def counter
 		 */
 		//Les dégats sont bloqués par la defense, mais le nombre compte !
 		int AttackerDamageDealt = (attacker.getDamage() - defender.getDefense()) * attacker.getNumber();
-		System.out.println("degat"+AttackerDamageDealt);
+		System.out.println("degat de l'att "+AttackerDamageDealt);
 		//Les défenseurs subissent les dégats
 		int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - AttackerDamageDealt) / defender.getHealth());
-		System.out.println("mort"+casualityDef);
+		System.out.println("mort des defs "+casualityDef);
 		
 		//Round 2, contre-attaque
 		int DefenderDamageDealt = (defender.getDamage() - attacker.getDefense()) * defender.getNumber();
-		System.out.println("degat"+DefenderDamageDealt);
+		System.out.println("degat des def "+DefenderDamageDealt);
 		//Les attaquant subissent les dégats
 		int casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - DefenderDamageDealt) / attacker.getHealth());
-		System.out.println("mort"+casualityAtt);
+		System.out.println("mort des att "+casualityAtt);
 		
 		//Les 2 Units perdent en nombres
 		removeUnits(targetBox.getOwner(), targetBox, casualityDef);
