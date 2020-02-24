@@ -28,6 +28,10 @@ public abstract class Resource {
 		this.amount += value;
 	}
 	
+	public void productionOfTurn() {
+		this.amount += this.productionPerTurn;
+	}
+	
 	public void addProductionPerTurn(int production) {
 		this.productionPerTurn += production;
 	}

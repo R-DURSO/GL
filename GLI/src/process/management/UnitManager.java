@@ -41,7 +41,7 @@ public class UnitManager {
 			Units units = createUnit(unitType, numberUnits);
 			if(units.getNumber() > units.getMaxNumber()) {
 				int numberExcessUnits = numberUnits - units.getMaxNumber();
-				units.addNumber(numberExcessUnits);
+				units.substractNumber(numberExcessUnits);
 				power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(units.getCost() * numberExcessUnits); 
 			}
 			box.setUnit(units);
@@ -94,27 +94,52 @@ public class UnitManager {
 		
 		//if targetBox is in ennemy's territory
 		Power targetBoxPower = targetBox.getOwner();
-		if(targetBoxPower != powerConcerned && targetBoxPower.getAlly() != powerConcerned) {
-			//powerConcerned will take this territory, and ressource gain per turn if have (inderictly, will have building on it too)  
-			powerConcerned.addBox(targetBox);
-			targetBox.setOwner(powerConcerned);
-			
-			/*Special case for buildingProducts, if takes up territory/box with a production building, 
-			 powerConcerned will 'steal' targetBoxPower's production*/
-			if(targetBox instanceof GroundBox && ((GroundBox)targetBox).getBuilding() instanceof BuildingProduct) {
-				BuildingProduct buildingProduct = (BuildingProduct) ((GroundBox)targetBox).getBuilding();
-				//a building product can be on a non-compatible resource 
-				//(Quarry on box which have Wood resource will do nothing for example)
-				if (buildingProduct.isOnRightResource()) {
-					int productionType = buildingProduct.getProductionType();
-					int productionPerTurn = buildingProduct.getProductionPerTurn();
-					powerConcerned.addResourcesProductionPerTurn(productionType, productionPerTurn);
-					targetBoxPower.substractResourcesProductionPerTurn(productionType, productionPerTurn);
+		if (targetBoxPower != null) {
+			if(targetBoxPower != powerConcerned && targetBoxPower.getAlly() != powerConcerned) {
+				//powerConcerned will take this territory, and ressource gain per turn if have (inderictly, will have building on it too)  
+				powerConcerned.addBox(targetBox);
+				targetBox.setOwner(powerConcerned);
+				
+				/*Special case for buildingProducts, if takes up territory/box with a production building, 
+			 	powerConcerned will 'steal' targetBoxPower's production*/
+				if(targetBox instanceof GroundBox && ((GroundBox)targetBox).getBuilding() instanceof BuildingProduct) {
+					BuildingProduct buildingProduct = (BuildingProduct) ((GroundBox)targetBox).getBuilding();
+					//a building product can be on a non-compatible resource 
+					//(Quarry on box which have Wood resource will do nothing for example)
+					if (buildingProduct.isOnRightResource()) {
+						int productionType = buildingProduct.getProductionType();
+						int productionPerTurn = buildingProduct.getProductionPerTurn();
+						powerConcerned.addResourcesProductionPerTurn(productionType, productionPerTurn);
+						targetBoxPower.substractResourcesProductionPerTurn(productionType, productionPerTurn);
+					}
 				}
+				//obviously, targetBoxPower will lose what powerConcernced earned
+				targetBoxPower.removeBox(targetBox);
 			}
-			//obviously, targetBoxPower will lose what powerConcernced earned
-			targetBoxPower.removeBox(targetBox);
 		}
 	}
-
+	
+	public void attackUnits (Power powerConcerned, Box fromBox, Box targetBox) {
+		Units attacker = fromBox.getUnit();
+		Units defender = targetBox.getUnit();
+		
+		/**
+		 * place attack
+		 * -if def is ranged, no counter
+		 * -if def is dead, minor counter
+		 * -else def counter
+		 */
+		
+		int damageDealt = (attacker.getDamage() - defender.getDefense()) * attacker.getNumber();
+		System.out.println("degat"+damageDealt);
+		
+		int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - damageDealt) / defender.getHealth());
+		System.out.println("mort"+casualityDef);
+		
+		defender.substractNumber(casualityDef);
+		if (defender.getNumber() == 0) {
+			deleteUnits(targetBox.getOwner(), targetBox);
+		}
+		
+	}
 }

@@ -30,6 +30,16 @@ public class CircleTest {
 		}
 	}
 	
+	/**
+	 * @param tab
+	 * @param cX
+	 * @param cY
+	 * @param radius
+	 * 
+	 * On dessine 2 triangles, un au-dessus, un en-dessous
+	 * Cela forme notre losange de portée, et si le point se trouve dans l'un des triangles alors,
+	 * le point est dans le losange
+	 */
 	public static void drawTriangle(boolean tab[][], int cX, int cY, int radius) { 
 		int ax = cX - radius;
 		int ay = cY;
@@ -59,6 +69,20 @@ public class CircleTest {
 		return Math.abs((ax*(by-cy) + bx*(cy-ay) + cx*(ay-by) ) / 2.0);
 	}
 	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param ax
+	 * @param ay
+	 * @param bx
+	 * @param by
+	 * @param cx
+	 * @param cy
+	 * 
+	 * Soit 4points, si l'aire du triangle de 3 points est égal à la somme des aires des 3 triangles contenant le point recherché
+	 * Alors, le point se trouve dans le triangle
+	 */
 	private static boolean isInside(int x, int y, int ax, int ay, int bx, int by, int cx, int cy) {
 		double A = area(ax, ay, bx, by, cx, cy);
 		double A1 = area(x, y, bx, by, cx, cy);
@@ -80,12 +104,17 @@ public class CircleTest {
 		}
 	}
 	
+	/**
+	 * @param tab
+	 * @param cX
+	 * @param cY
+	 * @param radius
+	 * Dessine tout autour du point, pour un radius donné
+	 */
 	public static void drawDiamond(boolean tab[][], int cX, int cY, int radius) {
-		int C = cX + cY;
 		for(int i = 0; i < tab.length; i++) {
 			for(int j = 0; j < tab[0].length; j++) {
-				int A = i + j;
-				int dist = Math.abs(C - A);
+				int dist = Math.abs(i - cX) + Math.abs(j - cY);
 				if(dist <= radius) {
 					System.out.println(i + " et " + j);
 					tab[i][j] = true; 
