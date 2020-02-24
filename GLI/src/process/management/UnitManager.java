@@ -133,7 +133,7 @@ public class UnitManager {
 		
 		/**
 		 * place attack
-		 * -if def is ranged, no counter
+		 * -if def is ranged, no counter TODO
 		 * -else def counter
 		 */
 		//Les dégats sont bloqués par la defense, mais le nombre compte !
@@ -161,6 +161,5 @@ public class UnitManager {
 				moveUnits(powerConcerned, fromBox, targetBox);
 			}
 		}
-		
 	}
 }
