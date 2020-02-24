@@ -94,7 +94,13 @@ public class UnitManager {
 		
 		//if targetBox is in ennemy's territory
 		Power targetBoxPower = targetBox.getOwner();
-		if (targetBoxPower != null) {
+		if (targetBoxPower == null) {
+			//targetBox is free, take it !
+			powerConcerned.addBox(targetBox);
+			targetBox.setOwner(powerConcerned);
+			//No building to add since it was still not owned by a power
+		}
+		else {
 			if(targetBoxPower != powerConcerned && targetBoxPower.getAlly() != powerConcerned) {
 				//powerConcerned will take this territory, and ressource gain per turn if have (inderictly, will have building on it too)  
 				powerConcerned.addBox(targetBox);
