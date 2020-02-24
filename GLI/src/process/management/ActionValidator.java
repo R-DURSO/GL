@@ -252,7 +252,12 @@ public class ActionValidator {
 		int bX = from.getX();
 		int bY = from.getX();
 		int range = units.getRange();
-		return (Math.abs(aX - bX) + Math.abs(aY - bY)) <= range;
+		return (getDifference(aX,bX) + getDifference(aY,bY)) <= range;
+	}
+	
+	//Sera surement utile pour le déplacement ?
+	private int getDifference (int a, int b) {
+		return Math.abs(a - b);
 	}
 	
 	/**
