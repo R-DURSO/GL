@@ -246,6 +246,14 @@ public class ActionValidator {
 		return (ABCTriangle == PBCTriangle + APCTriangle + ABPTriangle);
 	}
 	
+	private boolean isUnitsOnRanged(Position from, Units units, Position target) {
+		int aX = from.getX();
+		int aY = from.getX();
+		int bX = from.getX();
+		int bY = from.getX();
+		int range = units.getRange();
+		return (Math.abs(aX - bX) + Math.abs(aY - bY)) <= range;
+	}
 	
 	/**
 	 * Check if:
