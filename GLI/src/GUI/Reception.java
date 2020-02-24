@@ -23,11 +23,11 @@ public class Reception extends JFrame {
 	
 	private static final Dimension IDEAL_MAIN_DIMENSION = new Dimension(800,400);
 	private JPanel contentPaneBombox;
-	private	JPanel titleTextArea = new JPanel();
-	private	JLabel Conquête = new JLabel("Conquête");
-	private	JLabel creationTextArea = new JLabel("Creation de la partie ");
+	private	JPanel titlePanel = new JPanel();
+	private	JLabel ConquêteLabel = new JLabel("Conquête");
+	private	JLabel creationLabel = new JLabel("Creation de la partie ");
 	private	JLabel playerNumberLabel = new JLabel("nombre de joueurs");
-	private	JLabel MapTextArea = new JLabel("creation de la carte");
+	private	JLabel MapLabel = new JLabel("creation de la carte");
 	private	JComboBox<Integer> playerNumberComboBox = new JComboBox<>(playerNumbersList);
 	private	JButton lessBouton = new JButton("-");
 	private	JTextArea sizeTextArea = new JTextArea();
@@ -36,10 +36,10 @@ public class Reception extends JFrame {
 	private	JComboBox<String> levelIa2Bombox = new  JComboBox<>(aiLevelsList);
 	private	JComboBox<String> levelIa3Bombox = new  JComboBox<>(aiLevelsList);
 	private	JLabel LevelIaLabel = new JLabel("niveau des ia ");
-	private	JLabel IA1TextArea = new JLabel("IA 1");
-	private	JLabel IA2TextArea = new JLabel("IA 2");
-	private	JLabel IA3TextArea = new JLabel("IA 3");		
-	private	JLabel waterTextArea = new JLabel("quantité d'eau");
+	private	JLabel IA1Label = new JLabel("IA 1");
+	private	JLabel IA2Label = new JLabel("IA 2");
+	private	JLabel IA3Label= new JLabel("IA 3");		
+	private	JLabel waterLabel = new JLabel("quantité d'eau");
 	private	JComboBox<String> waterAmountBombox = new JComboBox<>(waterAmountsList);
 	private int value;
 	private int newGame;
@@ -62,13 +62,13 @@ public class Reception extends JFrame {
 		setContentPane(contentPaneBombox);
 		contentPaneBombox.setLayout(null);
 	
-		titleTextArea.setBounds(5, 5, 832, 24);
-		contentPaneBombox.add(titleTextArea);
+		titlePanel.setBounds(5, 5, 832, 24);
+		contentPaneBombox.add(titlePanel);
 		
-		titleTextArea.add(Conquête);
+		titlePanel.add(ConquêteLabel);
 	
-		creationTextArea.setBounds(376, 40, 129, 53);
-		contentPaneBombox.add(creationTextArea);
+		creationLabel.setBounds(376, 40, 129, 53);
+		contentPaneBombox.add(creationLabel);
 	
 
 		playerNumberLabel.setBounds(0, 103, 146, 58);
@@ -79,8 +79,8 @@ public class Reception extends JFrame {
 		contentPaneBombox.add(playerNumberComboBox);
 	
 
-		MapTextArea.setBounds(0, 175, 117, 53);
-		contentPaneBombox.add(MapTextArea);
+		MapLabel.setBounds(0, 175, 117, 53);
+		contentPaneBombox.add(MapLabel);
 	
 
 		lessBouton.setBounds(127, 190, 41, 23);
@@ -111,18 +111,18 @@ public class Reception extends JFrame {
 		contentPaneBombox.add(levelIa3Bombox);
 	
 
-		IA1TextArea.setBounds(599, 121, 51, 32);
-		contentPaneBombox.add(IA1TextArea);
+		IA1Label.setBounds(599, 121, 51, 32);
+		contentPaneBombox.add(IA1Label);
 
-		IA2TextArea.setBounds(599, 157, 51, 32);
-		contentPaneBombox.add(IA2TextArea);
+		IA2Label.setBounds(599, 157, 51, 32);
+		contentPaneBombox.add(IA2Label);
 
-		IA3TextArea.setBounds(599, 202, 59, 24);
-		contentPaneBombox.add(IA3TextArea);
+		IA3Label.setBounds(599, 202, 59, 24);
+		contentPaneBombox.add(IA3Label);
 
 		
-		waterTextArea.setBounds(322, 189, 38, 24);
-		contentPaneBombox.add(waterTextArea);
+		waterLabel.setBounds(322, 189, 38, 24);
+		contentPaneBombox.add(waterLabel);
 	
 
 		waterAmountBombox.setBounds(388, 190, 78, 32);
