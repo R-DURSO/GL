@@ -118,7 +118,7 @@ public class UnitManager {
 					BuildingProduct buildingProduct = (BuildingProduct) ((GroundBox)targetBox).getBuilding();
 					//a building product can be on a non-compatible resource 
 					//(Quarry on box which have Wood resource will do nothing for example)
-					if (buildingProduct.isOnRightResource()) {
+					if (buildingProduct.getOnRightResource()) {
 						int productionType = buildingProduct.getProductionType();
 						int productionPerTurn = buildingProduct.getProductionPerTurn();
 						powerConcerned.addResourcesProductionPerTurn(productionType, productionPerTurn);
