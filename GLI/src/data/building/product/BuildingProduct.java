@@ -29,6 +29,9 @@ public abstract class BuildingProduct extends Building{
 		return onRightResource;
 	}
 	
+	public void setOnRightResource (boolean TrueOrFalse) {
+		this.onRightResource = TrueOrFalse;
+	}
 	
 	public abstract int getProductionPerTurn();
 	public abstract int getProductionType();

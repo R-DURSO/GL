@@ -32,6 +32,9 @@ public class BuildingManager {
 			if (((BuildingProduct) building).isOnRightResource(box.getResourceType())) {
 				power.addResourcesProductionPerTurn(box.getResourceType(), ((BuildingProduct) building).getProductionPerTurn());
 			}
+			else {
+				((BuildingProduct) building).setOnRightResource(false);
+			}
 		}
 	}
 	
