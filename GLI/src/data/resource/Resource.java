@@ -1,9 +1,10 @@
 package data.resource;
 
+import data.InitialValue;
 import process.visitor.ressource_visitor.RessourceVisitor;
 
 public abstract class Resource {
-	private int amount = 0;
+	private int amount = InitialValue.NUMBER_INITIAL_VALUE;
 	private int productionPerTurn;
 	
 	
@@ -41,5 +42,4 @@ public abstract class Resource {
 	}
 	
 	public abstract <R> R accept(RessourceVisitor<R> visitor);
-	public abstract int getResourceType();
 }

@@ -1,14 +1,11 @@
 package data.resource;
 
+import data.InitialValue;
 import process.visitor.ressource_visitor.RessourceVisitor;
 
 public class Wood extends Resource {
 	int variation () {
-		return 0;
-	}
-
-	public int getResourceType() {
-		return ResourceTypes.RESOURCE_WOOD;
+		return InitialValue.NUMBER_INITIAL_VALUE;
 	}
 	
 	@Override

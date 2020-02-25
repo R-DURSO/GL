@@ -1,14 +1,10 @@
 package data.resource;
-
+import data.InitialValue;
 import process.visitor.ressource_visitor.RessourceVisitor;
 
 public class Gold extends Resource {
 	int variation () {
-		return 0;
-	}
-	
-	public int getResourceType() {
-		return ResourceTypes.RESOURCE_GOLD;
+		return InitialValue.NUMBER_INITIAL_VALUE ;
 	}
 	
 	@Override
