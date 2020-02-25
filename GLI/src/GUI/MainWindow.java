@@ -15,8 +15,8 @@ public class MainWindow extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 6569351248766478602L;
-	private JPanel gamePanel = new GamePanel();
-	private JPanel menuPanel = new MenuPanel();
+	private JPanel gamePanel = new GamePanel(this);
+	private JPanel menuPanel = new MenuPanel(this);
 	private JFrame context = this;
 	private CardLayout cardLayout = new CardLayout();
 	
@@ -38,6 +38,14 @@ public class MainWindow extends JFrame{
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
+	}
+	
+	public void changeWindow() {
+		cardLayout.next(getContentPane());
+	}
+	
+	public void loadGame() {
+		
 	}
 
 }

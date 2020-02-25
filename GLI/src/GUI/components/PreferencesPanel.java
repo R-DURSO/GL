@@ -2,11 +2,13 @@ package GUI.components;
 
 import java.awt.GridLayout;
 
-import javax.swing.BoxLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
+import javax.swing.SwingConstants;
+
+import data.GameContants;
 
 public class PreferencesPanel extends JPanel{
 	private static final long serialVersionUID = -714238221735387964L;
@@ -17,21 +19,18 @@ public class PreferencesPanel extends JPanel{
 	
 	//number players
 	private JPanel numberPlayersPanel = new JPanel();
-	private JLabel numberPlayersLabel = new JLabel("Nombre de joueurs");
+	private JLabel numberPlayersLabel = new JLabel("Nombre de joueurs", SwingConstants.CENTER);
 	private final Integer numberPlayersList[] = {2, 3, 4};
 	private JComboBox<Integer> numberPlayerComboBox = new JComboBox<>(numberPlayersList);
 	
 	//water amount
 	private JPanel waterAmountPanel = new JPanel();
-	private JLabel waterAmountLabel = new JLabel("Quantité d'eau : ");
-	private final String waterAmountList[] = {"peu", "moyen", "beaucoup"};
+	private JLabel waterAmountLabel = new JLabel("Quantité d'eau : ", SwingConstants.CENTER);
+	private final String waterAmountList[] = {"un peu", "moyen", "beaucoup"};
 	private JComboBox<String> waterAmountComboBox = new JComboBox<>(waterAmountList);
 	
 	//map size
-	private JPanel mapSizePanel = new JPanel();
-	private JLabel mapSizeLabel = new JLabel("Taille de la carte");
-	private JLabel mapSizeNumberLabel = new JLabel("" + INIT_MAP_SIZE);
-	private JSlider mapSizeSlider = new JSlider(JSlider.HORIZONTAL, MIN_MAP_SIZE, MAX_MAP_SIZE, INIT_MAP_SIZE); 
+	private SliderPanel mapSizePanel = new SliderPanel("Taille de la carte", MAX_MAP_SIZE, MIN_MAP_SIZE, INIT_MAP_SIZE);
 	
 	//ai levels
 	private JPanel aiPanel = new JPanel();
@@ -39,9 +38,9 @@ public class PreferencesPanel extends JPanel{
 	private JPanel ai1Panel = new JPanel();
 	private JPanel ai2Panel = new JPanel();
 	private JPanel ai3Panel = new JPanel();
-	private JLabel ai1Label = new JLabel("intelligence IA 1");
-	private JLabel ai2Label = new JLabel("intelligence IA 2");
-	private JLabel ai3Label = new JLabel("intelligence IA 3");
+	private JLabel ai1Label = new JLabel("IA 1", SwingConstants.CENTER);
+	private JLabel ai2Label = new JLabel("IA 2", SwingConstants.CENTER);
+	private JLabel ai3Label = new JLabel("IA 3", SwingConstants.CENTER);
 	private JComboBox<String> ai1ComboBox = new JComboBox<>(aiLevelsList);
 	private JComboBox<String> ai2ComboBox = new JComboBox<>(aiLevelsList);
 	private JComboBox<String> ai3ComboBox = new JComboBox<>(aiLevelsList);
@@ -51,12 +50,14 @@ public class PreferencesPanel extends JPanel{
 	}
 	
 	private void init() {
-		setLayout(new GridLayout(0, 2, 5, 5));
+		int paddingWidth = GuiPreferences.WIDTH / 20;
+		int paddingHeight = GuiPreferences.HEIGHT / 20;
+		setLayout(new GridLayout(0, 2, paddingWidth, paddingHeight));
+		setBorder(BorderFactory.createEmptyBorder(paddingHeight, paddingWidth, paddingHeight, paddingWidth));
 		setFont(GuiPreferences.BASE_FONT);
 
 		initNumberPlayersPanel();
 		initAiPanel();
-		initMapSizePanel();
 		initWaterAmountPanel();
 		
 		
@@ -71,20 +72,15 @@ public class PreferencesPanel extends JPanel{
 	private void initNumberPlayersPanel() {
 		numberPlayersPanel.setLayout(new GridLayout(0,1));
 		numberPlayersPanel.add(numberPlayersLabel);
+		numberPlayerComboBox.setSelectedIndex(2);
 		numberPlayersPanel.add(numberPlayerComboBox);
 	}
 
 	private void initWaterAmountPanel() {
 		waterAmountPanel.setLayout(new GridLayout(0,1));
 		waterAmountPanel.add(waterAmountLabel);
+		waterAmountComboBox.setSelectedIndex(0);
 		waterAmountPanel.add(waterAmountComboBox);
-	}
-
-	private void initMapSizePanel() {
-		mapSizePanel.setLayout(new GridLayout(0,1));
-		mapSizePanel.add(mapSizeLabel);
-		mapSizePanel.add(mapSizeNumberLabel);
-		mapSizePanel.add(mapSizeSlider);
 	}
 
 	private void initAiPanel() {
@@ -92,14 +88,17 @@ public class PreferencesPanel extends JPanel{
 		
 		ai1Panel.setLayout(new GridLayout(0,1));
 		ai1Panel.add(ai1Label);
+		ai1ComboBox.setSelectedIndex(0);
 		ai1Panel.add(ai1ComboBox);
 		
 		ai2Panel.setLayout(new GridLayout(0,1));
 		ai2Panel.add(ai2Label);
+		ai2ComboBox.setSelectedIndex(0);
 		ai2Panel.add(ai2ComboBox);
 		
 		ai3Panel.setLayout(new GridLayout(0,1));
 		ai3Panel.add(ai3Label);
+		ai3ComboBox.setSelectedIndex(0);
 		ai3Panel.add(ai3ComboBox);
 		
 		aiPanel.add(ai1Panel);
@@ -108,27 +107,38 @@ public class PreferencesPanel extends JPanel{
 	}
 
 	public int getNumberPlayers() {
-		return 4;
+		return numberPlayerComboBox.getSelectedIndex() + 2;
 	}
 	
 	public int getWaterAmount() {
-		return 20;
+		switch (waterAmountComboBox.getSelectedIndex()) {
+		case 0: //"peu"
+			return GameContants.WATER_AMOUNT_LITTLE;
+		case 1: //"moyen"
+			return GameContants.WATER_AMOUNT_NORMAL;
+		case 2: //"beaucoup"
+			return GameContants.WATER_AMOUNT_MANY;
+		default:
+			return GameContants.WATER_AMOUNT_LITTLE; 
+		}
+		
+		//return (waterAmountComboBox.getSelectedIndex() + 1) * 20;
 	}
 	
 	public int getMapSize() {
-		return 20;
+		return mapSizePanel.getValue();
 	}
 	
 	public int getAi1Level() {
-		return 1;
+		return ai1ComboBox.getSelectedIndex() + 1;
 	}
 	
 	public int getAi2Level() {
-		return 1;
+		return ai2ComboBox.getSelectedIndex() + 1;
 	}
 	
 	public int getAi3Level() {
-		return 1;
+		return ai3ComboBox.getSelectedIndex() + 1;
 	}
 
 }

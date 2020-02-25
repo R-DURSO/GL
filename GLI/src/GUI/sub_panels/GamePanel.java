@@ -1,12 +1,17 @@
 package GUI.sub_panels;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import GUI.MainWindow;
+
 public class GamePanel extends JPanel{
 	private JLabel testLabel = new JLabel("jeu");
-
-	public GamePanel() {
+	private JFrame context;
+	
+	public GamePanel(MainWindow context) {
+		this.context = context;
 		init();
 	}
 
