@@ -1,4 +1,4 @@
-package GUI.components;
+package GUI.components.menu;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;

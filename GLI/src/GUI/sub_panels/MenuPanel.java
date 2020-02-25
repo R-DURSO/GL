@@ -8,10 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import GUI.MainWindow;
-import GUI.components.ChoicePanel;
 import GUI.components.GuiPreferences;
-import GUI.components.PreferencesPanel;
-import GUI.components.TitlePanel;
+import GUI.components.menu.ChoicePanel;
+import GUI.components.menu.PreferencesPanel;
+import GUI.components.menu.TitlePanel;
 
 public class MenuPanel extends JPanel{
 	private static final long serialVersionUID = 5832326052399006926L;

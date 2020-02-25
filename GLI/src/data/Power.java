@@ -27,6 +27,10 @@ public class Power {
 		return name;
 	}
 	
+	public Resource[] getResources() {
+		return resources;
+	}
+	
 	public Resource getResource(int resourceType) {
 		return resources[resourceType];
 	}

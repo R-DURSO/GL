@@ -1,7 +1,7 @@
 package process.game;
 import java.util.ArrayList;
 
-import GUI.components.PreferencesPanel;
+import GUI.components.menu.PreferencesPanel;
 import data.actions.*;
 import data.GameMap;
 import data.Power;
@@ -17,7 +17,6 @@ public class GameLoop {
 	// constante temporaire 
 	private boolean isPlaying = true;
 	private Power powers[];
-	
 	
 	public GameLoop( Power[] powers,  GameMap  map ) {
 		initActionArray();

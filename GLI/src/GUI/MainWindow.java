@@ -15,6 +15,9 @@ public class MainWindow extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 6569351248766478602L;
+	
+	private final String GAME_WINDOW = "game";
+	private final String MENU_WINDOW = "menu";
 	private GamePanel gamePanel = new GamePanel(this);
 	private MenuPanel menuPanel = new MenuPanel(this);
 	private MainWindow context = this;
@@ -28,7 +31,7 @@ public class MainWindow extends JFrame{
 		init();
 		getContentPane().add(gamePanel, "game");
 		getContentPane().add(menuPanel, "menu");
-		cardLayout.show(getContentPane(), "menu");
+		cardLayout.show(getContentPane(), "game");
 	}
 
 	private void init() {

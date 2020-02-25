@@ -1,4 +1,4 @@
-package GUI.components;
+package GUI.components.menu;
 
 import java.awt.GridLayout;
 
@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import GUI.components.GuiPreferences;
+import GUI.components.SliderPanel;
 import data.GameContants;
 
 public class PreferencesPanel extends JPanel{
