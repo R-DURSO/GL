@@ -162,6 +162,8 @@ public class UnitManager {
 		removeUnits(fromBox.getOwner(), fromBox, casualityAtt);
 		//s'il n'y a plus de défenseur, ils sont morts
 		if (defender.getNumber() == 0) {
+			//delete defenders units
+			deleteUnits(targetBox.getOwner(), targetBox);
 			//s'il reste des attaquants...
 			if (attacker.getNumber() != 0) {
 				//La place est libre
