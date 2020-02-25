@@ -1,5 +1,6 @@
 package data.building.product;
 import data.building.Building;
+import data.resource.Resource;
 
 public abstract class BuildingProduct extends Building{
 	private boolean onRightResource;
@@ -8,13 +9,26 @@ public abstract class BuildingProduct extends Building{
 		super(buildTime, health);
 	}
 
-	public boolean isOnRightResource() {
+	public boolean isOnRightResource(Resource resource) {
+		if (getProductionType() == resource.getResourceType()) {
+			this.onRightResource = true;
+		}
+		else {
+			this.onRightResource = false;
+		}
 		return onRightResource;
 	}
 	
-	public void setIsOnRightResource(boolean onRightResource) {
-		this.onRightResource = onRightResource;
+	public boolean isOnRightResource(int resourceType) {
+		if (getProductionType() == resourceType) {
+			this.onRightResource = true;
+		}
+		else {
+			this.onRightResource = false;
+		}
+		return onRightResource;
 	}
+	
 	
 	public abstract int getProductionPerTurn();
 	public abstract int getProductionType();

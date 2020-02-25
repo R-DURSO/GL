@@ -41,4 +41,5 @@ public abstract class Resource {
 	}
 	
 	public abstract <R> R accept(RessourceVisitor<R> visitor);
+	public abstract int getResourceType();
 }

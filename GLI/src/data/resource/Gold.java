@@ -7,6 +7,10 @@ public class Gold extends Resource {
 		return 0;
 	}
 	
+	public int getResourceType() {
+		return ResourceTypes.RESOURCE_GOLD;
+	}
+	
 	@Override
 	public <R> R accept(RessourceVisitor<R> visitor) {
 		return visitor.visit(this);
