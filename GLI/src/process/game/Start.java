@@ -6,25 +6,28 @@ import process.management.MapBuilder;
 import process.management.PowerFactory;
 
 public class Start {
-	private Power powers[];
-	private GameMap map;
-	public Start(int numberplayer , int size , int waterAmout) {
-		initPlayer(numberplayer); 
-		generatedMap(size, waterAmout);	
-		new GameLoop(powers,  map);
+	private static Start instance = new Start();
+	
+	public static Start getInstance() {
+		return instance;
 	}
 	
-	public void initPlayer(int numberplayer){
-		powers = new Power[numberplayer];
+	private Start(){}
+	
+	public Power[] initPowers(int numberplayer){
+		Power powers[] = new Power[numberplayer];
 		for(int i = 0; i < numberplayer; i++) {
-			this.powers[i] = PowerFactory.createPower("Joueur " + (i + 1));
+			powers[i] = PowerFactory.createPower("Joueur " + (i + 1));
 		}
+		return powers;
 	}
 	
-	public void generatedMap(int size , int waterAmout) {
+	public GameMap generateMap(int size , int waterAmout, Power powers[]) {
 		MapBuilder mb = new MapBuilder(size, waterAmout, powers);
 		mb.displayMap();
-		map = mb.buildMap();
-		
+		GameMap map = mb.buildMap();
+		return map;
 	}
+	
+	
 }
