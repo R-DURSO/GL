@@ -28,6 +28,14 @@ public class BuildingManager {
 		Building building;
 		building = construction(buildingType);
 		box.setBuilding(building);
+		if (building instanceof BuildingProduct) {
+			if (((BuildingProduct) building).isOnRightResource(box.getResourceType())) {
+				power.addResourcesProductionPerTurn(box.getResourceType(), ((BuildingProduct) building).getProductionPerTurn());
+			}
+			else {
+				((BuildingProduct) building).setOnRightResource(false);
+			}
+		}
 	}
 	
 	//vérifications already done in ActionValidator

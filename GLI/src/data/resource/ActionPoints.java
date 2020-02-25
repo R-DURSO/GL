@@ -14,6 +14,9 @@ public class ActionPoints extends Resource {
 		return 0;
 	}
 
+	public int getResourceType() {
+		return ResourceTypes.RESOURCE_ACTIONS;
+	}
 	
 	@Override
 	public <R> R accept(RessourceVisitor<R> visitor) {

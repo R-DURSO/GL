@@ -6,6 +6,10 @@ public class Food extends Resource {
 	int variation () {
 		return 0;
 	}
+
+	public int getResourceType() {
+		return ResourceTypes.RESOURCE_FOOD;
+	}
 	
 	@Override
 	public <R> R accept(RessourceVisitor<R> visitor) {
