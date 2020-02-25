@@ -1,37 +1,24 @@
 package test;
-
+import process.management.*;
+import data.resource.*;
 import data.GameMap;
 import data.Position;
 import data.Power;
+import data.boxes.Box;
+import data.boxes.GroundBox;
+import data.building.BuildingTypes;
 import process.game.Start;
-import process.management.ActionValidator;
-import process.management.MapBuilder;
 
 public class TestTurn {
-GameMap map;
-Power power[];
-ActionValidator action; 
+private GameMap map;
+private Power power[];
+private ActionValidator action;
+
+
 public TestTurn() {
 	init();
-	power[1].addResourcesProductionPerTurn(3, 50);
-	power[1].addResourcesProductionPerTurn(4, 100);
-	for (int i=1 ; i<3; i++) {
-		System.out.println("tour "+i);
-		System.out.println(power[1].getResource(3).getAmount());
-		System.out.println(power[1].getResource(4).getAmount());
-
-		
-		if(i==1) {
-			try {
-				action.createActionConstruct(power[0], 1 , new Position(0,0));
-			}catch (IllegalArgumentException e){
-				System.err.println(e.getMessage());
-			}
-		i++;
-		}
-	
-		power[1].getResource(3).addValue(50);
-	}
+	turn();
+	endturn();
 }
 	
 	
@@ -51,6 +38,7 @@ public TestTurn() {
 		
 		//createMapBuilder
 		MapBuilder mapBuilder = new MapBuilder(15, 4, powers);
+		
 		map = mapBuilder.buildMap();
 		
 		mapBuilder.displayMap();
@@ -62,6 +50,28 @@ public TestTurn() {
 		
 
 	}
+	private void turn() {
+		for (int i=0; i<3 ; i++) {
+			if(i==1) {
+				try {
+				action.createActionConstruct(power[0], BuildingTypes.BUILDING_SAWMILL, new Position(1,0));
+				BuildingManager.getInstance().addNewBuilding(power[0], BuildingTypes.BUILDING_SAWMILL, (GroundBox) map.getBox(1, 0));
+				power[0].addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, Z );
+				}catch( IllegalArgumentException e) {
+					e.getMessage();
+				}
+			}
+		}
+	}
+	private void endturn() {
+		System.out.println(power[0].getResourceAmount(ResourceTypes.RESOURCE_FOOD));
+		System.out.println(map.getBox(1, 0));
+		System.out.println(power[0].getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD));
+	}
+	
+	
+	
+	
 	private static Power[] createPowers() {
 		Power powers[] = new Power[2];
 		for(int i = 0; i < 2; i++){
