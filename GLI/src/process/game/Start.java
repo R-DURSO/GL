@@ -6,15 +6,16 @@ import process.management.MapBuilder;
 import process.management.PowerFactory;
 
 public class Start {
-	private Power powers[]= new Power[4];
+	private Power powers[];
 	private GameMap map;
 	public Start(int numberplayer , int size , int waterAmout) {
 		initPlayer(numberplayer); 
 		generatedMap(size, waterAmout);	
-		new GameLoop( powers,  map);
+		new GameLoop(powers,  map);
 	}
 	
 	public void initPlayer(int numberplayer){
+		powers = new Power[numberplayer];
 		for(int i = 0; i < numberplayer; i++) {
 			this.powers[i] = PowerFactory.createPower("Joueur " + (i + 1));
 		}
