@@ -9,10 +9,13 @@ public class ActionPoints extends Resource {
 		super(ACTIONS_NUMBER);
 	}
 	
+	public int getResourceType() {
+		return ResourceTypes.RESOURCE_ACTIONS;
+	}
+	
 	int variation () {
 		return 0;
 	}
-
 	
 	@Override
 	public <R> R accept(RessourceVisitor<R> visitor) {
