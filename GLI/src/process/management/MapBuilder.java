@@ -40,7 +40,7 @@ public class MapBuilder {
 			setRandomPatternWater(randX, randY);
 		}
 		
-		map[size/2][size/2] = false;
+		makeSquareGround(size/2, size/2);
 	}
 	
 	
@@ -61,6 +61,16 @@ public class MapBuilder {
 		
 	}
 
+	private void makeSquareGround(int randX, int randY) {
+		int x,y;
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				x = randX + i;
+				y = randY + j;
+				map[x][y] = false;
+			}
+		}
+	}
 
 	private void makeSquareWater(int randX, int randY) {
 		int x,y;
