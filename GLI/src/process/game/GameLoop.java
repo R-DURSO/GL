@@ -1,5 +1,7 @@
 package process.game;
 import java.util.ArrayList;
+
+import GUI.components.PreferencesPanel;
 import data.actions.*;
 import data.GameMap;
 import data.Power;
@@ -18,9 +20,12 @@ public class GameLoop {
 	
 	
 	public GameLoop( Power[] powers,  GameMap  map ) {
-		InitActionArray();
+		initActionArray();
 		actionValidator = new ActionValidator(map);
 		this.powers = powers;
+	}
+	
+	public void init(PreferencesPanel preferences) {
 	}
 	
 	public void play() {
@@ -53,7 +58,7 @@ public class GameLoop {
 		}
 	}
 	
-	public void InitActionArray() {
+	public void initActionArray() {
 		for (int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
 			action[i]= new ArrayList<Action>();
 		}
