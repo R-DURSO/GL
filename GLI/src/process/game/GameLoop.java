@@ -45,13 +45,7 @@ public class GameLoop {
 				while(canContinueTurn(powers[i].getResource(ResourceTypes.RESOURCE_ACTIONS))) {
 					// test des action possible 
 
-					actionValidator.createActionMakeAlliance(powers[i], powers[i+1]);
-					if(actionValidator != null) {
-						System.out.println(actionValidator);
-						powers[i].removeActionPoint();
-					}else {
-						System.out.println("test");
-					}
+
 				}
 			}
 		}

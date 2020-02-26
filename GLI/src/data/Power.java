@@ -32,11 +32,11 @@ public class Power {
 	}
 	
 	public Resource getResource(int resourceType) {
-		return resources[resourceType];
+		return resources[resourceType - 1];
 	}
 	
 	public int getResourceAmount(int resourceType) {
-		return resources[resourceType].getAmount();
+		return resources[resourceType-1 ].getAmount();
 	}
 	
 	public boolean isAllied() {
@@ -48,15 +48,15 @@ public class Power {
 	}
 	
 	public int getResourceProductionPerTurn(int resourceType) {
-		return resources[resourceType].getProductionPerTurn();
+		return resources[resourceType-1].getProductionPerTurn();
 	}
 	
 	public void addResourcesProductionPerTurn(int resourceType, int amount) {
-		resources[resourceType].addProductionPerTurn(amount);
+		resources[resourceType-1].addProductionPerTurn(amount);
 	}
 	
 	public void substractResourcesProductionPerTurn(int resourceType, int amount) {
-		resources[resourceType].substractProductionPerTurn(amount);
+		resources[resourceType-1].substractProductionPerTurn(amount);
 	}
 
 	public void setAlly(Power ally) {
