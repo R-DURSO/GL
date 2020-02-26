@@ -13,7 +13,7 @@ public class ResourcePanel extends JPanel{
 	private Resource resource;
 
 	public ResourcePanel(String name, Resource resource) {
-		resourceNameLabel = new JLabel(name);
+		resourceNameLabel = new JLabel(name + "%");
 		resourceAmountProdLabel = new JLabel(resource.getAmount() + "(" + withSign(resource.getProductionPerTurn()) + ")", SwingConstants.CENTER);
 		this.resource = resource;
 		init();

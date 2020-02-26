@@ -64,34 +64,44 @@ public TestTurn() {
 				BuildingManager.getInstance().addNewBuilding(power[0], BuildingTypes.BUILDING_MINE, (GroundBox) map.getBox(1, 0));
 
 				}catch( IllegalArgumentException e) {
-					e.getMessage();
-				}
+					System.err.println(e.getMessage());				}
 				try {
 					action.createActionConstruct(power[0], BuildingTypes.BUILDING_BARRACK,new Position(0,1));
 					BuildingManager.getInstance().addNewBuilding(power[0], BuildingTypes.BUILDING_BARRACK,(GroundBox) map.getBox(0, 1));
 				}catch( IllegalArgumentException e) {
-					e.getMessage();
-				}
+					System.err.println(e.getMessage());				}
 				// action du joueur 2
 				try {
 					action.createActionMakeAlliance(power[1], power[0]);
+					power[0].setAlly(power[1]);
+					power[1].setAlly(power[0]);
 				}catch( IllegalArgumentException e) {
-					e.getMessage();
-				}
+					System.err.println(e.getMessage());				}
 			}
 			if(i==2) {
 				try {
 					action.createActionCreateUnit(power[0], UnitTypes.UNIT_INFANTRY, 10, new Position (0,1));
 					UnitManager.getInstance().addUnits(power[0], map.getBox(0, 1), UnitTypes.UNIT_PIKEMAN, 10);
 				}catch( IllegalArgumentException e) {
-					e.getMessage();
+					System.err.println(e.getMessage());
+				}
+				try {
+					action.createActionConstruct(power[1], BuildingTypes.BUILDING_BARRACK, new Position(0,1));
+					
+				}catch( IllegalArgumentException e){
+					System.err.println(e.getMessage());
+				}
+				try {
+					action.createActionCreateUnit(power[1], UnitTypes.UNIT_CAVALRY, 5, new Position(14,14));
+				}catch (IllegalArgumentException e) {
+					System.err.println(e.getMessage());
 				}
 			}
 		
 	}
 	private void endturn() {
 		for (int a=0 ; a<2; a++) {
-			System.out.println("joueur"+a);
+			System.out.println(power[a].getName());
 			System.out.println("ressource disponible  \n");
 			System.out.println("food : "+power[a].getResourceAmount(ResourceTypes.RESOURCE_FOOD));
 			System.out.println("gold : "+power[a].getResourceAmount(ResourceTypes.RESOURCE_GOLD));
@@ -109,6 +119,7 @@ public TestTurn() {
 			
 		}
 		System.out.println(power[1].getAlly());
+		System.out.println(map);
 	}
 	
 	
