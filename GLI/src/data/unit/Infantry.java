@@ -6,7 +6,7 @@ public class Infantry extends Units {
 	private static final int BASE_HEALTH = 4;
 	private static final int RANGE = 1;
 	private static final int MOVEMENT = 1;
-	private static final int DAMAGE = 2;
+	private static final int DAMAGE = 3;
 	private static final int DEFENSE = 2;
 	
 	public static final int COST = 10;

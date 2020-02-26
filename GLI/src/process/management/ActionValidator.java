@@ -134,7 +134,7 @@ public class ActionValidator {
 		
 		//check if there is units on target, in this case, check the owner of those units
 		//if player himself or his ally, no attack
-		if(targetBox.hasUnit() || targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAlly())
+		if(!targetBox.hasUnit() || targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAlly())
 			throw new IllegalArgumentException("Vous ne pouvez pas attaquer ici");
 		
 		powerConcerned.removeActionPoint();

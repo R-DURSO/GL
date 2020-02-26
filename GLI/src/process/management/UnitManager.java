@@ -140,20 +140,29 @@ public class UnitManager {
 		 * -if def is ranged, no counter TODO???
 		 * -else def counter
 		 */
+		
+		
+		/**
 		//Les dégats sont bloqués par la defense, mais le nombre compte !
-		int AttackerDamageDealt = (attacker.getDamage() - defender.getDefense()) * attacker.getNumber();
+		int AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) - ((int)DefDefence * defender.getNumber());
 		System.out.println("degat de l'att "+AttackerDamageDealt);
+		**/
+		
+		double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
+		System.out.println("degat de l'att "+AttackerDamageDealt);
+		
 		//Les défenseurs subissent les dégats
-		int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - AttackerDamageDealt) / defender.getHealth());
+		int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
 		System.out.println("mort des defs "+casualityDef);
 		
 		int casualityAtt = 0;
 		if (!isRanged(attacker)) {
 			//Round 2, contre-attaque si pas à distance
-			int DefenderDamageDealt = (defender.getDamage() - attacker.getDefense()) * defender.getNumber();
+			//int DefenderDamageDealt = (defender.getDamage() - attacker.getDefense()) * defender.getNumber();
+			double DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense()) / 10.0));
 			System.out.println("degat des def "+DefenderDamageDealt);
 			//Les attaquant subissent les dégats
-			casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - DefenderDamageDealt) / attacker.getHealth());
+			casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
 			System.out.println("mort des att "+casualityAtt);
 		}
 		
@@ -161,11 +170,13 @@ public class UnitManager {
 		removeUnits(targetBox.getOwner(), targetBox, casualityDef);
 		removeUnits(fromBox.getOwner(), fromBox, casualityAtt);
 		//s'il n'y a plus de défenseur, ils sont morts
-		if (defender.getNumber() == 0) {
+		if (!targetBox.hasUnit()) {
+			/**
 			//delete defenders units
 			deleteUnits(targetBox.getOwner(), targetBox);
+			**/
 			//s'il reste des attaquants...
-			if (attacker.getNumber() != 0) {
+			if (fromBox.hasUnit()) {
 				//La place est libre
 				moveUnits(powerConcerned, fromBox, targetBox);
 			}
