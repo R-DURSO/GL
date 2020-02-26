@@ -113,7 +113,7 @@ public TestTurn() {
 			System.out.println("stone "+power[a].getResourceProductionPerTurn(ResourceTypes.RESOURCE_STONE));
 			System.out.println(" wood "+power[a].getResourceProductionPerTurn(ResourceTypes.RESOURCE_WOOD));
 			System.out.println(map.getBox(0, 1).toString());
-			System.out.println(map.getBox(1, 0).toString());
+			System.out.println(map.getBox(1, 0).toString()); 
 			
 		}
 		System.out.println(power[1].getAlly());
