@@ -15,9 +15,9 @@ import data.GameContants;
 public class PreferencesPanel extends JPanel{
 	private static final long serialVersionUID = -714238221735387964L;
 	
-	private final int MIN_MAP_SIZE = 15;
+	private final int MIN_MAP_SIZE = 10;
 	private final int INIT_MAP_SIZE = 20;
-	private final int MAX_MAP_SIZE = 50;
+	private final int MAX_MAP_SIZE = 30;
 	
 	//number players
 	private JPanel numberPlayersPanel = new JPanel();

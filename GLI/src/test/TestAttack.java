@@ -77,18 +77,4 @@ public class TestAttack {
 		System.out.println(map);
 		
 	}
-
-
-	private static GameMap initMap(Power powers[]) {
-		MapBuilder mapBuilder = new MapBuilder(20, 0, powers);
-		return mapBuilder.buildMap();
-	}
-
-
-	private static void initPowers(Power powers[]) {
-		powers = new Power[2];
-		powers[0] = new Power("joueur 1");
-		powers[1] = new Power("joueur 2");
-	}
-
 }

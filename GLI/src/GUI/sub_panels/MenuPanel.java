@@ -20,7 +20,7 @@ public class MenuPanel extends JPanel{
 	private JPanel preferencesPanel = new PreferencesPanel();
 	private JPanel choicePanel;
 	
-	private final Dimension TITLE_DIMENSION = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 4);
+	private final Dimension TITLE_DIMENSION = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 10);
 	private final Dimension PREFERENCES_DIMENSION = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 2);
 	private final Dimension CHOICE_DIMENSION = TITLE_DIMENSION;
 

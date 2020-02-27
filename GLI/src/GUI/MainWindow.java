@@ -31,7 +31,7 @@ public class MainWindow extends JFrame{
 		init();
 		getContentPane().add(gamePanel, "game");
 		getContentPane().add(menuPanel, "menu");
-		cardLayout.show(getContentPane(), "game");
+		cardLayout.show(getContentPane(), "menu");
 	}
 
 	private void init() {
@@ -49,10 +49,13 @@ public class MainWindow extends JFrame{
 	
 	public void newGame() {
 		//gameloop.init(menuPanel.getPreferencesPanel());
+		
 	}
 	
 	public void loadGame() {
 		
 	}
+	
+	
 
 }

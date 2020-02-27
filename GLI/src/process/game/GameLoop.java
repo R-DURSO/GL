@@ -34,7 +34,7 @@ public class GameLoop {
 			
 			//for player 1, who is the unique human
 			while(canContinueTurn(powers[0].getResource(ResourceTypes.RESOURCE_ACTIONS))) {
-				
+				//window.doSomething()
 				
 			}
 		

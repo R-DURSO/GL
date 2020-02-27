@@ -25,5 +25,7 @@ public class MainGamePanel extends JPanel{
 		setLayout(new GridLayout(0,1));
 		add(new JLabel("affichage de la map", SwingConstants.CENTER));
 	}
+	
+	
 
 }

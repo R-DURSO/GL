@@ -26,7 +26,6 @@ public class ChoicePanel extends JPanel{
 
 	private void init() {
 		setLayout(new GridLayout(1, 3));
-		
 		newGameButton.addActionListener(new ActionNewGame());
 		loadGameButton.addActionListener(new ActionLoadGame());
 		
@@ -39,7 +38,7 @@ public class ChoicePanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(choiceBox("Voulez-vous vraiment lancer une nouvelle partie?\nLa partie précédente sera écrasée."))
-				context.loadGame();
+				context.newGame();
 		}
 	}
 	
