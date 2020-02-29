@@ -26,8 +26,8 @@ public class PreferencesPanel extends JPanel{
 	private JComboBox<Integer> numberPlayerComboBox = new JComboBox<>(numberPlayersList);
 	
 	//water amount
-	private JPanel waterAmountPanel = new JPanel();
 	private JLabel waterAmountLabel = new JLabel("Quantité d'eau : ", SwingConstants.CENTER);
+	private JPanel waterAmountPanel = new JPanel();
 	private final String waterAmountList[] = {"un peu", "moyen", "beaucoup"};
 	private JComboBox<String> waterAmountComboBox = new JComboBox<>(waterAmountList);
 	

@@ -7,8 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import GUI.components.GuiPreferences;
+import GUI.components.menu.PreferencesPanel;
 import GUI.sub_panels.GamePanel;
 import GUI.sub_panels.MenuPanel;
+import process.game.GameLoop;
 
 public class MainWindow extends JFrame{
 	/**
@@ -48,7 +50,9 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void newGame() {
-		//gameloop.init(menuPanel.getPreferencesPanel());
+		new GameLoop(  (PreferencesPanel) menuPanel.getPreferencesPanel());
+		cardLayout.show(getContentPane(), "game");
+		//System.out.println(menuPanel.getPreferencesPanel());
 		
 	}
 	

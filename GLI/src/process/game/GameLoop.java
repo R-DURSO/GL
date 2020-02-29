@@ -7,6 +7,7 @@ import data.GameMap;
 import data.Power;
 import data.resource.*;
 import process.management.ActionValidator;
+import process.management.MapBuilder;
 
 public class GameLoop {
 	
@@ -17,14 +18,27 @@ public class GameLoop {
 	// constante temporaire 
 	private boolean isPlaying = true;
 	private Power powers[];
+	GameMap map;
 	
-	public GameLoop( Power[] powers,  GameMap  map ) {
+	public GameLoop( PreferencesPanel preferences ) {
 		initActionArray();
+		init(preferences);
 		actionValidator = new ActionValidator(map);
-		this.powers = powers;
+		
 	}
 	
 	public void init(PreferencesPanel preferences) {
+		createPower(preferences.getNumberPlayers());
+		this.map=null;
+		MapBuilder mapBuilder= new MapBuilder(preferences.getMapSize(),preferences.getWaterAmount(), this.powers);
+		this.map=mapBuilder.buildMap();
+		mapBuilder.displayMap();
+		System.out.println(map);
+		/* initinalisation des ia qui ne sont pas encore crée donc 
+		 * IA1 = new createIA(preferences.getAi1Level());
+		 * IA2 = new createIA(preferences.getAi2Level());
+		 * IA3 = new createIA(preferences.getAi3Level());
+		 */
 	}
 	
 	public void play() {
@@ -59,6 +73,12 @@ public class GameLoop {
 	}
 	public Boolean canContinueTurn(Resource actionPoints) {
 		return actionPoints.getAmount() > 0;
+	}
+	public  void createPower(int number) {
+		this.powers =new Power[number];
+		for(int i = 0; i < number; i++){
+			this.powers[i] = new Power("joueur " + (i+1));
+		}
 	}
 	
 }
