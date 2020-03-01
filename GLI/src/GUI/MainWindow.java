@@ -7,10 +7,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import GUI.components.GuiPreferences;
+import GUI.components.game.MainGamePanel;
 import GUI.components.menu.PreferencesPanel;
 import GUI.sub_panels.GamePanel;
 import GUI.sub_panels.MenuPanel;
 import process.game.GameLoop;
+import process.game.Start;
 
 public class MainWindow extends JFrame{
 	/**
@@ -50,7 +52,9 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void newGame() {
-		new GameLoop(  (PreferencesPanel) menuPanel.getPreferencesPanel());
+		Start game = new Start((PreferencesPanel) menuPanel.getPreferencesPanel());
+
+		gamePanel.initMainGamePanel(game.getMap(), game.getPower());
 		cardLayout.show(getContentPane(), "game");
 		//System.out.println(menuPanel.getPreferencesPanel());
 		

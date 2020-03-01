@@ -12,6 +12,7 @@ import GUI.components.GuiPreferences;
 import GUI.components.game.GameButtonsPanel;
 import GUI.components.game.GameInfoPanel;
 import GUI.components.game.MainGamePanel;
+import data.GameMap;
 import data.Power;
 import data.resource.Resource;
 import data.resource.ResourceTypes;
@@ -28,7 +29,7 @@ public class GamePanel extends JPanel{
 	private final Dimension BUTTONS_DIMENSION = INFO_DIMENSION;
 	
 	private JPanel gameInfoPanel;
-	private JPanel mainGamePanel = new MainGamePanel();
+	private JPanel mainGamePanel;
 	private JPanel gameButtonsPanel = new GameButtonsPanel();
 	
 	
@@ -64,11 +65,15 @@ public class GamePanel extends JPanel{
 	private void init() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		gameInfoPanel.setPreferredSize(INFO_DIMENSION);
-		mainGamePanel.setPreferredSize(MAIN_DIMENSION);
 		gameButtonsPanel.setPreferredSize(BUTTONS_DIMENSION);
 		add(gameInfoPanel);
-		add(mainGamePanel);
+
 		add(gameButtonsPanel);
 	}
-
+	public void initMainGamePanel(GameMap map, Power powers[]) {
+		this.mainGamePanel	= new MainGamePanel(map, powers);
+		mainGamePanel.setPreferredSize(MAIN_DIMENSION);
+		add(mainGamePanel);
+		
+	}
 }
