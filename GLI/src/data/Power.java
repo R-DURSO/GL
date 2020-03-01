@@ -1,8 +1,6 @@
 package data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import data.boxes.Box;
 import data.resource.*;
 import process.management.ResourcesFactory;;

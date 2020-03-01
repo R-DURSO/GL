@@ -3,41 +3,16 @@ package process.management;
 import data.GameMap;
 import data.Position;
 import data.Power;
-import data.actions.ActionAttack;
-import data.actions.ActionBreakAlliance;
-import data.actions.ActionConstruct;
-import data.actions.ActionCreateUnit;
-import data.actions.ActionDestroyBuilding;
-import data.actions.ActionDestroyUnits;
-import data.actions.ActionMakeAlliance;
-import data.actions.ActionMove;
-import data.boxes.Box;
-import data.boxes.GroundBox;
-import data.boxes.WaterBox;
+import data.actions.*;
+import data.boxes.*;
 import data.building.Building;
 import data.building.BuildingTypes;
-import data.building.army.Barrack;
-import data.building.army.BuildingArmy;
-import data.building.army.Dock;
-import data.building.army.Workshop;
-import data.building.product.Mine;
-import data.building.product.Quarry;
-import data.building.product.Sawmill;
-import data.building.product.Windmill;
-import data.building.special.Door;
-import data.building.special.Temple;
-import data.building.special.Wall;
+import data.building.army.*;
+import data.building.product.*;
+import data.building.special.*;
 import data.resource.ResourceCost;
 import data.resource.ResourceTypes;
-import data.unit.Archer;
-import data.unit.BatteringRam;
-import data.unit.Boat;
-import data.unit.Cavalry;
-import data.unit.Infantry;
-import data.unit.Pikeman;
-import data.unit.Trebuchet;
-import data.unit.UnitTypes;
-import data.unit.Units;
+import data.unit.*;
 
 /**
  * This class ensures that every action the player does is possible 
@@ -488,5 +463,46 @@ public class ActionValidator {
 	
 	private Box getBoxFromMap(Position position) {
 		return map.getBox(position.getX(), position.getY());
+	}
+	
+	
+	
+	public ActionUpgradeCapital createActionUpgradeCapital (Power powerConcerned, Position target) throws IllegalArgumentException {
+		Box targetBox = getBoxFromMap(target);
+			//check if target belongs to powerConcerned
+		if (targetBox.getOwner() != powerConcerned) {
+			throw new IllegalArgumentException("La case ne nous appartient pas");
+		}
+			//Is the position on ground ?
+		if (targetBox instanceof WaterBox)
+			throw new IllegalArgumentException("La Capitale ne peut pas se trouver sur une case d'eau");
+		else {
+			GroundBox groundBox = (GroundBox)targetBox;
+				//Is there a building ?
+			if(!groundBox.hasBuilding()) {
+				throw new IllegalArgumentException("Il n'y a pas de building sur cette case");
+			}
+			else {
+					//And is this building a Capital ?
+				if (groundBox.getBuilding().getType() != BuildingTypes.BUILDING_CAPITAL) {
+					throw new IllegalArgumentException("Le batiment n'est pas la Capital");
+				}
+				else {
+					//So, we create the cost needed
+					int upgradeCost = ((Capital) groundBox.getBuilding()).getUpgradeCost();
+					//check if power can upgrade (0 if not upgradeable)
+					if (upgradeCost != 0) {
+						for (int i = 0 ; i < ResourceTypes.NUMBER_TYPE_RESOURCES - 1 ; i++) {
+							if (!checkPrice(powerConcerned.getResourceAmount(i), upgradeCost)) {
+								throw new IllegalArgumentException("Certaines Resource ne sont pas suffisantes");
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		powerConcerned.removeActionPoint();
+		return new ActionUpgradeCapital(powerConcerned);
 	}
 }

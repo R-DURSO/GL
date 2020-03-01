@@ -27,10 +27,28 @@ public class Capital extends BuildingSpecial {
 		super(BUILD_TIME, BASE_HEALTH);
 	}
 	
-
-	@Override
 	public int getType() {
 		return BuildingTypes.BUILDING_CAPITAL;
+	}
+
+	public int getLevel() {
+		return this.level;
+	}
+	
+	public int getUpgradeCost () {
+		if (getLevel() < MAX_LEVEL) {
+			switch(getLevel()) {
+			case 1:
+				return COST_LEVEL_2;
+			case 2:
+				return COST_LEVEL_3;
+			case 3:
+				return COST_LEVEL_4;
+			case 4:
+				return COST_LEVEL_5;
+			}
+		}
+		return 0;
 	}
 	
 	@Override
