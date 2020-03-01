@@ -1,39 +1,35 @@
 package GUI.components.game;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
-import java.awt.Graphics;
-
-import GUI.components.GuiPreferences;
+import GUI.colors.ColorData;
 import data.GameMap;
 import data.Power;
-import process.management.MapBuilder;
+import data.boxes.Box;
+import data.boxes.GroundBox;
+import data.boxes.WaterBox;
 
 public class MainGamePanel extends JPanel{
 	private static final long serialVersionUID = -4989371043690170741L;
 	private GameMap map;
-	private int scaleWidth;
-	private int scaleHeight;
+	private Power powers[];
 	
-	private final int MAP_SIZE = 10;
+	private final int MAP_SIZE = 15;
+
 	
-	private boolean debugMode = true;
-	
-	public MainGamePanel() {
+	public MainGamePanel(GameMap map, Power powers[]) {
 		super();
 		init();
-		//en attendant la reception des paramètres
-		buildMap();
-		setBackground(Color.WHITE);
+		
+		this.powers = powers;
+		this.map = map;
+		setBackground(Color.BLACK);
 	}
 	
 	
@@ -41,10 +37,8 @@ public class MainGamePanel extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if(debugMode) {
-			drawDebugModeGrid(g);
-		}
 		drawMap(g);
+		
 	}
 	
 
@@ -60,37 +54,58 @@ public class MainGamePanel extends JPanel{
             for (int j = 0; j < map.getSize(); j++) {
                 int x = i * rectWidth;
                 int y = j * rectHeight;
-                float r = rand.nextFloat();
-            	float gr = rand.nextFloat();
-            	float b = rand.nextFloat();
-            	g.setColor(new Color(r, gr, b));
+                //draw background of box 
+                determineBoxColor(g, i, j);
                 g.fillRect(x, y, rectWidth, rectHeight);
+                
+                //border color
+                determineBoxBorder(g, i, j);
+                g.setColor(ColorData.NO_POWER_COLOR);
+                g.drawRect(x, y, rectWidth, rectHeight);
+                
+                // TODO now, we want to draw shapes to show what resource, unit, building are in box and who has this box
+                
             }
         }
 	}
 
 
-
-	private void drawDebugModeGrid(Graphics g) {
-		int width = getWidth();
-		int height = getHeight();
-		g.setColor(Color.GRAY);
+	/*
+     * Border Color:
+     * 	Each color represents a belonging
+     *		-Black : no one
+     *		-Red : player 1
+     *		-Yellow : player 2
+     *		-Green : player 3
+     *		-White : player 4*/
+	private void determineBoxBorder(Graphics g, int i, int j) {
+		Box box = map.getBox(i, j);
+		if(box.hasOwner()) {
+			Power power = box.getOwner();
+			if(powers[0] == power) {
+				g.setColor(ColorData.POWER_1_COLOR);
+			}else if(powers[1] == power) {
+				g.setColor(ColorData.POWER_2_COLOR);
+			}else if(powers[2] == power) {
+				g.setColor(ColorData.POWER_3_COLOR);
+			}else{ //no other choice than power 4
+				g.setColor(ColorData.POWER_4_COLOR);
+			}
+		}else {
+			g.setColor(ColorData.NO_POWER_COLOR);
+		}
 		
-		for(int i = scaleWidth; i < MAP_SIZE * scaleWidth; i += scaleWidth){
-			g.drawLine(i, 1, i, height);
-		}
-		for(int i = scaleHeight; i < MAP_SIZE * scaleHeight; i += scaleHeight){
-			g.drawLine(1, i, width, i);
-		}
 	}
 
-	private void buildMap() {
-		Power powers[] = new Power[4];
-		for(int i = 1; i < 5; i++) {
-			powers[i-1] = new Power("joueur "+ i);
+
+
+	private void determineBoxColor(Graphics g, int i, int j) {
+		Box box = map.getBox(i, j);
+		if (box instanceof GroundBox) {
+			g.setColor(ColorData.GROUND_COLOR);
+		} else if(box instanceof WaterBox) {
+			g.setColor(ColorData.WATER_COLOR);
 		}
-		MapBuilder mb = new MapBuilder(MAP_SIZE, 20, powers);
-		map = mb.buildMap();
 	}
 
 	private void init() {
