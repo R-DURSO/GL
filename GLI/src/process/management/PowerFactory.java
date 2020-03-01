@@ -1,6 +1,6 @@
 package process.management;
 
-import data.Position;
+import data.building.special.Capital;
 import data.Power;
 
 public class PowerFactory {
@@ -10,7 +10,7 @@ public class PowerFactory {
 		return new Power(name);
 	}
 	
-	public static Power createPower(String name, Position capital) {
+	public static Power createPower(String name, Capital capital) {
 		return new Power(name, capital);
 	}
 }

@@ -1,8 +1,9 @@
 package data;
 
 import java.util.ArrayList;
-import data.boxes.Box;
+import data.boxes.*;
 import data.resource.*;
+import data.building.special.Capital;
 import process.management.ResourcesFactory;;
 
 public class Power {
@@ -10,7 +11,7 @@ public class Power {
 	private ArrayList<Box> territory = new ArrayList<>();
 	private Resource[] resources = new Resource[ResourceTypes.NUMBER_PLAYER_RESOURCES];
 	private Power ally;
-	private Position capital;
+	private Capital capital;
 	
 	public Power(String name) {
 		this.name = name;
@@ -22,7 +23,7 @@ public class Power {
 		resources[ResourceTypes.RESOURCE_SCORE - 1] = ResourcesFactory.createScore();
 	}
 	
-	public Power(String name, Position capital) {
+	public Power(String name, Capital capital) {
 		this(name);
 		this.capital = capital;
 	}
@@ -84,7 +85,7 @@ public class Power {
 		return territory;
 	}
 	
-	public Position getCapital() {
+	public Capital getCapital() {
 		return this.capital;
 	}
 	
