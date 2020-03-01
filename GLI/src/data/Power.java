@@ -10,6 +10,7 @@ public class Power {
 	private ArrayList<Box> territory = new ArrayList<>();
 	private Resource[] resources = new Resource[ResourceTypes.NUMBER_PLAYER_RESOURCES];
 	private Power ally;
+	private Position capital;
 	
 	public Power(String name) {
 		this.name = name;
@@ -19,6 +20,11 @@ public class Power {
 		resources[ResourceTypes.RESOURCE_WOOD - 1] = ResourcesFactory.createWood();
 		resources[ResourceTypes.RESOURCE_STONE - 1] = ResourcesFactory.createStone();
 		resources[ResourceTypes.RESOURCE_SCORE - 1] = ResourcesFactory.createScore();
+	}
+	
+	public Power(String name, Position capital) {
+		this(name);
+		this.capital = capital;
 	}
 	
 	public String getName() {
@@ -76,6 +82,10 @@ public class Power {
 	
 	public ArrayList<Box> getTerritory() {
 		return territory;
+	}
+	
+	public Position getCapital() {
+		return this.capital;
 	}
 	
 	public String toString() {

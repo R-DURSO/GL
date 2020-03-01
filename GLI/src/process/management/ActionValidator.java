@@ -468,6 +468,9 @@ public class ActionValidator {
 	
 	
 	public ActionUpgradeCapital createActionUpgradeCapital (Power powerConcerned, Position target) throws IllegalArgumentException {
+		
+		//TODO rajout d'une méthode PositionCapital dans Power
+		
 		Box targetBox = getBoxFromMap(target);
 			//check if target belongs to powerConcerned
 		if (targetBox.getOwner() != powerConcerned) {
@@ -499,8 +502,10 @@ public class ActionValidator {
 								throw new IllegalArgumentException("Certaines Resource ne sont pas suffisantes");
 							}
 						}
-						//On améliore la Capital
-						((Capital) groundBox.getBuilding()).upgrade();
+						
+						//TODO On améliore la Capital (je laisse l'appelle pour copier/coller
+						// ((Capital) groundBox.getBuilding()).upgrade();
+						
 						//Et on retire les Resource
 						for (int i = 0 ; i < ResourceTypes.NUMBER_TYPE_RESOURCES - 1 ; i++) {
 							powerConcerned.getResource(i).subValue(upgradeCost);
