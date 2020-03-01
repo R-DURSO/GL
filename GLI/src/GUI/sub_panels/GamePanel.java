@@ -68,12 +68,12 @@ public class GamePanel extends JPanel{
 		gameButtonsPanel.setPreferredSize(BUTTONS_DIMENSION);
 		add(gameInfoPanel);
 
-		add(gameButtonsPanel);
+		
 	}
 	public void initMainGamePanel(GameMap map, Power powers[]) {
 		this.mainGamePanel	= new MainGamePanel(map, powers);
 		mainGamePanel.setPreferredSize(MAIN_DIMENSION);
 		add(mainGamePanel);
-		
+		add(gameButtonsPanel);
 	}
 }
