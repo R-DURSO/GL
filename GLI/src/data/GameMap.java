@@ -11,6 +11,10 @@ public class GameMap {
 		this.boxes = boxes;
 	}
 	
+	public int getSize() {
+		return boxes.length;
+	}
+	
 	public Box getBox(int positionX, int positionY){
 		//abscissa and ordinate inverted
 		return boxes[positionY][positionX];
