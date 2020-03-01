@@ -51,6 +51,12 @@ public class Capital extends BuildingSpecial {
 		return 0;
 	}
 	
+	public void upgrade () {
+		if (getLevel() < MAX_LEVEL) {
+			this.level ++;
+		}
+	}
+	
 	@Override
 	public <B> B accept(BuildingVisitor<B> visitor) {
 		return visitor.visit(this);

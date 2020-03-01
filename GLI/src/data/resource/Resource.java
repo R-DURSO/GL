@@ -28,6 +28,10 @@ public abstract class Resource {
 	public void addValue(int value) {
 		this.amount += value;
 	}
+
+	public void subValue(int value) {
+		this.amount -= value;
+	}
 	
 	public void productionOfTurn() {
 		this.amount += this.productionPerTurn;
@@ -37,7 +41,7 @@ public abstract class Resource {
 		this.productionPerTurn += production;
 	}
 	
-	public void substractProductionPerTurn(int production) {
+	public void subProductionPerTurn(int production) {
 		this.productionPerTurn -= production;
 	}
 	

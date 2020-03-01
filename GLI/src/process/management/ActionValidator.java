@@ -372,8 +372,8 @@ public class ActionValidator {
 		
 		
 		powerConcerned.removeActionPoint();
-		//remove units cost
-		powerConcerned.getResource(neededResource.getType()).addValue(-neededResource.getCost());
+		//TODO remove units cost
+		powerConcerned.getResource(neededResource.getType()).subValue(neededResource.getCost());
 		return new ActionCreateUnit(powerConcerned, unitType, numberUnits, target);
 	}
 	
@@ -474,12 +474,13 @@ public class ActionValidator {
 			throw new IllegalArgumentException("La case ne nous appartient pas");
 		}
 			//Is the position on ground ?
-		if (targetBox instanceof WaterBox)
+		if (targetBox instanceof WaterBox) {
 			throw new IllegalArgumentException("La Capitale ne peut pas se trouver sur une case d'eau");
+		}
 		else {
 			GroundBox groundBox = (GroundBox)targetBox;
 				//Is there a building ?
-			if(!groundBox.hasBuilding()) {
+			if (!groundBox.hasBuilding()) {
 				throw new IllegalArgumentException("Il n'y a pas de building sur cette case");
 			}
 			else {
@@ -489,7 +490,8 @@ public class ActionValidator {
 				}
 				else {
 					//So, we create the cost needed
-					int upgradeCost = ((Capital) groundBox.getBuilding()).getUpgradeCost();
+					int upgradeCost = 0;
+					upgradeCost = ((Capital) groundBox.getBuilding()).getUpgradeCost();
 					//check if power can upgrade (0 if not upgradeable)
 					if (upgradeCost != 0) {
 						for (int i = 0 ; i < ResourceTypes.NUMBER_TYPE_RESOURCES - 1 ; i++) {
@@ -497,6 +499,16 @@ public class ActionValidator {
 								throw new IllegalArgumentException("Certaines Resource ne sont pas suffisantes");
 							}
 						}
+						//On améliore la Capital
+						((Capital) groundBox.getBuilding()).upgrade();
+						//Et on retire les Resource
+						for (int i = 0 ; i < ResourceTypes.NUMBER_TYPE_RESOURCES - 1 ; i++) {
+							powerConcerned.getResource(i).subValue(upgradeCost);
+						}
+					}
+					//Erreur si l'upgrade coute 0 (valeur par défaut ou retour du getUpgradeCost
+					else {
+						throw new IllegalArgumentException("Erreur lors de l'amélioration");
 					}
 				}
 			}

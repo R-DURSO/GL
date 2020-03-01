@@ -54,7 +54,7 @@ public class Power {
 	}
 	
 	public void substractResourcesProductionPerTurn(int resourceType, int amount) {
-		resources[resourceType-1].substractProductionPerTurn(amount);
+		resources[resourceType-1].subProductionPerTurn(amount);
 	}
 
 	public void setAlly(Power ally) {
