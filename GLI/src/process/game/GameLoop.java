@@ -22,25 +22,12 @@ public class GameLoop {
 	
 	public GameLoop( PreferencesPanel preferences ) {
 		initActionArray();
-		init(preferences);
+		
 		actionValidator = new ActionValidator(map);
 		
 	}
 	
-	public void init(PreferencesPanel preferences) {
-		createPower(preferences.getNumberPlayers());
-		this.map=null;
-		MapBuilder mapBuilder= new MapBuilder(preferences.getMapSize(),preferences.getWaterAmount(), this.powers);
-		this.map=mapBuilder.buildMap();
-		mapBuilder.displayMap();
-		System.out.println(map);
-		/* initinalisation des ia qui ne sont pas encore crée donc 
-		 * IA1 = new createIA(preferences.getAi1Level());
-		 * IA2 = new createIA(preferences.getAi2Level());
-		 * IA3 = new createIA(preferences.getAi3Level());
-		 */
-	}
-	
+
 	public void play() {
 
 		//the main game loop, which won't end unitl game is finished, or player wants to quit

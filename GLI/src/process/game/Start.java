@@ -1,33 +1,49 @@
 package process.game;
 
+import GUI.components.menu.PreferencesPanel;
 import data.GameMap;
 import data.Power;
 import process.management.MapBuilder;
 import process.management.PowerFactory;
 
 public class Start {
-	private static Start instance = new Start();
+	private GameMap map;
+	private Power powers[];
 	
-	public static Start getInstance() {
-		return instance;
+	
+
+	
+	public Start(PreferencesPanel preferences){
+		initPowers(preferences.getNumberPlayers());
+		this.map=null;
+		generateMap(preferences.getMapSize(),preferences.getWaterAmount(), this.powers);
+		System.out.println(map);
+		/* initinalisation des ia qui ne sont pas encore crée donc 
+		 * IA1 = new createIA(preferences.getAi1Level());
+		 * IA2 = new createIA(preferences.getAi2Level());
+		 * IA3 = new createIA(preferences.getAi3Level());
+		 */
 	}
 	
-	private Start(){}
-	
-	public Power[] initPowers(int numberplayer){
-		Power powers[] = new Power[numberplayer];
+	public void initPowers(int numberplayer){
+		this.powers = new Power[numberplayer];
 		for(int i = 0; i < numberplayer; i++) {
 			powers[i] = PowerFactory.createPower("Joueur " + (i + 1));
 		}
-		return powers;
+		
 	}
 	
-	public GameMap generateMap(int size , int waterAmout, Power powers[]) {
+	public void generateMap(int size , int waterAmout, Power powers[]) {
 		MapBuilder mb = new MapBuilder(size, waterAmout, powers);
 		mb.displayMap();
 		GameMap map = mb.buildMap();
-		return map;
+		 this.map=map;
 	}
 	
-	
+	public GameMap getMap() {
+		return map;
+	}
+	public Power[] getPower() {
+		return powers;
+	}
 }
