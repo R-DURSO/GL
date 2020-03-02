@@ -1,5 +1,10 @@
 package data.resource;
 
+/**
+ * <p>Various static final value are stocked here.</p>
+ * @author Maxence HENNEKEIN
+ */
+
 public class ResourceTypes {
 	
 	public static final int NUMBER_TYPE_RESOURCES = 5;

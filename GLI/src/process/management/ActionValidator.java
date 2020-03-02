@@ -371,7 +371,6 @@ public class ActionValidator {
 		
 		
 		powerConcerned.removeActionPoint();
-		//TODO remove units cost
 		powerConcerned.getResource(neededResource.getType()).subValue(neededResource.getCost());
 		return new ActionCreateUnit(powerConcerned, unitType, numberUnits, target);
 	}
@@ -466,8 +465,8 @@ public class ActionValidator {
 	
 	
 	/**
-	 * The Action to upgrade your Capital, 
-	 * Check if:
+	 * <p>The Action to upgrade your Capital,</p>
+	 *  Check if:
 	 * <ul>
 	 * 	<li>target position belongs to powerConcerned</li>
 	 * 	<li>target position contain a Capital</li>
@@ -479,7 +478,6 @@ public class ActionValidator {
 	 * @throws IllegalArgumentException If the conditions are not met
 	 */
 	public ActionUpgradeCapital createActionUpgradeCapital (Power powerConcerned, Position target) throws IllegalArgumentException {
-		//TODO rajout d'une méthode PositionCapital dans Power
 		
 		Box targetBox = getBoxFromMap(target);
 			//check if target belongs to powerConcerned
@@ -513,7 +511,7 @@ public class ActionValidator {
 							}
 						}
 						
-						//TODO On améliore la Capital (je laisse l'appelle pour copier/coller
+						//TODO On améliore la Capital (je laisse l'appel pour copier/coller
 						// ((Capital) groundBox.getBuilding()).upgrade();
 						
 						//Et on retire les Resource

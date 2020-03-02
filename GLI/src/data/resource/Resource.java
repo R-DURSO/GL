@@ -3,10 +3,15 @@ package data.resource;
 import data.InitialValue;
 import process.visitor.ressource_visitor.RessourceVisitor;
 
+/**
+ * <p>Resource have all methods applicable to infant classes.</p>
+ * <p>You can change the amount or productionPerTurn of a Resource here.</p>
+ * @author Maxence HENNEKEIN
+ */
+
 public abstract class Resource {
 	private int amount = InitialValue.NUMBER_INITIAL_VALUE;
 	private int productionPerTurn;
-	
 	
 	
 	public Resource () {
@@ -16,7 +21,8 @@ public abstract class Resource {
 	public Resource(int productionPerTurn) {
 		this.productionPerTurn = productionPerTurn;
 	}
-
+	
+	
 	public int getAmount() {
 		return amount;
 	}
