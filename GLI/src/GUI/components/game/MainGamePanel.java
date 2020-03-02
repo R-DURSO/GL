@@ -20,9 +20,6 @@ public class MainGamePanel extends JPanel{
 	private GameMap map;
 	private Power powers[];
 	
-	private final int MAP_SIZE = 15;
-
-	
 	public MainGamePanel(GameMap map, Power powers[]) {
 		super();
 		init();
@@ -60,8 +57,7 @@ public class MainGamePanel extends JPanel{
                 
                 //border color
                 determineBoxBorder(g, i, j);
-                g.setColor(ColorData.NO_POWER_COLOR);
-                g.drawRect(x, y, rectWidth, rectHeight);
+                g.drawRect(x, y, rectWidth-1, rectHeight-1);
                 
                 // TODO now, we want to draw shapes to show what resource, unit, building are in box and who has this box
                 
@@ -109,8 +105,6 @@ public class MainGamePanel extends JPanel{
 	}
 
 	private void init() {
-		setLayout(new GridLayout(0,1));
-		setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
 		setLayout(new GridLayout(0,1));
 	}
 	
