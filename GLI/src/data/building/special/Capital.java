@@ -14,13 +14,13 @@ public class Capital extends BuildingSpecial {
  						production = base_production * level
  	*/
 	private int level = 1;
-	private static final int MAX_LEVEL = 5;
-	private static final int COST_LEVEL_2 = 50;
-	private static final int COST_LEVEL_3 = 150;
-	private static final int COST_LEVEL_4 = 300;
-	private static final int COST_LEVEL_5 = 3000;
+	public static final int MAX_LEVEL = 4;
+	//costs of level up (gold)
+	public static final int COST_LEVEL_2 = 200;
+	public static final int COST_LEVEL_3 = 1000;
+	public static final int COST_LEVEL_4 = 2000;
 	
-	private static final int PRODUCTION_PER_TURN = 20; 
+	private static final int PRODUCTION_PER_TURN = 40; 
 	
 	
 	public Capital() {
@@ -35,6 +35,10 @@ public class Capital extends BuildingSpecial {
 		return this.level;
 	}
 	
+	public int getProductionPerTurn() {
+		return PRODUCTION_PER_TURN * level;
+	}
+	
 	public int getUpgradeCost () {
 		if (getLevel() < MAX_LEVEL) {
 			switch(getLevel()) {
@@ -44,8 +48,6 @@ public class Capital extends BuildingSpecial {
 				return COST_LEVEL_3;
 			case 3:
 				return COST_LEVEL_4;
-			case 4:
-				return COST_LEVEL_5;
 			}
 		}
 		return 0;

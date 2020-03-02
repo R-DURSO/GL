@@ -161,7 +161,7 @@ public class MapBuilder {
 	private void installCapital(Power power, Box box) {
 		//We are sure that this box is a grounded box (because specified it before)
 		box.setOwner(power);
-		((GroundBox) box).setBuilding(new Capital());
+		((GroundBox) box).setBuilding(power.getCapital());
 	}
 
 
