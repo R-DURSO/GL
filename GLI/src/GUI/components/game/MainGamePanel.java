@@ -41,12 +41,10 @@ public class MainGamePanel extends JPanel{
 
 
 	private void drawMap(Graphics g) {
-        super.paintComponent(g);
-        Random rand = new Random();
         g.clearRect(0, 0, getWidth(), getHeight());
         int rectWidth = getWidth() / map.getSize();
         int rectHeight = getHeight() / map.getSize();
-
+        
         for (int i = 0; i < map.getSize(); i++) {
             for (int j = 0; j < map.getSize(); j++) {
                 int x = i * rectWidth;
@@ -56,15 +54,28 @@ public class MainGamePanel extends JPanel{
                 g.fillRect(x, y, rectWidth, rectHeight);
                 
                 //border color
-                determineBoxBorder(g, i, j);
-                g.drawRect(x, y, rectWidth-1, rectHeight-1);
+                g.setColor(ColorData.NO_POWER_COLOR);
+                g.drawRect(x, y, rectWidth, rectHeight);
                 
                 // TODO now, we want to draw shapes to show what resource, unit, building are in box and who has this box
                 
             }
         }
+        //we draw "box belonging" here (to avoid an overdraw with boxes under)
+        for (int i = 0; i < map.getSize(); i++) {
+            for (int j = 0; j < map.getSize(); j++) {
+                int x = i * rectWidth;
+                int y = j * rectHeight;
+                
+                determineBoxBorder(g, i, j);
+                if(g.getColor() != ColorData.NO_POWER_COLOR)
+                	g.drawRect(x, y, rectWidth, rectHeight);
+                
+            }
+        }
+        
+        
 	}
-
 
 	/*
      * Border Color:
