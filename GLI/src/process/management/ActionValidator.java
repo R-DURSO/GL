@@ -20,7 +20,6 @@ import data.unit.*;
  * No data class is modified here (except for resource values, including actions points)
  * @author Aldric Vitali Silvestre <aldric.vitali@outlook.fr>
  * @see data.actions.Action
- *
  */
 public class ActionValidator {
 	private GameMap map;
@@ -466,9 +465,20 @@ public class ActionValidator {
 	}
 	
 	
-	
+	/**
+	 * The Action to upgrade your Capital, 
+	 * Check if:
+	 * <ul>
+	 * 	<li>target position belongs to powerConcerned</li>
+	 * 	<li>target position contain a Capital</li>
+	 * </ul>
+	 * @param powerConcerned The player who's in hand
+	 * @param target Where the Capital is
+	 * @return ActionUpgradeCapital
+	 * @see data.actions.ActionUpgradeCapital
+	 * @throws IllegalArgumentException If the conditions are not met
+	 */
 	public ActionUpgradeCapital createActionUpgradeCapital (Power powerConcerned, Position target) throws IllegalArgumentException {
-		
 		//TODO rajout d'une méthode PositionCapital dans Power
 		
 		Box targetBox = getBoxFromMap(target);
