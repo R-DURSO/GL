@@ -21,5 +21,36 @@ public class ColorData {
 	
 	public static final Color POWER_4_COLOR = Color.MAGENTA;
 	
+	//unit color
+	
+	public static final Color ARCHER_COLOR = Color.MAGENTA;
+	public static final Color BATTERING_RAM_COLOR = Color.MAGENTA;
+	public static final Color BOAT_COLOR = Color.MAGENTA;
+	public static final Color CAVALRY_COLOR = Color.MAGENTA;
+	public static final Color INFANTRY_COLOR = Color.MAGENTA;
+	public static final Color PIKEMAN_COLOR = Color.MAGENTA;
+	public static final Color TREBUCHET_COLOR = Color.MAGENTA;
+	
+	//building color
+	
+	public static final Color BARRACK_COLOR = Color.MAGENTA;
+	public static final Color DOCK_COLOR = Color.MAGENTA;
+	public static final Color WORKSHOP_COLOR = Color.MAGENTA;
+	public static final Color MINE_COLOR = Color.MAGENTA;
+	public static final Color QUARRY_COLOR = Color.MAGENTA;
+	public static final Color SAWMILL_COLOR = Color.MAGENTA;
+	public static final Color WINDMILL_COLOR = Color.MAGENTA;
+	public static final Color CAPITAL_COLOR = Color.PINK;
+	public static final Color DOOR_COLOR = Color.MAGENTA;
+	public static final Color TEMPLE_COLOR = Color.MAGENTA;
+	public static final Color WALL_COLOR = Color.MAGENTA;
+	
+	//Resource color
+	
+	public static final Color FOOD_COLOR = Color.RED;
+	public static final Color GOLD_COLOR = Color.YELLOW;
+	public static final Color STONE_COLOR = Color.GRAY;
+	public static final Color WOOD_COLOR = new Color(45, 21, 0);
+	public static final Color ARTIFACT_COLOR = Color.MAGENTA;
 
 }

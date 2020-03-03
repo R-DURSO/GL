@@ -3,9 +3,7 @@ package GUI.components.game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.util.Random;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import GUI.colors.ColorData;
@@ -14,9 +12,17 @@ import data.Power;
 import data.boxes.Box;
 import data.boxes.GroundBox;
 import data.boxes.WaterBox;
+import data.building.Building;
+import data.building.BuildingTypes;
+import data.resource.ResourceTypes;
+import data.unit.UnitTypes;
+import data.unit.Units;
+import process.management.BuildingManager;
+import process.management.UnitManager;
 
 public class MainGamePanel extends JPanel{
 	private static final long serialVersionUID = -4989371043690170741L;
+	private final int MINI_BOX_PART = 12;
 	private GameMap map;
 	private Power powers[];
 	
@@ -26,6 +32,10 @@ public class MainGamePanel extends JPanel{
 		
 		this.powers = powers;
 		this.map = map;
+		//montre affichage units sur cases
+		//UnitManager.getInstance().addUnits(powers[0], map.getBox(0, 0), UnitTypes.UNIT_INFANTRY, 50);
+		//montrre affihage batiments sur case
+		//BuildingManager.getInstance().addNewBuilding(powers[0], BuildingTypes.BUILDING_SAWMILL, (GroundBox) map.getBox(1, 0));
 		setBackground(Color.BLACK);
 	}
 	
@@ -57,7 +67,27 @@ public class MainGamePanel extends JPanel{
                 g.setColor(ColorData.NO_POWER_COLOR);
                 g.drawRect(x, y, rectWidth, rectHeight);
                 
-                // TODO now, we want to draw shapes to show what resource, unit, building are in box and who has this box
+                /*We draw resources, units, building here (just colored rectangles for now*/
+                int miniBoxWidth = rectWidth * 4 / MINI_BOX_PART;
+                int miniBoxHeight = rectHeight * 4 / MINI_BOX_PART;
+                int startX = x + (rectWidth/MINI_BOX_PART);
+                int startY = y + (rectHeight/MINI_BOX_PART);
+                
+                if(map.getBox(i, j) instanceof GroundBox) {
+                	GroundBox groundBox = (GroundBox) map.getBox(i, j);
+                	if(determineResourceColor(g, groundBox)) {
+                	
+						g.fillRect(startX, startY, miniBoxWidth, miniBoxHeight);
+                	}
+                	if(determineBuildingColor(g, groundBox)) {
+                		g.fillRect(x + startX, y + 2 * startY + miniBoxHeight, miniBoxWidth, miniBoxHeight);
+                	}
+                	
+                }
+                Box box = map.getBox(i, j);
+                if(determineUnitColor(g, box)) {
+            		g.fillRect(x + 2*startX + miniBoxWidth, y + 2 * startY + miniBoxHeight, miniBoxWidth, miniBoxHeight);
+            	}
                 
             }
         }
@@ -76,6 +106,106 @@ public class MainGamePanel extends JPanel{
         
         
 	}
+
+	private boolean determineBuildingColor(Graphics g, GroundBox groundBox) {
+		Building building = groundBox.getBuilding();
+		if(building == null)
+			return false;
+		
+		switch(building.getType()) {
+		case BuildingTypes.BUILDING_BARRACK:
+			g.setColor(ColorData.BARRACK_COLOR);
+			break;
+		case BuildingTypes.BUILDING_DOCK:
+			g.setColor(ColorData.DOCK_COLOR);
+			break;
+		case BuildingTypes.BUILDING_WORKSHOP:
+			g.setColor(ColorData.WORKSHOP_COLOR);
+			break;
+		case BuildingTypes.BUILDING_MINE:
+			g.setColor(ColorData.MINE_COLOR);
+			break;
+		case BuildingTypes.BUILDING_QUARRY:
+			g.setColor(ColorData.QUARRY_COLOR);
+			break;
+		case BuildingTypes.BUILDING_SAWMILL:
+			g.setColor(ColorData.SAWMILL_COLOR);
+			break;
+		case BuildingTypes.BUILDING_WINDMILL:
+			g.setColor(ColorData.WINDMILL_COLOR);
+			break;
+		case BuildingTypes.BUILDING_CAPITAL:
+			g.setColor(ColorData.CAPITAL_COLOR);
+			break;
+		case BuildingTypes.BUILDING_DOOR:
+			g.setColor(ColorData.DOOR_COLOR);
+			break;
+		case BuildingTypes.BUILDING_TEMPLE:
+			g.setColor(ColorData.TEMPLE_COLOR);
+			break;
+		case BuildingTypes.BUILDING_WALL:
+			g.setColor(ColorData.WALL_COLOR);
+			break;
+		}
+		return true;
+	}
+
+
+
+	private boolean determineUnitColor(Graphics g, Box box) {
+		Units units = box.getUnit();
+		if(units == null)
+			return false;
+		
+		switch(units.getTypes()) {
+		case UnitTypes.UNIT_ARCHER:
+			g.setColor(ColorData.ARCHER_COLOR);
+			break;
+		case UnitTypes.UNIT_BATTERING_RAM:
+			g.setColor(ColorData.BATTERING_RAM_COLOR);
+			break;
+		case UnitTypes.UNIT_BOAT:
+			g.setColor(ColorData.BOAT_COLOR);
+			break;
+		case UnitTypes.UNIT_CAVALRY:
+			g.setColor(ColorData.CAVALRY_COLOR);
+			break;
+		case UnitTypes.UNIT_INFANTRY:
+			g.setColor(ColorData.INFANTRY_COLOR);
+			break;
+		case UnitTypes.UNIT_TREBUCHET:
+			g.setColor(ColorData.TREBUCHET_COLOR);
+			break;
+		case UnitTypes.UNIT_PIKEMAN:
+			g.setColor(ColorData.PIKEMAN_COLOR);
+			break;
+		}
+		return true;
+	}
+
+
+
+	private boolean determineResourceColor(Graphics g, GroundBox gBox) {
+		switch (gBox.getResourceType()) {
+		case ResourceTypes.RESOURCE_FOOD:
+			g.setColor(ColorData.FOOD_COLOR);
+			break;
+		case ResourceTypes.RESOURCE_GOLD:
+			g.setColor(ColorData.GOLD_COLOR);
+			break;
+		case ResourceTypes.RESOURCE_STONE:
+			g.setColor(ColorData.STONE_COLOR);
+			break;
+		case ResourceTypes.RESOURCE_WOOD:
+			g.setColor(ColorData.WOOD_COLOR);
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+
+
 
 	/*
      * Border Color:

@@ -19,6 +19,7 @@ public class ResourceTypes {
 	
 	public static final int RESOURCE_ACTIONS = 5;
 	public static final int RESOURCE_SCORE = 6;
+	public static final int RESOURCE_ARTIFACT = 7;
 	
 	
 	private ResourceTypes() {}
