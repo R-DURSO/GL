@@ -20,7 +20,6 @@ import data.unit.*;
  * No data class is modified here (except for resource values, including actions points)
  * @author Aldric Vitali Silvestre <aldric.vitali@outlook.fr>
  * @see data.actions.Action
- *
  */
 public class ActionValidator {
 	private GameMap map;
@@ -372,7 +371,6 @@ public class ActionValidator {
 		
 		
 		powerConcerned.removeActionPoint();
-		//TODO remove units cost
 		powerConcerned.getResource(neededResource.getType()).subValue(neededResource.getCost());
 		return new ActionCreateUnit(powerConcerned, unitType, numberUnits, target);
 	}
@@ -467,28 +465,35 @@ public class ActionValidator {
 	
 	
 	/**
-	 * Check if Capital is not already level max, and if powerConcerned have enough resources,
-	 * before Creating an ActionUpgradeCapital
-	 * @param powerConcerned The player who in hand
-	 * @return the concerned Action
+	 * <p>The Action to upgrade your Capital,</p>
+	 *  Before adding the Action, check if:
+	 * <ul>
+	 * 	<li>Capital is not already level max,</li>
+	 * 	<li>powerConcerned have enough resources,</li>
+	 * </ul>
+	 * @param powerConcerned The player who's in hand
+	 * @return the concerned Action, ActionUpgradeCapital
 	 * @see data.actions.ActionUpgradeCapital
-	 * @throws IllegalArgumentException if conditions are not met
+	 * @throws IllegalArgumentException If the conditions are not met
 	 */
+	
 	public ActionUpgradeCapital createActionUpgradeCapital (Power powerConcerned) throws IllegalArgumentException {
 		
 		Capital capital = powerConcerned.getCapital();
 		
 		//check if capital is already level max
-		if(capital.getLevel() == Capital.MAX_LEVEL)
+		if (capital.getLevel() == Capital.MAX_LEVEL) {
 			throw new IllegalArgumentException("La capitale est déjà au niveau maximal");
+		}
 		
 		//check if have enough resources
 		int goldCost = capital.getUpgradeCost();
-		if(powerConcerned.getResourceAmount(ResourceTypes.RESOURCE_GOLD) < goldCost)
+		if(powerConcerned.getResourceAmount(ResourceTypes.RESOURCE_GOLD) < goldCost) {
 			throw new IllegalArgumentException("Pas assez de ressources pour améliorer la capitale (coût : " + goldCost + ")");
+		}
 		
 		//conditions are met, so we can remove action cost and create the ActionUpgradeCapital
-		powerConcerned.getResource(ResourceTypes.RESOURCE_GOLD).subValue(goldCost);
+				powerConcerned.getResource(ResourceTypes.RESOURCE_GOLD).subValue(goldCost);
 		
 		powerConcerned.removeActionPoint();
 		return new ActionUpgradeCapital(powerConcerned);

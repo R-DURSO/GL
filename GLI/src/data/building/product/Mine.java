@@ -4,6 +4,11 @@ import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
+/**
+ * <p>Mine is a Building that product Gold each Turn for a Power</p>
+ * @author Maxence HENNEKEIN
+ */
+
 public class Mine  extends BuildingProduct{
 	private static final int BUILD_TIME = 0;
 	public static final int COST = 100;

@@ -13,15 +13,24 @@ import GUI.components.game.GameButtonsPanel;
 import GUI.components.game.GameInfoPanel;
 import GUI.components.game.MainGamePanel;
 import data.GameMap;
+
 import data.Power;
 import data.resource.Resource;
 import data.resource.ResourceTypes;
+import data.boxes.*;
+import data.unit.*;
 
+
+/**
+ * <p>The class that control the game window</p>
+ * <p>Use GameInfoPanel & MainGamePanel</p>
+ */
 public class GamePanel extends JPanel{
 	private static final long serialVersionUID = 7722109867943150729L;
 	private MainWindow context;
 	
 	private Power power;
+	private Box SelectedBox;
 	
 	private final Dimension INFO_DIMENSION = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / GuiPreferences.GAME_PANELS_RATIO_HEIGHT);
 	private final Dimension MAIN_DIMENSION = 
@@ -37,7 +46,7 @@ public class GamePanel extends JPanel{
 		this.context = context;
 		initPower();
 		
-		gameInfoPanel = new GameInfoPanel(power.getResources());
+		gameInfoPanel = new GameInfoPanel(power.getResources(), SelectedBox);
 		
 		
 		init();
@@ -60,6 +69,12 @@ public class GamePanel extends JPanel{
 		power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_STONE, 300);
 		power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_WOOD, -100);
 		power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, 2000);
+		
+		
+		SelectedBox = new GroundBox(ResourceTypes.RESOURCE_GOLD);
+		Units units = new Archer(50);
+		SelectedBox.setUnit(units);
+		SelectedBox.setOwner(power);
 	}
 
 	private void init() {

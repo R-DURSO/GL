@@ -3,6 +3,12 @@ package data.building.special;
 import data.building.BuildingTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
+/**
+ * <p>The Temple is a BuildingSpecial that will spawn at the center of the map</p>
+ * <p>If a has bought and build the Temple, he instantly win.</p>
+ * @author Maxence HENNEKEIN
+ */
+
 public class Temple extends BuildingSpecial {
 	private static final int BUILD_TIME = 0;
 	public static final int COST = 100;

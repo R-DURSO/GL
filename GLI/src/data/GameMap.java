@@ -20,6 +20,10 @@ public class GameMap {
 		return boxes[positionY][positionX];
 	}
 	
+	public Box getBox(Position position){
+		return boxes[position.getY()][position.getX()];
+	}
+	
 	public String toString() {
 		String result = "\nMap Boxes:\n\n";
 		for(int i = 0; i < boxes.length; i++){

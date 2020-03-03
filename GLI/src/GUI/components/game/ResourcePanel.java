@@ -7,15 +7,17 @@ import javax.swing.SwingConstants;
 
 import data.resource.Resource;
 
+/**
+ * <p>The list of Resource the power hold (and it's production)</p>
+ */
+
 public class ResourcePanel extends JPanel{
 	private JLabel resourceNameLabel;
 	private JLabel resourceAmountProdLabel;
-	private Resource resource;
 
 	public ResourcePanel(String name, Resource resource) {
 		resourceNameLabel = new JLabel(name + "%");
 		resourceAmountProdLabel = new JLabel(resource.getAmount() + "(" + withSign(resource.getProductionPerTurn()) + ")", SwingConstants.CENTER);
-		this.resource = resource;
 		init();
 	}
 

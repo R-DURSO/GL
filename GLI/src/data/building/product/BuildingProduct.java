@@ -2,6 +2,12 @@ package data.building.product;
 import data.building.Building;
 import data.resource.Resource;
 
+/**
+ * <p>Main class for any Building that generate Resource.</p>
+ * <p>A building define for production will call this class</p>
+ * @author Maxence HENNEKEIN
+ */
+
 public abstract class BuildingProduct extends Building{
 	private boolean onRightResource;
 

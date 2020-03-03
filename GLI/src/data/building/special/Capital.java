@@ -3,6 +3,12 @@ package data.building.special;
 import data.building.BuildingTypes;
 import process.visitor.building_visitor.BuildingVisitor;
 
+/**
+ * <p>This class contains the information that a Capital will hold.</p>
+ * <p>If a Capital is destroyed, the player that hold the Capital lose</p>
+ * @author Maxence HENNEKEIN
+ */
+
 public class Capital extends BuildingSpecial {
 	private static final int BUILD_TIME = 0;
 	public static final int COST = 0;
@@ -21,7 +27,6 @@ public class Capital extends BuildingSpecial {
 	public static final int COST_LEVEL_4 = 2000;
 	
 	private static final int PRODUCTION_PER_TURN = 40; 
-	
 	
 	public Capital() {
 		super(BUILD_TIME, BASE_HEALTH);
