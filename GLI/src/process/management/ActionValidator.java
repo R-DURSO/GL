@@ -466,66 +466,34 @@ public class ActionValidator {
 	
 	/**
 	 * <p>The Action to upgrade your Capital,</p>
-	 *  Check if:
+	 *  Before adding the Action, check if:
 	 * <ul>
-	 * 	<li>target position belongs to powerConcerned</li>
-	 * 	<li>target position contain a Capital</li>
+	 * 	<li>Capital is not already level max,</li>
+	 * 	<li>powerConcerned have enough resources,</li>
 	 * </ul>
 	 * @param powerConcerned The player who's in hand
-	 * @param target Where the Capital is
-	 * @return ActionUpgradeCapital
+	 * @return the concerned Action, ActionUpgradeCapital
 	 * @see data.actions.ActionUpgradeCapital
 	 * @throws IllegalArgumentException If the conditions are not met
 	 */
-	public ActionUpgradeCapital createActionUpgradeCapital (Power powerConcerned, Position target) throws IllegalArgumentException {
+	
+	public ActionUpgradeCapital createActionUpgradeCapital (Power powerConcerned) throws IllegalArgumentException {
 		
-		Box targetBox = getBoxFromMap(target);
-			//check if target belongs to powerConcerned
-		if (targetBox.getOwner() != powerConcerned) {
-			throw new IllegalArgumentException("La case ne nous appartient pas");
+		Capital capital = powerConcerned.getCapital();
+		
+		//check if capital is already level max
+		if (capital.getLevel() == Capital.MAX_LEVEL) {
+			throw new IllegalArgumentException("La capitale est déjà au niveau maximal");
 		}
-			//Is the position on ground ?
-		if (targetBox instanceof WaterBox) {
-			throw new IllegalArgumentException("La Capitale ne peut pas se trouver sur une case d'eau");
+		
+		//check if have enough resources
+		int goldCost = capital.getUpgradeCost();
+		if(powerConcerned.getResourceAmount(ResourceTypes.RESOURCE_GOLD) < goldCost) {
+			throw new IllegalArgumentException("Pas assez de ressources pour améliorer la capitale (coût : " + goldCost + ")");
 		}
-		else {
-			GroundBox groundBox = (GroundBox)targetBox;
-				//Is there a building ?
-			if (!groundBox.hasBuilding()) {
-				throw new IllegalArgumentException("Il n'y a pas de building sur cette case");
-			}
-			else {
-					//And is this building a Capital ?
-				if (groundBox.getBuilding().getType() != BuildingTypes.BUILDING_CAPITAL) {
-					throw new IllegalArgumentException("Le batiment n'est pas la Capital");
-				}
-				else {
-					//So, we create the cost needed
-					int upgradeCost = 0;
-					upgradeCost = ((Capital) groundBox.getBuilding()).getUpgradeCost();
-					//check if power can upgrade (0 if not upgradeable)
-					if (upgradeCost != 0) {
-						for (int i = 0 ; i < ResourceTypes.NUMBER_TYPE_RESOURCES - 1 ; i++) {
-							if (!checkPrice(powerConcerned.getResourceAmount(i), upgradeCost)) {
-								throw new IllegalArgumentException("Certaines Resource ne sont pas suffisantes");
-							}
-						}
-						
-						//TODO On améliore la Capital (je laisse l'appel pour copier/coller
-						// ((Capital) groundBox.getBuilding()).upgrade();
-						
-						//Et on retire les Resource
-						for (int i = 0 ; i < ResourceTypes.NUMBER_TYPE_RESOURCES - 1 ; i++) {
-							powerConcerned.getResource(i).subValue(upgradeCost);
-						}
-					}
-					//Erreur si l'upgrade coute 0 (valeur par défaut ou retour du getUpgradeCost
-					else {
-						throw new IllegalArgumentException("Erreur lors de l'amélioration");
-					}
-				}
-			}
-		}
+		
+		//conditions are met, so we can remove action cost and create the ActionUpgradeCapital
+				powerConcerned.getResource(ResourceTypes.RESOURCE_GOLD).subValue(goldCost);
 		
 		powerConcerned.removeActionPoint();
 		return new ActionUpgradeCapital(powerConcerned);

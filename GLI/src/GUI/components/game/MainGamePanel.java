@@ -20,9 +20,6 @@ public class MainGamePanel extends JPanel{
 	private GameMap map;
 	private Power powers[];
 	
-	private final int MAP_SIZE = 15;
-
-	
 	public MainGamePanel(GameMap map, Power powers[]) {
 		super();
 		init();
@@ -44,12 +41,10 @@ public class MainGamePanel extends JPanel{
 
 
 	private void drawMap(Graphics g) {
-        super.paintComponent(g);
-        Random rand = new Random();
         g.clearRect(0, 0, getWidth(), getHeight());
         int rectWidth = getWidth() / map.getSize();
         int rectHeight = getHeight() / map.getSize();
-
+        
         for (int i = 0; i < map.getSize(); i++) {
             for (int j = 0; j < map.getSize(); j++) {
                 int x = i * rectWidth;
@@ -59,7 +54,6 @@ public class MainGamePanel extends JPanel{
                 g.fillRect(x, y, rectWidth, rectHeight);
                 
                 //border color
-                determineBoxBorder(g, i, j);
                 g.setColor(ColorData.NO_POWER_COLOR);
                 g.drawRect(x, y, rectWidth, rectHeight);
                 
@@ -67,8 +61,21 @@ public class MainGamePanel extends JPanel{
                 
             }
         }
+        //we draw "box belonging" here (to avoid an overdraw with boxes under)
+        for (int i = 0; i < map.getSize(); i++) {
+            for (int j = 0; j < map.getSize(); j++) {
+                int x = i * rectWidth;
+                int y = j * rectHeight;
+                
+                determineBoxBorder(g, i, j);
+                if(g.getColor() != ColorData.NO_POWER_COLOR)
+                	g.drawRect(x, y, rectWidth, rectHeight);
+                
+            }
+        }
+        
+        
 	}
-
 
 	/*
      * Border Color:
@@ -109,8 +116,6 @@ public class MainGamePanel extends JPanel{
 	}
 
 	private void init() {
-		setLayout(new GridLayout(0,1));
-		setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
 		setLayout(new GridLayout(0,1));
 	}
 	
