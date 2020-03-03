@@ -20,6 +20,19 @@ public class BoxSelectedPanel extends JPanel {
 	private JLabel ResourceLabel;
 
 	public BoxSelectedPanel(Box box) {
+		refresh(box);
+		init();
+	}
+	
+	private void init() {
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(OwnerLabel);
+		add(UnitsLabel);
+		add(BuildingLabel);
+		add(ResourceLabel);
+	}
+	
+	public void refresh(Box box) {
 		
 		if (box.hasOwner()) {
 			OwnerLabel = new JLabel(box.getOwner().toString());
@@ -49,16 +62,6 @@ public class BoxSelectedPanel extends JPanel {
 			BuildingLabel = new JLabel();
 			ResourceLabel = new JLabel();
 		}
-		
-		init();
-	}
-	
-	private void init() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(OwnerLabel);
-		add(UnitsLabel);
-		add(BuildingLabel);
-		add(ResourceLabel);
 	}
 
 }
