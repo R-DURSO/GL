@@ -20,47 +20,50 @@ public class BoxSelectedPanel extends JPanel {
 	private JLabel ResourceLabel;
 
 	public BoxSelectedPanel(Box box) {
-		refresh(box);
 		init();
+		refresh(box);
 	}
 	
 	private void init() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		OwnerLabel = new JLabel();
 		add(OwnerLabel);
+		UnitsLabel = new JLabel();
 		add(UnitsLabel);
+		BuildingLabel = new JLabel();
 		add(BuildingLabel);
+		ResourceLabel = new JLabel();
 		add(ResourceLabel);
 	}
 	
 	public void refresh(Box box) {
-		
 		if (box.hasOwner()) {
-			OwnerLabel = new JLabel(box.getOwner().toString());
+			OwnerLabel.setText(box.getOwner().toString());
 		}
 		else {
-			OwnerLabel = new JLabel("Aucun propriétaire");
+			OwnerLabel.setText("Aucun propriétaire");
 		}
 		
 		if (box.hasUnit()) {
-			UnitsLabel = new JLabel(box.getUnit().toString());
+			UnitsLabel.setText(box.getUnit().toString());
 		}
 		else {
-			UnitsLabel = new JLabel();
+			UnitsLabel.setText("");
 		}
 		
 		if (box instanceof GroundBox) {
 			GroundBox GBox = (GroundBox)box;
 			if (GBox.hasBuilding()) {
-				BuildingLabel = new JLabel(GBox.getBuilding().toString());
+				BuildingLabel.setText(GBox.getBuilding().toString());
 			}
 			else {
-				BuildingLabel = new JLabel();
+				BuildingLabel.setText("");
 			}
-			ResourceLabel = new JLabel("Ressource: " + GBox.getResourceTypeName());
+			ResourceLabel.setText("Ressource: " + GBox.getResourceTypeName());
 		}
 		else {
-			BuildingLabel = new JLabel();
-			ResourceLabel = new JLabel();
+			BuildingLabel.setText("");
+			ResourceLabel.setText("");
 		}
 	}
 

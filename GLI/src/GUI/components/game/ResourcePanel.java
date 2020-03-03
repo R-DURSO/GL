@@ -16,7 +16,7 @@ public class ResourcePanel extends JPanel{
 	private JLabel resourceAmountProdLabel;
 
 	public ResourcePanel(String name, Resource resource) {
-		resourceNameLabel = new JLabel(name + "%");
+		resourceNameLabel = new JLabel(name);
 		resourceAmountProdLabel = new JLabel(resource.getAmount() + "(" + withSign(resource.getProductionPerTurn()) + ")", SwingConstants.CENTER);
 		init();
 	}
