@@ -1,11 +1,7 @@
 package process.management;
 
 import data.resource.ActionPoints;
-import data.resource.Food;
-import data.resource.Gold;
-import data.resource.Score;
-import data.resource.Stone;
-import data.resource.Wood;
+import data.resource.*;
 import data.InitialValue;
 public class ResourcesFactory {
 
@@ -32,5 +28,8 @@ public class ResourcesFactory {
 	public static Wood createWood() {
 		return new Wood(InitialValue.WOOD_INITAL_VALUE);
 	}
-
+	
+	public static Artifact createArtifact() {
+		return new Artifact();
+	}
 }

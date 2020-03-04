@@ -37,8 +37,8 @@ public class ColorData {
 	public static final Color WINDMILL_COLOR = new Color(90, 90, 90);
 	public static final Color CAPITAL_COLOR = new Color(230, 20, 80);
 	public static final Color DOOR_COLOR = new Color(90, 90, 90);
-	public static final Color TEMPLE_COLOR = new Color(90, 90, 90);
-	public static final Color WALL_COLOR = new Color(90, 90, 90);
+	public static final Color TEMPLE_COLOR = new Color(200, 200, 200);
+	public static final Color WALL_COLOR = new Color(60, 60, 60);
 	
 	//Resource color
 	
