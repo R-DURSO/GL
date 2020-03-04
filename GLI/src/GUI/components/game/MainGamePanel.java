@@ -52,6 +52,8 @@ public class MainGamePanel extends JPanel{
         g.clearRect(0, 0, getWidth(), getHeight());
         int rectWidth = getWidth() / map.getSize();
         int rectHeight = getHeight() / map.getSize();
+        int miniBoxWidth = rectWidth * 4 / MINI_BOX_PART;
+        int miniBoxHeight = rectHeight * 4 / MINI_BOX_PART;
         
         for (int i = 0; i < map.getSize(); i++) {
             for (int j = 0; j < map.getSize(); j++) {
@@ -66,8 +68,7 @@ public class MainGamePanel extends JPanel{
                 g.drawRect(x, y, rectWidth, rectHeight);
                 
                 /*We draw resources, units, building here (just colored rectangles for now*/
-                int miniBoxWidth = rectWidth * 4 / MINI_BOX_PART;
-                int miniBoxHeight = rectHeight * 4 / MINI_BOX_PART;
+
                 int startX = x + (rectWidth/MINI_BOX_PART);
                 int startY = y + (rectHeight/MINI_BOX_PART);
                 
@@ -78,13 +79,13 @@ public class MainGamePanel extends JPanel{
                 	}
                 	if(determineBuildingColor(g, groundBox)) {
                 		System.out.println(g.getColor());
-                		g.fillRect(x + startX, y + 2 * startY + miniBoxHeight, miniBoxWidth, miniBoxHeight);
+                		g.fillRect( startX, startY + miniBoxHeight + miniBoxHeight/2, miniBoxWidth, miniBoxHeight);
                 	}
                 	
                 }
                 Box box = map.getBox(i, j);
                 if(determineUnitColor(g, box)) {
-            		g.fillRect(x + 2*startX + miniBoxWidth, y + 2 * startY + miniBoxHeight, miniBoxWidth, miniBoxHeight);
+            		g.fillRect(startX + miniBoxWidth + miniBoxWidth/2, startY + miniBoxHeight + miniBoxHeight/2, miniBoxWidth, miniBoxHeight);
             	}
                 
             }
