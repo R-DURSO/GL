@@ -25,11 +25,11 @@ public class GameInfoPanel extends JPanel{
 	private ResourcePanel foodPanel;
 
 	public GameInfoPanel(Resource resources[], Box box) {
-		actionPointsPanel = new ResourcePanel("Points d'action", resources[ResourceTypes.RESOURCE_ACTIONS]);
-		goldPanel = new ResourcePanel("Or", resources[ResourceTypes.RESOURCE_GOLD]);
-		stonePanel = new ResourcePanel("Pierre", resources[ResourceTypes.RESOURCE_STONE]);
-		woodPanel = new ResourcePanel("Bois", resources[ResourceTypes.RESOURCE_WOOD]);
-		foodPanel = new ResourcePanel("Nourriture", resources[ResourceTypes.RESOURCE_FOOD]);
+		actionPointsPanel = new ResourcePanel("Points d'action", resources[ResourceTypes.RESOURCE_ACTIONS - 1]);
+		goldPanel = new ResourcePanel("Or", resources[ResourceTypes.RESOURCE_GOLD - 1]);
+		stonePanel = new ResourcePanel("Pierre", resources[ResourceTypes.RESOURCE_STONE - 1]);
+		woodPanel = new ResourcePanel("Bois", resources[ResourceTypes.RESOURCE_WOOD - 1]);
+		foodPanel = new ResourcePanel("Nourriture", resources[ResourceTypes.RESOURCE_FOOD - 1]);
 		boxInfosPanel = new BoxSelectedPanel(box);
 		init();
 	}
