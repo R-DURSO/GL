@@ -12,7 +12,7 @@ import process.management.MapBuilder;
 public class GameLoop {
 	
 	@SuppressWarnings("unchecked")
-	private ArrayList<Action> action[]= (ArrayList<Action>[]) new ArrayList[8];
+	private ArrayList<Action> action[]= (ArrayList<Action>[]) new ArrayList[ActionTypes.NUMBER_ACTIONS];
 	
 	private ActionValidator actionValidator;
 	// constante temporaire 
