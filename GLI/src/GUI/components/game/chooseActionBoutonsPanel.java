@@ -24,10 +24,9 @@ public class chooseActionBoutonsPanel extends JPanel {
 	private JButton createActionDestroyUnitButton = new JButton("détruire les unité");
 	private JButton createActionDestroyBuildingtButton = new JButton("destruit le batiment");
 	private JButton createUdapteCapitalButton = new JButton("amélioration de la capital");
-	private Dimension  a = new Dimension(30,100);
 	
 	public chooseActionBoutonsPanel() {
-		setLayout(new GridLayout(5, 0));
+		setLayout(new GridLayout(0, 3));
 		
 		actionBreakAllianceButton.addActionListener(new ActionBreakAlliance());
 		add(actionBreakAllianceButton);

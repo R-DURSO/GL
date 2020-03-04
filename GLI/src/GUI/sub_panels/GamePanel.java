@@ -47,7 +47,7 @@ public class GamePanel extends JPanel{
 	private void init() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		gameButtonsPanel.setPreferredSize(BUTTONS_DIMENSION);
-
+		
 		
 	}
 	public void initMainGamePanel(GameMap map, Power powers[]) {
