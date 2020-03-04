@@ -1,5 +1,9 @@
 package data.resource;
 
+<<<<<<< HEAD
+=======
+import data.InitialValue;
+>>>>>>> refs/remotes/origin/master
 
 /**
  * <p>Food represents the number of Food a player hold or the Resource on a Box.</p>
@@ -17,5 +21,8 @@ public class Food extends Resource {
 		return ResourceTypes.RESOURCE_FOOD;
 	}
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
 }

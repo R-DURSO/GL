@@ -1,7 +1,5 @@
 package data.unit;
 
-import process.visitor.unit_visitor.UnitVisitor;
-
 public class Pikeman extends Units {
 	private static final int BASE_HEALTH = 5;
 	private static final int RANGE = 0;
@@ -29,11 +27,6 @@ public class Pikeman extends Units {
 	@Override
 	public int getFoodCost() {
 		return COST_PER_TURN;
-	}
-	
-	@Override
-	public <U> U accept(UnitVisitor<U> visitor) {
-		return visitor.visit(this);
 	}
 	
 	@Override

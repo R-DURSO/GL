@@ -1,7 +1,5 @@
 package data.unit;
 
-import process.visitor.unit_visitor.UnitVisitor;
-
 public class Boat extends Units {
 	private static final int BASE_HEALTH = 1;
 	private static final int RANGE = 0;
@@ -35,10 +33,6 @@ public class Boat extends Units {
 		this.containedUnits = containedUnits;
 	}
 
-	public <U> U accept(UnitVisitor<U> visitor) {
-		return visitor.visit(this);
-	}
-
 	public int getTypes() {
 		return UnitTypes.UNIT_BOAT;
 	}
@@ -47,7 +41,6 @@ public class Boat extends Units {
 		return COST;
 	}
 	
-	@Override
 	public int getFoodCost() {
 		return COST_PER_TURN;
 	}

@@ -1,4 +1,9 @@
 package data.resource;
+<<<<<<< HEAD
+=======
+
+import data.InitialValue;
+>>>>>>> refs/remotes/origin/master
 
 /**
  * <p>Gold represents the number of Gold a player hold or the Resource on a Box.</p>
@@ -16,5 +21,8 @@ public class Gold extends Resource {
 		return ResourceTypes.RESOURCE_GOLD;
 	}
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
 }

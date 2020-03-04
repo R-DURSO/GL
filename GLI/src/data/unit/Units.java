@@ -1,7 +1,5 @@
 package data.unit;
 
-import process.visitor.unit_visitor.UnitVisitor;
-
 public abstract class Units {
 	private int health;
 	private int range;
@@ -21,8 +19,6 @@ public abstract class Units {
 		this.maxNumber = maxNumber;
 	}
 	
-	
-	public abstract <U> U accept(UnitVisitor<U> visitor);
 	public abstract int getTypes();
 	public abstract int getCost();
 	public abstract int getFoodCost();

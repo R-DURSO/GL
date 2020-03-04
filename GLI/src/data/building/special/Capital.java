@@ -1,7 +1,6 @@
 package data.building.special;
 
 import data.building.BuildingTypes;
-import process.visitor.building_visitor.BuildingVisitor;
 
 /**
  * <p>This class contains the information that a Capital will hold.</p>
@@ -62,11 +61,6 @@ public class Capital extends BuildingSpecial {
 		if (getLevel() < MAX_LEVEL) {
 			this.level ++;
 		}
-	}
-	
-	@Override
-	public <B> B accept(BuildingVisitor<B> visitor) {
-		return visitor.visit(this);
 	}
 
 }

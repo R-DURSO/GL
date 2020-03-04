@@ -1,7 +1,5 @@
 package data.unit;
 
-import process.visitor.unit_visitor.UnitVisitor;
-
 public class Trebuchet  extends Units {
 	
 	private static final int BASE_HEALTH = 5;
@@ -34,11 +32,6 @@ public class Trebuchet  extends Units {
 	public Trebuchet() {
 		super(BASE_HEALTH, RANGE_MOVING, MOVEMENT_MOVING, 1, DAMAGE_MOVING, DEFENSE, NUMBER_MAX_UNITS);
 	}
-	
-	@Override
-	public <U> U accept(UnitVisitor<U> visitor) {
-		return visitor.visit(this);
-	}
 
 	public int getTypes() {
 		return UnitTypes.UNIT_TREBUCHET;
@@ -48,7 +41,6 @@ public class Trebuchet  extends Units {
 		return COST;
 	}
 	
-	@Override
 	public int getFoodCost() {
 		return COST_PER_TURN;
 	}

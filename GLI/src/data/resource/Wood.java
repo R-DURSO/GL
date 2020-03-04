@@ -1,6 +1,10 @@
 package data.resource;
 
+<<<<<<< HEAD
 
+=======
+import data.InitialValue;
+>>>>>>> refs/remotes/origin/master
 
 /**
  * <p>Wood represents the number of Wood a player hold or the Resource on a Box.</p>
@@ -17,5 +21,8 @@ public class Wood extends Resource {
 		return ResourceTypes.RESOURCE_WOOD;
 	}
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
 }

@@ -48,6 +48,10 @@ public abstract class Resource {
 	public void subProductionPerTurn(int production) {
 		this.productionPerTurn -= production;
 	}
+<<<<<<< HEAD
 	
+=======
+	 
+>>>>>>> refs/remotes/origin/master
 	public abstract int getResourceType();
 }

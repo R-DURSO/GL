@@ -1,8 +1,6 @@
 package data.building.army;
 
-import data.building.Building;
 import data.building.BuildingTypes;
-import process.visitor.building_visitor.BuildingVisitor;
 
 public class Dock extends BuildingArmy {
 	private static final int BUILD_TIME = 0;
@@ -18,8 +16,4 @@ public class Dock extends BuildingArmy {
 		return BuildingTypes.BUILDING_DOCK;
 	}
 	
-	@Override
-	public <B> B accept(BuildingVisitor<B> visitor) {
-		return visitor.visit(this);
-	}
 }
