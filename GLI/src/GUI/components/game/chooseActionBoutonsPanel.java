@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -20,7 +21,7 @@ public class chooseActionBoutonsPanel extends JPanel {
 	private JButton createActionMoveButton = new JButton("déplacer les trouppes");
 	private JButton createActionConstructButton = new JButton("contruire un batiment ");
 	private JButton createActionCreateUnitButton = new JButton("créer de nouvelle troupe");
-	private JButton createActionDestroyUnitButton = new JButton("détruire les unité  troupe");
+	private JButton createActionDestroyUnitButton = new JButton("détruire les unité");
 	private JButton createActionDestroyBuildingtButton = new JButton("destruit le batiment");
 	private JButton createUdapteCapitalButton = new JButton("amélioration de la capital");
 	private Dimension  a = new Dimension(30,100);
@@ -76,8 +77,12 @@ public class chooseActionBoutonsPanel extends JPanel {
 	class ActionContrcut implements ActionListener{
 		String[] choices = { "moulin", "scierie", "mine", "port", "écurie","caserne","mur","porte","temple"};
 		public void actionPerformed(ActionEvent e) {
-			int answer= (int) JOptionPane.showInputDialog(null, "quel construction","les type de construction", JOptionPane.QUESTION_MESSAGE,null, choices,choices[0]);
-			
+			JComboBox building = new JComboBox(choices);
+			JOptionPane.showMessageDialog(null, building, "construction possible", 0);
+			building.getSelectedIndex();
+			System.out.println(building.getSelectedIndex());
+		//	int answer= (int) JOptionPane.showInputDialog(null, "quel construction","les type de construction", JOptionPane.QUESTION_MESSAGE,null, choices,choices[0]);
+				
 		}
 		
 	}
