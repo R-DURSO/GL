@@ -1,8 +1,12 @@
 package GUI.components.game;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Shape;
+import java.awt.Stroke;
 
 import javax.swing.JPanel;
 
@@ -95,10 +99,11 @@ public class MainGamePanel extends JPanel{
             for (int j = 0; j < map.getSize(); j++) {
                 int x = i * rectWidth;
                 int y = j * rectHeight;
-                
                 determineBoxBorder(g, i, j);
-                if(g.getColor() != ColorData.NO_POWER_COLOR)
-                	g.drawRect(x, y, rectWidth, rectHeight);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setStroke(new BasicStroke(2));
+                if(g2.getColor() != ColorData.NO_POWER_COLOR)
+                	g2.drawRect(x, y, rectWidth, rectHeight);
                 
             }
         }
