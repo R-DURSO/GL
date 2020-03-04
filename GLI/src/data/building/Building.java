@@ -30,4 +30,7 @@ public abstract class Building {
 		this.health -= damage;
 	}
 
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 }

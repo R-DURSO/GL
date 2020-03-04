@@ -48,7 +48,7 @@ public class BoxSelectedPanel extends JPanel {
 			UnitsLabel.setText(box.getUnit().toString());
 		}
 		else {
-			UnitsLabel.setText("");
+			UnitsLabel.setText("Pas d'unité");
 		}
 		
 		if (box instanceof GroundBox) {
@@ -57,12 +57,12 @@ public class BoxSelectedPanel extends JPanel {
 				BuildingLabel.setText(GBox.getBuilding().toString());
 			}
 			else {
-				BuildingLabel.setText("");
+				BuildingLabel.setText("Pas de bâtiment");
 			}
 			ResourceLabel.setText("Ressource: " + GBox.getResourceTypeName());
 		}
 		else {
-			BuildingLabel.setText("");
+			BuildingLabel.setText("Case d'eau");
 			ResourceLabel.setText("");
 		}
 	}
