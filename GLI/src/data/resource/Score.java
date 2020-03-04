@@ -16,10 +16,5 @@ public class Score extends Resource {
 	public int getResourceType() {
 		return ResourceTypes.RESOURCE_SCORE;
 	}
-	
-<<<<<<< HEAD
 
-
-=======
->>>>>>> refs/remotes/origin/master
 }

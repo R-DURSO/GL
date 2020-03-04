@@ -14,11 +14,11 @@ public class ResourcesFactory {
 	}
 	
 	public static Food createFood() {
-		return new Food(InitialValue.NUMBER_INITIAL_ACTION);
+		return new Food(InitialValue.NUMBER_INITIAL_VALUE);
 	}
 	
 	public static Gold createGold() {
-		return new Gold(InitialValue.NUMBER_INITIAL_ACTION);
+		return new Gold(InitialValue.NUMBER_INITIAL_VALUE);
 	}
 	
 	public static Score createScore() {
@@ -26,11 +26,11 @@ public class ResourcesFactory {
 	}
 	
 	public static Stone createStone() {
-		return new Stone(InitialValue.NUMBER_INITIAL_ACTION);
+		return new Stone(InitialValue.NUMBER_INITIAL_VALUE);
 	}
 	
 	public static Wood createWood() {
-		return new Wood(InitialValue.NUMBER_INITIAL_ACTION);
+		return new Wood(InitialValue.NUMBER_INITIAL_VALUE);
 	}
 
 }

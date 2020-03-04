@@ -1,10 +1,6 @@
 package data.resource;
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> refs/remotes/origin/master
 /**
  * <p>ActionPoints represents the number of action a player can do each turn.</p>
  * <p>Useable Action can be seen in "data.actions"</p>
@@ -25,9 +21,5 @@ public class ActionPoints extends Resource {
 	int variation () {
 		return 0;
 	}
-	
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/master
 }

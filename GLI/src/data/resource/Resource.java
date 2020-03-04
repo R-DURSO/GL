@@ -1,7 +1,5 @@
 package data.resource;
 
-import data.InitialValue;
-
 /**
  * <p>Resource have all methods applicable to infant classes.</p>
  * <p>You can change the amount or productionPerTurn of a Resource here.</p>
@@ -48,10 +46,6 @@ public abstract class Resource {
 	public void subProductionPerTurn(int production) {
 		this.productionPerTurn -= production;
 	}
-<<<<<<< HEAD
-	
-=======
-	 
->>>>>>> refs/remotes/origin/master
+
 	public abstract int getResourceType();
 }
