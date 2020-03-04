@@ -1,6 +1,6 @@
 package data.resource;
 
-import process.visitor.ressource_visitor.RessourceVisitor;
+
 
 /**
  * <p>ActionPoints represents the number of action a player can do each turn.</p>
@@ -9,10 +9,10 @@ import process.visitor.ressource_visitor.RessourceVisitor;
  */
 
 public class ActionPoints extends Resource {
-	private static final int ACTIONS_NUMBER= 3;
-	private static final int MAX_ACTIONS = 6 ;
-	public ActionPoints() {
-		super(ACTIONS_NUMBER);
+//	private static final int ACTIONS_NUMBER= 3;
+//	private static final int MAX_ACTIONS = 6 ;
+	public ActionPoints(int number) {
+		super(number);
 	}
 	
 	public int getResourceType() {
@@ -23,8 +23,5 @@ public class ActionPoints extends Resource {
 		return 0;
 	}
 	
-	@Override
-	public <R> R accept(RessourceVisitor<R> visitor) {
-		return visitor.visit(this);
-	}
+
 }

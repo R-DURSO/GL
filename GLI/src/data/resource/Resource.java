@@ -1,7 +1,6 @@
 package data.resource;
 
 import data.InitialValue;
-import process.visitor.ressource_visitor.RessourceVisitor;
 
 /**
  * <p>Resource have all methods applicable to infant classes.</p>
@@ -10,16 +9,15 @@ import process.visitor.ressource_visitor.RessourceVisitor;
  */
 
 public abstract class Resource {
-	private int amount = InitialValue.NUMBER_INITIAL_VALUE;
-	private int productionPerTurn;
+	private int amount;
+	private int productionPerTurn = 0;
 	
 	
 	public Resource () {
-		productionPerTurn = 0;
+		this.amount = 0;
 	}
-	
-	public Resource(int productionPerTurn) {
-		this.productionPerTurn = productionPerTurn;
+	public Resource(int amount) {
+		this.amount = amount;
 	}
 	
 	
@@ -51,6 +49,5 @@ public abstract class Resource {
 		this.productionPerTurn -= production;
 	}
 	
-	public abstract <R> R accept(RessourceVisitor<R> visitor);
 	public abstract int getResourceType();
 }

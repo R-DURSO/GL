@@ -75,13 +75,13 @@ public class chooseActionBoutonsPanel extends JPanel {
 		
 	}
 	class ActionContrcut implements ActionListener{
-		String[] choices = { "moulin", "scierie", "mine", "port", "écurie","caserne","mur","porte","temple"};
+		String[] choices = { "caserne (100 bois)", "scierie", "mine", "port", "écurie","caserne","mur","porte","temple"};
 		public void actionPerformed(ActionEvent e) {
 			JComboBox building = new JComboBox(choices);
 			JOptionPane.showMessageDialog(null, building, "construction possible", 0);
 			building.getSelectedIndex();
 			System.out.println(building.getSelectedIndex());
-		//	int answer= (int) JOptionPane.showInputDialog(null, "quel construction","les type de construction", JOptionPane.QUESTION_MESSAGE,null, choices,choices[0]);
+		
 				
 		}
 		
