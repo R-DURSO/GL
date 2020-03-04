@@ -10,15 +10,13 @@ import data.building.BuildingTypes;
 
 public class Temple extends BuildingSpecial {
 	private static final int BUILD_TIME = 0;
-	public static final int COST = 100;
 	private static final int BASE_HEALTH = 3;
+	public static final int COST = 100;
 	
 	public Temple() {
 		super(BUILD_TIME, BASE_HEALTH);
 	}
 	
-
-	@Override
 	public int getType() {
 		return BuildingTypes.BUILDING_TEMPLE;
 	}
