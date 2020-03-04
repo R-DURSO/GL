@@ -1,7 +1,6 @@
 package data.building.special;
 
 import data.building.BuildingTypes;
-import process.visitor.building_visitor.BuildingVisitor;
 
 /**
  * <p>The Temple is a BuildingSpecial that will spawn at the center of the map</p>
@@ -24,9 +23,4 @@ public class Temple extends BuildingSpecial {
 		return BuildingTypes.BUILDING_TEMPLE;
 	}
 	
-	@Override
-	public <B> B accept(BuildingVisitor<B> visitor) {
-		return visitor.visit(this);
-	}
-
 }

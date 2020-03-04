@@ -1,7 +1,6 @@
 package data.resource;
 
 import data.InitialValue;
-import process.visitor.ressource_visitor.RessourceVisitor;
 
 /**
  * <p>Resource have all methods applicable to infant classes.</p>
@@ -50,7 +49,6 @@ public abstract class Resource {
 	public void subProductionPerTurn(int production) {
 		this.productionPerTurn -= production;
 	}
-	
-	public abstract <R> R accept(RessourceVisitor<R> visitor);
+	 
 	public abstract int getResourceType();
 }

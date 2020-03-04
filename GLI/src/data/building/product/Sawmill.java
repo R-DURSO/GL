@@ -2,7 +2,6 @@ package data.building.product;
 
 import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
-import process.visitor.building_visitor.BuildingVisitor;
 
 /**
  * <p>Mine is a Building that product Wood each Turn for a Power</p>
@@ -32,15 +31,8 @@ public class Sawmill extends BuildingProduct {
 		return ResourceTypes.RESOURCE_WOOD;
 	}
 	
-
-	@Override
 	public int getType() {
 		return BuildingTypes.BUILDING_SAWMILL;
-	}
-	
-	@Override
-	public <B> B accept(BuildingVisitor<B> visitor) {
-		return visitor.visit(this);
 	}
 	
 	public String toString() {

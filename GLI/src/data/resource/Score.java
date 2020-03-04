@@ -1,7 +1,5 @@
 package data.resource;
 
-import process.visitor.ressource_visitor.RessourceVisitor;
-
 /**
  * <p>Score represents the number of score a player have.</p>
  * <p>It can be gain by Combat and territory size.</p>
@@ -18,9 +16,4 @@ public class Score extends Resource {
 		return ResourceTypes.RESOURCE_SCORE;
 	}
 	
-	@Override
-	public <R> R accept(RessourceVisitor<R> visitor) {
-		return visitor.visit(this);
-	}
-
 }

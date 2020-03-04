@@ -1,7 +1,6 @@
 package data.resource;
 
 import data.InitialValue;
-import process.visitor.ressource_visitor.RessourceVisitor;
 
 /**
  * <p>Food represents the number of Food a player hold or the Resource on a Box.</p>
@@ -18,8 +17,4 @@ public class Food extends Resource {
 		return ResourceTypes.RESOURCE_FOOD;
 	}
 	
-	@Override
-	public <R> R accept(RessourceVisitor<R> visitor) {
-		return visitor.visit(this);
-	}
 }

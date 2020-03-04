@@ -1,7 +1,6 @@
 package data.building;
 
 import data.Power;
-import process.visitor.building_visitor.BuildingVisitor;
 
 public abstract class Building {
 	
@@ -31,8 +30,4 @@ public abstract class Building {
 		this.health -= damage;
 	}
 
-
-
-	public abstract <B> B accept(BuildingVisitor<B> visitor);
-	//public abstract int getCost();
 }

@@ -1,7 +1,5 @@
 package data.resource;
 
-import process.visitor.ressource_visitor.RessourceVisitor;
-
 /**
  * <p>ActionPoints represents the number of action a player can do each turn.</p>
  * <p>Useable Action can be seen in "data.actions"</p>
@@ -23,8 +21,4 @@ public class ActionPoints extends Resource {
 		return 0;
 	}
 	
-	@Override
-	public <R> R accept(RessourceVisitor<R> visitor) {
-		return visitor.visit(this);
-	}
 }
