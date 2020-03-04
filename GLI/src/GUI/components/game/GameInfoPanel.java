@@ -17,7 +17,7 @@ import data.resource.ResourceTypes;
 public class GameInfoPanel extends JPanel{
 	private static final long serialVersionUID = 1700840665124988595L;
 	
-	private BoxSelectedPanel positionPanel;
+	private BoxSelectedPanel boxInfosPanel;
 	private ResourcePanel actionPointsPanel;
 	private ResourcePanel goldPanel;
 	private ResourcePanel stonePanel;
@@ -30,7 +30,7 @@ public class GameInfoPanel extends JPanel{
 		stonePanel = new ResourcePanel("Pierre", resources[ResourceTypes.RESOURCE_STONE]);
 		woodPanel = new ResourcePanel("Bois", resources[ResourceTypes.RESOURCE_WOOD]);
 		foodPanel = new ResourcePanel("Nourriture", resources[ResourceTypes.RESOURCE_FOOD]);
-		positionPanel = new BoxSelectedPanel(box);
+		boxInfosPanel = new BoxSelectedPanel(box);
 		init();
 	}
 
@@ -41,7 +41,7 @@ public class GameInfoPanel extends JPanel{
 		positionPanel.setLayout(new GridLayout(0,1));
 		positionPanel.add(new JLabel("Position de la case sélectionée"));
 		*/
-		add(positionPanel);
+		add(boxInfosPanel);
 		add(actionPointsPanel);
 		add(goldPanel);
 		add(stonePanel);
@@ -50,7 +50,7 @@ public class GameInfoPanel extends JPanel{
 	}
 	
 	public BoxSelectedPanel getSelectionPanel() {
-		return positionPanel;
+		return boxInfosPanel;
 	}
 
 }

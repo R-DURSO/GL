@@ -29,15 +29,15 @@ public class GroundBox extends Box{
 	public String getResourceTypeName() {
 		switch (resourceType) {
 		case ResourceTypes.NO_RESOURCE:
-			return "Void";
+			return "Pas de resource";
 		case ResourceTypes.RESOURCE_FOOD:
-			return "Food";
+			return "Nourriture";
 		case ResourceTypes.RESOURCE_GOLD:
-			return "Gold";
+			return "Or";
 		case ResourceTypes.RESOURCE_STONE:
-			return "Stone";
+			return "Pierre";
 		case ResourceTypes.RESOURCE_WOOD:
-			return "Wood";
+			return "Bois";
 		default:
 			return "unknown";
 		}
