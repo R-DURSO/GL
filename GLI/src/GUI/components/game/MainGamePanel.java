@@ -28,15 +28,13 @@ public class MainGamePanel extends JPanel{
 	
 	public MainGamePanel(GameMap map, Power powers[]) {
 		super();
-		init();
 		
 		this.powers = powers;
 		this.map = map;
 		//montre affichage units sur cases
-		//UnitManager.getInstance().addUnits(powers[0], map.getBox(0, 0), UnitTypes.UNIT_INFANTRY, 50);
+		UnitManager.getInstance().addUnits(powers[0], map.getBox(1, 0), UnitTypes.UNIT_INFANTRY, 50);
 		//montrre affihage batiments sur case
-		//BuildingManager.getInstance().addNewBuilding(powers[0], BuildingTypes.BUILDING_SAWMILL, (GroundBox) map.getBox(1, 0));
-		setBackground(Color.BLACK);
+		BuildingManager.getInstance().addNewBuilding(powers[0], BuildingTypes.BUILDING_SAWMILL, (GroundBox) map.getBox(1, 0));
 	}
 	
 	
@@ -76,10 +74,10 @@ public class MainGamePanel extends JPanel{
                 if(map.getBox(i, j) instanceof GroundBox) {
                 	GroundBox groundBox = (GroundBox) map.getBox(i, j);
                 	if(determineResourceColor(g, groundBox)) {
-                	
 						g.fillRect(startX, startY, miniBoxWidth, miniBoxHeight);
                 	}
                 	if(determineBuildingColor(g, groundBox)) {
+                		System.out.println(g.getColor());
                 		g.fillRect(x + startX, y + 2 * startY + miniBoxHeight, miniBoxWidth, miniBoxHeight);
                 	}
                 	
@@ -244,11 +242,5 @@ public class MainGamePanel extends JPanel{
 			g.setColor(ColorData.WATER_COLOR);
 		}
 	}
-
-	private void init() {
-		setLayout(new GridLayout(0,1));
-	}
-	
-	
 
 }
