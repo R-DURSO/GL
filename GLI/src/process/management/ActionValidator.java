@@ -44,7 +44,7 @@ public class ActionValidator {
 	public ActionMakeAlliance createActionMakeAlliance(Power powerConcerned, Power potentialAlly) throws IllegalArgumentException{
 		//check if one of players has already an allied
 		if (powerConcerned.isAllied() || potentialAlly.isAllied()) {
-			throw new IllegalArgumentException("Une des puissances est d�j� en alliance");
+			throw new IllegalArgumentException("Une des puissances est deja en alliance");
 		}
 		
 		powerConcerned.removeActionPoint();
@@ -62,7 +62,7 @@ public class ActionValidator {
 	public ActionBreakAlliance createActionBreakAlliance(Power powerConcerned, Power formerAlly) throws IllegalArgumentException{
 		//check if player has ally and if this ally is the right Power
 		if(!powerConcerned.isAllied())
-			throw new IllegalArgumentException(powerConcerned.getName() + " n'a pas d'alli�");
+			throw new IllegalArgumentException(powerConcerned.getName() + " n'a pas d'allie");
 		if(powerConcerned.getAlly() != formerAlly) {
 			throw new IllegalArgumentException(powerConcerned.getName() + " n'est pas en alliance avec " + formerAlly.getName());
 		}
@@ -96,15 +96,15 @@ public class ActionValidator {
 		
 		//check if from Box is powerConcerned's
 		if(fromBox.getOwner() != powerConcerned)
-			throw new IllegalArgumentException("Cette case n'appartient pas � " + powerConcerned.getName());
+			throw new IllegalArgumentException("Cette case n'appartient pas a " + powerConcerned.getName());
 		
 		//check if there is any unit on the fromBox
 		if(!fromBox.hasUnit())
-			throw new IllegalArgumentException("Il n'y a pas d'unit� � d�placer ici");
+			throw new IllegalArgumentException("Il n'y a pas d'unite a deplacer ici");
 		
 		//check if units are on range
 		if(!isUnitsOnRange(from, fromBox.getUnit(), target))
-			throw new IllegalArgumentException("Les unit�s sont trop loin de la cible");
+			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
 		
 		//check if there is units on target, in this case, check the owner of those units
 		//if player himself or his ally, no attack
@@ -134,19 +134,19 @@ public class ActionValidator {
 	 */
 	public ActionMove createActionMove(Power powerConcerned, Position from, Position target) throws IllegalArgumentException{
 		if(from.equals(target))
-			throw new IllegalArgumentException("On ne peut pas se d�placer la ou on est d�j�");
+			throw new IllegalArgumentException("On ne peut pas se deplacer la ou on est deja");
 		
 		Box fromBox = getBoxFromMap(from);
 		Box targetBox = getBoxFromMap(target);
 		
 		//check if from Box is powerConcerned's
 		if(fromBox.getOwner() != powerConcerned)
-			throw new IllegalArgumentException("Cette case n'appartient pas � " + powerConcerned.getName());
+			throw new IllegalArgumentException("Cette case n'appartient pas a " + powerConcerned.getName());
 		
 		
 		//check if there is any unit on the fromBox
 		if(!fromBox.hasUnit())
-			throw new IllegalArgumentException("Il n'y a pas d'unit� � d�placer ici");
+			throw new IllegalArgumentException("Il n'y a pas d'unite a deplacer ici");
 		
 		Units movingUnits = fromBox.getUnit();
 		
@@ -155,38 +155,38 @@ public class ActionValidator {
 		if(targetBox instanceof WaterBox && movingUnits.getTypes() != UnitTypes.UNIT_BOAT
 			|| targetBox instanceof GroundBox && movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
 			
-			throw new IllegalArgumentException("Cette unit� ne peut pas aller sur ce type de case");
+			throw new IllegalArgumentException("Cette unite ne peut pas aller sur ce type de case");
 		}
 		
 		//check if units are on range
 		if(!isUnitsOnRange(from, movingUnits, target))
-			throw new IllegalArgumentException("Les unit�s sont trop loin de la cible");
+			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
 		
-		// TODO v�rify that no obstable on path (between from and target)
+		// TODO verify that no obstable on path (between from and target)
 		
 		//check if there is "obstacle" on target : either wall / ennemy door, or units 
 		if(targetBox.getOwner() == powerConcerned) {
 			if(targetBox.hasUnit()) {
 				Units unitsOnTarget = targetBox.getUnit();
 				if(movingUnits.getTypes() != unitsOnTarget.getTypes())
-					throw new IllegalArgumentException("Des unit�s d'un type diff�rent sont sur le lieu cibl�");
+					throw new IllegalArgumentException("Des unites d'un type different sont sur le lieu cible");
 			}
 			
 			if(targetBox instanceof GroundBox) {
 				GroundBox groundBox = (GroundBox) targetBox;
 				if(groundBox.getBuilding() instanceof Wall)
-					throw new IllegalArgumentException("Les unit�s ne peuvent pas aller dans un mur");
+					throw new IllegalArgumentException("Les unites ne peuvent pas aller dans un mur");
 			}
 		}else {
 			if(targetBox.hasUnit())
-				throw new IllegalArgumentException("Il y a des unit�s ennemies sur la case cible");
+				throw new IllegalArgumentException("Il y a des unites ennemies sur la case cible");
 			if(targetBox instanceof GroundBox) {
 				GroundBox groundBox = (GroundBox) targetBox;
 				if(groundBox.getBuilding() instanceof Wall)
-					throw new IllegalArgumentException("Les unit�s ne peuvent pas aller dans un mur");
+					throw new IllegalArgumentException("Les unites ne peuvent pas aller dans un mur");
 				//units can go through "allied" doors
 				if(groundBox.getBuilding() instanceof Door && groundBox.getOwner() == powerConcerned.getAlly())
-					throw new IllegalArgumentException("Les unit�s ne peuvent pas aller dans une porte ennemie");
+					throw new IllegalArgumentException("Les unites ne peuvent pas aller dans une porte ennemie");
 			}
 		}
 		
@@ -229,7 +229,7 @@ public class ActionValidator {
 		return (getDifference(aX,bX) + getDifference(aY,bY)) <= range;
 	}
 	
-	//Sera surement utile pour le d�placement ?
+	//Sera surement utile pour le deplacement ?
 	private int getDifference (int a, int b) {
 		return Math.abs(a - b);
 	}
@@ -255,7 +255,7 @@ public class ActionValidator {
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() != powerConcerned) {
-			throw new IllegalArgumentException("Impossible de construire sur une case �trang�re");
+			throw new IllegalArgumentException("Impossible de construire sur une case etrangere");
 		}
 		
 		//check if have enough resources to build
@@ -270,11 +270,11 @@ public class ActionValidator {
 		GroundBox groundBox = (GroundBox) targetBox;
 		//check if there is already a building on this box
 		if(groundBox.hasBuilding())
-			throw new IllegalArgumentException("Impossible de construire sur une case qui poss�de d�j� un batiment"); 
+			throw new IllegalArgumentException("Impossible de construire sur une case qui possede deja un batiment"); 
 		
 		if (buildingType == BuildingTypes.BUILDING_TEMPLE) {
-			if (groundBox.getResourceType() == ResourceTypes.RESOURCE_ARTIFACT) {
-				//construct
+			if (groundBox.getResourceType() != ResourceTypes.RESOURCE_ARTIFACT) {
+				throw new IllegalArgumentException("La case ne possede pas l'Artefact"); 
 			}
 		}
 		
@@ -336,42 +336,42 @@ public class ActionValidator {
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() != powerConcerned) {
-			throw new IllegalArgumentException("Impossible de cr�er des unit�s sur une case �trang�re");
+			throw new IllegalArgumentException("Impossible de creer des unites sur une case etrangere");
 		}
 		
 		//check if have enough gold to create units 
 		ResourceCost neededResource = getUnitCost(powerConcerned, unitType, numberUnits);
 		if(!checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
-			throw new IllegalArgumentException("Pas assez de ressources pour cr�er ces unit�s");
+			throw new IllegalArgumentException("Pas assez de ressources pour creer ces unites");
 				
 		
 		//check if not in water
 		if(targetBox instanceof WaterBox)
-			throw new IllegalArgumentException("Impossible de cr�er des unit�s sur une case d'eau");
+			throw new IllegalArgumentException("Impossible de creer des unites sur une case d'eau");
 		
 		GroundBox groundBox = (GroundBox) targetBox;
 		//check if this box has a building
 		if(!groundBox.hasBuilding())
-			throw new IllegalArgumentException("La cr�ation d'unit�s demande la pr�sence d'un batiment sp�cifique");
+			throw new IllegalArgumentException("La creation d'unites demande la presence d'un batiment specifique");
 		
 		Building building = groundBox.getBuilding();
 		
 		//check if thoses units can be created here
 		if(! (building instanceof BuildingArmy))
-			throw new IllegalArgumentException("Impossible de cr�er des unit�s dans un batiment comme ceci");
+			throw new IllegalArgumentException("Impossible de creer des unites dans un batiment comme ceci");
 		else
 			switch(building.getType()) {
 			case BuildingTypes.BUILDING_BARRACK:
 				if(unitType >= UnitTypes.UNITS_IN_BARRACK)
-					throw new IllegalArgumentException("Ces unit�s ne sont pas cr��es dans des casernes");
+					throw new IllegalArgumentException("Ces unites ne sont pas creees dans des casernes");
 				break;
 			case BuildingTypes.BUILDING_WORKSHOP:
 				if(unitType < UnitTypes.UNITS_IN_BARRACK || unitType >= UnitTypes.UNITS_IN_WORKSHOP)
-					throw new IllegalArgumentException("Ces unit�s ne sont pas cr��es dans des ateliers");
+					throw new IllegalArgumentException("Ces unites ne sont pas creees dans des ateliers");
 				break;
 			case BuildingTypes.BUILDING_DOCK:
 				if(unitType < UnitTypes.UNITS_IN_WORKSHOP)
-					throw new IllegalArgumentException("Ces unit�s ne sont pas cr��es dans des ports");
+					throw new IllegalArgumentException("Ces unites ne sont pas creees dans des ports");
 				break;
 			}
 		
@@ -426,7 +426,7 @@ public class ActionValidator {
 		//check if there is indeed a building here
 		//we first need to know the type of the box
 		if(targetBox instanceof WaterBox)
-			throw new IllegalArgumentException("Il n'y a rien � d�truire sur une case d'eau");
+			throw new IllegalArgumentException("Il n'y a rien a detruire sur une case d'eau");
 		else {
 			GroundBox groundBox = (GroundBox) targetBox;
 			if(!groundBox.hasBuilding())
@@ -455,11 +455,11 @@ public class ActionValidator {
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() != powerConcerned)
-			throw new IllegalArgumentException("Impossible de faire une suppression d'unit� sur une case qui ne nous appartient pas");
+			throw new IllegalArgumentException("Impossible de faire une suppression d'unite sur une case qui ne nous appartient pas");
 		
 		//check if there is any unit on this box
 		if(!targetBox.hasUnit())
-			throw new IllegalArgumentException("Il n'y a pas d'unit�s � supprimer ici");
+			throw new IllegalArgumentException("Il n'y a pas d'unites a supprimer ici");
 		
 		powerConcerned.removeActionPoint();
 		return new ActionDestroyUnits(powerConcerned, target);
@@ -489,13 +489,13 @@ public class ActionValidator {
 		
 		//check if capital is already level max
 		if (capital.getLevel() == Capital.MAX_LEVEL) {
-			throw new IllegalArgumentException("La capitale est d�j� au niveau maximal");
+			throw new IllegalArgumentException("La capitale est deja au niveau maximal");
 		}
 		
 		//check if have enough resources
 		int goldCost = capital.getUpgradeCost();
 		if(powerConcerned.getResourceAmount(ResourceTypes.RESOURCE_GOLD) < goldCost) {
-			throw new IllegalArgumentException("Pas assez de ressources pour am�liorer la capitale (co�t : " + goldCost + ")");
+			throw new IllegalArgumentException("Pas assez de ressources pour ameliorer la capitale (cout : " + goldCost + ")");
 		}
 		
 		//conditions are met, so we can remove action cost and create the ActionUpgradeCapital
