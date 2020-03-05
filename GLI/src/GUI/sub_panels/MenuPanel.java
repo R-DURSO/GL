@@ -17,7 +17,7 @@ public class MenuPanel extends JPanel{
 	private static final long serialVersionUID = 5832326052399006926L;
 	
 	private JPanel titlePanel = new TitlePanel();
-	private JPanel preferencesPanel = new PreferencesPanel();
+	private PreferencesPanel preferencesPanel = new PreferencesPanel();
 	private JPanel choicePanel;
 	
 	private final Dimension TITLE_DIMENSION = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 10);
@@ -39,7 +39,7 @@ public class MenuPanel extends JPanel{
 		add(choicePanel);
 	}
 	
-	public JPanel getPreferencesPanel() {
+	public PreferencesPanel getPreferencesPanel() {
 		return preferencesPanel;
 	}
 

@@ -13,10 +13,10 @@ public class Start {
 	
 
 	
-	public Start(PreferencesPanel preferences){
-		initPowers(preferences.getNumberPlayers());
+	public Start(int numberPlayers, int mapSize, int waterAmount, int aiLevels[]){
+		initPowers(numberPlayers);
 		this.map=null;
-		generateMap(preferences.getMapSize(),preferences.getWaterAmount(), this.powers);
+		generateMap(mapSize, waterAmount, this.powers);
 		System.out.println(map);
 		/* initinalisation des ia qui ne sont pas encore crée donc 
 		 * IA1 = new createIA(preferences.getAi1Level());
@@ -37,13 +37,13 @@ public class Start {
 		MapBuilder mb = new MapBuilder(size, waterAmout, powers);
 		mb.displayMap();
 		GameMap map = mb.buildMap();
-		 this.map=map;
+		this.map=map;
 	}
 	
 	public GameMap getMap() {
 		return map;
 	}
-	public Power[] getPower() {
+	public Power[] getPowers() {
 		return powers;
 	}
 }
