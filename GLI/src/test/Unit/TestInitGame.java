@@ -11,6 +11,7 @@ import data.GameMap;
 import data.Power;
 import data.boxes.GroundBox;
 import data.building.special.Capital;
+import data.resource.ResourceTypes;
 import process.game.Start;
 import process.management.MapBuilder;
 
@@ -65,5 +66,11 @@ public class TestInitGame {
 		assertTrue(gb3.getBuilding() instanceof Capital);
 		assertTrue(gb4.getBuilding() instanceof Capital);
 	}
-
+	
+	@Test 
+	public void testArtifactPosition() {
+		GroundBox groundBox = (GroundBox) map.getBox(mapSize/2, mapSize/2);
+		assertEquals(groundBox.getResourceType(), ResourceTypes.RESOURCE_ARTIFACT);
+	}
+		
 }

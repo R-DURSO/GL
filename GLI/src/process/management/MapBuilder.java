@@ -113,7 +113,10 @@ public class MapBuilder {
 				if (map[i][j]) {
 					box = new WaterBox();
 				}else {
-					box = new GroundBox(defineRessourceType());
+					if(i == size/2 && j == size/2)
+						box = new GroundBox(ResourceTypes.RESOURCE_ARTIFACT);
+					else
+						box = new GroundBox(defineRessourceType());
 				}
 				boxes[i][j] = box;
 			}

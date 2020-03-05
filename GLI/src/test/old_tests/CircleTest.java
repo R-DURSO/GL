@@ -1,4 +1,4 @@
-package test;
+package test.old_tests;
 
 public class CircleTest {
 

@@ -10,18 +10,14 @@ public class Start {
 	private GameMap map;
 	private Power powers[];
 	
-	
-
-	
 	public Start(int numberPlayers, int mapSize, int waterAmount, int aiLevels[]){
 		initPowers(numberPlayers);
 		this.map=null;
 		generateMap(mapSize, waterAmount, this.powers);
-		System.out.println(map);
 		/* initinalisation des ia qui ne sont pas encore crée donc 
-		 * IA1 = new createIA(preferences.getAi1Level());
-		 * IA2 = new createIA(preferences.getAi2Level());
-		 * IA3 = new createIA(preferences.getAi3Level());
+		 * IA1 = IAFactory.createIA(aiLevels[0]);
+		 * IA2 = IAFactory.createIA(aiLevels[0]);
+		 * IA3 = IAFactory.createIA(aiLevels[0]);
 		 */
 	}
 	
@@ -35,9 +31,7 @@ public class Start {
 	
 	public void generateMap(int size , int waterAmout, Power powers[]) {
 		MapBuilder mb = new MapBuilder(size, waterAmout, powers);
-		mb.displayMap();
-		GameMap map = mb.buildMap();
-		this.map=map;
+		this.map = mb.buildMap();
 	}
 	
 	public GameMap getMap() {

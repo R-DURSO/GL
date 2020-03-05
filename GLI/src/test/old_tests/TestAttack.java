@@ -1,4 +1,4 @@
-package test;
+package test.old_tests;
 
 import data.GameMap;
 import data.Position;
@@ -12,7 +12,7 @@ import process.management.BuildingManager;
 import process.management.MapBuilder;
 import process.management.UnitManager;
 
-public class TestAttack2 {
+public class TestAttack {
 	public static void main(String[] args) {
 		Power powers[] = new Power[2];
 		powers[0] = new Power("j1");
@@ -42,15 +42,15 @@ public class TestAttack2 {
 		
 		
 		try {
-			validator.createActionCreateUnit(powers[1], UnitTypes.UNIT_INFANTRY, 10, new Position(2,2));
-			UnitManager.getInstance().addUnits(powers[1], map.getBox(2, 2), UnitTypes.UNIT_INFANTRY, 10);
+			validator.createActionCreateUnit(powers[1], UnitTypes.UNIT_INFANTRY, 30, new Position(2,2));
+			UnitManager.getInstance().addUnits(powers[1], map.getBox(2, 2), UnitTypes.UNIT_INFANTRY, 30);
 		}catch(IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 		
 		try {
-			validator.createActionCreateUnit(powers[0], UnitTypes.UNIT_INFANTRY, 20, new Position(1,1));
-			UnitManager.getInstance().addUnits(powers[0], map.getBox(1, 1), UnitTypes.UNIT_INFANTRY, 20);
+			validator.createActionCreateUnit(powers[0], UnitTypes.UNIT_INFANTRY, 10, new Position(1,1));
+			UnitManager.getInstance().addUnits(powers[0], map.getBox(1, 1), UnitTypes.UNIT_INFANTRY, 10);
 		}catch(IllegalArgumentException e) {
 			e.printStackTrace();
 		}
@@ -64,6 +64,7 @@ public class TestAttack2 {
 		}
 		
 		System.out.println(map);
+		System.out.println("\n\n==============\n\n");
 		
 		try {
 			validator.createActionAttack(powers[0], new Position(1,2), new Position(2,2));
@@ -76,18 +77,4 @@ public class TestAttack2 {
 		System.out.println(map);
 		
 	}
-
-
-	private static GameMap initMap(Power powers[]) {
-		MapBuilder mapBuilder = new MapBuilder(20, 0, powers);
-		return mapBuilder.buildMap();
-	}
-
-
-	private static void initPowers(Power powers[]) {
-		powers = new Power[2];
-		powers[0] = new Power("joueur 1");
-		powers[1] = new Power("joueur 2");
-	}
-
 }
