@@ -82,7 +82,6 @@ public class MainGamePanel extends JPanel{
 						g.fillRect(startX, startY, miniBoxWidth, miniBoxHeight);
                 	}
                 	if(determineBuildingColor(g, groundBox)) {
-                		System.out.println(g.getColor());
                 		g.fillRect( startX, startY + miniBoxHeight + miniBoxHeight/2, miniBoxWidth, miniBoxHeight);
                 	}
                 	

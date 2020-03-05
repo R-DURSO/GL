@@ -30,7 +30,6 @@ public class MainWindow extends JFrame{
 
 	public MainWindow() {
 		super("Conquête");
-		System.out.println(GuiPreferences.WIDTH + " " + GuiPreferences.HEIGHT);
 		setPreferredSize(new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT));
 		init();
 		getContentPane().add(gamePanel, "game");
@@ -61,7 +60,6 @@ public class MainWindow extends JFrame{
 
 		gamePanel.initMainGamePanel(game.getMap(), game.getPowers());
 		cardLayout.show(getContentPane(), "game");
-		//System.out.println(menuPanel.getPreferencesPanel());
 		
 	}
 	
