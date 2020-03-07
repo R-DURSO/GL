@@ -18,7 +18,7 @@ import org.junit.runners.Suite;
  *
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({TestInitGame.class, TestActionValidator.class})
+@Suite.SuiteClasses({TestInitGame.class, TestActionValidator.class, TestCreateBuilding.class, TestRessource.class})
 public class GameTestSuite {
 
 }
