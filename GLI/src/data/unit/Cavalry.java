@@ -3,8 +3,8 @@ package data.unit;
 public class Cavalry extends Units {
 	private static final int BASE_HEALTH = 2;
 	private static final int RANGE = 0;
-	private static final int MOVEMENT = 1;
-	private static final int DAMAGE = 0;
+	private static final int MOVEMENT = 3;
+	private static final int DAMAGE = 2;
 	private static final int DEFENSE = 1;
 	
 	public static final int COST = 10;

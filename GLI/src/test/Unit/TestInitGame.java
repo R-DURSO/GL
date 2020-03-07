@@ -17,8 +17,8 @@ import process.management.MapBuilder;
 
 /**
  * Unit test of map and mapBuilder.
- * We test the worse scenario concerning bugs: map has 10 boxes per side,
- * there is a lot of water and 4 players are playing on this map
+ * We test the worse scenario concerning bugs: {@link data.GameMap} has 10 boxes per side,
+ * there is a lot of {@link data.boxes.WaterBox} and 4 {@link data.Power} are playing on this map
  * @author Aldric Vitali Silvestre
  *
  */

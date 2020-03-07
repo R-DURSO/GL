@@ -125,6 +125,32 @@ public class MapBuilder {
 		installPowers(boxes);
 		return new GameMap(boxes);
 	}
+	
+	/**
+	 * Create a special map, used only for testing purposes 
+	 * @return the special map
+	 */
+	public GameMap buildSpecialMap() {
+		Box[][] boxes = new Box[size][size];
+		Box box;
+		for(int i = 0; i < size; i++){
+			for(int j = 0; j < size; j++){
+				if(j < size/2) {
+					box = new GroundBox(ResourceTypes.RESOURCE_WOOD);
+				}else if(j > size/2) {
+					box = new GroundBox(ResourceTypes.RESOURCE_GOLD);
+				}else if(i == size/2) {
+					box = new GroundBox(ResourceTypes.RESOURCE_ARTIFACT);
+				}else {
+					box = new WaterBox();
+				}
+				boxes[i][j] = box;
+			}
+		}
+		//'install' powers 
+		installPowers(boxes);
+		return new GameMap(boxes);
+	}
 
 	private void installPowers(Box boxes[][]) {
 		//player 1 on top-left side
