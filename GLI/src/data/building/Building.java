@@ -1,7 +1,15 @@
 package data.building;
 
-import data.Power;
-
+/**
+ * <p>A Building, set in the Map, own by a Power</p>
+ * A Building can be:
+ * <ul>
+ * 	<li>A {@link data.building.product.BuildingProduct BuildingProduct}</li>
+ * 	<li>A {@link data.building.army.BuildingArmy BuildingArmy}</li>
+ * 	<li>A {@link data.building.special.BuildingSpecial BuildingSpecial}</li>
+ * </ul>
+ * @author Maxence
+ */
 public abstract class Building {
 	
 	private int buildTime; //when buildTime == 0, this building can be used
