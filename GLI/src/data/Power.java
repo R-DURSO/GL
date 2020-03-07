@@ -6,7 +6,15 @@ import data.resource.*;
 import data.building.special.Capital;
 import process.management.ResourcesFactory;;
 
+/**
+ * <p>Represents a player in the Game.</p>
+ * <p>A Power hold resource, that can be spend on construction of {@link data.building.Building Building} or the creation of {@link data.unit.Units Units}.</p>
+ * <p>A Power also hold a {@link data.building.special.Capital Capital}, and letting it be destroyed mean losing the game.</p>
+ * <p>Power are created by a {@link process.management.PowerFactory PowerFactory}.</p>
+ * @author Maxence
+ */
 public class Power {
+	
 	private String name;
 	private ArrayList<Box> territory = new ArrayList<>();
 	private Resource[] resources = new Resource[ResourceTypes.NUMBER_PLAYER_RESOURCES];

@@ -1,5 +1,18 @@
 package data.unit;
 
+/**
+ * <p>Represents a Units in the Game.</p>
+ * <p>A Units move across the Map, capturing new territory for the {@link data.Power Power} that control it.</p>
+ * <p>A Units have HP, range and damage capabilities, as well as defence and number.</p>
+ * Some Units can't have number, so be numerous on the same Boxes,
+ * <ul>
+ * 	<li>{@link data.unit.Boat Boat}</li>
+ * 	<li>{@link data.unit.Trebuchet Trebuchet}</li>
+ * </ul>
+ * <p>Unis are created by a {@link process.management.UnitManager UnitManager}.</p>
+ * @author Maxence
+ *
+ */
 public abstract class Units {
 	private int health;
 	private int range;
