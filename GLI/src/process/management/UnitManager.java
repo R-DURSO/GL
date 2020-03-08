@@ -155,21 +155,17 @@ public class UnitManager {
 		**/
 		
 		double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
-		System.out.println("degat de l'att "+AttackerDamageDealt);
 		
 		//Les défenseurs subissent les dégats
 		int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
-		System.out.println("mort des defs "+casualityDef);
 		
 		int casualityAtt = 0;
 		if (!isRanged(attacker)) {
 			//Round 2, contre-attaque si pas à distance
 			//int DefenderDamageDealt = (defender.getDamage() - attacker.getDefense()) * defender.getNumber();
 			double DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense()) / 10.0));
-			System.out.println("degat des def "+DefenderDamageDealt);
 			//Les attaquant subissent les dégats
 			casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
-			System.out.println("mort des att "+casualityAtt);
 		}
 		
 		//Les 2 Units perdent en nombres
