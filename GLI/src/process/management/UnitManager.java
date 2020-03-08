@@ -12,24 +12,24 @@ import data.Power;
 public class UnitManager {
 	
 	private static UnitManager instance = new UnitManager();
-	
 	public static UnitManager getInstance() { return instance; }
 	
 	public void addUnits(Power power, Box box, int unitType, int numberUnits) {
 		//cant add negative or none Unit
 		if (numberUnits > 0) {
 			//we will check if there is already units of the same type on the box
-			if(box.hasUnit()) {
+			if (box.hasUnit()) {
 				Units unitsOnBox = box.getUnit();
 				int numberUnitsOnBox = unitsOnBox.getNumber();
 				int numberUnitsNeeded = numberUnits + numberUnitsOnBox;
 				//if the number of units we want to add is less than the max number, we simply add thoses new units
-				if(numberUnitsNeeded <= unitsOnBox.getMaxNumber()) {
+				if (numberUnitsNeeded <= unitsOnBox.getMaxNumber()) {
 					unitsOnBox.addNumber(numberUnitsNeeded);
 					//modify amount of food earned between each turn
 					int foodCostToRemove = numberUnits * unitsOnBox.getFoodCost();
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 				}
+				//TODO La gestion d'or devrait se faire ici ?
 				else {
 					//else, we have to add to max number
 					int numberExcessUnits = numberUnitsNeeded - unitsOnBox.getMaxNumber();
@@ -44,7 +44,7 @@ public class UnitManager {
 				Units units = createUnit(unitType, numberUnits);
 				//Unit shouldn't be here if invalid type
 				if (units != null) {
-					if(units.getNumber() > units.getMaxNumber()) {
+					if (units.getNumber() > units.getMaxNumber()) {
 						int numberExcessUnits = numberUnits - units.getMaxNumber();
 						units.substractNumber(numberExcessUnits);
 						power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(units.getCost() * numberExcessUnits); 
@@ -90,13 +90,18 @@ public class UnitManager {
 		}
 		else {
 			units.substractNumber(numberUnitsRemoved);
+			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, numberUnitsRemoved * box.getUnit().getFoodCost());
 		}
 	}
 	
 	public void deleteUnits(Power power, Box box) {
-		int foodProdToAdd = box.getUnit().getFoodCost() * box.getUnit().getNumber();
-		power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
-		box.setUnit(null);
+		if (power != null) {
+			if (box.hasUnit()) {
+				int foodProdToAdd = box.getUnit().getFoodCost() * box.getUnit().getNumber();
+				power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
+				box.setUnit(null);
+			}
+		}
 	}
 	
 	public void moveUnits(Power powerConcerned, Box fromBox, Box targetBox) {
@@ -113,7 +118,7 @@ public class UnitManager {
 			//No building to add since it was still not owned by a power
 		}
 		else {
-			if(targetBoxPower != powerConcerned && targetBoxPower.getAlly() != powerConcerned) {
+			if ((targetBoxPower != powerConcerned) && (targetBoxPower.getAlly() != powerConcerned)) {
 				//powerConcerned will take this territory, and ressource gain per turn if have (inderictly, will have building on it too)  
 				powerConcerned.addBox(targetBox);
 				targetBox.setOwner(powerConcerned);
