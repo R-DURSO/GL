@@ -30,15 +30,39 @@ public class MainGamePanel extends JPanel{
 	private GameMap map;
 	private Power powers[];
 	
-	public MainGamePanel(GameMap map, Power powers[]) {
+    private int rectWidth;
+    private int rectHeight;
+	
+	public MainGamePanel(GameMap map, Power powers[], int rectWidth, int rectHeight) {
 		super();
 		
 		this.powers = powers;
 		this.map = map;
+		
+//		this.rectWidth = rectWidth;
+//	    this.rectHeight = rectHeight;
+	    
+		//TODO remove this when not useful anymore
+		
 		//montre affichage units sur cases
 		UnitManager.getInstance().addUnits(powers[0], map.getBox(1, 0), UnitTypes.UNIT_INFANTRY, 50);
 		//montrre affihage batiments sur case
 		BuildingManager.getInstance().addNewBuilding(powers[0], BuildingTypes.BUILDING_SAWMILL, (GroundBox) map.getBox(1, 0));
+	}
+	
+	public Box getBoxFromCoordinates(int x, int y) {
+		int w = getWidth() / map.getSize();
+		int h = getHeight() / map.getSize();
+		int xMapRelative = x  / w;
+		int yMapRelative = y  / h;
+		
+		//sometimes, map will be a little bit smaller than panel, so mouse can be out of the map
+		//and therefore, bugs can occur, so we check if mouse is still on map to avoid those problems
+		if(xMapRelative >= map.getSize())
+			xMapRelative = map.getSize() - 1;
+		if(yMapRelative >= map.getSize())
+			yMapRelative = map.getSize() - 1;
+		return map.getBox(xMapRelative, yMapRelative);
 	}
 	
 	
@@ -53,9 +77,9 @@ public class MainGamePanel extends JPanel{
 
 
 	private void drawMap(Graphics g) {
+		int rectWidth = getWidth() / map.getSize();
+		int rectHeight = getHeight() / map.getSize();
         g.clearRect(0, 0, getWidth(), getHeight());
-        int rectWidth = getWidth() / map.getSize();
-        int rectHeight = getHeight() / map.getSize();
         int miniBoxWidth = rectWidth * 4 / MINI_BOX_PART;
         int miniBoxHeight = rectHeight * 4 / MINI_BOX_PART;
         

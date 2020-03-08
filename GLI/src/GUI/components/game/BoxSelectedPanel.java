@@ -63,7 +63,7 @@ public class BoxSelectedPanel extends JPanel {
 		}
 		else {
 			BuildingLabel.setText("Case d'eau");
-			ResourceLabel.setText("");
+			ResourceLabel.setText("___");
 		}
 	}
 

@@ -26,7 +26,6 @@ public class MainWindow extends JFrame{
 	private MenuPanel menuPanel = new MenuPanel(this);
 	private MainWindow context = this;
 	private CardLayout cardLayout = new CardLayout();
-	
 
 	public MainWindow() {
 		super("Conquête");
@@ -58,7 +57,7 @@ public class MainWindow extends JFrame{
 		int aiLevels[] = {preferences.getAi1Level(), preferences.getAi2Level(), preferences.getAi3Level()}; 
 		Start game = new Start(numberPlayers, mapSize, waterAmount, aiLevels);
 
-		gamePanel.initMainGamePanel(game.getMap(), game.getPowers());
+		gamePanel.initGamePanel(game.getMap(), game.getPowers());
 		cardLayout.show(getContentPane(), "game");
 		
 	}
