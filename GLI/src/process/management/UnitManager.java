@@ -6,8 +6,8 @@ import data.unit.*;
 import data.Power;
 
 /**
- * Singleton class to manipulate units : creation, update and deletion
- * <b>Do not use this class without {@link ActionValidator}, which mades most of importants verfications</b>
+ * <p>Singleton class to manipulate units : creation, update and deletion</p>
+ * <p><b>Do not use this class without {@link ActionValidator}, which mades most of importants verfications</b></p>
  */
 public class UnitManager {
 	
@@ -16,38 +16,44 @@ public class UnitManager {
 	public static UnitManager getInstance() { return instance; }
 	
 	public void addUnits(Power power, Box box, int unitType, int numberUnits) {
-		//we will check if there is already units of the same type on the box
-		if(box.hasUnit()) {
-			Units unitsOnBox = box.getUnit();
-			int numberUnitsOnBox = unitsOnBox.getNumber();
-			int numberUnitsNeeded = numberUnits + numberUnitsOnBox;
-			//if the number of units we want to add is less than the max number, we simply add thoses new units
-			if(numberUnitsNeeded <= unitsOnBox.getMaxNumber()) {
-				unitsOnBox.addNumber(numberUnitsNeeded);
-				//modify amount of food earned between each turn
-				int foodCostToRemove = numberUnits * unitsOnBox.getFoodCost();
-				power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
+		//cant add negative or none Unit
+		if (numberUnits > 0) {
+			//we will check if there is already units of the same type on the box
+			if(box.hasUnit()) {
+				Units unitsOnBox = box.getUnit();
+				int numberUnitsOnBox = unitsOnBox.getNumber();
+				int numberUnitsNeeded = numberUnits + numberUnitsOnBox;
+				//if the number of units we want to add is less than the max number, we simply add thoses new units
+				if(numberUnitsNeeded <= unitsOnBox.getMaxNumber()) {
+					unitsOnBox.addNumber(numberUnitsNeeded);
+					//modify amount of food earned between each turn
+					int foodCostToRemove = numberUnits * unitsOnBox.getFoodCost();
+					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
+				}
+				else {
+					//else, we have to add to max number
+					int numberExcessUnits = numberUnitsNeeded - unitsOnBox.getMaxNumber();
+					unitsOnBox.addNumber(numberUnitsNeeded - numberExcessUnits);
+					int foodCostToRemove = (numberUnitsNeeded - numberExcessUnits) * unitsOnBox.getFoodCost();
+					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
+					//and refound gold 
+					power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(unitsOnBox.getCost() * numberExcessUnits); 
+				}	
 			}
 			else {
-				//else, we have to add to max number
-				int numberExcessUnits = numberUnitsNeeded - unitsOnBox.getMaxNumber();
-				unitsOnBox.addNumber(numberUnitsNeeded - numberExcessUnits);
-				int foodCostToRemove = (numberUnitsNeeded - numberExcessUnits) * unitsOnBox.getFoodCost();
-				power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
-				//and refound gold 
-				power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(unitsOnBox.getCost() * numberExcessUnits); 
-			}	
-		}else {
-			Units units = createUnit(unitType, numberUnits);
-			if(units.getNumber() > units.getMaxNumber()) {
-				int numberExcessUnits = numberUnits - units.getMaxNumber();
-				units.substractNumber(numberExcessUnits);
-				power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(units.getCost() * numberExcessUnits); 
+				Units units = createUnit(unitType, numberUnits);
+				//Unit shouldn't be here if invalid type
+				if (units != null) {
+					if(units.getNumber() > units.getMaxNumber()) {
+						int numberExcessUnits = numberUnits - units.getMaxNumber();
+						units.substractNumber(numberExcessUnits);
+						power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(units.getCost() * numberExcessUnits); 
+					}
+					box.setUnit(units);
+					int foodCostToRemove = units.getNumber() * units.getFoodCost();
+					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
+				}
 			}
-			box.setUnit(units);
-			int foodCostToRemove = units.getNumber() * units.getFoodCost();
-			power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
-			
 		}
 	}
 	

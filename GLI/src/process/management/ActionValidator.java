@@ -373,6 +373,8 @@ public class ActionValidator {
 				if(unitType < UnitTypes.UNITS_IN_WORKSHOP)
 					throw new IllegalArgumentException("Ces unites ne sont pas creees dans des ports");
 				break;
+			default:
+				throw new IllegalArgumentException("Il n'y a pas d'unité de ce type");	
 			}
 		
 		
