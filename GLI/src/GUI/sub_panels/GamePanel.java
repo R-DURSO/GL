@@ -1,6 +1,9 @@
 package GUI.sub_panels;
 
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -13,7 +16,7 @@ import GUI.components.game.GameButtonsPanel;
 import GUI.components.game.GameInfoPanel;
 import GUI.components.game.MainGamePanel;
 import data.GameMap;
-
+import data.Position;
 import data.Power;
 import data.resource.Resource;
 import data.resource.ResourceTypes;
@@ -34,9 +37,14 @@ public class GamePanel extends JPanel{
 			new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT * GuiPreferences.GAME_PANELS_SUBSTRACT_HEIGHT / GuiPreferences.GAME_PANELS_RATIO_HEIGHT);
 	private final Dimension BUTTONS_DIMENSION = INFO_DIMENSION;
 	
-	private JPanel gameInfoPanel;
-	private JPanel mainGamePanel;
-	private JPanel gameButtonsPanel = new GameButtonsPanel();
+	private GameInfoPanel gameInfoPanel;
+	private MainGamePanel mainGamePanel;
+	private GameButtonsPanel gameButtonsPanel = new GameButtonsPanel();
+	
+	//attributes used for game logic
+	private GameMap map;
+	private Position fromPosition = new Position();
+	private Position targetPosition = new Position();
 	
 	
 	public GamePanel(MainWindow context) {
@@ -46,17 +54,74 @@ public class GamePanel extends JPanel{
 
 	private void init() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		gameButtonsPanel.setPreferredSize(BUTTONS_DIMENSION);
-		
-		
+		gameButtonsPanel.setPreferredSize(BUTTONS_DIMENSION);	
 	}
-	public void initMainGamePanel(GameMap map, Power powers[]) {
-		this.mainGamePanel	= new MainGamePanel(map, powers);
+	
+	public void initGamePanel(GameMap map, Power powers[]) {
+		int mapSize = map.getSize();
+		int mapBoxWidth = (int) (MAIN_DIMENSION.getWidth() / mapSize);
+		int mapBoxHeight = (int) (MAIN_DIMENSION.getHeight() / mapSize);
+		
+		this.mainGamePanel	= new MainGamePanel(map, powers, mapBoxWidth, mapBoxHeight);
 		mainGamePanel.setPreferredSize(MAIN_DIMENSION);
+		//mouseListener
+		mainGamePanel.addMouseMotionListener(new MouseMotionManager());
+		mainGamePanel.addMouseListener(new MouseInputManager());
+		
 		gameInfoPanel = new GameInfoPanel(powers[0].getResources(), map.getBox(0,0));
 		gameInfoPanel.setPreferredSize(INFO_DIMENSION);
 		add(gameInfoPanel);
 		add(mainGamePanel);
 		add(gameButtonsPanel);
 	}
+	
+	class MouseMotionManager implements MouseMotionListener{
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			int x = e.getX();
+			int y = e.getY();
+			Box box = mainGamePanel.getBoxFromCoordinates(x, y);
+			gameInfoPanel.getSelectionPanel().refresh(box);
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+		}
+	}
+	
+	class MouseInputManager implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 }
