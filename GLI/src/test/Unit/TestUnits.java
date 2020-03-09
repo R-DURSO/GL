@@ -85,7 +85,7 @@ public class TestUnits {
 	
 	/*
 	 * Actuellement, le cout en Or se fait dans l'ActionValidator...
-	 * Faudrait surement déplacer ça
+	 * TODO Faudrait surement déplacer ça
 	@Test
 	public void createUnitCost() {
 		power = powers[0];

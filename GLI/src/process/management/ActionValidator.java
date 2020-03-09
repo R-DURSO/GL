@@ -1,5 +1,8 @@
 package process.management;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import data.GameMap;
 import data.Position;
 import data.Power;
@@ -80,7 +83,7 @@ public class ActionValidator {
 	 * 	<li>target position has ennemy units to attack</li>
 	 * </ul>
 	 * Before returning the ActionAttack
-	 * @param powerConcerned The player who in hand
+	 * @param powerConcerned The player who's taking the Action
 	 * @param from The position where player's units will attack
 	 * @param target Where player's units will attack
 	 * @return ActionAttack
@@ -95,21 +98,22 @@ public class ActionValidator {
 		Box targetBox = getBoxFromMap(target);
 		
 		//check if from Box is powerConcerned's
-		if(fromBox.getOwner() != powerConcerned)
+		if (fromBox.getOwner() != powerConcerned)
 			throw new IllegalArgumentException("Cette case n'appartient pas a " + powerConcerned.getName());
 		
 		//check if there is any unit on the fromBox
-		if(!fromBox.hasUnit())
-			throw new IllegalArgumentException("Il n'y a pas d'unite a deplacer ici");
-		
+		if (!fromBox.hasUnit()) {
+			throw new IllegalArgumentException("Il n'y a pas d'unite pour lancer l'attaque");
+		}
 		//check if units are on range
-		if(!isUnitsOnRange(from, fromBox.getUnit(), target))
+		if (!isUnitsOnRange(from, fromBox.getUnit().getRange(), target)) {
 			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
-		
+		}
 		//check if there is units on target, in this case, check the owner of those units
 		//if player himself or his ally, no attack
-		if(!targetBox.hasUnit() || targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAlly())
+		if (!targetBox.hasUnit() || targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAlly()) {
 			throw new IllegalArgumentException("Vous ne pouvez pas attaquer ici");
+		}
 		
 		powerConcerned.removeActionPoint();
 		return new ActionAttack(powerConcerned, from, target);
@@ -125,44 +129,51 @@ public class ActionValidator {
 	 * 	<li>target position can go on the target position (infantry can't go in water or on boxes where there is Archers for instance)</li>
 	 * </ul>
 	 * Before returning the ActionMove
-	 * @param powerConcerned The player who in hand
+	 * @param powerConcerned The player who's taking the Action
 	 * @param from The position where player's units will move
 	 * @param target Where player's units will move
 	 * @return ActionMove
 	 * @see data.actions.ActionMove
 	 * @throws IllegalArgumentException If the conditions are not met
 	 */
-	public ActionMove createActionMove(Power powerConcerned, Position from, Position target) throws IllegalArgumentException{
-		if(from.equals(target))
+	public ActionMove createActionMove (Power powerConcerned, Position from, Position target) throws IllegalArgumentException {
+		//Check if you want to move to the same Box
+		if (from.equals(target)) {
 			throw new IllegalArgumentException("On ne peut pas se deplacer la ou on est deja");
+		}
 		
 		Box fromBox = getBoxFromMap(from);
 		Box targetBox = getBoxFromMap(target);
 		
 		//check if from Box is powerConcerned's
-		if(fromBox.getOwner() != powerConcerned)
+		if (fromBox.getOwner() != powerConcerned) {
 			throw new IllegalArgumentException("Cette case n'appartient pas a " + powerConcerned.getName());
-		
-		
-		//check if there is any unit on the fromBox
-		if(!fromBox.hasUnit())
+		}
+		//check if there is any Units on the fromBox
+		if (!fromBox.hasUnit()) {
 			throw new IllegalArgumentException("Il n'y a pas d'unite a deplacer ici");
+		}
 		
 		Units movingUnits = fromBox.getUnit();
 		
+		//check if units are on range
+		if (!isUnitsOnRange(from, movingUnits.getMovement(), target)) {
+			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
+		}
+
+		// TODO verify that no obstable on path (between from and target)
+		
+		if (!pathFinding(from, movingUnits.getMovement(), target)) {
+			throw new IllegalArgumentException("Impossible de déterminer un chemin jusqu'à la destination");
+		}
 		//check if unit can go on this box (water or ground) 
 		//only a boat can go on water
-		if(targetBox instanceof WaterBox && movingUnits.getTypes() != UnitTypes.UNIT_BOAT
+		if (targetBox instanceof WaterBox && movingUnits.getTypes() != UnitTypes.UNIT_BOAT
 			|| targetBox instanceof GroundBox && movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
-			
-			throw new IllegalArgumentException("Cette unite ne peut pas aller sur ce type de case");
+			//stop pathfinding;
 		}
 		
-		//check if units are on range
-		if(!isUnitsOnRange(from, movingUnits, target))
-			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
 		
-		// TODO verify that no obstable on path (between from and target)
 		
 		//check if there is "obstacle" on target : either wall / ennemy door, or units 
 		if(targetBox.getOwner() == powerConcerned) {
@@ -194,42 +205,48 @@ public class ActionValidator {
 		return new ActionMove(powerConcerned, from, target);
 	}
 	
-	private boolean isUnitsOnRange(Position from, Units units, Position target) {
-		int aX = from.getX() - units.getRange();
-		int aY = from.getY();
-		int bX = from.getX();
-		int bY = from.getY() - units.getRange();
-		int bYPrime = from.getY() + units.getRange();
-		int cX = from.getX() + units.getRange();
-		int cY = from.getY();
-		
-		return isInTriangle(aX, aY, bX, bY, cX, cY, target.getX(), target.getY())
-				|| isInTriangle(aX, aY, bX, bYPrime, cX, cY, target.getX(), target.getY());
+	/**
+	 * 
+	 * @param from Starting Box
+	 * @param unitsMovement Movement Point of the Unit
+	 * @param target Box where the Units wants to go
+	 * @return true if Units have a path
+	 */
+	private boolean pathFinding(Position from, int unitsMovement, Position target) {
+		//2 ArrayList created, to stocking the next Box to visit and the one visited
+		ArrayList<Position> toVisit = new ArrayList<Position>();
+		ArrayList<Position> visited = new ArrayList<Position>();
+		//Adding the Starting Box
+		toVisit.add(from);
+		for (Iterator<Position> i = toVisit.iterator(); i.hasNext(); ) {
+			Position data = i.next();
+			if (!visited.contains(data)) {
+				if (data.equals(target)) {
+					return true;
+				}
+				else {
+					visited.add(data);
+					//TODO rajouter les autres Box des alentours
+				}
+			}
+		}
+		//TODO l'unité qui passe devrait aussi conquérir le territoire qu'il survole ?
+		return false;
 	}
 	
-	private double calculateArea(int aX, int aY, int bX, int bY, int cX, int cY) {
-		return Math.abs((aX*(bY-cY) + bX*(cY-aY) + cX*(aY-bY) ) / 2.0);
-	}
-	
-	private boolean isInTriangle(int aX, int aY, int bX, int bY, int cX, int cY, int posX, int posY) {
-		double ABCTriangle = calculateArea(aX, aY, bX, bY, cX, cY);
-		double PBCTriangle = calculateArea(posX, posY, bX, bY, cX, cY);
-		double APCTriangle = calculateArea(aX, aY, posX, posY, cX, cY);
-		double ABPTriangle = calculateArea(aX, aY, bX, bY, posX, posY);
-		
-		return (ABCTriangle == PBCTriangle + APCTriangle + ABPTriangle);
-	}
-	
-	private boolean isUnitsOnRanged(Position from, Units units, Position target) {
+	private boolean isUnitsOnRange(Position from, int unitsMoveRange, Position target) {
 		int aX = from.getX();
 		int aY = from.getX();
 		int bX = from.getX();
 		int bY = from.getX();
-		int range = units.getRange();
-		return (getDifference(aX,bX) + getDifference(aY,bY)) <= range;
+		return ((getDifference(aX,bX) + getDifference(aY,bY)) <= unitsMoveRange);
 	}
 	
-	//Sera surement utile pour le deplacement ?
+	/**
+	 * @param a Entier
+	 * @param b Entier
+	 * @return La différence entre ces 2 entiers
+	 */
 	private int getDifference (int a, int b) {
 		return Math.abs(a - b);
 	}
