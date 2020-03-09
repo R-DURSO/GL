@@ -39,12 +39,12 @@ public class GamePanel extends JPanel{
 	
 	private GameInfoPanel gameInfoPanel;
 	private MainGamePanel mainGamePanel;
-	private GameButtonsPanel gameButtonsPanel = new GameButtonsPanel();
+	private GameButtonsPanel gameButtonsPanel;
 	
 	//attributes used for game logic
 	private GameMap map;
-	private Position fromPosition = new Position();
-	private Position targetPosition = new Position();
+	private Position fromPosition = new Position(0, 0);
+	private Position targetPosition = new Position(0, 0);
 	
 	
 	public GamePanel(MainWindow context) {
@@ -54,6 +54,8 @@ public class GamePanel extends JPanel{
 
 	private void init() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+		gameButtonsPanel = new GameButtonsPanel(this);
 		gameButtonsPanel.setPreferredSize(BUTTONS_DIMENSION);	
 	}
 	
@@ -70,6 +72,7 @@ public class GamePanel extends JPanel{
 		
 		gameInfoPanel = new GameInfoPanel(powers[0].getResources(), map.getBox(0,0));
 		gameInfoPanel.setPreferredSize(INFO_DIMENSION);
+
 		add(gameInfoPanel);
 		add(mainGamePanel);
 		add(gameButtonsPanel);
@@ -94,7 +97,14 @@ public class GamePanel extends JPanel{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
+			Position position = mainGamePanel.getPositionFromCoordinates(e.getX(), e.getY());
+			if (gameButtonsPanel.getActionsBoutonsPanel().isWaitingFromPosition()) {
+				fromPosition = position;
+			}else if(gameButtonsPanel.getActionsBoutonsPanel().isWaitingTargetPosition()) {
+				targetPosition = position;
+			}
+			mainGamePanel.refreshSelection(fromPosition, targetPosition);
+			mainGamePanel.repaint();
 			
 		}
 
