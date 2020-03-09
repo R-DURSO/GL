@@ -163,41 +163,38 @@ public class ActionValidator {
 
 		// TODO verify that no obstable on path (between from and target)
 		
-		if (!pathFinding(from, movingUnits.getMovement(), target)) {
+		if (!pathFinding(from, movingUnits, target)) {
 			throw new IllegalArgumentException("Impossible de déterminer un chemin jusqu'à la destination");
 		}
-		//check if unit can go on this box (water or ground) 
-		//only a boat can go on water
-		if (targetBox instanceof WaterBox && movingUnits.getTypes() != UnitTypes.UNIT_BOAT
-			|| targetBox instanceof GroundBox && movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
-			//stop pathfinding;
-		}
-		
-		
 		
 		//check if there is "obstacle" on target : either wall / ennemy door, or units 
-		if(targetBox.getOwner() == powerConcerned) {
-			if(targetBox.hasUnit()) {
+		if (targetBox.getOwner() == powerConcerned) {
+			if (targetBox.hasUnit()) {
 				Units unitsOnTarget = targetBox.getUnit();
-				if(movingUnits.getTypes() != unitsOnTarget.getTypes())
+				if (movingUnits.getTypes() != unitsOnTarget.getTypes()) {
 					throw new IllegalArgumentException("Des unites d'un type different sont sur le lieu cible");
+				}
 			}
-			
-			if(targetBox instanceof GroundBox) {
+			if (targetBox instanceof GroundBox) {
 				GroundBox groundBox = (GroundBox) targetBox;
-				if(groundBox.getBuilding() instanceof Wall)
+				if (groundBox.getBuilding() instanceof Wall) {
 					throw new IllegalArgumentException("Les unites ne peuvent pas aller dans un mur");
+				}
 			}
-		}else {
-			if(targetBox.hasUnit())
+		}
+		else {
+			if (targetBox.hasUnit()) {
 				throw new IllegalArgumentException("Il y a des unites ennemies sur la case cible");
-			if(targetBox instanceof GroundBox) {
+			}
+			if (targetBox instanceof GroundBox) {
 				GroundBox groundBox = (GroundBox) targetBox;
-				if(groundBox.getBuilding() instanceof Wall)
+				if (groundBox.getBuilding() instanceof Wall) {
 					throw new IllegalArgumentException("Les unites ne peuvent pas aller dans un mur");
+				}
 				//units can go through "allied" doors
-				if(groundBox.getBuilding() instanceof Door && groundBox.getOwner() == powerConcerned.getAlly())
+				if (groundBox.getBuilding() instanceof Door && groundBox.getOwner() == powerConcerned.getAlly()) {
 					throw new IllegalArgumentException("Les unites ne peuvent pas aller dans une porte ennemie");
+				}
 			}
 		}
 		
@@ -212,7 +209,8 @@ public class ActionValidator {
 	 * @param target Box where the Units wants to go
 	 * @return true if Units have a path
 	 */
-	private boolean pathFinding(Position from, int unitsMovement, Position target) {
+	private boolean pathFinding(Position from, Units units, Position target) {
+		//TODO int unitsMovement = units.getMovement();
 		//2 ArrayList created, to stock the next Box to visit and one for those visited
 		ArrayList<Position> toVisit = new ArrayList<Position>();
 		ArrayList<Position> visited = new ArrayList<Position>();
@@ -221,38 +219,77 @@ public class ActionValidator {
 		for (Iterator<Position> i = toVisit.iterator(); i.hasNext(); ) {
 			Position data = i.next();
 			if (!visited.contains(data)) {
-				if (data.equals(target)) {
-					return true;
-				}
-				else {
-					visited.add(data);
-					Position dataToAdd;
-					for (int d=1 ; d<=4 ; d++) {
-						switch(d) {
-							case 1:
-								dataToAdd = map.getUpPos(data);
-								break;
-							case 2:
-								dataToAdd = map.getLeftPos(data);
-								break;
-							case 3:
-								dataToAdd = map.getRightPos(data);
-								break;
-							case 4:
-								dataToAdd = map.getDownPos(data);
-								break;
-							default:
-								dataToAdd = null;
-								break;
-						}
-						if (dataToAdd != null) {
-							toVisit.add(dataToAdd);
+				if (map.getBox(data) instanceof WaterBox && units.getTypes() == UnitTypes.UNIT_BOAT) {
+					//A boat on the sea
+					if (data.equals(target)) {
+						return true;
+					}
+					else {
+						visited.add(data);
+						Position dataToAdd;
+						for (int d=1 ; d<=4 ; d++) {
+							switch(d) {
+								case 1:
+									dataToAdd = map.getUpPos(data);
+									break;
+								case 2:
+									dataToAdd = map.getLeftPos(data);
+									break;
+								case 3:
+									dataToAdd = map.getRightPos(data);
+									break;
+								case 4:
+									dataToAdd = map.getDownPos(data);
+									break;
+								default:
+									dataToAdd = null;
+									break;
+							}
+							if (dataToAdd != null) {
+								toVisit.add(dataToAdd);
+							}
 						}
 					}
 				}
+				else if (map.getBox(data) instanceof GroundBox && units.getTypes() != UnitTypes.UNIT_BOAT) {
+					//A man on the land
+					if ( ((GroundBox) map.getBox(data)).getBuilding().getType() != BuildingTypes.BUILDING_WALL) {
+						if (data.equals(target)) {
+							return true;
+						}
+						else {
+							visited.add(data);
+							Position dataToAdd;
+							for (int d=1 ; d<=4 ; d++) {
+								switch(d) {
+								case 1:
+									dataToAdd = map.getUpPos(data);
+									break;
+								case 2:
+									dataToAdd = map.getLeftPos(data);
+									break;
+								case 3:
+									dataToAdd = map.getRightPos(data);
+									break;
+								case 4:
+									dataToAdd = map.getDownPos(data);
+									break;
+								default:
+									dataToAdd = null;
+									break;
+								}
+								if (dataToAdd != null) {
+									toVisit.add(dataToAdd);
+								}
+							}
+						}
+					}
+				}
+				
 			}
 		}
 		//TODO l'unité qui passe devrait aussi conquérir le territoire qu'il survole ?
+		//Pousser la node à noter un code pour retrouver son chemin ?
 		return false;
 	}
 	
