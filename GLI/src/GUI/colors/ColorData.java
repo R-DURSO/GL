@@ -47,5 +47,12 @@ public class ColorData {
 	public static final Color STONE_COLOR = new Color(170, 170, 170);;
 	public static final Color WOOD_COLOR = new Color(140, 70, 20);
 	public static final Color ARTIFACT_COLOR = Color.WHITE;
+	
+	//Selection Color
+	
+	public static final Color FROM_SELECTION_COLOR = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+	public static final Color TARGET_SELECTION_COLOR = new Color(0.0f, 0.0f, 0.0f, 0.5f);
+	
+	
 
 }

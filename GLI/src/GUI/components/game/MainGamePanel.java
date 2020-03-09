@@ -1,17 +1,14 @@
 package GUI.components.game;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Shape;
-import java.awt.Stroke;
 
 import javax.swing.JPanel;
 
 import GUI.colors.ColorData;
 import data.GameMap;
+import data.Position;
 import data.Power;
 import data.boxes.Box;
 import data.boxes.GroundBox;
@@ -30,20 +27,21 @@ public class MainGamePanel extends JPanel{
 	private GameMap map;
 	private Power powers[];
 	
-    private int rectWidth;
-    private int rectHeight;
+	private int rectWidth;
+	private int rectHeight;
+	
+	private Position fromPosition;
+	private Position targetPosition;
+
 	
 	public MainGamePanel(GameMap map, Power powers[], int rectWidth, int rectHeight) {
 		super();
 		
 		this.powers = powers;
 		this.map = map;
-		
-//		this.rectWidth = rectWidth;
-//	    this.rectHeight = rectHeight;
 	    
-		//TODO remove this when not useful anymore
 		
+		//TODO remove this when not useful anymore
 		//montre affichage units sur cases
 		UnitManager.getInstance().addUnits(powers[0], map.getBox(1, 0), UnitTypes.UNIT_INFANTRY, 50);
 		//montrre affihage batiments sur case
@@ -51,6 +49,11 @@ public class MainGamePanel extends JPanel{
 	}
 	
 	public Box getBoxFromCoordinates(int x, int y) {
+		Position position = getPositionFromCoordinates(x, y);
+		return map.getBox(position.getX(), position.getY());
+	}
+	
+	public Position getPositionFromCoordinates(int x, int y) {
 		int w = getWidth() / map.getSize();
 		int h = getHeight() / map.getSize();
 		int xMapRelative = x  / w;
@@ -62,7 +65,8 @@ public class MainGamePanel extends JPanel{
 			xMapRelative = map.getSize() - 1;
 		if(yMapRelative >= map.getSize())
 			yMapRelative = map.getSize() - 1;
-		return map.getBox(xMapRelative, yMapRelative);
+		
+		return new Position(xMapRelative, yMapRelative);
 	}
 	
 	
@@ -70,15 +74,22 @@ public class MainGamePanel extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
+		rectWidth = getWidth() / map.getSize();
+		rectHeight = getHeight() / map.getSize();
+		
 		drawMap(g);
 		
+		if(fromPosition != null)
+			drawFromPostion(g);
+		
+		if(targetPosition != null)
+			drawTargetPostion(g);
 	}
 	
 
 
 	private void drawMap(Graphics g) {
-		int rectWidth = getWidth() / map.getSize();
-		int rectHeight = getHeight() / map.getSize();
         g.clearRect(0, 0, getWidth(), getHeight());
         int miniBoxWidth = rectWidth * 4 / MINI_BOX_PART;
         int miniBoxHeight = rectHeight * 4 / MINI_BOX_PART;
@@ -129,9 +140,23 @@ public class MainGamePanel extends JPanel{
                 	g2.drawRect(x, y, rectWidth, rectHeight);
                 
             }
-        }
-        
-        
+        }  
+	}
+	
+	private void drawFromPostion(Graphics g) {
+		g.setColor(ColorData.FROM_SELECTION_COLOR);
+		drawSelectionRect(g, fromPosition);
+	}
+	
+	private void drawTargetPostion(Graphics g) {
+		g.setColor(ColorData.TARGET_SELECTION_COLOR);
+		drawSelectionRect(g, targetPosition);
+	}
+	
+	private void drawSelectionRect(Graphics g, Position position) {
+		int posX = position.getX() * rectWidth;
+		int posY = position.getY() * rectHeight;
+		g.fillRect(posX, posY, rectWidth, rectHeight);
 	}
 
 	private boolean determineBuildingColor(Graphics g, GroundBox groundBox) {
@@ -270,6 +295,12 @@ public class MainGamePanel extends JPanel{
 		} else if(box instanceof WaterBox) {
 			g.setColor(ColorData.WATER_COLOR);
 		}
+	}
+
+	public void refreshSelection(Position fromPosition, Position targetPosition) {
+		this.fromPosition = fromPosition;
+		this.targetPosition = targetPosition;
+		repaint();
 	}
 
 }
