@@ -20,8 +20,44 @@ public class GameMap {
 		return boxes[positionY][positionX];
 	}
 	
-	public Box getBox(Position position){
+	public Box getBox(Position position) {
 		return boxes[position.getY()][position.getX()];
+	}
+
+	public Position getLeftPos(Position position) {
+		if ((position.getX()-1) >= 0) {
+			return new Position(position.getY()-1,position.getX()-1);
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public Position getRightPos(Position position) {
+		if ((position.getX()+1) < getSize()) {
+			return new Position(position.getY(),position.getX()+1);
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public Position getUpPos(Position position) {
+		if ((position.getY()-1) >= 0) {
+			return new Position(position.getY()-1,position.getX());
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public Position getDownPos(Position position) {
+		if ((position.getY()+1) < getSize()) {
+			return new Position(position.getY()+1,position.getX());
+		}
+		else {
+			return null;
+		}
 	}
 	
 	public String toString() {
