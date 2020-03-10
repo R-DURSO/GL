@@ -13,8 +13,16 @@ import javax.swing.JSlider;
 
 import GUI.components.SliderPanel;
 import GUI.sub_panels.GamePanel;
+import data.Position;
 import data.actions.ActionBreakAlliance;
-
+import data.building.BuildingTypes;
+import process.management.ActionValidator;
+/**
+ * 
+ * @author rdurs
+ * this class is use for implements the button of gameButtonPanel
+ *
+ */
 public class ActionsButtonsPanel extends JPanel {
 	
 	private JButton actionBreakAllianceButton = new JButton("Briser une alliance");
@@ -42,7 +50,7 @@ public class ActionsButtonsPanel extends JPanel {
 	//allows to get Positions, which are in GamePanel 
 	// TODO : peut-être qu'il y aura une position par défaut, du coup plus besoin de ça...
 	private GamePanel context;
-	
+	private ActionValidator action;
 	public ActionsButtonsPanel(GamePanel context) {
 		this.context = context;
 		setLayout(new GridLayout(0, 3));
@@ -113,10 +121,16 @@ public class ActionsButtonsPanel extends JPanel {
 		
 	}
 	class ActionContrcut implements ActionListener{
-		String[] choices = { "caserne (100 bois)", "scierie", "mine", "port", "écurie","caserne","mur","porte","temple"};
+		String[] choices = { "caserne (100 bois)","écurie","port",  "mine","scierie","moulin","carière","porte", "mur","temple"};
 		public void actionPerformed(ActionEvent e) {
 			JComboBox building = new JComboBox(choices);
-			JOptionPane.showMessageDialog(null, building, "constructions possibles", 0);
+			JOptionPane.showMessageDialog(null, building, "constructions possibles", 1);
+			//System.out.println(context.getfromPosition().getX());
+			try {
+				action.createActionConstruct(context.getOwner(), building.getSelectedIndex()+1,context.getfromPosition() );
+			}catch( IllegalArgumentException e1) {
+				JOptionPane.showInputDialog(e1.getMessage());
+			}
 			building.getSelectedIndex();
 			System.out.println(building.getSelectedIndex());
 		
