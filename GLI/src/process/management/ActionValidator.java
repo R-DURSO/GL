@@ -1,6 +1,7 @@
 package process.management;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import data.GameMap;
@@ -195,12 +196,12 @@ public class ActionValidator {
 		Power power = map.getBox(from).getOwner();
 		//TODO int unitsMovement = units.getMovement();
 		//2 ArrayList created, to stock the next Box to visit and one for those visited
-		ArrayList<Position> toVisit = new ArrayList<Position>();
+		HashMap<String,Position> toVisit = new HashMap<String,Position>();
 		boolean hasVisited;
 		ArrayList<Position> visited = new ArrayList<Position>();
 		//Adding the Starting Box
-		toVisit.add(from);
-		for (Iterator<Position> i = toVisit.iterator(); i.hasNext(); ) {
+		toVisit.put("0", target);
+		for (Iterator<Position> i = toVisit.values().iterator(); i.hasNext(); ) {
 			Position data = i.next();
 			Box dataMap = map.getBox(data);
 			if (!visited.contains(data)) {
@@ -260,7 +261,7 @@ public class ActionValidator {
 							break;
 						}
 						if (dataToAdd != null) {
-							toVisit.add(dataToAdd);
+							toVisit.put("0"+d,dataToAdd);
 						}
 					}
 				}
