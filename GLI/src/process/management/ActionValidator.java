@@ -161,23 +161,21 @@ public class ActionValidator {
 			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
 		}
 
-		// TODO verify that no obstable on path (between from and target)
-		
+		//check if there is "obstacle" on target : either wall / ennemy door, or units
+		//TODO Pathfinding ne vérifie pas la présence d'unité, donc le survoler des annemis est possible
 		if (!pathFinding(from, movingUnits, target)) {
 			throw new IllegalArgumentException("Impossible de déterminer un chemin jusqu'à la destination");
 		}
 		
-		//check if there is "obstacle" on target : either wall / ennemy door, or units 
-		if (targetBox.getOwner() == powerConcerned) {
-			if (targetBox.hasUnit()) {
+		//check if there isn't any ennemy Unit or Different UnitTypes
+		if (targetBox.hasUnit()) {
+			if (targetBox.getOwner() == powerConcerned) {
 				Units unitsOnTarget = targetBox.getUnit();
 				if (movingUnits.getTypes() != unitsOnTarget.getTypes()) {
 					throw new IllegalArgumentException("Des unites d'un type different sont sur le lieu cible");
 				}
 			}
-		}
-		else {
-			if (targetBox.hasUnit()) {
+			else {
 				throw new IllegalArgumentException("Il y a des unites ennemies sur la case cible");
 			}
 		}
@@ -198,6 +196,7 @@ public class ActionValidator {
 		//TODO int unitsMovement = units.getMovement();
 		//2 ArrayList created, to stock the next Box to visit and one for those visited
 		ArrayList<Position> toVisit = new ArrayList<Position>();
+		boolean hasVisited;
 		ArrayList<Position> visited = new ArrayList<Position>();
 		//Adding the Starting Box
 		toVisit.add(from);
@@ -205,36 +204,14 @@ public class ActionValidator {
 			Position data = i.next();
 			Box dataMap = map.getBox(data);
 			if (!visited.contains(data)) {
+				hasVisited = false;
 				if ((dataMap instanceof WaterBox) && (units.getTypes() == UnitTypes.UNIT_BOAT)) {
 					//A boat on the sea
 					if (data.equals(target)) {
 						return true;
 					}
 					else {
-						visited.add(data);
-						Position dataToAdd;
-						for (int d=1 ; d<=4 ; d++) {
-							switch(d) {
-								case 1:
-									dataToAdd = map.getUpPos(data);
-									break;
-								case 2:
-									dataToAdd = map.getLeftPos(data);
-									break;
-								case 3:
-									dataToAdd = map.getRightPos(data);
-									break;
-								case 4:
-									dataToAdd = map.getDownPos(data);
-									break;
-								default:
-									dataToAdd = null;
-									break;
-							}
-							if (dataToAdd != null) {
-								toVisit.add(dataToAdd);
-							}
-						}
+						hasVisited = true;
 					}
 				}
 				else if ((dataMap instanceof GroundBox) && (units.getTypes() != UnitTypes.UNIT_BOAT)) {
@@ -248,30 +225,7 @@ public class ActionValidator {
 									return true;
 								}
 								else {
-									visited.add(data);
-									Position dataToAdd;
-									for (int d=1 ; d<=4 ; d++) {
-										switch(d) {
-										case 1:
-											dataToAdd = map.getUpPos(data);
-											break;
-										case 2:
-											dataToAdd = map.getLeftPos(data);
-											break;
-										case 3:
-											dataToAdd = map.getRightPos(data);
-											break;
-										case 4:
-											dataToAdd = map.getDownPos(data);
-											break;
-										default:
-											dataToAdd = null;
-											break;
-										}
-										if (dataToAdd != null) {
-											toVisit.add(dataToAdd);
-										}
-									}
+									hasVisited = true;
 								}
 							}
 						}
@@ -280,34 +234,36 @@ public class ActionValidator {
 						return true;
 					}
 					else {
-						visited.add(data);
-						Position dataToAdd;
-						for (int d=1 ; d<=4 ; d++) {
-							switch(d) {
-							case 1:
-								dataToAdd = map.getUpPos(data);
-								break;
-							case 2:
-								dataToAdd = map.getLeftPos(data);
-								break;
-							case 3:
-								dataToAdd = map.getRightPos(data);
-								break;
-							case 4:
-								dataToAdd = map.getDownPos(data);
-								break;
-							default:
-								dataToAdd = null;
-								break;
-							}
-							if (dataToAdd != null) {
-								toVisit.add(dataToAdd);
-							}
+						hasVisited = true;
+					}
+				}
+				//check if the Box visited can be walk upon
+				if (hasVisited) {
+					visited.add(data);
+					Position dataToAdd;
+					for (int d=1 ; d<=4 ; d++) {
+						switch(d) {
+						case 1:
+							dataToAdd = map.getUpPos(data);
+							break;
+						case 2:
+							dataToAdd = map.getLeftPos(data);
+							break;
+						case 3:
+							dataToAdd = map.getRightPos(data);
+							break;
+						case 4:
+							dataToAdd = map.getDownPos(data);
+							break;
+						default:
+							dataToAdd = null;
+							break;
+						}
+						if (dataToAdd != null) {
+							toVisit.add(dataToAdd);
 						}
 					}
-					
 				}
-				//TODO l'algo devrait être correct... mais besoin de nettoyer un peu
 			}
 		}
 		//TODO l'unité qui passe devrait aussi conquérir le territoire qu'il survole ?
