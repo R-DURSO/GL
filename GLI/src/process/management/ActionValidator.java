@@ -192,7 +192,7 @@ public class ActionValidator {
 	 * @param target Box where the Units wants to go
 	 * @return true if Units have a path
 	 */
-	private boolean pathFinding(Position from, Units units, Position target) {
+	public boolean pathFinding(Position from, Units units, Position target) {
 		Power power = map.getBox(from).getOwner();
 		int unitsMovement = units.getMovement();
 		//2 ArrayList created, to stock the next Box to visit and one for those visited
@@ -268,6 +268,9 @@ public class ActionValidator {
 						}
 					}
 				}
+			}
+			if (!toVisit.remove(path, data)) {
+				throw new NullPointerException("probleme sur la suppression d'ancienne position");
 			}
 		}
 		//TODO l'unité qui passe devrait aussi conquérir le territoire qu'il survole ?

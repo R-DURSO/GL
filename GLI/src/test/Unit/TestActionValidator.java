@@ -166,6 +166,16 @@ public class TestActionValidator {
 		actionValidator.createActionUpgradeCapital(powers[2]);
 	}
 	
+	@Test(expected = AssertionError.class)
+	public void testPathFindingFail() {
+		assertTrue(actionValidator.pathFinding(new Position(0,0), map.getBox(new Position(0,0)).getUnit(), new Position(0,1)));
+	}
+	
+	@Test
+	public void testPathFindingSuccess() {
+		assertTrue(actionValidator.pathFinding(new Position(0,0), map.getBox(new Position(0,0)).getUnit(), new Position(1,1)));
+	}
+	
 	private void placeUnitsAndBuildings() {
 		//we put a boat on water, on top side
 		map.getBox(mapSize/2, 0).setOwner(powers[0]);
