@@ -26,7 +26,7 @@ public class GameMap {
 
 	public Position getLeftPos(Position position) {
 		if ((position.getX()-1) >= 0) {
-			return new Position(position.getY(),position.getX()-1);
+			return new Position(position.getX()-1,position.getY());
 		}
 		else {
 			return null;
@@ -35,7 +35,7 @@ public class GameMap {
 	
 	public Position getRightPos(Position position) {
 		if ((position.getX()+1) < getSize()) {
-			return new Position(position.getY(),position.getX()+1);
+			return new Position(position.getX()+1,position.getY());
 		}
 		else {
 			return null;
@@ -44,7 +44,7 @@ public class GameMap {
 	
 	public Position getUpPos(Position position) {
 		if ((position.getY()-1) >= 0) {
-			return new Position(position.getY()-1,position.getX());
+			return new Position(position.getX(),position.getY()-1);
 		}
 		else {
 			return null;
@@ -53,7 +53,7 @@ public class GameMap {
 	
 	public Position getDownPos(Position position) {
 		if ((position.getY()+1) < getSize()) {
-			return new Position(position.getY()+1,position.getX());
+			return new Position(position.getX(),position.getY()+1);
 		}
 		else {
 			return null;
