@@ -18,10 +18,12 @@ import GUI.components.game.MainGamePanel;
 import data.GameMap;
 import data.Position;
 import data.Power;
+import data.actions.Action;
 import data.resource.Resource;
 import data.resource.ResourceTypes;
 import data.boxes.*;
 import data.unit.*;
+import process.game.GameLoop;
 import process.management.ActionValidator;
 
 
@@ -48,6 +50,8 @@ public class GamePanel extends JPanel{
 	private Position targetPosition = new Position(0, 0);
 	private ActionValidator actionValidator;
 	private Power player;
+	private GameLoop gameLoop;
+	
 	public GamePanel(MainWindow context) {
 		this.context = context;
 		init();
@@ -61,6 +65,8 @@ public class GamePanel extends JPanel{
 	}
 	
 	public void initGamePanel(GameMap map, Power powers[]) {
+		gameLoop = new GameLoop(map, powers);
+		
 		int mapSize = map.getSize();
 		int mapBoxWidth = (int) (MAIN_DIMENSION.getWidth() / mapSize);
 		int mapBoxHeight = (int) (MAIN_DIMENSION.getHeight() / mapSize);
@@ -79,6 +85,16 @@ public class GamePanel extends JPanel{
 		add(mainGamePanel);
 		add(gameButtonsPanel);
 	}
+	
+	public void addAction(Action action, int actionType) {
+		gameLoop.addAction(actionType, action);
+	}
+	
+	public void endPlayerTurn() {
+		gameLoop.doActions();
+	}
+	
+	
 	
 	class MouseMotionManager implements MouseMotionListener{
 

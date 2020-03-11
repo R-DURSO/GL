@@ -23,9 +23,10 @@ public class GameLoop {
 	private Power powers[];
 	GameMap map;
 	
-	public GameLoop( PreferencesPanel preferences ) {
+	public GameLoop(GameMap map, Power powers[] ) {
 		initActionArray();
-		
+		this.map = map;
+		this.powers = powers;
 	}
 	
 	public void addAction(int actionType, Action action) {
