@@ -3,11 +3,15 @@ import java.util.ArrayList;
 
 import GUI.components.menu.PreferencesPanel;
 import data.actions.*;
+import data.boxes.Box;
+import data.boxes.GroundBox;
 import data.GameMap;
 import data.Power;
 import data.resource.*;
 import process.management.ActionValidator;
+import process.management.BuildingManager;
 import process.management.MapBuilder;
+import process.management.UnitManager;
 
 public class GameLoop {
 	
@@ -55,7 +59,101 @@ public class GameLoop {
 	
 	public void doActions() {
 		for(int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
+			switch(i) {
+			case ActionTypes.ACTION_ATTACK:
+				executeActionsAttack(actions[i]);
+				break;
+			case ActionTypes.ACTION_BREAK_ALLIANCE:
+				executeActionsBreakAlliance(actions[i]);
+				break;
+			case ActionTypes.ACTION_CONSTRUCT:
+				executeActionsConstruct(actions[i]);
+				break;
+			case ActionTypes.ACTION_CREATE_UNITS:
+				executeActionsCreateUnits(actions[i]);
+				break;
+			case ActionTypes.ACTION_DESTROY_BUILDING:
+				executeActionsDestroyBuilding(actions[i]);
+				break;
+			case ActionTypes.ACTION_DESTROY_UNITS:
+				executeActionsDestroyUnits(actions[i]);
+				break;
+			case ActionTypes.ACTION_MAKE_ALLIANCE:
+				executeActionsMakeAlliance(actions[i]);
+				break;
+			case ActionTypes.ACTION_MOVE:
+				executeActionsMove(actions[i]);
+				break;
+			case ActionTypes.ACTION_UPGRADE_CAPITAL:
+				executeActionsUpgradeCapital(actions[i]);
+				break;
+			}
+			executeActionsAttack(actions[i]);
+		}
+		actions = (ArrayList<Action>[]) new ArrayList[ActionTypes.NUMBER_ACTIONS];
+	}
+	
+	private void executeActionsUpgradeCapital(ArrayList<Action> arrayList) {
+		for(Action a : arrayList) {
+			ActionUpgradeCapital action = (ActionUpgradeCapital)a;
 			
+		}
+		
+	}
+
+	private void executeActionsMove(ArrayList<Action> arrayList) {
+		for(Action a : arrayList) {
+			ActionMove action = (ActionMove)a;
+			Power powerConcerned = action.getPowerConcerned();
+			Box fromBox = map.getBox(action.getFrom());
+			Box targetBox = map.getBox(action.getTarget());
+			UnitManager.getInstance().moveUnits(powerConcerned, fromBox, targetBox);
+		}
+	}
+
+	private void executeActionsMakeAlliance(ArrayList<Action> arrayList) {
+		for(Action a : arrayList) {
+			ActionMakeAlliance action = (ActionMakeAlliance)a;
+		}
+	}
+
+	private void executeActionsDestroyUnits(ArrayList<Action> arrayList) {
+		for(Action a : arrayList) {
+			ActionUpgradeCapital action = (ActionUpgradeCapital)a;
+		}
+	}
+
+	private void executeActionsDestroyBuilding(ArrayList<Action> arrayList) {
+		for(Action a : arrayList) {
+			ActionDestroyBuilding action = (ActionDestroyBuilding)a;
+		}
+	}
+
+	private void executeActionsCreateUnits(ArrayList<Action> arrayList) {
+		for(Action a : arrayList) {
+			ActionCreateUnit action = (ActionCreateUnit)a;
+		}
+	}
+
+	private void executeActionsConstruct(ArrayList<Action> arrayList) {
+		for(Action a : arrayList) {
+			ActionConstruct action = (ActionConstruct)a;
+			Power powerConcerned = action.getPowerConcerned();
+			Box targetBox = map.getBox(action.getTarget());
+			int buildingType = action.getBuildingType();
+			BuildingManager.getInstance().addNewBuilding(powerConcerned, buildingType, (GroundBox)targetBox);
+		}
+	}
+
+	private void executeActionsBreakAlliance(ArrayList<Action> arrayList) {
+		for(Action a : arrayList) {
+			ActionBreakAlliance action = (ActionBreakAlliance)a;
+		}
+	}
+
+	private void executeActionsAttack(ArrayList<Action> arrayList) {
+		for(Action a : arrayList) {
+			ActionAttack action = (ActionAttack)a;
 		}
 	}
 	
