@@ -73,7 +73,7 @@ public class ActionsButtonsPanel extends JPanel {
 		createActionAttackButton.addActionListener(new ActionBreakAlliance());
 		add(createActionAttackButton);
 		
-		createActionMoveButton.addActionListener(new ActionMoveTrouppe());
+		createActionMoveButton.addActionListener(new ActionListenerMoveUnits());
 		add(createActionMoveButton);
 		
 		createActionDestroyUnitButton.addActionListener(new ActionBreakAlliance());
@@ -85,7 +85,7 @@ public class ActionsButtonsPanel extends JPanel {
 		createActionCreateUnitButton.addActionListener(new ActionBreakAlliance());
 		add(createActionCreateUnitButton);
 		
-		createActionConstructButton.addActionListener(new ActionConstrcut());
+		createActionConstructButton.addActionListener(new ActionListenerConstrcut());
 		add(createActionConstructButton);
 		
 		add(createUdapteCapitalButton);
@@ -129,21 +129,17 @@ public class ActionsButtonsPanel extends JPanel {
 		}
 		
 	}
-	class ActionConstrcut implements ActionListener{
+	class ActionListenerConstrcut implements ActionListener{
 		String[] choices = { "caserne (100 bois)","écurie","port",  "mine","scierie","moulin","carière","porte", "mur","temple"};
 		public void actionPerformed(ActionEvent e) {
 			JComboBox building = new JComboBox(choices);
 			JOptionPane.showMessageDialog(null, building, "constructions possibles", 1);
 			//System.out.println(context.getfromPosition().getX());
 			try {
-				//
-				//
-				//
-
 				
 				action = context.getActionValidator().createActionConstruct(context.getPlayer() ,building.getSelectedIndex()+1 ,context.getPositionFrom());
 //				gameLoop.addAction(ActionTypes.ACTION_CONSTRUCT, action);
-				
+				context.addAction(action, ActionTypes.ACTION_CONSTRUCT);
 			}catch( IllegalArgumentException e1) {
 				JOptionPane.showMessageDialog(null,e1.getMessage());
 			}catch(NullPointerException e2) {
@@ -156,11 +152,14 @@ public class ActionsButtonsPanel extends JPanel {
 		}
 		
 	}
-	class ActionMoveTrouppe implements ActionListener{
+	class ActionListenerMoveUnits implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			System.out.println(context.getPositionFrom().getY());
+			System.out.println(context.getPositionFrom().getX());
+			System.out.println(context.getPositiontarget().getX());
+			System.out.println();
 			
 		}
 		

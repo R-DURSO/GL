@@ -30,7 +30,7 @@ public class GameButtonsPanel extends JPanel{
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		add(actionsPanel, gbc);
 		gbc.weightx = 0.5;
-		
+		endTurnButton.addActionListener(new ActionEndTurn());
 		add(endTurnButton, gbc);
 		add(quitButton, gbc);
 	}

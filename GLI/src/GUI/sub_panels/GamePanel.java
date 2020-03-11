@@ -92,6 +92,7 @@ public class GamePanel extends JPanel{
 	
 	public void endPlayerTurn() {
 		gameLoop.doActions();
+		repaint();		
 	}
 	
 	
@@ -163,5 +164,8 @@ public class GamePanel extends JPanel{
 	}
 	public Power getPlayer() {
 		return player;
+	}
+	public Position getPositiontarget() {
+		return targetPosition;
 	}
 }

@@ -59,6 +59,7 @@ public class GameLoop {
 	}
 	
 	public void doActions() {
+	
 		for(int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
 			switch(i) {
 			case ActionTypes.ACTION_ATTACK:
@@ -89,9 +90,9 @@ public class GameLoop {
 				executeActionsUpgradeCapital(actions[i]);
 				break;
 			}
-			executeActionsAttack(actions[i]);
 		}
 		actions = (ArrayList<Action>[]) new ArrayList[ActionTypes.NUMBER_ACTIONS];
+		initActionArray();
 	}
 	
 	private void executeActionsUpgradeCapital(ArrayList<Action> arrayList) {
@@ -142,6 +143,7 @@ public class GameLoop {
 			Power powerConcerned = action.getPowerConcerned();
 			Box targetBox = map.getBox(action.getTarget());
 			int buildingType = action.getBuildingType();
+
 			BuildingManager.getInstance().addNewBuilding(powerConcerned, buildingType, (GroundBox)targetBox);
 		}
 	}
@@ -173,5 +175,5 @@ public class GameLoop {
 			this.powers[i] = new Power("joueur " + (i+1));
 		}
 	}
-	
+
 }
