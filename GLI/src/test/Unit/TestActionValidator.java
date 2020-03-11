@@ -71,7 +71,7 @@ public class TestActionValidator {
 	
 	@Test
 	public void testMakeAllianceSuccess() throws IllegalArgumentException{
-		actionValidator.createActionMakeAlliance(powers[1], powers[3]);
+		actionValidator.createActionMakeAlliance(powers[2], powers[3]);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -82,7 +82,7 @@ public class TestActionValidator {
 	
 	@Test
 	public void testBreakAllianceSuccess() throws IllegalArgumentException{
-		actionValidator.createActionBreakAlliance(powers[0], powers[2]);
+		actionValidator.createActionBreakAlliance(powers[0], powers[1]);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -117,7 +117,7 @@ public class TestActionValidator {
 	@Test(expected = IllegalArgumentException.class)
 	public void testMoveFailure2() throws IllegalArgumentException{
 		//obstacle
-		actionValidator.createActionMove(powers[0], new Position(0, 0), new Position(0, 1));
+		actionValidator.createActionMove(powers[0], new Position(0, 0), new Position(0, 2));
 	}
 	
 	@Test
@@ -182,7 +182,7 @@ public class TestActionValidator {
 		map.getBox(mapSize/2, 0).setUnit(new Boat());
 		
 		//we add several units on different places
-		map.getBox(0,0).setUnit(new Infantry(20));
+		map.getBox(0,0).setUnit(new Archer(20));
 		map.getBox(0,mapSize - 1).setUnit(new Infantry(20));
 		map.getBox(mapSize-1, 2).setOwner(powers[2]);
 		map.getBox(mapSize - 1,2).setUnit(new Archer(20));
@@ -199,8 +199,8 @@ public class TestActionValidator {
 		((GroundBox)map.getBox(mapSize - 1, 1)).setBuilding(new Door());
 		
 		//2 powers are allied here
-		powers[0].setAlly(powers[2]);
-		powers[2].setAlly(powers[0]);
+		powers[0].setAlly(powers[1]);
+		powers[1].setAlly(powers[0]);
 	}
 
 	private void generatePowers() {

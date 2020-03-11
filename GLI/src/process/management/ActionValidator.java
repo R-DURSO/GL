@@ -197,10 +197,10 @@ public class ActionValidator {
 		int unitsMovement = units.getMovement();
 		//2 ArrayList created, to stock the next Box to visit and one for those visited
 		HashMap<String,Position> toVisit = new HashMap<String,Position>();
-		boolean hasVisited;
+		boolean hasVisited = true;
 		ArrayList<Position> visited = new ArrayList<Position>();
 		//Adding the Starting Box
-		toVisit.put("0", target);
+		toVisit.put("0", from);
 		for (Iterator<String> i = toVisit.keySet().iterator(); i.hasNext(); ) {
 			String path = i.next();
 			Position data = toVisit.get(path);
@@ -227,18 +227,20 @@ public class ActionValidator {
 									if (data.equals(target)) {
 										return true;
 									}
-									else {
-										hasVisited = true;
-									}
+//									else {
+//										hasVisited = true;
+//									}
 								}
 							}
+							
 						}
 						else if (data.equals(target)) {
 							return true;
 						}
-						else {
-							hasVisited = true;
-						}
+//						else {
+//							hasVisited = true;
+//						}
+						hasVisited = true;
 					}
 					//check if the Box visited can be walk upon
 					if (hasVisited) {
@@ -272,6 +274,7 @@ public class ActionValidator {
 			if (!toVisit.remove(path, data)) {
 				throw new NullPointerException("probleme sur la suppression d'ancienne position");
 			}
+			//i = toVisit.keySet().iterator();
 		}
 		//TODO l'unité qui passe devrait aussi conquérir le territoire qu'il survole ?
 		//Pousser la node à noter un code pour retrouver son chemin ?
@@ -279,11 +282,12 @@ public class ActionValidator {
 		return false;
 	}
 	
+	
 	private boolean isUnitsOnRange(Position from, int unitsMoveRange, Position target) {
 		int aX = from.getX();
-		int aY = from.getX();
-		int bX = from.getX();
-		int bY = from.getX();
+		int aY = from.getY();
+		int bX = target.getX();
+		int bY = target.getY();
 		return ((getDifference(aX,bX) + getDifference(aY,bY)) <= unitsMoveRange);
 	}
 	
