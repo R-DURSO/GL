@@ -308,5 +308,8 @@ public class MainGamePanel extends JPanel{
 	public Position getPositionTarget() {
 		return targetPosition;
 	}
+	public Box getBoxByPosition(Position pos) {
+		return map.getBox(pos);
+	}
 
 }

@@ -14,9 +14,15 @@ import javax.swing.JSlider;
 import GUI.components.SliderPanel;
 import GUI.sub_panels.GamePanel;
 import data.Position;
+import data.Power;
+import data.actions.Action;
 import data.actions.ActionBreakAlliance;
+import data.actions.ActionConstruct;
+import data.actions.ActionTypes;
+import data.boxes.GroundBox;
 import data.building.BuildingTypes;
 import process.management.ActionValidator;
+import process.management.BuildingManager;
 /**
  * 
  * @author rdurs
@@ -51,7 +57,7 @@ public class ActionsButtonsPanel extends JPanel {
 	// TODO : peut-être qu'il y aura une position par défaut, du coup plus besoin de ça...
 	private GamePanel context;
 	private MainGamePanel game;
-	private ActionValidator action;
+	private ActionValidator actionValidator;
 	public ActionsButtonsPanel(GamePanel context) {
 		this.context = context;
 		this.game=context.getMainGamePanel();
@@ -78,7 +84,7 @@ public class ActionsButtonsPanel extends JPanel {
 		createActionCreateUnitButton.addActionListener(new ActionBreakAlliance());
 		add(createActionCreateUnitButton);
 		
-		createActionConstructButton.addActionListener(new ActionContrcut());
+		createActionConstructButton.addActionListener(new ActionConstrcut());
 		add(createActionConstructButton);
 		
 		add(createUdapteCapitalButton);
@@ -122,14 +128,20 @@ public class ActionsButtonsPanel extends JPanel {
 		}
 		
 	}
-	class ActionContrcut implements ActionListener{
+	class ActionConstrcut implements ActionListener{
 		String[] choices = { "caserne (100 bois)","écurie","port",  "mine","scierie","moulin","carière","porte", "mur","temple"};
 		public void actionPerformed(ActionEvent e) {
 			JComboBox building = new JComboBox(choices);
 			JOptionPane.showMessageDialog(null, building, "constructions possibles", 1);
 			//System.out.println(context.getfromPosition().getX());
 			try {
-				//action.createActionConstruct(game.ow building.getSelectedIndex()+1,context.getfromPosition() );
+				//
+				//game.getBoxByPosition(game.getPositionFrom()).getOwner() 
+				//building.getSelectedIndex()+1
+				Power j1 = new Power("1");
+				Action action = actionValidator.createActionConstruct( j1,3 ,new Position(1,1));
+//				gameLoop.addAction(ActionTypes.ACTION_CONSTRUCT, action);
+				
 			}catch( IllegalArgumentException e1) {
 				JOptionPane.showInputDialog(e1.getMessage());
 			}
