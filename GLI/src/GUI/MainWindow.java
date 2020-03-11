@@ -55,9 +55,8 @@ public class MainWindow extends JFrame{
 		int mapSize = preferences.getMapSize();
 		int waterAmount = preferences.getWaterAmount();
 		int aiLevels[] = {preferences.getAi1Level(), preferences.getAi2Level(), preferences.getAi3Level()}; 
-		Start game = new Start(numberPlayers, mapSize, waterAmount, aiLevels);
-
-		gamePanel.initGamePanel(game.getMap(), game.getPowers());
+		Start starter = new Start(numberPlayers, mapSize, waterAmount, aiLevels);
+		gamePanel.initGamePanel(starter.getMap(), starter.getPowers());
 		cardLayout.show(getContentPane(), "game");
 		
 	}

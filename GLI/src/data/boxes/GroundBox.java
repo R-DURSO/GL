@@ -38,6 +38,8 @@ public class GroundBox extends Box{
 			return "Pierre";
 		case ResourceTypes.RESOURCE_WOOD:
 			return "Bois";
+		case ResourceTypes.RESOURCE_ARTIFACT:
+			return "Artéfact";
 		default:
 			return "unknown";
 		}

@@ -49,6 +49,9 @@ public class GameInfoPanel extends JPanel{
 		add(foodPanel);
 	}
 	
+	public void refreshAll() {
+	}
+	
 	public BoxSelectedPanel getSelectionPanel() {
 		return boxInfosPanel;
 	}

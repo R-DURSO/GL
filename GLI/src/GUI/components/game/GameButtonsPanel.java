@@ -3,6 +3,8 @@ package GUI.components.game;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,6 +14,7 @@ import GUI.sub_panels.GamePanel;
 
 public class GameButtonsPanel extends JPanel{
 	private static final long serialVersionUID = -3154461334874408763L;
+	private GamePanel context;
 	private ActionsButtonsPanel actionsPanel;
 //	private JPanel controlPanel = new JPanel(); //Contains endturnButton and tempButton
 	private JButton endTurnButton = new JButton("Fin du tour");
@@ -19,7 +22,7 @@ public class GameButtonsPanel extends JPanel{
 
 	public GameButtonsPanel(GamePanel context) {
 		actionsPanel = new ActionsButtonsPanel(context); 
-		
+		this.context = context;
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.weightx = 2;
@@ -27,13 +30,20 @@ public class GameButtonsPanel extends JPanel{
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		add(actionsPanel, gbc);
 		gbc.weightx = 0.5;
-		
+		endTurnButton.addActionListener(new ActionEndTurn());
 		add(endTurnButton, gbc);
 		add(quitButton, gbc);
 	}
 
 	public ActionsButtonsPanel getActionsBoutonsPanel() {
 		return actionsPanel;
+	}
+	
+	class ActionEndTurn implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			context.endPlayerTurn();
+		}
 	}
 
 }
