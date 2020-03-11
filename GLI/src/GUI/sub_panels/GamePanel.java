@@ -134,15 +134,7 @@ public class GamePanel extends JPanel{
 
 		
 	}
-	public Position getfromPosition() {
-		return fromPosition;
-	
-	}
-	public Position gettargetPosition() {
-		return targetPosition;
-	}
-//	je recoit comme erreur nullPointerExecption a l'utilisation de la map je comprend pas pk 
-	public Power getOwner() {
-		return map.getBox(fromPosition).getOwner();
+	public MainGamePanel getMainGamePanel() {
+		return mainGamePanel ;
 	}
 }

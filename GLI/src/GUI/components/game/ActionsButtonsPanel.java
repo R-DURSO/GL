@@ -50,9 +50,11 @@ public class ActionsButtonsPanel extends JPanel {
 	//allows to get Positions, which are in GamePanel 
 	// TODO : peut-être qu'il y aura une position par défaut, du coup plus besoin de ça...
 	private GamePanel context;
+	private MainGamePanel game;
 	private ActionValidator action;
 	public ActionsButtonsPanel(GamePanel context) {
 		this.context = context;
+		this.game=context.getMainGamePanel();
 		setLayout(new GridLayout(0, 3));
 		
 		actionBreakAllianceButton.addActionListener(new ActionBreakAlliance());
@@ -127,7 +129,7 @@ public class ActionsButtonsPanel extends JPanel {
 			JOptionPane.showMessageDialog(null, building, "constructions possibles", 1);
 			//System.out.println(context.getfromPosition().getX());
 			try {
-				action.createActionConstruct(context.getOwner(), building.getSelectedIndex()+1,context.getfromPosition() );
+				//action.createActionConstruct(game.ow building.getSelectedIndex()+1,context.getfromPosition() );
 			}catch( IllegalArgumentException e1) {
 				JOptionPane.showInputDialog(e1.getMessage());
 			}

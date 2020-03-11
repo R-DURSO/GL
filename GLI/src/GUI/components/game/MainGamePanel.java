@@ -302,5 +302,11 @@ public class MainGamePanel extends JPanel{
 		this.targetPosition = targetPosition;
 		repaint();
 	}
+	public Position getPositionFrom() {
+		return fromPosition ;
+	}
+	public Position getPositionTarget() {
+		return targetPosition;
+	}
 
 }
