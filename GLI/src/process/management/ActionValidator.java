@@ -163,10 +163,10 @@ public class ActionValidator {
 		}
 
 		//check if there is "obstacle" on target : either wall / ennemy door, or units
-		//TODO Pathfinding ne vérifie pas la présence d'unité, donc le survoler des annemis est possible
-//		if (!pathFinding(from, movingUnits, target)) {
-//			throw new IllegalArgumentException("Impossible de déterminer un chemin jusqu'à la destination");
-//		}
+		//TODO Pathfinding ne verifie pas la presence d'unite, donc le survoler des annemis est possible
+		if (!pathFinding(from, movingUnits, target)) {
+			throw new IllegalArgumentException("Impossible de determiner un chemin jusqu'a la destination");
+		}
 		
 		//check if there isn't any ennemy Unit or Different UnitTypes
 		if (targetBox.hasUnit()) {
@@ -193,92 +193,137 @@ public class ActionValidator {
 	 * @return true if Units have a path
 	 */
 	public boolean pathFinding(Position from, Units units, Position target) {
+		//Get the Power from the Starting Point
 		Power power = map.getBox(from).getOwner();
+		//How far the Unit can go
 		int unitsMovement = units.getMovement();
-		//2 ArrayList created, to stock the next Box to visit and one for those visited
-		HashMap<String,Position> toVisit = new HashMap<String,Position>();
-		boolean hasVisited = true;
-		ArrayList<Position> visited = new ArrayList<Position>();
+		//HashMap created, with the next Boxes to go
+		HashMap<String,Position> visiting = new HashMap<String,Position>(8*unitsMovement);
+		//HashMap created which contains the next Boxes to visit
+		HashMap<String,Position> toVisit = new HashMap<String,Position>(8*unitsMovement);
+		//Boolean that will check if we can visit adjacent Boxes
+		boolean canVisit = false;
+		//ArrayList created, to stock visited Boxes
+		ArrayList<Position> visited = new ArrayList<Position>(4*unitsMovement);
 		//Adding the Starting Box
 		toVisit.put("0", from);
-		for (Iterator<String> i = toVisit.keySet().iterator(); i.hasNext(); ) {
-			String path = i.next();
-			Position data = toVisit.get(path);
-			Box dataMap = map.getBox(data);
-			if (path.length() <= unitsMovement) {
-				if (!visited.contains(data)) {
-					hasVisited = false;
-					if ((dataMap instanceof WaterBox) && (units.getTypes() == UnitTypes.UNIT_BOAT)) {
-						//A boat on the sea
-						if (data.equals(target)) {
-							return true;
+		//We continue to search for 
+		while (!toVisit.isEmpty()) {
+			visiting.clear();
+			visiting.putAll(toVisit);
+			toVisit.clear();
+			//Iterator trough all visiting Boxes
+			for (Iterator<String> i = visiting.keySet().iterator(); i.hasNext(); ) {
+				//Get some data from the received Box
+				//path will get the path taken to get here
+				String path = i.next();
+				//visitPosition get the actual Position
+				Position visitPosition = visiting.get(path);
+				//dataMap get the Box on the Map
+				Box visitBox = map.getBox(visitPosition);
+				//if path is too long, enough Position have been visited, can't go any further
+				if (path.length() <= unitsMovement + 1) {
+					//if we haven't visited the Position
+					if (!visited.contains(visitPosition)) {
+						//reset canVisit, we will see if we can go further
+						canVisit = false;
+						if ((visitBox instanceof WaterBox) && (units.getTypes() == UnitTypes.UNIT_BOAT)) {
+							//A boat on the sea
+							if (visitPosition.equals(target)) {
+								return true;
+							}
+							else {
+								canVisit = true;
+							}
 						}
-						else {
-							hasVisited = true;
-						}
-					}
-					else if ((dataMap instanceof GroundBox) && (units.getTypes() != UnitTypes.UNIT_BOAT)) {
-						//A man on land
-						GroundBox gdataMap = (GroundBox) dataMap;
-						if (gdataMap.hasBuilding()) {
-							if (gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_WALL) {
-								if ( (gdataMap.getBuilding().getType() == BuildingTypes.BUILDING_DOOR)
-									&& ( (gdataMap.getOwner() == power) || (gdataMap.getOwner() == power.getAlly()) )) {
-									if (data.equals(target)) {
-										return true;
+						else if ((visitBox instanceof GroundBox) && (units.getTypes() != UnitTypes.UNIT_BOAT)) {
+							//A man on land
+							GroundBox gdataMap = (GroundBox) visitBox;
+							//if there is a Building, it can be a Wall
+							if (gdataMap.hasBuilding()) {
+								if (gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_WALL) {
+									//if it isn't a Wall, is it a Door that we can go through
+									if (gdataMap.getBuilding().getType() == BuildingTypes.BUILDING_DOOR) {
+										//Does the Door belong to us
+										if (gdataMap.getOwner() == power) {
+											if (visitPosition.equals(target)) {
+												return true;
+											}
+											else {
+												canVisit = true;
+											}
+										}
+										//Do we have an Ally
+										else if (power.isAllied()) {
+											//And does the Door belong to Ally
+											if (gdataMap.getOwner() == power.getAlly()) {
+												if (visitPosition.equals(target)) {
+													return true;
+												}
+												else {
+													canVisit = true;
+												}
+											}
+										}
+										//Cannot go trough enemy Door
 									}
-//									else {
-//										hasVisited = true;
-//									}
+									//canVisit is true because it isn't a Wall or Door
+									else {
+										if (visitPosition.equals(target)) {
+											return true;
+										}
+										else {
+											canVisit = true;
+										}
+									}
 								}
+								//canVisit stay false because it is a Wall blocking the path
 							}
-							
-						}
-						else if (data.equals(target)) {
-							return true;
-						}
-//						else {
-//							hasVisited = true;
-//						}
-						hasVisited = true;
-					}
-					//check if the Box visited can be walk upon
-					if (hasVisited) {
-						visited.add(data);
-						Position dataToAdd;
-						for (int d=1 ; d<=4 ; d++) {
-							switch(d) {
-							case 1:
-								dataToAdd = map.getUpPos(data);
-								break;
-							case 2:
-								dataToAdd = map.getLeftPos(data);
-								break;
-							case 3:
-								dataToAdd = map.getRightPos(data);
-								break;
-							case 4:
-								dataToAdd = map.getDownPos(data);
-								break;
-							default:
-								dataToAdd = null;
-								break;
+							else if (visitPosition.equals(target)) {
+								return true;
 							}
-							if (dataToAdd != null) {
-								toVisit.put(Integer.toString(d)+path,dataToAdd);
+							else {
+								canVisit = true;
+							}
+						}
+						//check if the Box visited can be walk upon
+						if (canVisit) {
+							Position dataToAdd;
+							for (int d=1 ; d<=4 ; d++) {
+								switch(d) {
+								case 1:
+									dataToAdd = map.getUpPos(visitPosition);
+									break;
+								case 2:
+									dataToAdd = map.getLeftPos(visitPosition);
+									break;
+								case 3:
+									dataToAdd = map.getRightPos(visitPosition);
+									break;
+								case 4:
+									dataToAdd = map.getDownPos(visitPosition);
+									break;
+								default:
+									dataToAdd = null;
+									break;
+								}
+								if (dataToAdd != null) {
+									toVisit.put(Integer.toString(d)+path,dataToAdd);
+								}
 							}
 						}
 					}
 				}
+				//Added the Position to Visited and Remove it in toVisit 
+				visited.add(visitPosition);
+//				if (!visiting.remove(path, visitPosition)) {
+//					throw new NullPointerException("probleme sur la suppression d'ancienne position");
+//				}
 			}
-			if (!toVisit.remove(path, data)) {
-				throw new NullPointerException("probleme sur la suppression d'ancienne position");
-			}
-			//i = toVisit.keySet().iterator();
 		}
-		//TODO l'unité qui passe devrait aussi conquérir le territoire qu'il survole ?
-		//Pousser la node à noter un code pour retrouver son chemin ?
-		//Garder de côté les cases passés
+		//TODO l'unite qui passe devrait aussi conquerir le territoire qu'il survole ?
+		//Pousser la node a noter un code pour retrouver son chemin ?
+		//Garder de cote les cases passes
 		return false;
 	}
 	
@@ -294,7 +339,7 @@ public class ActionValidator {
 	/**
 	 * @param a Entier
 	 * @param b Entier
-	 * @return La différence entre ces 2 entiers
+	 * @return La diffï¿½rence entre ces 2 entiers
 	 */
 	private int getDifference (int a, int b) {
 		return Math.abs(a - b);

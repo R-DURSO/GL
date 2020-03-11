@@ -26,7 +26,7 @@ public class GameMap {
 
 	public Position getLeftPos(Position position) {
 		if ((position.getX()-1) >= 0) {
-			return new Position(position.getY()-1,position.getX()-1);
+			return new Position(position.getY(),position.getX()-1);
 		}
 		else {
 			return null;
