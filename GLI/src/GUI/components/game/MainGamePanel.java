@@ -251,6 +251,9 @@ public class MainGamePanel extends JPanel{
 		case ResourceTypes.RESOURCE_WOOD:
 			g.setColor(ColorData.WOOD_COLOR);
 			break;
+		case ResourceTypes.RESOURCE_ARTIFACT:
+			g.setColor(ColorData.ARTIFACT_COLOR);
+			break;
 		default:
 			return false;
 		}
