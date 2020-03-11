@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import GUI.MainWindow;
 import GUI.components.GuiPreferences;
 import GUI.components.game.GameButtonsPanel;
-import GUI.components.game.GameInfoPanel;
+import GUI.components.game.PlayerResourcesPanel;
 import GUI.components.game.MainGamePanel;
 import data.GameMap;
 import data.Position;
@@ -40,7 +40,7 @@ public class GamePanel extends JPanel{
 			new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT * GuiPreferences.GAME_PANELS_SUBSTRACT_HEIGHT / GuiPreferences.GAME_PANELS_RATIO_HEIGHT);
 	private final Dimension BUTTONS_DIMENSION = INFO_DIMENSION;
 	
-	private GameInfoPanel gameInfoPanel;
+	private PlayerResourcesPanel gameInfoPanel;
 	private MainGamePanel mainGamePanel;
 	private GameButtonsPanel gameButtonsPanel;
 	
@@ -77,7 +77,7 @@ public class GamePanel extends JPanel{
 		mainGamePanel.addMouseMotionListener(new MouseMotionManager());
 		mainGamePanel.addMouseListener(new MouseInputManager());
 		
-		gameInfoPanel = new GameInfoPanel(powers[0].getResources(), map.getBox(0,0));
+		gameInfoPanel = new PlayerResourcesPanel(powers[0].getResources(), map.getBox(0,0));
 		gameInfoPanel.setPreferredSize(INFO_DIMENSION);
 		this.map=map;
 		this.player=powers[0];

@@ -14,7 +14,7 @@ import data.resource.ResourceTypes;
  * <p>Use ResourcePanel and BoxSelectedPanel</p>
  */
 
-public class GameInfoPanel extends JPanel{
+public class PlayerResourcesPanel extends JPanel{
 	private static final long serialVersionUID = 1700840665124988595L;
 	
 	private BoxSelectedPanel boxInfosPanel;
@@ -24,7 +24,7 @@ public class GameInfoPanel extends JPanel{
 	private ResourcePanel woodPanel;
 	private ResourcePanel foodPanel;
 
-	public GameInfoPanel(Resource resources[], Box box) {
+	public PlayerResourcesPanel(Resource resources[], Box box) {
 		actionPointsPanel = new ResourcePanel("Points d'action", resources[ResourceTypes.RESOURCE_ACTIONS - 1]);
 		goldPanel = new ResourcePanel("Or", resources[ResourceTypes.RESOURCE_GOLD - 1]);
 		stonePanel = new ResourcePanel("Pierre", resources[ResourceTypes.RESOURCE_STONE - 1]);
