@@ -73,7 +73,7 @@ public class ActionsButtonsPanel extends JPanel {
 		createActionAttackButton.addActionListener(new ActionBreakAlliance());
 		add(createActionAttackButton);
 		
-		createActionMoveButton.addActionListener(new ActionBreakAlliance());
+		createActionMoveButton.addActionListener(new ActionMoveTrouppe());
 		add(createActionMoveButton);
 		
 		createActionDestroyUnitButton.addActionListener(new ActionBreakAlliance());
@@ -137,11 +137,11 @@ public class ActionsButtonsPanel extends JPanel {
 			//System.out.println(context.getfromPosition().getX());
 			try {
 				//
-				//game.getBoxByPosition(game.getPositionFrom()).getOwner() 
-				//building.getSelectedIndex()+1
-				Power j1 = new Power("1");
+				//
+				//
+
 				
-				action = context.getActionValidator().createActionConstruct( j1,3 ,new Position(1,1));
+				action = context.getActionValidator().createActionConstruct(context.getPlayer() ,building.getSelectedIndex()+1 ,context.getPositionFrom());
 //				gameLoop.addAction(ActionTypes.ACTION_CONSTRUCT, action);
 				
 			}catch( IllegalArgumentException e1) {
@@ -150,11 +150,20 @@ public class ActionsButtonsPanel extends JPanel {
 				e2.printStackTrace();
 			}
 			building.getSelectedIndex();
-			System.out.println(building.getSelectedIndex());
+			//System.out.println(building.getSelectedIndex());
 		
 				
 		}
 		
 	}
+	class ActionMoveTrouppe implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			
+		}
+		
 	
+	}
 }

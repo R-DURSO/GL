@@ -47,7 +47,7 @@ public class GamePanel extends JPanel{
 	private Position fromPosition = new Position(0, 0);
 	private Position targetPosition = new Position(0, 0);
 	private ActionValidator actionValidator;
-	
+	private Power player;
 	public GamePanel(MainWindow context) {
 		this.context = context;
 		init();
@@ -74,6 +74,7 @@ public class GamePanel extends JPanel{
 		gameInfoPanel = new GameInfoPanel(powers[0].getResources(), map.getBox(0,0));
 		gameInfoPanel.setPreferredSize(INFO_DIMENSION);
 		this.map=map;
+		this.player=powers[0];
 		add(gameInfoPanel);
 		add(mainGamePanel);
 		add(gameButtonsPanel);
@@ -140,5 +141,11 @@ public class GamePanel extends JPanel{
 	}
 	public ActionValidator getActionValidator() {
 		return actionValidator;
+	}
+	public Position getPositionFrom() {
+		return fromPosition;
+	}
+	public Power getPlayer() {
+		return player;
 	}
 }
