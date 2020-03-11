@@ -17,4 +17,8 @@ public class ActionConstruct extends Action {
 	public int getBuildingType() {
 		return buildingType;
 	}
+	
+	public Position getTarget() {
+		return target;
+	}
 }

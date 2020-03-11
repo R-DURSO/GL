@@ -35,8 +35,8 @@ public class ActionManagerTest {
 		//make alliance
 		try {
 			ActionMakeAlliance ama = actionManager.createActionMakeAlliance(powers[1], powers[2]);
-			ama.getPower().setAlly(ama.getPotentialAllied());
-			ama.getPotentialAllied().setAlly(ama.getPower());
+			ama.getPowerConcerned().setAlly(ama.getPotentialAllied());
+			ama.getPotentialAllied().setAlly(ama.getPowerConcerned());
 			System.out.println("alliance created");
 		}catch(IllegalArgumentException e) {
 			System.err.println(e.getMessage());

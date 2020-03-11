@@ -14,7 +14,7 @@ public abstract class Action {
 		this.power = powerConcerned;
 	}
 
-	public Power getPower() {
+	public Power getPowerConcerned() {
 		return power;
 	}
 }

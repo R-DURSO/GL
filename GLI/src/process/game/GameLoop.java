@@ -12,9 +12,8 @@ import process.management.MapBuilder;
 public class GameLoop {
 	
 	@SuppressWarnings("unchecked")
-	private ArrayList<Action> action[]= (ArrayList<Action>[]) new ArrayList[ActionTypes.NUMBER_ACTIONS];
+	private ArrayList<Action> actions[]= (ArrayList<Action>[]) new ArrayList[ActionTypes.NUMBER_ACTIONS];
 	
-	private ActionValidator actionValidator;
 	// constante temporaire 
 	private boolean isPlaying = true;
 	private Power powers[];
@@ -23,8 +22,10 @@ public class GameLoop {
 	public GameLoop( PreferencesPanel preferences ) {
 		initActionArray();
 		
-		actionValidator = new ActionValidator(map);
-		
+	}
+	
+	public void addAction(int actionType, Action action) {
+		actions[actionType].add(action);
 	}
 	
 
@@ -52,9 +53,15 @@ public class GameLoop {
 		}
 	}
 	
-	public void initActionArray() {
+	public void doActions() {
+		for(int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
+			
+		}
+	}
+	
+	private void initActionArray() {
 		for (int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
-			action[i]= new ArrayList<Action>();
+			actions[i]= new ArrayList<Action>();
 		}
 
 	}
