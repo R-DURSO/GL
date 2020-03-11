@@ -339,7 +339,7 @@ public class ActionValidator {
 	/**
 	 * @param a Entier
 	 * @param b Entier
-	 * @return La diff�rence entre ces 2 entiers
+	 * @return La difference entre ces 2 entiers
 	 */
 	private int getDifference (int a, int b) {
 		return Math.abs(a - b);
