@@ -57,7 +57,8 @@ public class ActionsButtonsPanel extends JPanel {
 	// TODO : peut-être qu'il y aura une position par défaut, du coup plus besoin de ça...
 	private GamePanel context;
 	private MainGamePanel game;
-	private ActionValidator actionValidator;
+	private Action action;
+
 	public ActionsButtonsPanel(GamePanel context) {
 		this.context = context;
 		this.game=context.getMainGamePanel();
@@ -139,11 +140,14 @@ public class ActionsButtonsPanel extends JPanel {
 				//game.getBoxByPosition(game.getPositionFrom()).getOwner() 
 				//building.getSelectedIndex()+1
 				Power j1 = new Power("1");
-				Action action = actionValidator.createActionConstruct( j1,3 ,new Position(1,1));
+				
+				action = context.getActionValidator().createActionConstruct( j1,3 ,new Position(1,1));
 //				gameLoop.addAction(ActionTypes.ACTION_CONSTRUCT, action);
 				
 			}catch( IllegalArgumentException e1) {
-				JOptionPane.showInputDialog(e1.getMessage());
+				JOptionPane.showMessageDialog(null,e1.getMessage());
+			}catch(NullPointerException e2) {
+				e2.printStackTrace();
 			}
 			building.getSelectedIndex();
 			System.out.println(building.getSelectedIndex());

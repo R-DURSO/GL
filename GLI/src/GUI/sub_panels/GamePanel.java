@@ -22,6 +22,7 @@ import data.resource.Resource;
 import data.resource.ResourceTypes;
 import data.boxes.*;
 import data.unit.*;
+import process.management.ActionValidator;
 
 
 /**
@@ -45,7 +46,7 @@ public class GamePanel extends JPanel{
 	private GameMap map;
 	private Position fromPosition = new Position(0, 0);
 	private Position targetPosition = new Position(0, 0);
-	
+	private ActionValidator actionValidator;
 	
 	public GamePanel(MainWindow context) {
 		this.context = context;
@@ -63,7 +64,7 @@ public class GamePanel extends JPanel{
 		int mapSize = map.getSize();
 		int mapBoxWidth = (int) (MAIN_DIMENSION.getWidth() / mapSize);
 		int mapBoxHeight = (int) (MAIN_DIMENSION.getHeight() / mapSize);
-		
+		actionValidator = new ActionValidator(map);
 		this.mainGamePanel	= new MainGamePanel(map, powers, mapBoxWidth, mapBoxHeight);
 		mainGamePanel.setPreferredSize(MAIN_DIMENSION);
 		//mouseListener
@@ -136,5 +137,8 @@ public class GamePanel extends JPanel{
 	}
 	public MainGamePanel getMainGamePanel() {
 		return mainGamePanel ;
+	}
+	public ActionValidator getActionValidator() {
+		return actionValidator;
 	}
 }

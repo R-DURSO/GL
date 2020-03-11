@@ -317,7 +317,7 @@ public class ActionValidator {
 	 * @see data.building.BuildingTypes
 	 * @throws IllegalArgumentException If the conditions are not met
 	 */
-	public ActionConstruct createActionConstruct(Power powerConcerned, int buildingType, Position target) throws IllegalArgumentException{
+	public ActionConstruct createActionConstruct(Power powerConcerned, int buildingType, Position target) throws IllegalArgumentException, NullPointerException{
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() != powerConcerned) {
