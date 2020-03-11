@@ -1,5 +1,6 @@
 package test.Unit;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Assert;
@@ -166,9 +167,9 @@ public class TestActionValidator {
 		actionValidator.createActionUpgradeCapital(powers[2]);
 	}
 	
-	@Test(expected = AssertionError.class)
+	@Test
 	public void testPathFindingFail() {
-		assertTrue(actionValidator.pathFinding(new Position(0,0), map.getBox(new Position(0,0)).getUnit(), new Position(0,1)));
+		assertFalse(actionValidator.pathFinding(new Position(0,0), map.getBox(new Position(0,0)).getUnit(), new Position(0,1)));
 	}
 	
 	@Test
