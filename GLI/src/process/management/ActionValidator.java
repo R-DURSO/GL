@@ -164,9 +164,9 @@ public class ActionValidator {
 
 		//check if there is "obstacle" on target : either wall / ennemy door, or units
 		//TODO Pathfinding ne vérifie pas la présence d'unité, donc le survoler des annemis est possible
-		if (!pathFinding(from, movingUnits, target)) {
-			throw new IllegalArgumentException("Impossible de déterminer un chemin jusqu'à la destination");
-		}
+//		if (!pathFinding(from, movingUnits, target)) {
+//			throw new IllegalArgumentException("Impossible de déterminer un chemin jusqu'à la destination");
+//		}
 		
 		//check if there isn't any ennemy Unit or Different UnitTypes
 		if (targetBox.hasUnit()) {
