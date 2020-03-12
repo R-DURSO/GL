@@ -9,16 +9,30 @@ import data.resource.Resource;
 
 /**
  * <p>The list of Resource the power hold (and it's production)</p>
+ * <p>Used in {@link PlayerResourcesPanel}
  */
-
 public class ResourcePanel extends JPanel{
-	private JLabel resourceNameLabel;
-	private JLabel resourceAmountProdLabel;
+	private static final long serialVersionUID = -1991549825949046698L;
+	private Resource resource;
+	private String resourceName;
+	private String resourceAmountAndProd;
+	private JLabel resourceLabel;
 
 	public ResourcePanel(String name, Resource resource) {
-		resourceNameLabel = new JLabel(name);
-		resourceAmountProdLabel = new JLabel(resource.getAmount() + "(" + withSign(resource.getProductionPerTurn()) + ")", SwingConstants.CENTER);
+		resourceName = name;
+		this.resource = resource;
+		resourceLabel = new JLabel("", SwingConstants.CENTER);
+		
+		refresh();
+		
 		init();
+
+	}
+	
+	public void refresh() {
+		resourceAmountAndProd = resource.getAmount() + "(" + withSign(resource.getProductionPerTurn()) + ")";		
+		resourceLabel.setText(resourceName + resourceAmountAndProd);
+		repaint();
 	}
 
 	private String withSign(int productionPerTurn) {
@@ -27,8 +41,7 @@ public class ResourcePanel extends JPanel{
 
 	private void init() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(resourceNameLabel);
-		add(resourceAmountProdLabel);
+		add(resourceLabel);
 	}
 
 }

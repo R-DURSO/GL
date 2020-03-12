@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import GUI.colors.ColorData;
+import GUI.sub_panels.GamePanel;
 import data.GameMap;
 import data.Position;
 import data.Power;
@@ -21,8 +22,10 @@ import data.unit.Units;
 import process.management.BuildingManager;
 import process.management.UnitManager;
 
-public class MainGamePanel extends JPanel{
+public class MapPanel extends JPanel{
 	private static final long serialVersionUID = -4989371043690170741L;
+	private GamePanel context;
+	
 	private final int MINI_BOX_PART = 12;
 	private GameMap map;
 	private Power powers[];
@@ -34,9 +37,10 @@ public class MainGamePanel extends JPanel{
 	private Position targetPosition;
 
 	
-	public MainGamePanel(GameMap map, Power powers[], int rectWidth, int rectHeight) {
+	public MapPanel(GamePanel context, GameMap map, Power powers[]) {
 		super();
 		
+		this.context = context;
 		this.powers = powers;
 		this.map = map;
 	    

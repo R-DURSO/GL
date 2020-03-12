@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import GUI.components.GuiPreferences;
-import GUI.components.game.MainGamePanel;
+import GUI.components.game.MapPanel;
 import GUI.components.menu.PreferencesPanel;
 import GUI.sub_panels.GamePanel;
 import GUI.sub_panels.MenuPanel;

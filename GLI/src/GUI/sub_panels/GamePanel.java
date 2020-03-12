@@ -1,5 +1,6 @@
 package GUI.sub_panels;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -13,8 +14,9 @@ import javax.swing.JPanel;
 import GUI.MainWindow;
 import GUI.components.GuiPreferences;
 import GUI.components.game.GameButtonsPanel;
+import GUI.components.game.InfosPanel;
 import GUI.components.game.PlayerResourcesPanel;
-import GUI.components.game.MainGamePanel;
+import GUI.components.game.MapPanel;
 import data.GameMap;
 import data.Position;
 import data.Power;
@@ -33,57 +35,70 @@ import process.management.ActionValidator;
  */
 public class GamePanel extends JPanel{
 	private static final long serialVersionUID = 7722109867943150729L;
-	private MainWindow context;
+	private MainWindow window;
 	
 	private final Dimension INFO_DIMENSION = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / GuiPreferences.GAME_PANELS_RATIO_HEIGHT);
 	private final Dimension MAIN_DIMENSION = 
 			new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT * GuiPreferences.GAME_PANELS_SUBSTRACT_HEIGHT / GuiPreferences.GAME_PANELS_RATIO_HEIGHT);
 	private final Dimension BUTTONS_DIMENSION = INFO_DIMENSION;
 	
-	private PlayerResourcesPanel gameInfoPanel;
-	private MainGamePanel mainGamePanel;
+	private final Dimension DIM_RESOURCES = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 20);
+	private final Dimension DIM_MAP = new Dimension(4 * GuiPreferences.WIDTH / 5, 3 * GuiPreferences.HEIGHT / 4);
+	private final Dimension DIM_INFOS = new Dimension(GuiPreferences.WIDTH / 5, 3 * GuiPreferences.HEIGHT / 4);
+	private final Dimension DIM_BUTTONS= new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 5);
+	
+	private PlayerResourcesPanel playerResourcesPanel;
+	private InfosPanel infosPanel;
+	private MapPanel mapPanel;
 	private GameButtonsPanel gameButtonsPanel;
 	
 	//attributes used for game logic
 	private GameMap map;
-	private Position fromPosition = new Position(0, 0);
-	private Position targetPosition = new Position(0, 0);
+	private Position fromPosition = null;
+	private Position targetPosition = null;
 	private ActionValidator actionValidator;
 	private Power player;
 	private GameLoop gameLoop;
 	
-	public GamePanel(MainWindow context) {
-		this.context = context;
+	public GamePanel(MainWindow window) {
+		this.window = window;
 		init();
 	}
 
 	private void init() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new BorderLayout());
 
+		
 		gameButtonsPanel = new GameButtonsPanel(this);
-		gameButtonsPanel.setPreferredSize(BUTTONS_DIMENSION);	
+		gameButtonsPanel.setPreferredSize(DIM_BUTTONS);	
 	}
 	
 	public void initGamePanel(GameMap map, Power powers[]) {
-		gameLoop = new GameLoop(map, powers);
-		
-		int mapSize = map.getSize();
-		int mapBoxWidth = (int) (MAIN_DIMENSION.getWidth() / mapSize);
-		int mapBoxHeight = (int) (MAIN_DIMENSION.getHeight() / mapSize);
-		actionValidator = new ActionValidator(map);
-		this.mainGamePanel	= new MainGamePanel(map, powers, mapBoxWidth, mapBoxHeight);
-		mainGamePanel.setPreferredSize(MAIN_DIMENSION);
-		//mouseListener
-		mainGamePanel.addMouseMotionListener(new MouseMotionManager());
-		mainGamePanel.addMouseListener(new MouseInputManager());
-		
-		gameInfoPanel = new PlayerResourcesPanel(powers[0].getResources(), map.getBox(0,0));
-		gameInfoPanel.setPreferredSize(INFO_DIMENSION);
 		this.map=map;
 		this.player=powers[0];
-		add(gameInfoPanel);
-		add(mainGamePanel);
-		add(gameButtonsPanel);
+		
+		gameLoop = new GameLoop(map, powers);
+		
+		actionValidator = new ActionValidator(map);
+		this.mapPanel = new MapPanel(this, map, powers);
+		mapPanel.setPreferredSize(DIM_MAP);
+		
+		infosPanel = new InfosPanel();
+		infosPanel.initInfosPanel(this);
+		infosPanel.setPreferredSize(DIM_INFOS);
+		
+		playerResourcesPanel = new PlayerResourcesPanel(powers[0].getResources());
+		playerResourcesPanel.setPreferredSize(DIM_RESOURCES);
+		
+		//mouseListener
+		mapPanel.addMouseMotionListener(new MouseMotionManager());
+		mapPanel.addMouseListener(new MouseInputManager());
+		
+
+		add(playerResourcesPanel, BorderLayout.NORTH);
+		add(mapPanel, BorderLayout.CENTER);
+		add(infosPanel, BorderLayout.EAST);
+		add(gameButtonsPanel, BorderLayout.SOUTH);
 	}
 	
 	public void addAction(Action action, int actionType) {
@@ -103,8 +118,8 @@ public class GamePanel extends JPanel{
 		public void mouseMoved(MouseEvent e) {
 			int x = e.getX();
 			int y = e.getY();
-			Box box = mainGamePanel.getBoxFromCoordinates(x, y);
-			gameInfoPanel.getSelectionPanel().refresh(box);
+			Box box = mapPanel.getBoxFromCoordinates(x, y);
+			infosPanel.refreshBoxHover(box);
 		}
 
 		@Override
@@ -116,14 +131,14 @@ public class GamePanel extends JPanel{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			Position position = mainGamePanel.getPositionFromCoordinates(e.getX(), e.getY());
+			Position position = mapPanel.getPositionFromCoordinates(e.getX(), e.getY());
 			if (gameButtonsPanel.getActionsBoutonsPanel().isWaitingFromPosition()) {
 				fromPosition = position;
 			}else if(gameButtonsPanel.getActionsBoutonsPanel().isWaitingTargetPosition()) {
 				targetPosition = position;
 			}
-			mainGamePanel.refreshSelection(fromPosition, targetPosition);
-			mainGamePanel.repaint();
+			mapPanel.refreshSelection(fromPosition, targetPosition);
+			mapPanel.repaint();
 			
 		}
 
@@ -153,8 +168,8 @@ public class GamePanel extends JPanel{
 
 		
 	}
-	public MainGamePanel getMainGamePanel() {
-		return mainGamePanel ;
+	public MapPanel getMapPanel() {
+		return mapPanel ;
 	}
 	public ActionValidator getActionValidator() {
 		return actionValidator;

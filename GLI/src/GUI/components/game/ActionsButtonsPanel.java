@@ -56,12 +56,12 @@ public class ActionsButtonsPanel extends JPanel {
 	//allows to get Positions, which are in GamePanel 
 	// TODO : peut-être qu'il y aura une position par défaut, du coup plus besoin de ça...
 	private GamePanel context;
-	private MainGamePanel game;
+	private MapPanel game;
 	private Action action;
 
 	public ActionsButtonsPanel(GamePanel context) {
 		this.context = context;
-		this.game=context.getMainGamePanel();
+		this.game=context.getMapPanel();
 		setLayout(new GridLayout(0, 3));
 		
 		actionBreakAllianceButton.addActionListener(new ActionBreakAlliance());
