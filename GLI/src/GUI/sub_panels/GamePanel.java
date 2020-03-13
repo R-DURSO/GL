@@ -37,15 +37,10 @@ public class GamePanel extends JPanel{
 	private static final long serialVersionUID = 7722109867943150729L;
 	private MainWindow window;
 	
-	private final Dimension INFO_DIMENSION = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / GuiPreferences.GAME_PANELS_RATIO_HEIGHT);
-	private final Dimension MAIN_DIMENSION = 
-			new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT * GuiPreferences.GAME_PANELS_SUBSTRACT_HEIGHT / GuiPreferences.GAME_PANELS_RATIO_HEIGHT);
-	private final Dimension BUTTONS_DIMENSION = INFO_DIMENSION;
-	
-	private final Dimension DIM_RESOURCES = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 20);
-	private final Dimension DIM_MAP = new Dimension(4 * GuiPreferences.WIDTH / 5, 3 * GuiPreferences.HEIGHT / 4);
-	private final Dimension DIM_INFOS = new Dimension(GuiPreferences.WIDTH / 5, 3 * GuiPreferences.HEIGHT / 4);
-	private final Dimension DIM_BUTTONS= new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 5);
+	private final Dimension DIM_RESOURCES = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 30);
+	private final Dimension DIM_MAP = new Dimension(4 * GuiPreferences.WIDTH / 5, 4 * GuiPreferences.HEIGHT / 5);
+	private final Dimension DIM_INFOS = new Dimension(GuiPreferences.WIDTH / 5, 4 * GuiPreferences.HEIGHT / 5);
+	private final Dimension DIM_BUTTONS= new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 10);
 	
 	private PlayerResourcesPanel playerResourcesPanel;
 	private InfosPanel infosPanel;

@@ -31,7 +31,7 @@ public class ResourcePanel extends JPanel{
 	
 	public void refresh() {
 		resourceAmountAndProd = resource.getAmount() + "(" + withSign(resource.getProductionPerTurn()) + ")";		
-		resourceLabel.setText(resourceName + resourceAmountAndProd);
+		resourceLabel.setText(resourceName + " : " + resourceAmountAndProd);
 		repaint();
 	}
 

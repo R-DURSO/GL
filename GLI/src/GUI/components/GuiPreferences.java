@@ -5,6 +5,8 @@ import java.awt.Font;
 public class GuiPreferences {
 	public static final int RATIO_WIDTH = 16;
 	public static final int RATIO_HEIGHT = 9;
+	
+	public static final int BAR_HEIGHT = 30;
 
 	public static final int HEIGHT = 720;
 	
