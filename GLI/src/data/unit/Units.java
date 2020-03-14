@@ -49,7 +49,7 @@ public abstract class Units {
 		}
 	}
 	
-	public void substractNumber (int number) {
+	public void subNumber (int number) {
 		this.number -= number;
 		if (this.number <= 0) {
 			this.number = 0;

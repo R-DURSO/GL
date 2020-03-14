@@ -46,7 +46,7 @@ public class UnitManager {
 				if (units != null) {
 					if (units.getNumber() > units.getMaxNumber()) {
 						int numberExcessUnits = numberUnits - units.getMaxNumber();
-						units.substractNumber(numberExcessUnits);
+						units.subNumber(numberExcessUnits);
 						power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(units.getCost() * numberExcessUnits); 
 					}
 					box.setUnit(units);
@@ -89,7 +89,7 @@ public class UnitManager {
 			deleteUnits(power, box);
 		}
 		else {
-			units.substractNumber(numberUnitsRemoved);
+			units.subNumber(numberUnitsRemoved);
 			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, numberUnitsRemoved * box.getUnit().getFoodCost());
 		}
 	}
@@ -104,6 +104,18 @@ public class UnitManager {
 		}
 	}
 	
+	/**
+	 * TODO MoveUnit a modifier
+	 * 	L'unite passe sur plusieurs case
+	 * 		-Convertir path en Array de Box ou faire cas par cas depuis un String
+	 * 			-move Unit en 2 cas, 1 pour le deplacement global
+	 * 			-l'autre pour la gestion de Box en Box
+	 *  			-Doit conquérir chaque Boxes
+	 *  L'unite peut arriver sur un Boat
+	 *  	-Rentrer dans le bateau
+	 *  	-peut passer de bateau en bateau (comme un pont ?) s'il y en a plusieurs cote à cote
+	 *  
+	 */
 	public void moveUnits(Power powerConcerned, Box fromBox, Box targetBox) {
 		Units movingUnits = fromBox.getUnit();
 		targetBox.setUnit(movingUnits);
@@ -142,29 +154,22 @@ public class UnitManager {
 		}
 	}
 	
+	/**
+	 * <p>Battle between 2 {@link data.unit.Units Units}.</p>
+	 * <p>Damage are calculated by baseDamage * number minus 10% damage reduction per point of defense.</p>
+	 * @param powerConcerned the {@link data.Power Power} launching the attack
+	 * @param fromBox Attacker
+	 * @param targetBox Defender
+	 */
 	public void attackUnits (Power powerConcerned, Box fromBox, Box targetBox) {
 		Units attacker = fromBox.getUnit();
 		Units defender = targetBox.getUnit();
-		
-		/**
-		 * place attack
-		 * -if def is ranged, no counter TODO???
-		 * -else def counter
-		 */
-		
-		
-		/**
-		//Les dégats sont bloqués par la defense, mais le nombre compte !
-		int AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) - ((int)DefDefence * defender.getNumber());
-		System.out.println("degat de l'att "+AttackerDamageDealt);
-		**/
-		
+		//calcul des degats par le nombre, et chaque point de defense reduit de 10% les degats subits
 		double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
-		
 		//Les défenseurs subissent les dégats
 		int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
-		
 		int casualityAtt = 0;
+		//Si les attaquant sont à portés, ils ne subissent pas de perte
 		if (!isRanged(attacker)) {
 			//Round 2, contre-attaque si pas à distance
 			//int DefenderDamageDealt = (defender.getDamage() - attacker.getDefense()) * defender.getNumber();
@@ -172,7 +177,6 @@ public class UnitManager {
 			//Les attaquant subissent les dégats
 			casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
 		}
-		
 		//Les 2 Units perdent en nombres
 		removeUnits(targetBox.getOwner(), targetBox, casualityDef);
 		removeUnits(fromBox.getOwner(), fromBox, casualityAtt);
