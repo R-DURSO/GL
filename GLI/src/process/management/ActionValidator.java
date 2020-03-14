@@ -396,19 +396,25 @@ public class ActionValidator {
 			throw new IllegalArgumentException("Impossible de construire sur une case etrangere");
 		}
 		
+		//check if targetBox is a WaterBox or not
+		if(targetBox instanceof WaterBox)
+			throw new IllegalArgumentException("Impossible de construire sur une case d'eau");
+		
 		//check if have enough resources to build
 		ResourceCost neededResource = getBuildingCost(buildingType); 
 		if(!checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
 			throw new IllegalArgumentException("Pas assez de ressources pour construire ceci");
 		
-		//check if targetBox is a WaterBox or not
-		if(targetBox instanceof WaterBox)
-			throw new IllegalArgumentException("Impossible de construire sur une case d'eau");
-		
 		GroundBox groundBox = (GroundBox) targetBox;
 		//check if there is already a building on this box
 		if(groundBox.hasBuilding())
 			throw new IllegalArgumentException("Impossible de construire sur une case qui possede deja un batiment"); 
+		
+		if (buildingType == BuildingTypes.BUILDING_DOCK) {
+			if (!isNearWater(target)) {
+				throw new IllegalArgumentException("Le port n'est pas a poximite de case d'eau"); 
+			}
+		}
 		
 		if (buildingType == BuildingTypes.BUILDING_TEMPLE) {
 			if (groundBox.getResourceType() != ResourceTypes.RESOURCE_ARTIFACT) {
@@ -420,6 +426,40 @@ public class ActionValidator {
 		//remove building cost
 		powerConcerned.getResource(neededResource.getType()).subValue(neededResource.getCost());
 		return new ActionConstruct(powerConcerned, buildingType, target);
+	}
+	
+	/**
+	 * check if nearby Boxes are made of Water
+	 * @param target
+	 * @return true if target is near Water
+	 */
+	private boolean isNearWater(Position target) {
+		Box wBox = null;
+		for (int d=0 ; d<=4 ; d++) {
+			switch(d) {
+			case 0:
+				wBox = map.getBox(target);
+			case 1:
+				wBox = map.getBox(map.getUpPos(target));
+				break;
+			case 2:
+				wBox = map.getBox(map.getLeftPos(target));
+				break;
+			case 3:
+				wBox = map.getBox(map.getRightPos(target));
+				break;
+			case 4:
+				wBox = map.getBox(map.getDownPos(target));
+				break;
+			default:
+				wBox = null;
+				break;
+			}
+			if (wBox instanceof WaterBox) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
