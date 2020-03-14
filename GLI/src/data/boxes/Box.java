@@ -4,6 +4,11 @@ import data.Power;
 import data.building.Building;
 import data.unit.Units;
 
+/**
+ * <p>A Box represent a country.</p>
+ * <p>two types of Boxes, {@link data.boxes.GroundBox GroundBox} and {@link data.boxes.WaterBox WaterBox}</p>
+ * @author Maxence
+ */
 public abstract class Box {
 	private Units unit;
 	private Power owner;

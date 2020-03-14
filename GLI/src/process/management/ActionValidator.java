@@ -134,7 +134,7 @@ public class ActionValidator {
 	 * @param from The position where player's units will move
 	 * @param target Where player's units will move
 	 * @return ActionMove
-	 * @see data.actions.ActionMove
+	 * @see {@link data.actions.ActionMove ActionMove}
 	 * @throws IllegalArgumentException If the conditions are not met
 	 */
 	public ActionMove createActionMove (Power powerConcerned, Position from, Position target) throws IllegalArgumentException {
@@ -163,7 +163,7 @@ public class ActionValidator {
 		}
 
 		//check if there is "obstacle" on target : either wall / ennemy door, or units
-		//TODO Pathfinding ne verifie pas la presence d'unite, donc le survoler des annemis est possible
+		//TODO Pathfinding ne verifie pas la presence d'unite, donc survoler des annemis est possible
 		if (!pathFinding(from, movingUnits, target)) {
 			throw new IllegalArgumentException("Impossible de determiner un chemin jusqu'a la destination");
 		}
@@ -172,7 +172,20 @@ public class ActionValidator {
 		if (targetBox.hasUnit()) {
 			if (targetBox.getOwner() == powerConcerned) {
 				Units unitsOnTarget = targetBox.getUnit();
-				if (movingUnits.getTypes() != unitsOnTarget.getTypes()) {
+				if (unitsOnTarget.getTypes() == UnitTypes.UNIT_BOAT) {
+					//moves Units on the boat
+					Boat boatTarget = ((Boat)unitsOnTarget);
+					if (boatTarget.hasContainedUnits()) {
+						if (boatTarget.getContainedUnitsTypes() == movingUnits.getTypes()) {
+							//You can re-group those Units
+						}
+						else {
+							throw new IllegalArgumentException("Des Unités de types différents sont dans ce bateau");
+						}
+					}
+					//boatTarget.setContainedUnits(movingUnits);
+				}
+				else if (movingUnits.getTypes() != unitsOnTarget.getTypes()) {
 					throw new IllegalArgumentException("Des unites d'un type different sont sur le lieu cible");
 				}
 			}
@@ -186,7 +199,8 @@ public class ActionValidator {
 	}
 	
 	/**
-	 * 
+	 * Determine the PathFinding an Unit will take to go to a target.
+	 * Units will conquer all passed territory.
 	 * @param from Starting Box
 	 * @param unitsMovement Movement Point of the Unit
 	 * @param target Box where the Units wants to go
@@ -227,13 +241,24 @@ public class ActionValidator {
 					if (!visited.contains(visitPosition)) {
 						//reset canVisit, we will see if we can go further
 						canVisit = false;
-						if ((visitBox instanceof WaterBox) && (units.getTypes() == UnitTypes.UNIT_BOAT)) {
-							//A boat on the sea
-							if (visitPosition.equals(target)) {
-								return true;
+						if (visitBox instanceof WaterBox) {
+							if (units.getTypes() == UnitTypes.UNIT_BOAT) {
+								//A boat on the sea
+								if (visitPosition.equals(target)) {
+									return true;
+								}
+								else {
+									canVisit = true;
+								}
 							}
-							else {
-								canVisit = true;
+							else if (visitBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
+								//You can move on a Boat (will check later if you own it)
+								if (visitPosition.equals(target)) {
+									return true;
+								}
+								else {
+									canVisit = true;
+								}
 							}
 						}
 						else if ((visitBox instanceof GroundBox) && (units.getTypes() != UnitTypes.UNIT_BOAT)) {
@@ -316,18 +341,20 @@ public class ActionValidator {
 				}
 				//Added the Position to Visited and Remove it in toVisit 
 				visited.add(visitPosition);
-//				if (!visiting.remove(path, visitPosition)) {
-//					throw new NullPointerException("probleme sur la suppression d'ancienne position");
-//				}
 			}
 		}
-		//TODO l'unite qui passe devrait aussi conquerir le territoire qu'il survole ?
-		//Pousser la node a noter un code pour retrouver son chemin ?
-		//Garder de cote les cases passes
+		//TODO l'unite qui passe va conquerir le territoire qu'il survole
+		//La node stock un code pour retrouver son chemin (String path)
 		return false;
 	}
 	
-	
+	/**
+	 * check all adjacent Boxes on a set Range
+	 * @param from Starting Box
+	 * @param unitsMoveRange Integer that limit the range
+	 * @param target Box where you want to go
+	 * @return if target is at the range of from 
+	 */
 	private boolean isUnitsOnRange(Position from, int unitsMoveRange, Position target) {
 		int aX = from.getX();
 		int aY = from.getY();
@@ -395,6 +422,11 @@ public class ActionValidator {
 		return new ActionConstruct(powerConcerned, buildingType, target);
 	}
 	
+	/**
+	 * Used in CreateActionConstruct
+	 * @param buildingType representing which Building you want to construct
+	 * @return the ResourceCost of the construction, with the Type of Resource Needed
+	 */
 	private ResourceCost getBuildingCost(int buildingType) {
 		switch(buildingType) {
 		case BuildingTypes.BUILDING_BARRACK:

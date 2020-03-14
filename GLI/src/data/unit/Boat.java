@@ -1,5 +1,10 @@
 package data.unit;
 
+/**
+ * <p>Only Units that can go on {@link data.boxes.WaterBox WaterBoxes}</p>
+ * <p>Can Contain a Unit, and transport elsewhere</p>
+ * @author Maxence
+ */
 public class Boat extends Units {
 	private static final int BASE_HEALTH = 1;
 	private static final int RANGE = 0;
@@ -28,9 +33,17 @@ public class Boat extends Units {
 	public Units getContainedUnits() {
 		return containedUnits;
 	}
-
+	
+	public int getContainedUnitsTypes() {
+		return containedUnits.getTypes();
+	}
+	
 	public void setContainedUnits(Units containedUnits) {
 		this.containedUnits = containedUnits;
+	}
+	
+	public boolean hasContainedUnits () {
+		return containedUnits != null;
 	}
 
 	public int getTypes() {

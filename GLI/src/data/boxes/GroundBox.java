@@ -4,6 +4,12 @@ import data.building.Building;
 import data.resource.ResourceTypes;
 import data.unit.Units;
 
+/**
+ * <p>{@link data.boxes.Box Boxes} that are made of land.</p>
+ * <p>Can contain {@link data.resource.Resource Resources}, which can be Exploited by {@link data.Power Power} with {@link data.building.BuildingProduct BuildingProduct}.</p>
+ * <p>Even if there isn't a Resource, can have diverse {@link data.building.Building Buildings} to help develop your Power ingame.</p>
+ * @author Maxence
+ */
 public class GroundBox extends Box{
 	
 	private Building building;
