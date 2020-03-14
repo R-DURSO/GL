@@ -19,11 +19,11 @@ import data.resource.ResourceTypes;
 import data.unit.*;
 
 /**
- * This class ensures that every action the player does is possible 
- * and allows to create Actions to be performed at the end of the turn in the game.
- * No data class is modified here (except for resource values, including actions points)
+ * <p>This class ensures that every action the player does is possible
+ * and allows to create Actions to be performed at the end of the turn in the game.</p>
+ * <p>No data class is modified here (except for resource values, including actions points)</p>
  * @author Aldric Vitali Silvestre <aldric.vitali@outlook.fr>
- * @see data.actions.Action
+ * @see {@link data.actions.Action Action}
  */
 public class ActionValidator {
 	private GameMap map;
@@ -481,16 +481,15 @@ public class ActionValidator {
 		if(targetBox.getOwner() != powerConcerned) {
 			throw new IllegalArgumentException("Impossible de creer des unites sur une case etrangere");
 		}
+
+		//check if not in water
+		if(targetBox instanceof WaterBox)
+			throw new IllegalArgumentException("Impossible de creer des unites sur une case d'eau");
 		
 		//check if have enough gold to create units 
 		ResourceCost neededResource = getUnitCost(powerConcerned, unitType, numberUnits);
 		if(!checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
 			throw new IllegalArgumentException("Pas assez de ressources pour creer ces unites");
-				
-		
-		//check if not in water
-		if(targetBox instanceof WaterBox)
-			throw new IllegalArgumentException("Impossible de creer des unites sur une case d'eau");
 		
 		GroundBox groundBox = (GroundBox) targetBox;
 		//check if this box has a building
@@ -501,7 +500,7 @@ public class ActionValidator {
 		
 		//check if thoses units can be created here
 		if(! (building instanceof BuildingArmy))
-			throw new IllegalArgumentException("Impossible de creer des unites dans un batiment comme ceci");
+			throw new IllegalArgumentException("Impossible de creer des unites dans ce batiment");
 		else
 			switch(building.getType()) {
 			case BuildingTypes.BUILDING_BARRACK:
@@ -517,9 +516,8 @@ public class ActionValidator {
 					throw new IllegalArgumentException("Ces unites ne sont pas creees dans des ports");
 				break;
 			default:
-				throw new IllegalArgumentException("Il n'y a pas d'unité de ce type");	
+				throw new IllegalArgumentException("Il n'y a pas d'unite de ce type");	
 			}
-		
 		
 		powerConcerned.removeActionPoint();
 		powerConcerned.getResource(neededResource.getType()).subValue(neededResource.getCost());

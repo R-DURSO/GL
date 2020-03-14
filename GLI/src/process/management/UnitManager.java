@@ -6,8 +6,8 @@ import data.unit.*;
 import data.Power;
 
 /**
- * <p>Singleton class to manipulate units : creation, update and deletion</p>
- * <p><b>Do not use this class without {@link ActionValidator}, which mades most of importants verfications</b></p>
+ * <p>Singleton class to manipulate {@link data.units.Units Units} : creation, update and deletion</p>
+ * <p><b>Do not use this class without {@link process.management.ActionValidator ActionValidator}, which mades most of importants verfications</b></p>
  */
 public class UnitManager {
 	
@@ -33,23 +33,28 @@ public class UnitManager {
 				else {
 					//else, we have to add to max number
 					int numberExcessUnits = numberUnitsNeeded - unitsOnBox.getMaxNumber();
-					unitsOnBox.addNumber(numberUnitsNeeded - numberExcessUnits);
-					int foodCostToRemove = (numberUnitsNeeded - numberExcessUnits) * unitsOnBox.getFoodCost();
+					unitsOnBox.addNumber(numberUnits - numberExcessUnits);
+					//reduce adapted production
+					int foodCostToRemove = (numberUnits - numberExcessUnits) * unitsOnBox.getFoodCost();
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 					//and refound gold 
 					power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(unitsOnBox.getCost() * numberExcessUnits); 
-				}	
+				}
 			}
 			else {
 				Units units = createUnit(unitType, numberUnits);
 				//Unit shouldn't be here if invalid type
 				if (units != null) {
 					if (units.getNumber() > units.getMaxNumber()) {
+						//unit above max number
 						int numberExcessUnits = numberUnits - units.getMaxNumber();
 						units.subNumber(numberExcessUnits);
+						//refund gold
 						power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(units.getCost() * numberExcessUnits); 
 					}
+					//add those unit
 					box.setUnit(units);
+					//tax of food per turn
 					int foodCostToRemove = units.getNumber() * units.getFoodCost();
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 				}
