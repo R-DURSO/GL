@@ -94,6 +94,7 @@ public class TestActionValidator {
 
 	@Test
 	public void testMoveSuccess1() throws IllegalArgumentException{
+		//deplacer le cavalier au milieu de la carte
 		actionValidator.createActionMove(powers[1], new Position(mapSize -1, mapSize -2), new Position(mapSize/2, mapSize/2));
 	}
 	

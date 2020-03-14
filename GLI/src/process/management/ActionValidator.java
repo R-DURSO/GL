@@ -251,13 +251,15 @@ public class ActionValidator {
 									canVisit = true;
 								}
 							}
-							else if (visitBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
-								//You can move on a Boat (will check later if you own it)
-								if (visitPosition.equals(target)) {
-									return true;
-								}
-								else {
-									canVisit = true;
+							else if (visitBox.hasUnit()) {
+								if (visitBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
+									//You can move on a Boat (will check later if you own it)
+									if (visitPosition.equals(target)) {
+										return true;
+									}
+									else {
+										canVisit = true;
+									}
 								}
 							}
 						}
