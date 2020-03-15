@@ -14,5 +14,8 @@ public class Door extends BuildingSpecial{
 	public int getType() {
 		return BuildingTypes.BUILDING_DOOR;
 	}
-
+	
+	public String toString() {
+		return "Portail";
+	}
 }

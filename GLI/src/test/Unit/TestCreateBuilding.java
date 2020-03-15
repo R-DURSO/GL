@@ -23,7 +23,6 @@ public class TestCreateBuilding {
 	@Test
 	public void createBarrack(){
 			BuildingManager.getInstance().addNewBuilding(powers[0],BuildingTypes.BUILDING_BARRACK , (GroundBox) powers[0].getTerritory().get(1));
-		
 	}
 	
 	@Test

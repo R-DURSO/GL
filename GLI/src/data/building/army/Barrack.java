@@ -14,5 +14,9 @@ public class Barrack extends BuildingArmy {
 	public int getType() {
 		return BuildingTypes.BUILDING_BARRACK;
 	}
+	
+	public String toString() {
+		return "Caserne";
+	}
 
 }

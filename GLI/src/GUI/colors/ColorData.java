@@ -28,17 +28,17 @@ public class ColorData {
 	
 	//building color
 	
-	public static final Color BARRACK_COLOR = new Color(90, 90, 90);
-	public static final Color DOCK_COLOR = new Color(90, 90, 90);
-	public static final Color WORKSHOP_COLOR = new Color(90, 90, 90);
-	public static final Color MINE_COLOR = new Color(90, 90, 90);
-	public static final Color QUARRY_COLOR = new Color(90, 90, 90);
-	public static final Color SAWMILL_COLOR = new Color(90, 90, 90);
-	public static final Color WINDMILL_COLOR = new Color(90, 90, 90);
-	public static final Color CAPITAL_COLOR = new Color(230, 20, 80);
+	public static final Color BARRACK_COLOR = new Color(153, 102, 51);
+	public static final Color DOCK_COLOR = new Color(51, 153, 255);
+	public static final Color WORKSHOP_COLOR = new Color(255, 0, 0);
+	public static final Color MINE_COLOR = new Color(0, 0, 51);
+	public static final Color QUARRY_COLOR = new Color(255, 255, 51);
+	public static final Color SAWMILL_COLOR = new Color(204, 204, 255);
+	public static final Color WINDMILL_COLOR = new Color(0, 77, 26);
+	public static final Color CAPITAL_COLOR = new Color(255, 255, 255);
 	public static final Color DOOR_COLOR = new Color(90, 90, 90);
-	public static final Color TEMPLE_COLOR = new Color(200, 200, 200);
-	public static final Color WALL_COLOR = new Color(60, 60, 60);
+	public static final Color TEMPLE_COLOR = new Color(230, 20, 80);
+	public static final Color WALL_COLOR = new Color(148, 148, 184);
 	
 	//Resource color
 	

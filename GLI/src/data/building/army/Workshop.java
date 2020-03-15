@@ -14,5 +14,10 @@ public class Workshop extends BuildingArmy {
 	public int getType() {
 		return BuildingTypes.BUILDING_WORKSHOP;
 	}
+	
+	public String toString() {
+		return "Atelier";
+	}
+
 
 }

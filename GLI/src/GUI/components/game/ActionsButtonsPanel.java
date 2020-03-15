@@ -132,12 +132,12 @@ public class ActionsButtonsPanel extends JPanel {
 	class ActionListenerConstrcut implements ActionListener{
 		String[] choices = { "caserne (100 bois)","écurie","port",  "mine","scierie","moulin","carière","porte", "mur","temple"};
 		public void actionPerformed(ActionEvent e) {
-			JComboBox building = new JComboBox(choices);
-			JOptionPane.showMessageDialog(null, building, "constructions possibles", 1);
+			JComboBox<String> buildingComboBox = new JComboBox<>(choices);
+			JOptionPane.showMessageDialog(null, buildingComboBox, "constructions possibles", 1);
+			//TODO vérifier si l'utilisateur a cliqué sur la croix pour fermer la fenetre
 			//System.out.println(context.getfromPosition().getX());
 			try {
-				
-				action = context.getActionValidator().createActionConstruct(context.getPlayer() ,building.getSelectedIndex()+1 ,context.getPositionFrom());
+				action = context.getActionValidator().createActionConstruct(context.getPlayer() ,buildingComboBox.getSelectedIndex()+1 ,context.getPositionFrom());
 //				gameLoop.addAction(ActionTypes.ACTION_CONSTRUCT, action);
 				context.addAction(action, ActionTypes.ACTION_CONSTRUCT);
 			}catch( IllegalArgumentException e1) {
@@ -145,7 +145,7 @@ public class ActionsButtonsPanel extends JPanel {
 			}catch(NullPointerException e2) {
 				e2.printStackTrace();
 			}
-			building.getSelectedIndex();
+			buildingComboBox.getSelectedIndex();
 			//System.out.println(building.getSelectedIndex());
 		
 				

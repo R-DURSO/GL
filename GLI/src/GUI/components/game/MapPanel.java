@@ -1,6 +1,7 @@
 package GUI.components.game;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -43,13 +44,6 @@ public class MapPanel extends JPanel{
 		this.context = context;
 		this.powers = powers;
 		this.map = map;
-	    
-		
-		//TODO remove this when not useful anymore
-		//montre affichage units sur cases
-		UnitManager.getInstance().addUnits(powers[0], map.getBox(1, 0), UnitTypes.UNIT_INFANTRY, 50);
-		//montrre affihage batiments sur case
-		BuildingManager.getInstance().addNewBuilding(powers[0], BuildingTypes.BUILDING_SAWMILL, (GroundBox) map.getBox(1, 0));
 	}
 	
 	public Box getBoxFromCoordinates(int x, int y) {
@@ -120,8 +114,20 @@ public class MapPanel extends JPanel{
                 	if(determineResourceColor(g, groundBox)) {
 						g.fillRect(startX, startY, miniBoxWidth, miniBoxHeight);
                 	}
-                	if(determineBuildingColor(g, groundBox)) {
-                		g.fillRect( startX, startY + miniBoxHeight + miniBoxHeight/2, miniBoxWidth, miniBoxHeight);
+                	Building building = groundBox.getBuilding();
+                	if(determineBuildingColor(g, building)) {
+                		int drawX = startX;
+                		int drawY = startY + miniBoxHeight + miniBoxHeight/2;
+                		g.fillRect( drawX, drawY, miniBoxWidth, miniBoxHeight);
+                		//we check if building is enabled or not, in order to change opacity in this case
+                		if(building.getBuildTime() > 0) { //never null (checked in 'determineBuildingColor()')
+                			//in this case, we simply draw a crossed white line to show his "state"
+                			g.setColor(Color.WHITE); //capital can't be disabled
+                			Graphics2D g2 = (Graphics2D) g;
+                            g2.setStroke(new BasicStroke(2));
+                			g2.drawLine(drawX, drawY, drawX + miniBoxWidth, drawY + miniBoxHeight);
+                			g2.setStroke(new BasicStroke(1));
+                		}
                 	}
                 	
                 }
@@ -139,7 +145,7 @@ public class MapPanel extends JPanel{
                 int y = j * rectHeight;
                 determineBoxBorder(g, i, j);
                 Graphics2D g2 = (Graphics2D) g;
-                g2.setStroke(new BasicStroke(2));
+                g2.setStroke(new BasicStroke(3));
                 if(g2.getColor() != ColorData.NO_POWER_COLOR)
                 	g2.drawRect(x, y, rectWidth, rectHeight);
                 
@@ -163,11 +169,9 @@ public class MapPanel extends JPanel{
 		g.fillRect(posX, posY, rectWidth, rectHeight);
 	}
 
-	private boolean determineBuildingColor(Graphics g, GroundBox groundBox) {
-		Building building = groundBox.getBuilding();
+	private boolean determineBuildingColor(Graphics g, Building building) {
 		if(building == null)
 			return false;
-		
 		switch(building.getType()) {
 		case BuildingTypes.BUILDING_BARRACK:
 			g.setColor(ColorData.BARRACK_COLOR);

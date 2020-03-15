@@ -16,4 +16,9 @@ public class Dock extends BuildingArmy {
 		return BuildingTypes.BUILDING_DOCK;
 	}
 	
+	public String toString() {
+		return "Port";
+	}
+
+	
 }

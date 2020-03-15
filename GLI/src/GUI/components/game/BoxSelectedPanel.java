@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import data.boxes.*;
+import data.building.Building;
 
 
 /**
@@ -54,7 +55,11 @@ public class BoxSelectedPanel extends JPanel {
 		if (box instanceof GroundBox) {
 			GroundBox GBox = (GroundBox)box;
 			if (GBox.hasBuilding()) {
-				BuildingLabel.setText(GBox.getBuilding().toString());
+				Building building = GBox.getBuilding();
+				if(building.getBuildTime() > 0)
+					BuildingLabel.setText(building.toString() + " (" + building.getBuildTime() + " tour(s) avant activation)");
+				else
+					BuildingLabel.setText(building.toString());
 			}
 			else {
 				BuildingLabel.setText("Pas de bâtiment");

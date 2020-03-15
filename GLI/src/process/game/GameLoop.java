@@ -91,7 +91,6 @@ public class GameLoop {
 				break;
 			}
 		}
-		actions = (ArrayList<Action>[]) new ArrayList[ActionTypes.NUMBER_ACTIONS];
 		initActionArray();
 	}
 	

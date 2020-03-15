@@ -543,7 +543,11 @@ public class ActionValidator {
 		//check if thoses units can be created here
 		if(! (building instanceof BuildingArmy))
 			throw new IllegalArgumentException("Impossible de creer des unites dans ce batiment");
-		else
+		else {
+			//we need to know if this building is enabled (or if Building#buildTime == 0)
+			if(building.getBuildTime() > 0)
+				throw new IllegalArgumentException("Ce batiment n'est pas encore utilisable");
+			
 			switch(building.getType()) {
 			case BuildingTypes.BUILDING_BARRACK:
 				if(unitType >= UnitTypes.UNITS_IN_BARRACK)
@@ -560,6 +564,7 @@ public class ActionValidator {
 			default:
 				throw new IllegalArgumentException("Il n'y a pas d'unite de ce type");	
 			}
+		}
 		
 		powerConcerned.removeActionPoint();
 		powerConcerned.getResource(neededResource.getType()).subValue(neededResource.getCost());

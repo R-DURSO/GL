@@ -37,8 +37,4 @@ public abstract class Building {
 	public void applyDamage(int damage) {
 		this.health -= damage;
 	}
-
-	public String toString() {
-		return this.getClass().getSimpleName();
-	}
 }

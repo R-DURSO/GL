@@ -62,5 +62,10 @@ public class Capital extends BuildingSpecial {
 			this.level ++;
 		}
 	}
+	
+	public String toString() {
+		return "Capitale";
+	}
+
 
 }
