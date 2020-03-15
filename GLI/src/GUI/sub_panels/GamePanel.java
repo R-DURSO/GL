@@ -128,6 +128,7 @@ public class GamePanel extends JPanel{
 		public void mouseClicked(MouseEvent e) {
 			Position position = mapPanel.getPositionFromCoordinates(e.getX(), e.getY());
 			if (gameButtonsPanel.getActionsBoutonsPanel().isWaitingFromPosition()) {
+				targetPosition=fromPosition;
 				fromPosition = position;
 			}else if(gameButtonsPanel.getActionsBoutonsPanel().isWaitingTargetPosition()) {
 				targetPosition = position;

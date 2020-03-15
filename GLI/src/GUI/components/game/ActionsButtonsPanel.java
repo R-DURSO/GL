@@ -82,7 +82,7 @@ public class ActionsButtonsPanel extends JPanel {
 		createActionDestroyBuildingtButton.addActionListener(new ActionBreakAlliance());
 		add(createActionDestroyBuildingtButton);
 		
-		createActionCreateUnitButton.addActionListener(new ActionBreakAlliance());
+		createActionCreateUnitButton.addActionListener(new ActionListenerCreateUnits());
 		add(createActionCreateUnitButton);
 		
 		createActionConstructButton.addActionListener(new ActionListenerConstrcut());
@@ -156,13 +156,23 @@ public class ActionsButtonsPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println(context.getPositionFrom().getY());
-			System.out.println(context.getPositionFrom().getX());
-			System.out.println(context.getPositiontarget().getX());
-			System.out.println();
+			JOptionPane.showConfirmDialog(null, "voulez vous déplacer vos trouppe");
+			try {
+				action = context.getActionValidator().createActionMove(context.getPlayer(), context.getPositiontarget(), context.getPositionFrom());
+			}catch(IllegalArgumentException e1){
+				JOptionPane.showMessageDialog(null,e1.getMessage());
+			}
+		
+	
+		}
+	}
+	class ActionListenerCreateUnits implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
 			
 		}
 		
-	
 	}
 }
