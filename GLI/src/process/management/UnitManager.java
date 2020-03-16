@@ -83,6 +83,27 @@ public class UnitManager {
 		}
 	}
 	
+	public int maxNumberUnit(int type) {
+		switch(type) {
+		case UnitTypes.UNIT_INFANTRY:
+			return Infantry.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_ARCHER:
+			return Archer.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_CAVALRY:
+			return Cavalry.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_PIKEMAN:
+			return Pikeman.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_BATTERING_RAM:
+			return BatteringRam.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_TREBUCHET:
+			return Trebuchet.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_BOAT:
+			return Boat.NUMBER_MAX_UNITS;
+		default:
+			return 1;
+		}
+	}
+	
 	private boolean isRanged (Units unit) {
 		return unit.getRange() > 1;
 	}
@@ -132,46 +153,73 @@ public class UnitManager {
 			}
 			else {
 				//dans l'eau sans unite a destination, on bouge surement un bateau
-				targetBox.setUnit(movingUnits);
+				if (movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
+					targetBox.setUnit(movingUnits);
+				}
 			}
 		}
 		else {
-			//sur terre
+			//sur terre, les vérifications se font dans ActionValidator
 			targetBox.setUnit(movingUnits);
 		}
-		fromBox.setUnit(null);
 		
+		//Vérification qu'il y a eu un déplacement
+		if (targetBox.hasUnit()) {
+			if (targetBox.getUnit().equals(movingUnits)) {
+				fromBox.setUnit(null);
+			}
+		}
+		
+		boolean conquerBox = false;
 		//if targetBox is in ennemy's territory
 		Power targetBoxPower = targetBox.getOwner();
 		if (targetBoxPower == null) {
 			//targetBox is free, take it !
-			powerConcerned.addBox(targetBox);
-			targetBox.setOwner(powerConcerned);
-			//No building to add since it was still not owned by a power
+			conquerBox = true;
 		}
 		else {
-			if ((targetBoxPower != powerConcerned) && (targetBoxPower.getAlly() != powerConcerned)) {
-				//powerConcerned will take this territory, and ressource gain per turn if have (inderictly, will have building on it too)  
-				powerConcerned.addBox(targetBox);
-				targetBox.setOwner(powerConcerned);
-				
-				/*Special case for buildingProducts, if takes up territory/box with a production building, 
-			 	powerConcerned will 'steal' targetBoxPower's production*/
-				if(targetBox instanceof GroundBox && ((GroundBox)targetBox).getBuilding() instanceof BuildingProduct) {
-					BuildingProduct buildingProduct = (BuildingProduct) ((GroundBox)targetBox).getBuilding();
-					//a building product can be on a non-compatible resource 
-					//(Quarry on box which have Wood resource will do nothing for example)
-					if (buildingProduct.getOnRightResource()) {
-						int productionType = buildingProduct.getProductionType();
-						int productionPerTurn = buildingProduct.getProductionPerTurn();
-						powerConcerned.addResourcesProductionPerTurn(productionType, productionPerTurn);
-						targetBoxPower.substractResourcesProductionPerTurn(productionType, productionPerTurn);
+			if (targetBoxPower != powerConcerned) {
+				//La case ne nous appartient pas
+				if (powerConcerned.isAllied()) {
+					if (powerConcerned.getAlly() != targetBoxPower) {
+						conquerBox = true;
 					}
 				}
-				//obviously, targetBoxPower will lose what powerConcernced earned
-				targetBoxPower.removeBox(targetBox);
+				else {
+					//Not Allied
+					conquerBox = true;
+				}
 			}
 		}
+		if (conquerBox) {
+			//powerConcerned will take this territory, and ressource gain per turn if any (inderictly, will gain the building on it too)  
+			powerConcerned.addBox(targetBox);
+			targetBox.setOwner(powerConcerned);
+			//Are on Ground or on Water (checking for Building)
+			if (targetBox instanceof GroundBox) {
+				GroundBox targetGBox = (GroundBox)targetBox;
+				/*Special case for buildingProducts, if takes up territory/box with a production building, 
+			 	powerConcerned will 'steal' targetBoxPower's production*/
+				if (targetGBox.hasBuilding()) {
+					if (targetGBox.getBuilding() instanceof BuildingProduct) {
+						BuildingProduct buildingProduct = (BuildingProduct)targetGBox.getBuilding();
+						//a building product can be on a non-compatible resource 
+						//(Quarry on box which have Wood resource will do nothing for example)
+						if (buildingProduct.getOnRightResource()) {
+							int productionType = buildingProduct.getProductionType();
+							int productionPerTurn = buildingProduct.getProductionPerTurn();
+							powerConcerned.addResourcesProductionPerTurn(productionType, productionPerTurn);
+							targetBoxPower.substractResourcesProductionPerTurn(productionType, productionPerTurn);
+						}
+					}
+				}
+			}
+			//obviously, targetBoxPower will lose what powerConcernced earned
+			targetBoxPower.removeBox(targetBox);
+		}
+		
+		
+		
 	}
 	
 	/**
@@ -182,35 +230,54 @@ public class UnitManager {
 	 * @param targetBox Defender
 	 */
 	public void attackUnits (Power powerConcerned, Box fromBox, Box targetBox) {
-		Units attacker = fromBox.getUnit();
-		Units defender = targetBox.getUnit();
-		//calcul des degats par le nombre, et chaque point de defense reduit de 10% les degats subits
-		double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
-		//Les défenseurs subissent les dégats
-		int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
-		int casualityAtt = 0;
-		//Si les attaquant sont à portés, ils ne subissent pas de perte
-		if (!isRanged(attacker)) {
-			//Round 2, contre-attaque si pas à distance
-			//int DefenderDamageDealt = (defender.getDamage() - attacker.getDefense()) * defender.getNumber();
-			double DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense()) / 10.0));
-			//Les attaquant subissent les dégats
-			casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
-		}
-		//Les 2 Units perdent en nombres
-		removeUnits(targetBox.getOwner(), targetBox, casualityDef);
-		removeUnits(fromBox.getOwner(), fromBox, casualityAtt);
-		//s'il n'y a plus de défenseur, ils sont morts
-		if (!targetBox.hasUnit()) {
-			/**
-			//delete defenders units
-			deleteUnits(targetBox.getOwner(), targetBox);
-			**/
-			//s'il reste des attaquants...
-			if (fromBox.hasUnit()) {
-				//La place est libre
-				moveUnits(powerConcerned, fromBox, targetBox);
+		/*
+		 * Verification de la cible
+		 * S'il y a des unités, c'est un combat
+		 * Sinon, une attaque de batiment
+		 */
+		if (targetBox.hasUnit()) {
+			Units attacker = fromBox.getUnit();
+			Units defender = targetBox.getUnit();
+			//calcul des degats par le nombre, et chaque point de defense reduit de 10% les degats subits
+			double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
+			//Les défenseurs subissent les dégats
+			int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
+			int casualityAtt = 0;
+			//Si les attaquant sont à portés, ils ne subissent pas de perte
+			if (!isRanged(attacker)) {
+				//Round 2, contre-attaque si pas à distance
+				//int DefenderDamageDealt = (defender.getDamage() - attacker.getDefense()) * defender.getNumber();
+				double DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense()) / 10.0));
+				//Les attaquant subissent les dégats
+				casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
 			}
+			//Les 2 Units perdent en nombres
+			removeUnits(targetBox.getOwner(), targetBox, casualityDef);
+			removeUnits(fromBox.getOwner(), fromBox, casualityAtt);
+			//s'il n'y a plus de défenseur, ils sont morts
+			if (!targetBox.hasUnit()) {
+				//Les defenseurs sont morts !
+				//s'il reste des attaquants...
+				if (fromBox.hasUnit()) {
+					//La place est libre
+					if (!isRanged(attacker)) {
+						//Les unités qui attaquent à distance ne se déplace pas après le combat
+						moveUnits(powerConcerned, fromBox, targetBox);
+					}
+				}
+			}
+		}
+		else if (targetBox instanceof GroundBox) {
+			GroundBox targetGBox = (GroundBox)targetBox;
+			if (targetGBox.hasBuilding()) {
+				//attaque du batiment
+			}
+			else {
+				
+			}
+		}
+		else {
+			//On attaque de l'eau sans unité...
 		}
 	}
 }
