@@ -29,11 +29,12 @@ public class BuildingManager {
 		building = construction(buildingType);
 		box.setBuilding(building);
 		if (building instanceof BuildingProduct) {
-			if (((BuildingProduct) building).isOnRightResource(box.getResourceType())) {
-				power.addResourcesProductionPerTurn(box.getResourceType(), ((BuildingProduct) building).getProductionPerTurn());
+			BuildingProduct buildingProduct = (BuildingProduct) building;
+			if (buildingProduct.isOnRightResource(box.getResourceType())) {
+				power.addResourcesProductionPerTurn(box.getResourceType(), buildingProduct.getProductionPerTurn());
 			}
 			else {
-				((BuildingProduct) building).setOnRightResource(false);
+				buildingProduct.setOnRightResource(false);
 			}
 		}
 	}
