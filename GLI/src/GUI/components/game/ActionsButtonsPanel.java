@@ -1,5 +1,6 @@
 package GUI.components.game;
-
+import data.unit.Archer;
+import data.unit.Units;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -23,6 +24,7 @@ import data.boxes.GroundBox;
 import data.building.BuildingTypes;
 import process.management.ActionValidator;
 import process.management.BuildingManager;
+import process.management.UnitManager;
 /**
  * 
  * @author rdurs
@@ -124,7 +126,8 @@ public class ActionsButtonsPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment créer une alliance?","Création d'alliance ?", JOptionPane.YES_NO_OPTION);
+			Archer test =  new Archer(10);
+			game.getBoxByPosition(context.getPositionFrom()).setUnit(test);
 			
 		}
 		
@@ -143,10 +146,9 @@ public class ActionsButtonsPanel extends JPanel {
 			}catch( IllegalArgumentException e1) {
 				JOptionPane.showMessageDialog(null,e1.getMessage());
 			}catch(NullPointerException e2) {
-				e2.printStackTrace();
+				JOptionPane.showMessageDialog(null,e2.getMessage());
 			}
-			buildingComboBox.getSelectedIndex();
-			//System.out.println(building.getSelectedIndex());
+
 		
 				
 		}
@@ -167,12 +169,31 @@ public class ActionsButtonsPanel extends JPanel {
 		}
 	}
 	class ActionListenerCreateUnits implements ActionListener{
-
+		String[] choices = {"aucune unité", "infantrie ","archer","cavalier",  "piquier","char","trébuchet","bateau"};
+		int maxUnit=0;
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			JComboBox<String> unitComboBox = new JComboBox<>(choices);
+			JOptionPane.showMessageDialog(null, unitComboBox, "quel unité voulais vous", 1);
 			
-			
+				if(unitComboBox.getSelectedIndex()>0) {
+					maxUnit = UnitManager.getInstance().maxNumberUnit(unitComboBox.getSelectedIndex()-1);
+					JSlider number = new JSlider(1,maxUnit);
+					number.setMajorTickSpacing (10);
+					number.setMinorTickSpacing (1);
+					number.setPaintTicks (true);
+					number.setPaintLabels (true);
+					JOptionPane.showMessageDialog(null, number, "combien d'unité voulais vous", 1);
+					try {
+						action = context.getActionValidator().createActionCreateUnit(context.getPlayer(), unitComboBox.getSelectedIndex()-1, number.getValue(), context.getPositionFrom());
+						context.addAction(action, ActionTypes.ACTION_CREATE_UNITS);
+					}catch(IllegalArgumentException e1) {
+						JOptionPane.showMessageDialog(null,e1.getMessage());
+					}
+				}
 		}
 		
 	}
+
+	
 }
