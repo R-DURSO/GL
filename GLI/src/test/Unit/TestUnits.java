@@ -83,18 +83,6 @@ public class TestUnits {
 		assertEquals(false, map.getBox(target).hasUnit());
 	}
 	
-	/*
-	 * Actuellement, le cout en Or se fait dans l'ActionValidator...
-	 * TODO Faudrait surement déplacer ça
-	@Test
-	public void createUnitCost() {
-		power = powers[0];
-		target = new Position(0,1);
-		UnitManager.getInstance().addUnits(powers[0], map.getBox(target), UnitTypes.UNIT_INFANTRY, 5);
-		assertEquals(InitialValue.GOLD_INITAL_VALUE - (Infantry.COST * 5), power.getResourceAmount(ResourceTypes.RESOURCE_GOLD));
-	}
-	*/
-	
 	@Test
 	public void createUnitFoodCost() {
 		power = powers[0];

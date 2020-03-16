@@ -123,7 +123,22 @@ public class UnitManager {
 	 */
 	public void moveUnits(Power powerConcerned, Box fromBox, Box targetBox) {
 		Units movingUnits = fromBox.getUnit();
-		targetBox.setUnit(movingUnits);
+		if (targetBox instanceof WaterBox) {
+			if (targetBox.hasUnit()) {
+				if (targetBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
+					//target est sur l'eau & target possede un bateau
+					((Boat) targetBox.getUnit()).setContainedUnits(movingUnits);
+				}
+			}
+			else {
+				//dans l'eau sans unite a destination, on bouge surement un bateau
+				targetBox.setUnit(movingUnits);
+			}
+		}
+		else {
+			//sur terre
+			targetBox.setUnit(movingUnits);
+		}
 		fromBox.setUnit(null);
 		
 		//if targetBox is in ennemy's territory
