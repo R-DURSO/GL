@@ -126,8 +126,8 @@ public class ActionsButtonsPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Archer test =  new Archer(10);
-			game.getBoxByPosition(context.getPositionFrom()).setUnit(test);
+		
+			
 			
 		}
 		
