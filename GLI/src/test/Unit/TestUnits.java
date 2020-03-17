@@ -15,8 +15,12 @@ import data.InitialValue;
 import data.Position;
 import data.Power;
 import data.boxes.*;
+import data.building.Building;
+import data.building.BuildingTypes;
+import data.building.product.Windmill;
 import data.resource.ResourceTypes;
 import data.unit.*;
+import process.management.BuildingManager;
 import process.management.MapBuilder;
 import process.management.UnitManager;
 
@@ -40,7 +44,7 @@ public class TestUnits {
 		powers[2] = new Power("basePlayer");
 		MapBuilder mapBuilder = new MapBuilder(4, 0, powers);
 		map = mapBuilder.buildMap();
-		mapBuilder.displayMap();
+//		mapBuilder.displayMap();
 	}
 	
 	@Before
@@ -122,6 +126,37 @@ public class TestUnits {
 		}
 		else {
 			assertNotEquals(nbUnit, map.getBox(target).getUnit().getNumber());
+		}
+	}
+	
+	@Test
+	public void createUnitAttackBuilding() {
+		
+		from = new Position(0,1);
+		Box fromBox = map.getBox(from);
+		fromBox.setOwner(powers[0]);
+		
+		target = new Position(2,2);
+		Box targetBox = map.getBox(target);
+		targetBox.setOwner(powers[1]);
+		
+		int nbUnit = 20;
+		GroundBox targetGBox = (GroundBox) targetBox;
+		
+		UnitManager.getInstance().addUnits(powers[0], fromBox, UnitTypes.UNIT_INFANTRY, nbUnit);
+		Units unit = fromBox.getUnit();
+		BuildingManager.getInstance().addNewBuilding(powers[1], BuildingTypes.BUILDING_WINDMILL, targetGBox);
+		
+		UnitManager.getInstance().attackUnits(powers[0], map.getBox(from), map.getBox(target));
+		
+		if (map.getBox(from).hasUnit()) {
+			System.out.println("le batiment tiens toujours");
+			assertNotEquals(Windmill.BASE_HEALTH, ((GroundBox) targetBox).getBuilding().getHealth());
+		}
+		else {
+			System.out.println("le batiment s'est effondre");
+			assertNotEquals(unit, targetBox.getUnit());
+			assertEquals(false, targetGBox.hasBuilding());
 		}
 	}
 }
