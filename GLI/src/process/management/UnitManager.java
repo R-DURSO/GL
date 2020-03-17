@@ -276,11 +276,11 @@ public class UnitManager {
 				Building buildDef = targetGBox.getBuilding();
 				//calcul des degats par le nombre, et chaque point de defense reduit de 10% les degats subits
 				double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - buildDef.getDefense()) / 10.0));
-				//Les défenseurs subissent les dégats
-				int buildingDamage =  ((buildDef.getHealth() - (int)AttackerDamageDealt));
-				buildDef.applyDamage(buildingDamage);
+				//Le batiment subit les dégats
+				buildDef.applyDamage((int)AttackerDamageDealt);
 				if (buildDef.isDestroyed()) {
 					targetGBox.setBuilding(null);
+					moveUnits(powerConcerned, fromBox, targetBox);
 				}
 			}
 			else {

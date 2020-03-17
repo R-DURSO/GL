@@ -113,10 +113,15 @@ public class TestUnits {
 	
 	@Test
 	public void createUnitAttack() {
+		
 		from = new Position(0,1);
 		map.getBox(from).setOwner(powers[0]);
+		powers[0].addBox(map.getBox(from));
+		
 		target = new Position(2,2);
 		map.getBox(target).setOwner(powers[1]);
+		powers[1].addBox(map.getBox(target));
+		
 		int nbUnit = 20;
 		UnitManager.getInstance().addUnits(powers[0], map.getBox(from), UnitTypes.UNIT_INFANTRY, nbUnit);
 		UnitManager.getInstance().addUnits(powers[1], map.getBox(target), UnitTypes.UNIT_INFANTRY, nbUnit/2);
@@ -135,10 +140,12 @@ public class TestUnits {
 		from = new Position(0,1);
 		Box fromBox = map.getBox(from);
 		fromBox.setOwner(powers[0]);
+		powers[0].addBox(fromBox);
 		
 		target = new Position(2,2);
 		Box targetBox = map.getBox(target);
 		targetBox.setOwner(powers[1]);
+		powers[1].addBox(targetBox);
 		
 		int nbUnit = 20;
 		GroundBox targetGBox = (GroundBox) targetBox;
@@ -147,15 +154,15 @@ public class TestUnits {
 		Units unit = fromBox.getUnit();
 		BuildingManager.getInstance().addNewBuilding(powers[1], BuildingTypes.BUILDING_WINDMILL, targetGBox);
 		
-		UnitManager.getInstance().attackUnits(powers[0], map.getBox(from), map.getBox(target));
+		UnitManager.getInstance().attackUnits(powers[0], fromBox, targetBox);
 		
-		if (map.getBox(from).hasUnit()) {
-			System.out.println("le batiment tiens toujours");
+		if (fromBox.hasUnit()) {
+//			System.out.println("le batiment tiens toujours");
 			assertNotEquals(Windmill.BASE_HEALTH, ((GroundBox) targetBox).getBuilding().getHealth());
 		}
 		else {
-			System.out.println("le batiment s'est effondre");
-			assertNotEquals(unit, targetBox.getUnit());
+//			System.out.println("le batiment s'est effondre");
+			assertEquals(unit, targetBox.getUnit());
 			assertEquals(false, targetGBox.hasBuilding());
 		}
 	}
