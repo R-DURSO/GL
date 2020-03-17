@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import GUI.MainWindow;
 import GUI.components.GuiPreferences;
+import GUI.components.game.ActionsButtonsPanel;
 import GUI.components.game.GameButtonsPanel;
 import GUI.components.game.InfosPanel;
 import GUI.components.game.PlayerResourcesPanel;
@@ -131,15 +132,14 @@ public class GamePanel extends JPanel{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			Position position = mapPanel.getPositionFromCoordinates(e.getX(), e.getY());
-			if (gameButtonsPanel.getActionsBoutonsPanel().isWaitingFromPosition()) {
-				targetPosition=fromPosition;
+			ActionsButtonsPanel actionsButtonsPanel = gameButtonsPanel.getActionsBoutonsPanel();
+			if (actionsButtonsPanel.isWaitingFromPosition()) {
 				fromPosition = position;
-			}else if(gameButtonsPanel.getActionsBoutonsPanel().isWaitingTargetPosition()) {
+			}else if(actionsButtonsPanel.isWaitingTargetPosition()) {
 				targetPosition = position;
 			}
 			mapPanel.refreshSelection(fromPosition, targetPosition);
 			mapPanel.repaint();
-			
 		}
 
 		@Override

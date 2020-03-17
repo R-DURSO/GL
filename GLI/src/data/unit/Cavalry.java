@@ -30,6 +30,6 @@ public class Cavalry extends Units {
 	}
 	
 	public String toString() {
-		return super.toString() ;
+		return "Cavalier" + super.toString() ;
 	}
 }

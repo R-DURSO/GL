@@ -5,7 +5,9 @@ import GUI.components.menu.PreferencesPanel;
 import data.actions.*;
 import data.boxes.Box;
 import data.boxes.GroundBox;
+import data.building.special.Capital;
 import data.GameMap;
+import data.Position;
 import data.Power;
 import data.resource.*;
 import process.management.ActionValidator;
@@ -58,6 +60,10 @@ public class GameLoop {
 		}
 	}
 	
+	public void endTurn() {
+		doActions();
+	}
+	
 	public void doActions() {
 	
 		for(int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
@@ -97,9 +103,10 @@ public class GameLoop {
 	private void executeActionsUpgradeCapital(ArrayList<Action> arrayList) {
 		for(Action a : arrayList) {
 			ActionUpgradeCapital action = (ActionUpgradeCapital)a;
-			
+			Power powerConcerned = action.getPowerConcerned();
+			Capital capital = powerConcerned.getCapital();
+			capital.upgrade();
 		}
-		
 	}
 
 	private void executeActionsMove(ArrayList<Action> arrayList) {
@@ -115,24 +122,41 @@ public class GameLoop {
 	private void executeActionsMakeAlliance(ArrayList<Action> arrayList) {
 		for(Action a : arrayList) {
 			ActionMakeAlliance action = (ActionMakeAlliance)a;
+			Power powerConcerned = action.getPowerConcerned();
+			Power powerAllied = action.getPotentialAllied();
+			UnitManager.getInstance().makeAlliance(powerConcerned, powerAllied);
 		}
 	}
 
 	private void executeActionsDestroyUnits(ArrayList<Action> arrayList) {
 		for(Action a : arrayList) {
-			ActionUpgradeCapital action = (ActionUpgradeCapital)a;
+			ActionDestroyUnits action = (ActionDestroyUnits)a;
+			Power powerConcerned = action.getPowerConcerned();
+			Position targetPosition = action.getTarget();
+			Box targetBox = map.getBox(targetPosition);
+			UnitManager.getInstance().deleteUnits(powerConcerned, targetBox);
 		}
 	}
 
 	private void executeActionsDestroyBuilding(ArrayList<Action> arrayList) {
 		for(Action a : arrayList) {
 			ActionDestroyBuilding action = (ActionDestroyBuilding)a;
+			Power powerConcerned = action.getPowerConcerned();
+			Position targetPosition = action.getTarget();
+			Box targetBox = map.getBox(targetPosition);
+			BuildingManager.getInstance().destroyBuilding(powerConcerned, (GroundBox)targetBox);
 		}
 	}
 
 	private void executeActionsCreateUnits(ArrayList<Action> arrayList) {
 		for(Action a : arrayList) {
 			ActionCreateUnit action = (ActionCreateUnit)a;
+			Power powerConcerned = action.getPowerConcerned();
+			Position targetPosition = action.getTarget();
+			Box targetBox = map.getBox(targetPosition);
+			int unitsType = action.getUnitType();
+			int numberUnits = action.getNumberUnits();
+			UnitManager.getInstance().addUnits(powerConcerned, targetBox, unitsType, numberUnits);
 		}
 	}
 
@@ -150,12 +174,18 @@ public class GameLoop {
 	private void executeActionsBreakAlliance(ArrayList<Action> arrayList) {
 		for(Action a : arrayList) {
 			ActionBreakAlliance action = (ActionBreakAlliance)a;
+			Power powerConcerned = action.getPowerConcerned();
+			UnitManager.getInstance().breakAlliance(powerConcerned);
 		}
 	}
 
 	private void executeActionsAttack(ArrayList<Action> arrayList) {
 		for(Action a : arrayList) {
 			ActionAttack action = (ActionAttack)a;
+			Power powerConcerned = action.getPowerConcerned();
+			Box fromBox = map.getBox(action.getFrom());
+			Box targetBox = map.getBox(action.getTarget());
+			UnitManager.getInstance().attack(powerConcerned, fromBox, targetBox);
 		}
 	}
 	

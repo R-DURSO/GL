@@ -76,6 +76,10 @@ public class Power {
 		this.ally = ally;
 	}
 	
+	public void removeAlly() {
+		this.ally = null;
+	}
+	
 	public void removeActionPoint() {
 		resources[ResourceTypes.RESOURCE_ACTIONS - 1].addValue(-1);
 	}

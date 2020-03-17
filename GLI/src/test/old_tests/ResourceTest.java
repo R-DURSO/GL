@@ -42,7 +42,7 @@ public class ResourceTest {
 		UnitManager.getInstance().moveUnits(pow1, box1, box2);
 		System.out.println("boite2 avec unit moved\n"+box2);
 
-		UnitManager.getInstance().attackUnits(pow2, box3, box2);
+		UnitManager.getInstance().attack(pow2, box3, box2);
 		System.out.println("boite2 avec combat\n"+box2);
 		System.out.println("boite3 avec combat\n"+box3);
 	}

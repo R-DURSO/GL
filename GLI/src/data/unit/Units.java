@@ -85,6 +85,6 @@ public abstract class Units {
 	}
 
 	public String toString() {
-		return ": "+number+", atk:"+damage+" def:"+defense;
+		return ": "+number+", attaque:"+damage+" defense:"+defense;
 	}
 }

@@ -67,7 +67,7 @@ public class TestAttack2 {
 		
 		try {
 			validator.createActionAttack(powers[0], new Position(1,2), new Position(2,2));
-			UnitManager.getInstance().attackUnits(powers[0], map.getBox(1,2), map.getBox(2, 2));
+			UnitManager.getInstance().attack(powers[0], map.getBox(1,2), map.getBox(2, 2));
 		}catch(IllegalArgumentException e) {
 			e.printStackTrace();
 		}

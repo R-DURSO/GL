@@ -122,7 +122,7 @@ public class TestUnits {
 		int nbUnit = 20;
 		UnitManager.getInstance().addUnits(powers[0], map.getBox(from), UnitTypes.UNIT_INFANTRY, nbUnit);
 		UnitManager.getInstance().addUnits(powers[1], map.getBox(target), UnitTypes.UNIT_INFANTRY, nbUnit/2);
-		UnitManager.getInstance().attackUnits(powers[0], map.getBox(from), map.getBox(target));
+		UnitManager.getInstance().attack(powers[0], map.getBox(from), map.getBox(target));
 		if (map.getBox(from).hasUnit()) {
 			assertNotEquals(nbUnit, map.getBox(from).getUnit().getNumber());
 		}
@@ -152,7 +152,7 @@ public class TestUnits {
 		BuildingManager.getInstance().addNewBuilding(powers[1], BuildingTypes.BUILDING_WINDMILL, targetGBox);
 		int baseHP = targetGBox.getBuilding().getHealth();
 		
-		UnitManager.getInstance().attackUnits(powers[0], fromBox, targetBox);
+		UnitManager.getInstance().attack(powers[0], fromBox, targetBox);
 		
 		if (fromBox.hasUnit()) {
 //			System.out.println("le batiment tiens toujours");

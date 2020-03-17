@@ -15,6 +15,14 @@ public class UnitManager {
 	private static UnitManager instance = new UnitManager();
 	public static UnitManager getInstance() { return instance; }
 	
+	/**
+	 * Add {@link Units} on a {@link Box} (will always be on an {@link BuildingArmy})
+	 * @param power the power who want to create units 
+	 * @param box where the power want to create units
+	 * @param unitType the type of unit (either Infantry, Cavalry, ...)
+	 * @param numberUnits the number of units to be created
+	 * @see UnitTypes
+	 */
 	public void addUnits(Power power, Box box, int unitType, int numberUnits) {
 		//cant add negative or none Unit
 		if (numberUnits > 0) {
@@ -109,6 +117,14 @@ public class UnitManager {
 		return unit.getRange() > 1;
 	}
 	
+	
+	/**
+	 * Remove a defined amount of units in a {@link Box}.<p> 
+	 * If there is no more units on box, will call {@link UnitManager#deleteUnits}  
+	 * @param power the power who have those units
+	 * @param box where are units to be destroyed
+	 * @param numberUnitsRemoved the number of units to be destroyed
+	 */
 	public void removeUnits(Power power, Box box, int numberUnitsRemoved) {
 		Units units = box.getUnit();
 		int numberUnits = units.getNumber() - numberUnitsRemoved;
@@ -121,6 +137,11 @@ public class UnitManager {
 		}
 	}
 	
+	/**
+	 * Remove all {@link Units} on a defined {@link Box}
+	 * @param power the power who have those units
+	 * @param box where are units to be destroyed
+	 */
 	public void deleteUnits(Power power, Box box) {
 		if (power != null) {
 			if (box.hasUnit()) {
@@ -131,7 +152,7 @@ public class UnitManager {
 		}
 	}
 	
-	/**
+	/*
 	 * TODO MoveUnit a modifier
 	 * 	L'unite passe sur plusieurs case
 	 * 		-Convertir path en Array de Box ou faire cas par cas depuis un String
@@ -230,7 +251,7 @@ public class UnitManager {
 	 * @param fromBox Attacker
 	 * @param targetBox Defender
 	 */
-	public void attackUnits (Power powerConcerned, Box fromBox, Box targetBox) {
+	public void attack (Power powerConcerned, Box fromBox, Box targetBox) {
 		/*
 		 * Verification de la cible
 		 * S'il y a des unités, c'est un combat
@@ -290,5 +311,18 @@ public class UnitManager {
 		else {
 			//On attaque de l'eau sans unité...
 		}
+	}
+	
+	public void makeAlliance(Power power1, Power power2) {
+		power1.setAlly(power2);
+		power2.setAlly(power1);
+	}
+	
+	public void breakAlliance(Power power) {
+		Power power2 = power.getAlly();
+		power.removeAlly();
+		power2.removeAlly();
+		
+		// TODO Vérifier si il y a des territoires a prendre
 	}
 }

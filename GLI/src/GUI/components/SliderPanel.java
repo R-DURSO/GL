@@ -16,9 +16,14 @@ public class SliderPanel extends JPanel {
 	private JSlider slider;
 	
 	public SliderPanel(String title, int maxValue, int minValue, int initialValue) {
+		this(title, maxValue, minValue, initialValue, 5);
+	}
+	
+	public SliderPanel(String title, int maxValue, int minValue, int initialValue, int spacing) {
 		this.title = new JLabel(title, SwingConstants.CENTER);
 		this.value = new JLabel("" + initialValue, SwingConstants.CENTER);
 		this.slider = new JSlider(minValue, maxValue, initialValue);
+		this.slider.setMajorTickSpacing(spacing);
 		init();
 	}
 
@@ -28,12 +33,10 @@ public class SliderPanel extends JPanel {
 		add(value);
 		
 		//slider preferences
-		slider.setMajorTickSpacing(5);
 		slider.setMinorTickSpacing(1);
 		slider.setPaintLabels(true);
 		slider.setPaintTicks(true);
 		slider.addChangeListener(new ChangeSliderValue());
-		
 		add(slider);
 	}
 	

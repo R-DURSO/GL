@@ -1,4 +1,5 @@
 package process.management;
+import data.boxes.Box;
 import data.boxes.GroundBox;
 import data.building.Building;
 import data.building.BuildingTypes;
@@ -16,18 +17,32 @@ public class BuildingManager {
 
 	private static BuildingManager instance = new BuildingManager();
 	
+	/**
+	 * Permits to work with the unique instance of BuildingManager.
+	 * @return unique instance of BuildingManager
+	 */
 	public static BuildingManager getInstance() {
 		return instance;
 	}
 	
+	/**
+	 * Add a building on a {@link GroundBox].
+	 * @param power tht power who decided to build
+	 * @param buildingType the type of building
+	 * @param box where power wants to build
+	 * @see BuildingTypes
+	 */
 	public void addNewBuilding(Power power, int buildingType, GroundBox box) {
 		Building building;
-		building = construction(buildingType);
+		//create building depending on his type
+		building = createBuildingWithType(buildingType);
+		//add building to the box
 		box.setBuilding(building);
+		//now, we check if building is a production building and if he is on the right resource
 		if (building instanceof BuildingProduct) {
 			BuildingProduct buildingProduct = (BuildingProduct) building;
 			if (buildingProduct.isOnRightResource(box.getResourceType())) {
-				power.addResourcesProductionPerTurn(box.getResourceType(), buildingProduct.getProductionPerTurn());
+				buildingProduct.setOnRightResource(true);
 			}
 			else {
 				buildingProduct.setOnRightResource(false);
@@ -35,8 +50,7 @@ public class BuildingManager {
 		}
 	}
 	
-	//vérifications already done in ActionValidator
-	private Building construction(int buildingType) {
+	private Building createBuildingWithType(int buildingType) {
 			switch(buildingType) {
 			case BuildingTypes.BUILDING_BARRACK:
 				return new Barrack();
@@ -64,4 +78,25 @@ public class BuildingManager {
 	}
 	
 	
+	/**
+	 * Destroy a building and remove production per turn if the building is a {@link BuildingProduct}
+	 * @param powerConcerned the power who want to destroy a building
+	 * @param targetBox where the building to be destroy is
+	 */
+	public void destroyBuilding(Power powerConcerned, GroundBox targetBox) {
+		Building building = targetBox.getBuilding();
+		//if building is a production building, we can't just destroy it
+		if(building instanceof BuildingProduct) {
+			BuildingProduct buildingProduct = (BuildingProduct)building;
+			//we check if building is enabled
+			if(buildingProduct.getBuildTime() > 0) {
+				//we get resource type and production
+				int resourceType = buildingProduct.getProductionType();
+				int resourceProdPerTurn = buildingProduct.getProductionPerTurn();
+				powerConcerned.substractResourcesProductionPerTurn(resourceType, resourceProdPerTurn);
+			}
+		}
+		//now we simply remove building from map
+		targetBox.setBuilding(null);
+	}
 }
