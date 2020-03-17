@@ -6,7 +6,6 @@ import data.GameMap;
 import data.Position;
 import data.Power;
 import data.boxes.*;
-import data.building.special.Capital;
 import data.resource.ResourceTypes;
 
 /**

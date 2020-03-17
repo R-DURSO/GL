@@ -2,7 +2,7 @@ package data.unit;
 
 /**
  * <p>Only Units that can go on {@link data.boxes.WaterBox WaterBoxes}</p>
- * <p>Can Contain a Unit, and transport elsewhere</p>
+ * <p>Can Contain a Unit, and transport it anywhere else</p>
  * @author Maxence
  */
 public class Boat extends Units {

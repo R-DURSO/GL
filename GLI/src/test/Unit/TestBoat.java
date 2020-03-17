@@ -13,6 +13,10 @@ import data.boxes.*;
 import process.management.MapBuilder;
 import process.management.UnitManager;
 
+/**
+ * <p>JUnit of the {@link data.unit.Boat Boat}.</p>
+ * @author Maxence
+ */
 public class TestBoat {
 	private static Power powers[] = new Power[2];
 	private static GameMap map;
@@ -50,7 +54,7 @@ public class TestBoat {
 				}
 			}
 		}
-		mapBuilder.displayMap();
+//		mapBuilder.displayMap();
 	}
 	
 	@Test
@@ -70,7 +74,7 @@ public class TestBoat {
 		UnitManager.getInstance().moveUnits(power, map.getBox(wPos2), map.getBox(wPos3));
 		UnitManager.getInstance().moveUnits(power, map.getBox(wPos3), map.getBox( new Position(map.getSize()/2, map.getSize()/2) ));
 		
-		System.out.println(boat3);
+//		System.out.println(boat3);
 		
 		assertFalse(boat1.hasContainedUnits());
 		assertEquals(boat2.getContainedUnits(), boat1);

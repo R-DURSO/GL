@@ -4,7 +4,7 @@ import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
 
 /**
- * <p>Mine is a Building that product Wood each Turn for a Power</p>
+ * <p>Mine is a {@link data.building.product.BuildingProduct Building} that product Wood each Turn for a Power</p>
  * @author Maxence HENNEKEIN
  */
 

@@ -3,8 +3,14 @@ import data.building.Building;
 import data.resource.Resource;
 
 /**
- * <p>Main class for any Building that generate Resource.</p>
+ * <p>Main class for any {@link data.building.Building Building} that generate Resource.</p>
  * <p>A building define for production will call this class</p>
+ * <ul> There is 4 type of BuildingProduct
+ * 		<li>{@link data.building.product.Mine Mine}</li>
+ * 		<li>{@link data.building.product.Quarry Quarry}</li>
+ * 		<li>{@link data.building.product.Sawmill Sawmill}</li>
+ * 		<li>{@link data.building.product.Windmill Windmill}</li>
+ * </ul>
  * @author Maxence HENNEKEIN
  */
 

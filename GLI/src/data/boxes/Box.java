@@ -1,7 +1,6 @@
 package data.boxes;
 
 import data.Power;
-import data.building.Building;
 import data.unit.Units;
 
 /**

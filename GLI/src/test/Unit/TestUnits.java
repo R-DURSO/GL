@@ -11,13 +11,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import data.GameMap;
-import data.InitialValue;
 import data.Position;
 import data.Power;
 import data.boxes.*;
-import data.building.Building;
 import data.building.BuildingTypes;
-import data.building.product.Windmill;
 import data.resource.ResourceTypes;
 import data.unit.*;
 import process.management.BuildingManager;
@@ -153,12 +150,13 @@ public class TestUnits {
 		UnitManager.getInstance().addUnits(powers[0], fromBox, UnitTypes.UNIT_INFANTRY, nbUnit);
 		Units unit = fromBox.getUnit();
 		BuildingManager.getInstance().addNewBuilding(powers[1], BuildingTypes.BUILDING_WINDMILL, targetGBox);
+		int baseHP = targetGBox.getBuilding().getHealth();
 		
 		UnitManager.getInstance().attackUnits(powers[0], fromBox, targetBox);
 		
 		if (fromBox.hasUnit()) {
 //			System.out.println("le batiment tiens toujours");
-			assertNotEquals(Windmill.BASE_HEALTH, ((GroundBox) targetBox).getBuilding().getHealth());
+			assertNotEquals(baseHP, ((GroundBox) targetBox).getBuilding().getHealth());
 		}
 		else {
 //			System.out.println("le batiment s'est effondre");

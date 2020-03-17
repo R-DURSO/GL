@@ -3,11 +3,10 @@ package data.unit;
 public class Trebuchet  extends Units {
 	
 	private static final int BASE_HEALTH = 5;
+	
 	private static final int RANGE_MOVING = 0;
 	private static final int MOVEMENT_MOVING = 1;
 	private static final int DAMAGE_MOVING = 0;
-	
-	
 	
 	private static final int RANGE_INSTALLED = 3;
 	private static final int MOVEMENT_INSTALLED = 0;
@@ -43,6 +42,17 @@ public class Trebuchet  extends Units {
 	
 	public int getFoodCost() {
 		return COST_PER_TURN;
+	}
+	
+	public void changeState() {
+		switch(this.state) {
+		case STATE_INSTALLED:
+			this.state = STATE_MOVING;
+			break;
+		case STATE_MOVING:
+			this.state = STATE_INSTALLED;
+			break;
+		}
 	}
 	
 	public String toString() {

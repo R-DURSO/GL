@@ -16,10 +16,6 @@ public class BuildingManager {
 
 	private static BuildingManager instance = new BuildingManager();
 	
-	public BuildingManager() {
-		
-	}
-	
 	public static BuildingManager getInstance() {
 		return instance;
 	}
