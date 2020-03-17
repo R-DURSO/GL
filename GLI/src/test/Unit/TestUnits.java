@@ -40,6 +40,7 @@ public class TestUnits {
 		powers[2] = new Power("basePlayer");
 		MapBuilder mapBuilder = new MapBuilder(4, 0, powers);
 		map = mapBuilder.buildMap();
+		mapBuilder.displayMap();
 	}
 	
 	@Before

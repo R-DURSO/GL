@@ -11,7 +11,7 @@ package data.building;
  * @author Maxence
  */
 public abstract class Building {
-	
+	public static final int BUILDING_DEFENSE = 8;
 	private int buildTime; //when buildTime == 0, this building can be used
 	private int health;
 	
@@ -28,13 +28,31 @@ public abstract class Building {
 		return health;
 	}
 	
+	public int getDefense() {
+		return BUILDING_DEFENSE;
+	}
+	
 	public abstract int getType();
 
 	public void decreaseBuildTime() {
-		buildTime--;
+		this.buildTime--;
+		if (this.buildTime <= 0) {
+			this.buildTime = 0;
+		}
+	}
+	
+	public boolean isFinish() {
+		return this.buildTime == 0;
 	}
 
 	public void applyDamage(int damage) {
 		this.health -= damage;
+		if (this.health <= 0) {
+			this.health = 0;
+		}
+	}
+	
+	public boolean isDestroyed() {
+		return this.health == 0;
 	}
 }

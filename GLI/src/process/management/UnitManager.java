@@ -1,5 +1,6 @@
 package process.management;
 import data.boxes.*;
+import data.building.Building;
 import data.building.product.BuildingProduct;
 import data.resource.ResourceTypes;
 import data.unit.*;
@@ -134,13 +135,13 @@ public class UnitManager {
 	 * TODO MoveUnit a modifier
 	 * 	L'unite passe sur plusieurs case
 	 * 		-Convertir path en Array de Box ou faire cas par cas depuis un String
-	 * 			-move Unit en 2 cas, 1 pour le deplacement global
-	 * 			-l'autre pour la gestion de Box en Box
-	 *  			-Doit conquérir chaque Boxes
+	 * 		-move Unit en 2 cas,
+	 * 			-1 pour le deplacement global
+	 * 			*-l'autre pour la gestion de Box en Box
+	 *  			*-Doit conquérir chaque Boxes
 	 *  L'unite peut arriver sur un Boat
-	 *  	-Rentrer dans le bateau
+	 *  	*-Rentrer dans le bateau
 	 *  	-peut passer de bateau en bateau (comme un pont ?) s'il y en a plusieurs cote à cote
-	 *  
 	 */
 	public void moveUnits(Power powerConcerned, Box fromBox, Box targetBox) {
 		Units movingUnits = fromBox.getUnit();
@@ -214,11 +215,11 @@ public class UnitManager {
 					}
 				}
 			}
-			//obviously, targetBoxPower will lose what powerConcernced earned
-			targetBoxPower.removeBox(targetBox);
+			if (targetBoxPower != null) {
+				//obviously, targetBoxPower will lose what powerConcernced earned
+				targetBoxPower.removeBox(targetBox);
+			}
 		}
-		
-		
 		
 	}
 	
@@ -271,9 +272,19 @@ public class UnitManager {
 			GroundBox targetGBox = (GroundBox)targetBox;
 			if (targetGBox.hasBuilding()) {
 				//attaque du batiment
+				Units attacker = fromBox.getUnit();
+				Building buildDef = targetGBox.getBuilding();
+				//calcul des degats par le nombre, et chaque point de defense reduit de 10% les degats subits
+				double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - buildDef.getDefense()) / 10.0));
+				//Les défenseurs subissent les dégats
+				int buildingDamage =  ((buildDef.getHealth() - (int)AttackerDamageDealt));
+				buildDef.applyDamage(buildingDamage);
+				if (buildDef.isDestroyed()) {
+					targetGBox.setBuilding(null);
+				}
 			}
 			else {
-				
+				moveUnits(powerConcerned, fromBox, targetBox);
 			}
 		}
 		else {
