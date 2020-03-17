@@ -163,6 +163,7 @@ public class ActionsButtonsPanel extends JPanel {
 			if(result ==0) {
 				try {
 					action = context.getActionValidator().createActionMove(context.getPlayer(), context.getPositiontarget(), context.getPositionFrom());
+					context.addAction(action, ActionTypes.ACTION_MOVE);
 				}catch(IllegalArgumentException e1){
 					JOptionPane.showMessageDialog(null,e1.getMessage());
 				}
@@ -221,7 +222,7 @@ public class ActionsButtonsPanel extends JPanel {
 			if(result ==0) {
 				try {
 				action =context.getActionValidator().createActionDestroyUnits(context.getPlayer(), context.getPositionFrom());
-				context.addAction(action, ActionTypes.ACTION_DESTROY_BUILDING);
+				context.addAction(action, ActionTypes.ACTION_DESTROY_UNITS);
 				}catch(IllegalArgumentException e1) {
 					JOptionPane.showMessageDialog(null,e1.getMessage());
 				}
