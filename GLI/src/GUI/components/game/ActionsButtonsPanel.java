@@ -72,16 +72,16 @@ public class ActionsButtonsPanel extends JPanel {
 		actionMakeAllianceButton.addActionListener(new ActionMakeAlliance());
 		add(actionMakeAllianceButton);
 		
-		createActionAttackButton.addActionListener(new ActionBreakAlliance());
+		createActionAttackButton.addActionListener(new ActionListenerAttack());
 		add(createActionAttackButton);
 		
 		createActionMoveButton.addActionListener(new ActionListenerMoveUnits());
 		add(createActionMoveButton);
 		
-		createActionDestroyUnitButton.addActionListener(new ActionBreakAlliance());
+		createActionDestroyUnitButton.addActionListener(new ActionListenerDestroyUnits());
 		add(createActionDestroyUnitButton);
 		
-		createActionDestroyBuildingtButton.addActionListener(new ActionBreakAlliance());
+		createActionDestroyBuildingtButton.addActionListener(new ActionListenerDestroyBuilding());
 		add(createActionDestroyBuildingtButton);
 		
 		createActionCreateUnitButton.addActionListener(new ActionListenerCreateUnits());
@@ -89,7 +89,7 @@ public class ActionsButtonsPanel extends JPanel {
 		
 		createActionConstructButton.addActionListener(new ActionListenerConstrcut());
 		add(createActionConstructButton);
-		
+		createUdapteCapitalButton.addActionListener(new ActionListenerUdapteCapital());
 		add(createUdapteCapitalButton);
 		
 		 
@@ -158,14 +158,15 @@ public class ActionsButtonsPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showConfirmDialog(null, "voulez vous déplacer vos trouppe");
-			try {
-				action = context.getActionValidator().createActionMove(context.getPlayer(), context.getPositiontarget(), context.getPositionFrom());
-			}catch(IllegalArgumentException e1){
-				JOptionPane.showMessageDialog(null,e1.getMessage());
-			}
-		
-	
+			int result = 0;
+			result = JOptionPane.showConfirmDialog(null, "voulez vous déplacer vos trouppe");
+			if(result ==0) {
+				try {
+					action = context.getActionValidator().createActionMove(context.getPlayer(), context.getPositiontarget(), context.getPositionFrom());
+				}catch(IllegalArgumentException e1){
+					JOptionPane.showMessageDialog(null,e1.getMessage());
+				}
+				}
 		}
 	}
 	class ActionListenerCreateUnits implements ActionListener{
@@ -194,6 +195,75 @@ public class ActionsButtonsPanel extends JPanel {
 		}
 		
 	}
+	class ActionListenerDestroyBuilding implements ActionListener{
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int result = 0;
+			result = JOptionPane.showConfirmDialog(null, "voulez vous détruire ce batiment");
+			if(result ==0) {
+				try {
+				action =context.getActionValidator().createActionDestroyBuilding(context.getPlayer(), context.getPositionFrom());
+				context.addAction(action, ActionTypes.ACTION_DESTROY_BUILDING);
+				}catch(IllegalArgumentException e1) {
+					JOptionPane.showMessageDialog(null,e1.getMessage());
+				}
+			}
+			
+		}
+	}
+	class ActionListenerDestroyUnits implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int result = 0;
+			result = JOptionPane.showConfirmDialog(null, "voulez vous détruire ces unité ");
+			if(result ==0) {
+				try {
+				action =context.getActionValidator().createActionDestroyUnits(context.getPlayer(), context.getPositionFrom());
+				context.addAction(action, ActionTypes.ACTION_DESTROY_BUILDING);
+				}catch(IllegalArgumentException e1) {
+					JOptionPane.showMessageDialog(null,e1.getMessage());
+				}
+			}
+			
+		}
+		
+	}
+		
 	
+class ActionListenerUdapteCapital implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		int result = 0;
+		result = JOptionPane.showConfirmDialog(null, "voulez vous améliorer votre capital");
+		if(result==0) {
+			try {
+				action = context.getActionValidator().createActionUpgradeCapital(context.getPlayer());
+				context.addAction(action, ActionTypes.ACTION_UPGRADE_CAPITAL);
+			}catch(IllegalArgumentException e1) {
+				JOptionPane.showMessageDialog(null,e1.getMessage());
+			}
+		}
+	}
+}
+class ActionListenerAttack implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		int result = 0;
+		result = JOptionPane.showConfirmDialog(null, "voulez vous améliorer votre capital");
+		if(result==0) {
+			try {
+				action = context.getActionValidator().createActionAttack(context.getPlayer(), context.getPositiontarget(), context.getPositionFrom());
+				context.addAction(action, ActionTypes.ACTION_ATTACK);
+			}catch(IllegalArgumentException e1) {
+				JOptionPane.showMessageDialog(null,e1.getMessage());
+			}
+		}
+	}
+	
+}
+
 }

@@ -98,6 +98,10 @@ public class GamePanel extends JPanel{
 	
 	public void addAction(Action action, int actionType) {
 		gameLoop.addAction(actionType, action);
+		fromPosition = new Position(0,0);
+		targetPosition=fromPosition;
+		mapPanel.refreshSelection(fromPosition, targetPosition);
+		mapPanel.repaint();
 	}
 	
 	public void endPlayerTurn() {
