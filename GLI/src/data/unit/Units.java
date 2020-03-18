@@ -1,5 +1,7 @@
 package data.unit;
 
+import data.Power;
+
 /**
  * <p>Represents a Units in the Game.</p>
  * <p>A Units move across the Map, capturing new territory for the {@link data.Power Power} that control it.</p>
@@ -22,7 +24,10 @@ public abstract class Units {
 	private int defense;
 	private int maxNumber;
 	
-	public Units(int health, int range, int move, int number, int damage, int defense, int maxNumber) {
+	private Power owner;
+	
+	public Units(Power owner, int health, int range, int move, int number, int damage, int defense, int maxNumber) {
+		this.owner = owner;
 		this.health = health;
 		this.range = range;
 		this.movement = move;
@@ -54,6 +59,10 @@ public abstract class Units {
 		if (this.number <= 0) {
 			this.number = 0;
 		}
+	}
+	
+	public Power getOwner() {
+		return owner;
 	}
 
 	public int getHealth() {
