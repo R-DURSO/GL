@@ -1,5 +1,7 @@
 package data.unit;
 
+import data.Power;
+
 /**
  * <p>Only Units that can go on {@link data.boxes.WaterBox WaterBoxes}</p>
  * <p>Can Contain a Unit, and transport it anywhere else</p>
@@ -20,14 +22,9 @@ public class Boat extends Units {
 	/* specific to Boat : can contain Units*/
 	private Units containedUnits;
 
-	public Boat () {
-		super(BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
+	public Boat (Power owner) {
+		super(owner, BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
 		this.containedUnits = null;
-	}
-	
-	public Boat (Units containedUnits) {
-		super(BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
-		this.containedUnits = containedUnits;
 	}
 	
 	public Units getContainedUnits() {

@@ -51,7 +51,7 @@ public class UnitManager {
 				}
 			}
 			else {
-				Units units = createUnit(unitType, numberUnits);
+				Units units = createUnit(unitType, numberUnits, power);
 				//Unit shouldn't be here if invalid type
 				if (units != null) {
 					if (units.getNumber() > units.getMaxNumber()) {
@@ -71,22 +71,22 @@ public class UnitManager {
 		}
 	}
 	
-	private Units createUnit(int type, int nb) {
+	private Units createUnit(int type, int nb, Power power) {
 		switch(type) {
 		case UnitTypes.UNIT_INFANTRY:
-			return new Infantry(nb);
+			return new Infantry(nb, power);
 		case UnitTypes.UNIT_ARCHER:
-			return new Archer(nb);
+			return new Archer(nb, power);
 		case UnitTypes.UNIT_CAVALRY:
-			return new Cavalry(nb);
+			return new Cavalry(nb, power);
 		case UnitTypes.UNIT_PIKEMAN:
-			return new Pikeman(nb);
+			return new Pikeman(nb, power);
 		case UnitTypes.UNIT_BATTERING_RAM:
-			return new BatteringRam(nb);
+			return new BatteringRam(nb, power);
 		case UnitTypes.UNIT_TREBUCHET:
-			return new Trebuchet();
+			return new Trebuchet(power);
 		case UnitTypes.UNIT_BOAT:
-			return new Boat();
+			return new Boat(power);
 		default:
 			return null;
 		}

@@ -1,5 +1,7 @@
 package data.unit;
 
+import data.Power;
+
 public class Trebuchet  extends Units {
 	
 	private static final int BASE_HEALTH = 5;
@@ -28,8 +30,8 @@ public class Trebuchet  extends Units {
 	private int state = STATE_MOVING;
 	
 	//always 1 Trebuchet per Unit "stack"
-	public Trebuchet() {
-		super(BASE_HEALTH, RANGE_MOVING, MOVEMENT_MOVING, 1, DAMAGE_MOVING, DEFENSE, NUMBER_MAX_UNITS);
+	public Trebuchet(Power owner) {
+		super(owner, BASE_HEALTH, RANGE_MOVING, MOVEMENT_MOVING, 1, DAMAGE_MOVING, DEFENSE, NUMBER_MAX_UNITS);
 	}
 
 	public int getTypes() {

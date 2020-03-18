@@ -147,7 +147,7 @@ public class TestActionValidator {
 		actionValidator.createActionCreateUnit(powers[1], UnitTypes.UNIT_INFANTRY, 20, new Position(mapSize - 2, mapSize - 2));
 	}
 	
-	@Test //(expected = IllegalArgumentException.class)
+	@Test (expected = IllegalArgumentException.class)
 	public void testCreateUnitsFailure() throws IllegalArgumentException{
 		//not on barrack
 		actionValidator.createActionCreateUnit(powers[1], UnitTypes.UNIT_INFANTRY, 20, new Position(mapSize - 2, mapSize - 1));
@@ -178,15 +178,15 @@ public class TestActionValidator {
 	private void placeUnitsAndBuildings() {
 		//we put a boat on water, on top side
 		map.getBox(mapSize/2, 0).setOwner(powers[0]);
-		map.getBox(mapSize/2, 0).setUnit(new Boat());
+		map.getBox(mapSize/2, 0).setUnit(new Boat(powers[0]));
 		
 		//we add several units on different places
-		map.getBox(0,0).setUnit(new Archer(20));
-		map.getBox(0,mapSize - 1).setUnit(new Infantry(20));
-		map.getBox(mapSize-1, 2).setOwner(powers[2]);
+		map.getBox(0,0).setUnit(new Archer(20, powers[0]));
+		map.getBox(0,mapSize - 1).setUnit(new Infantry(20, powers[3]));
+		map.getBox(mapSize-1, 2).setOwner(powers[1]);
 		map.getBox(mapSize-4, mapSize-3).setOwner(powers[0]);
-		map.getBox(mapSize - 1,2).setUnit(new Archer(20));
-		map.getBox(mapSize - 1 ,mapSize - 2).setUnit(new Cavalry(20));
+		map.getBox(mapSize - 1,2).setUnit(new Archer(20, powers[2]));
+		map.getBox(mapSize - 1 ,mapSize - 2).setUnit(new Cavalry(20, powers[1]));
 		
 		//and buildings
 		((GroundBox)map.getBox(mapSize/2 -1, 0)).setBuilding(new Barrack());

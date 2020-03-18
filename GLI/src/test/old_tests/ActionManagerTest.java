@@ -83,7 +83,7 @@ public class ActionManagerTest {
 			powers[0].getResource(ResourceTypes.RESOURCE_GOLD).addValue(3000);
 			actionManager.createActionCreateUnit(powers[0], UnitTypes.UNIT_ARCHER, numberUnits, new Position(1,1));
 			//to do in another class of course
-			map.getBox(1, 1).setUnit(new Archer(numberUnits));
+			map.getBox(1, 1).setUnit(new Archer(numberUnits, powers[0]));
 			System.out.println("units created");
 		} catch (IllegalArgumentException e) {
 			System.err.println(e.getMessage());

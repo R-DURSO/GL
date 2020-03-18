@@ -1,5 +1,7 @@
 package data.unit;
 
+import data.Power;
+
 public class Archer extends Units {
 	private static final int BASE_HEALTH = 2;
 	private static final int RANGE = 2;
@@ -11,8 +13,8 @@ public class Archer extends Units {
 	public static final int COST_PER_TURN = 3;
 	public static final int NUMBER_MAX_UNITS = 20;
 	
-	public Archer (int numberUnits) {
-		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
+	public Archer (int numberUnits, Power owner) {
+		super(owner, BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
 	}
 
 	public int getTypes() {

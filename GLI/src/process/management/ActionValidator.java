@@ -153,7 +153,7 @@ public class ActionValidator {
 		}
 		
 		//if has allied, we must check if targetBox is ally's
-		if(powerConcerned.isAllied()) {
+		if(boxOwner != powerConcerned && powerConcerned.isAllied()) {
 			Power ally = powerConcerned.getAlly();
 			if(targetBox.getOwner() != ally)
 				throw new IllegalArgumentException("Cette case n'appartient ni à vous, ni à votre allié");

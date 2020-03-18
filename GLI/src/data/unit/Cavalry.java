@@ -1,5 +1,7 @@
 package data.unit;
 
+import data.Power;
+
 public class Cavalry extends Units {
 	private static final int BASE_HEALTH = 2;
 	private static final int RANGE = 0;
@@ -12,8 +14,8 @@ public class Cavalry extends Units {
 	public static final int NUMBER_MAX_UNITS = 20;
 	
 
-	public Cavalry (int numberUnits) {
-		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
+	public Cavalry (int numberUnits, Power owner) {
+		super(owner, BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
 		// TODO Auto-generated constructor stub
 	}
 

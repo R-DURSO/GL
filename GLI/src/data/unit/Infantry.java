@@ -1,5 +1,7 @@
 package data.unit;
 
+import data.Power;
+
 public class Infantry extends Units {
 	private static final int BASE_HEALTH = 4;
 	private static final int RANGE = 1;
@@ -12,8 +14,8 @@ public class Infantry extends Units {
 	public static final int NUMBER_MAX_UNITS = 50;
 	
 
-	public Infantry (int numberUnits) {
-		super(BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
+	public Infantry (int numberUnits, Power owner) {
+		super(owner, BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
 	}
 
 	public int getTypes() {
