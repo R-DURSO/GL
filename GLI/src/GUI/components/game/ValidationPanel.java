@@ -45,20 +45,22 @@ public class ValidationPanel extends JPanel{
 	private void proceedDependingOnActionType() {
 		//only 2 actions needs to have a 2nd mouse button press, so we treat both actions separately
 		//first, we check if target position is set
+		boolean hasFinished = false;
 		if (gamePanel.getTargetPosition() != null) {
 			switch (actionType) {
 			case ActionTypes.ACTION_ATTACK:
-				doActionAttack();
+				hasFinished = doActionAttack();
 				break;
 			case ActionTypes.ACTION_MOVE:
-				doActionMove();
+				hasFinished = doActionMove();
 				break;
 			default:
 				gamePanel.cancelAction();
 				break;
 			}
-			//we return on the action buttons "state"
-			gameButtonsPanel.changeMiddlePanel();
+			//we return on the action buttons "state", if no error occurs
+			if(hasFinished)
+				gameButtonsPanel.changeMiddlePanel();
 		}else {
 			JOptionPane.showMessageDialog(null, "Choisissez une case à cibler avant.", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
@@ -66,7 +68,7 @@ public class ValidationPanel extends JPanel{
 		
 	}
 	
-	private void doActionMove() {
+	private boolean doActionMove() {
 		int result;
 		result = JOptionPane.showConfirmDialog(null, "Voulez-vous déplacer vos troupes?");
 		if (result == JOptionPane.YES_OPTION) {
@@ -78,12 +80,14 @@ public class ValidationPanel extends JPanel{
 				gamePanel.addAction(action, ActionTypes.ACTION_MOVE);
 			} catch (IllegalArgumentException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				return false;
 			}
 		}
+		return true;
 		
 	}
 
-	private void doActionAttack() {
+	private boolean doActionAttack() {
 		int result = 0;
 		result = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment attaquer?");
 		if (result == 0) {
@@ -95,8 +99,10 @@ public class ValidationPanel extends JPanel{
 				gamePanel.addAction(action, ActionTypes.ACTION_ATTACK);
 			} catch (IllegalArgumentException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				return false;
 			}
 		}
+		return true;
 	}
 
 	class ActionCancel implements ActionListener{

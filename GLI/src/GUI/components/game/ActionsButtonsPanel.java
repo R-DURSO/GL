@@ -35,7 +35,7 @@ import process.management.UnitManager;
  * @author rdurs this class is use for implements the button of gameButtonPanel
  *
  */
-public class ActionsButtonsPanel extends JPanel{
+public class ActionsButtonsPanel extends JPanel {
 
 	private JButton actionBreakAllianceButton = new JButton("Briser une alliance");
 	private JButton actionMakeAllianceButton = new JButton("Créer une alliance");
@@ -73,8 +73,8 @@ public class ActionsButtonsPanel extends JPanel{
 		this.game = context.getMapPanel();
 		setLayout(new GridLayout(0, 3));
 
-		actionBreakAllianceButton.addActionListener(new ActionBreakAlliance());
-		actionMakeAllianceButton.addActionListener(new ActionMakeAlliance());
+		actionBreakAllianceButton.addActionListener(new ActionListenerBreakAlliance());
+		actionMakeAllianceButton.addActionListener(new ActionListenerMakeAlliance());
 		createActionAttackButton.addActionListener(new ActionListenerAttack());
 		createActionMoveButton.addActionListener(new ActionListenerMoveUnits());
 		createActionDestroyUnitButton.addActionListener(new ActionListenerDestroyUnits());
@@ -82,7 +82,7 @@ public class ActionsButtonsPanel extends JPanel{
 		createActionCreateUnitButton.addActionListener(new ActionListenerCreateUnits());
 		createActionConstructButton.addActionListener(new ActionListenerConstruct());
 		createUdapteCapitalButton.addActionListener(new ActionListenerUpdateCapital());
-		
+
 		add(createUdapteCapitalButton);
 		add(createActionMoveButton);
 		add(createActionAttackButton);
@@ -92,7 +92,7 @@ public class ActionsButtonsPanel extends JPanel{
 		add(actionBreakAllianceButton);
 		add(createActionCreateUnitButton);
 		add(createActionDestroyUnitButton);
-		
+
 		setMajorButtonsVisibility(false);
 	}
 
@@ -110,7 +110,7 @@ public class ActionsButtonsPanel extends JPanel{
 	}
 
 	public void setStateWaitingFromPosition() {
-												
+
 		state = STATE_WAITING_FROM_POSTION;
 	}
 
@@ -126,7 +126,7 @@ public class ActionsButtonsPanel extends JPanel{
 		return state == STATE_WAITING_TARGET_POSTION;
 	}
 
-	class ActionBreakAlliance implements ActionListener {
+	class ActionListenerBreakAlliance implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 			int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment détruire cette alliance?",
@@ -134,7 +134,7 @@ public class ActionsButtonsPanel extends JPanel{
 		}
 	}
 
-	class ActionMakeAlliance implements ActionListener {
+	class ActionListenerMakeAlliance implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -142,7 +142,7 @@ public class ActionsButtonsPanel extends JPanel{
 		}
 
 	}
-	
+
 	class ActionListenerUpdateCapital implements ActionListener {
 
 		@Override
@@ -161,39 +161,39 @@ public class ActionsButtonsPanel extends JPanel{
 	}
 
 	class ActionListenerConstruct implements ActionListener {
-		String[] choices = { "caserne (100 bois)", "écurie", "port", "mine", "scierie", "moulin", "carière", "porte", "mur", "temple" };
+		String[] choices = { "caserne (100 bois)", "écurie", "port", "mine", "scierie", "moulin", "carière", "porte",
+				"mur", "temple" };
 
 		public void actionPerformed(ActionEvent e) {
 			JComboBox<String> buildingComboBox = new JComboBox<>(choices);
-			JOptionPane.showMessageDialog(null, buildingComboBox, "constructions possibles", 1);
-			// TODO vérifier si l'utilisateur a cliqué sur la croix pour fermer la fenetre
-			// System.out.println(context.getfromPosition().getX());
-			try {
-				action = context.getActionValidator().createActionConstruct(context.getPlayer(),
-						buildingComboBox.getSelectedIndex() + 1, context.getFromPosition());
-//				gameLoop.addAction(ActionTypes.ACTION_CONSTRUCT, action);
-				context.addAction(action, ActionTypes.ACTION_CONSTRUCT);
-			} catch (IllegalArgumentException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			} catch (NullPointerException e2) {
-				JOptionPane.showMessageDialog(null, e2.getMessage());
+			int answer = JOptionPane.showConfirmDialog(null, buildingComboBox, "constructions possibles",
+					JOptionPane.YES_NO_OPTION);
+			if (answer == JOptionPane.YES_OPTION) {
+				try {
+					action = context.getActionValidator().createActionConstruct(context.getPlayer(),
+							buildingComboBox.getSelectedIndex() + 1, context.getFromPosition());
+//					gameLoop.addAction(ActionTypes.ACTION_CONSTRUCT, action);
+					context.addAction(action, ActionTypes.ACTION_CONSTRUCT);
+				} catch (IllegalArgumentException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
-
 		}
 
 	}
 
-	//now, this action is done in ValidationPanel, to ensure double click
+	// now, this action is done in ValidationPanel, to ensure double click
 	class ActionListenerMoveUnits implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// User will have a change in the GUI, which causes to avoid to set up multiple actions, and wait his second selection to be done
+			// User will have a change in the GUI, which causes to avoid to set up multiple
+			// actions, and wait his second selection to be done
 			JOptionPane.showMessageDialog(null, "Choisissez une cible");
 			gameButtonsPanel.changeMiddlePanel();
 			gameButtonsPanel.setValidationActionType(ActionTypes.ACTION_MOVE);
 			setStateWaitingTargetPosition();
-			
-			//set "order" in infos panel
+
+			// set "order" in infos panel
 			context.setOrder("Choisissez un lieu ou déplacer vos unité(s)");
 		}
 	}
@@ -207,7 +207,6 @@ public class ActionsButtonsPanel extends JPanel{
 			setStateWaitingTargetPosition();
 		}
 	}
-	
 
 	class ActionListenerCreateUnits implements ActionListener {
 		String[] choices = { "Infantrie", "Archer", "Cavalier", "Piquier", "Char", "Trébuchet", "Bateau" };
@@ -216,8 +215,7 @@ public class ActionsButtonsPanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JComboBox<String> unitComboBox = new JComboBox<>(choices);
-			int answer = JOptionPane.showConfirmDialog(null, unitComboBox, "Quelle(s) unité(s) voulez-vous?",
-					JOptionPane.YES_NO_CANCEL_OPTION);
+			int answer = JOptionPane.showConfirmDialog(null, unitComboBox, "Quelle(s) unité(s) voulez-vous?", JOptionPane.YES_NO_CANCEL_OPTION);
 			// we check if user has canceled his choice
 			if (answer == JOptionPane.YES_OPTION) {
 				int unitType = unitComboBox.getSelectedIndex();
@@ -280,38 +278,20 @@ public class ActionsButtonsPanel extends JPanel{
 
 	}
 
-
-	class MouseTargetPosition implements MouseListener{
+	class MouseTargetPosition implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			Position position = context.getMapPanel().getPositionFromCoordinates(arg0.getX(), arg0.getY());
 		}
-
 		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
+		public void mouseEntered(MouseEvent arg0) {}
 		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
+		public void mouseExited(MouseEvent arg0) {}
 		@Override
-		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
+		public void mousePressed(MouseEvent arg0) {}
 		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
+		public void mouseReleased(MouseEvent arg0) {}
 	}
 
 }
