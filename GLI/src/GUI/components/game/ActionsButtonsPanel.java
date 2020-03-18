@@ -278,7 +278,7 @@ public class ActionsButtonsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int result = 0;
-			result = JOptionPane.showConfirmDialog(null, "voulez vous améliorer votre capital");
+			result = JOptionPane.showConfirmDialog(null, "voulez vous lancer une attaque");
 			if (result == 0) {
 				try {
 					action = context.getActionValidator().createActionAttack(context.getPlayer(),
