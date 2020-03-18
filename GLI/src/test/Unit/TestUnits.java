@@ -109,6 +109,22 @@ public class TestUnits {
 	}
 	
 	@Test
+	public void createUnitMovementAllied() {
+		power = powers[0];
+		Power powerA = powers[1];
+		from = new Position(0,1);
+		target = new Position(0,2);
+		
+		UnitManager.getInstance().addUnits(power, map.getBox(from), UnitTypes.UNIT_INFANTRY, 5);
+		Units unit = map.getBox(from).getUnit();
+		
+		UnitManager.getInstance().moveUnits(power, map.getBox(from), map.getBox(target));
+		assertEquals(null, map.getBox(from).getUnit());
+		
+		assertEquals(unit, map.getBox(target).getUnit());
+	}
+	
+	@Test
 	public void createUnitAttack() {
 		
 		from = new Position(0,1);

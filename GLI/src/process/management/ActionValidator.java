@@ -146,8 +146,8 @@ public class ActionValidator {
 		Box fromBox = getBoxFromMap(from);
 		Box targetBox = getBoxFromMap(target);
 		Power boxOwner = fromBox.getOwner();
-		//check if from Box is powerConcerned's
 		
+		//check if from Box is powerConcerned's
 		if (boxOwner != powerConcerned && !powerConcerned.isAllied()) {
 			throw new IllegalArgumentException("Cette case n'appartient pas a " + powerConcerned.getName());
 		}
@@ -173,6 +173,7 @@ public class ActionValidator {
 
 		//check if there is "obstacle" on target : either wall / ennemy door, or units
 		//TODO Pathfinding ne verifie pas la presence d'unite, donc survoler des ennemis est possible
+		//Use Power of Unit
 		if (!pathFinding(from, movingUnits, target)) {
 			throw new IllegalArgumentException("Impossible de determiner un chemin jusqu'a la destination");
 		}
@@ -275,9 +276,9 @@ public class ActionValidator {
 						else if ((visitBox instanceof GroundBox) && (units.getTypes() != UnitTypes.UNIT_BOAT)) {
 							//A man on land
 							GroundBox gdataMap = (GroundBox) visitBox;
-							//if there is a Building, it can be a Wall
+							//if there is a Building, it can be a Wall or Capital
 							if (gdataMap.hasBuilding()) {
-								if (gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_WALL) {
+								if ((gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_WALL) || (gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_CAPITAL)) {
 									//if it isn't a Wall, is it a Door that we can go through
 									if (gdataMap.getBuilding().getType() == BuildingTypes.BUILDING_DOOR) {
 										//Does the Door belong to us
@@ -313,7 +314,7 @@ public class ActionValidator {
 										}
 									}
 								}
-								//canVisit stay false because it is a Wall blocking the path
+								//canVisit stay false because it is a Wall or Capital blocking the path
 							}
 							else if (visitPosition.equals(target)) {
 								return true;
