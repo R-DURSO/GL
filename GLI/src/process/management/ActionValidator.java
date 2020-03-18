@@ -278,7 +278,7 @@ public class ActionValidator {
 							GroundBox gdataMap = (GroundBox) visitBox;
 							//if there is a Building, it can be a Wall or Capital
 							if (gdataMap.hasBuilding()) {
-								if ((gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_WALL) || (gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_CAPITAL)) {
+								if ((gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_WALL) && (gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_CAPITAL)) {
 									//if it isn't a Wall, is it a Door that we can go through
 									if (gdataMap.getBuilding().getType() == BuildingTypes.BUILDING_DOOR) {
 										//Does the Door belong to us

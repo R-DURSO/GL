@@ -111,8 +111,8 @@ public class TestActionValidator {
 		actionValidator.createActionMove(powers[0], new Position(0, 0), new Position(0, 2));
 	}
 	
-	@Test //(expected = IllegalArgumentException.class)
-	public void testMoveAlliedFailure() throws IllegalArgumentException{
+	@Test 
+	public void testMoveAlly() throws IllegalArgumentException{
 		//deplacer le cavalier chez l'allie
 		actionValidator.createActionMove(powers[1], new Position(mapSize -1, mapSize -2), new Position(mapSize -4, mapSize -3));
 		//le ramener a la base
