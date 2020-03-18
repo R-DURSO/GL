@@ -177,6 +177,12 @@ public class GamePanel extends JPanel{
 	public ActionValidator getActionValidator() {
 		return actionValidator;
 	}
+	public int getPlayersNumber() {
+		return gameLoop.getPlayerNumber();
+	}
+	public Power[] getPowers(){
+		return gameLoop.getPowers();
+	}
 	public Position getFromPosition() {
 		return fromPosition;
 	}

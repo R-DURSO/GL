@@ -14,6 +14,7 @@ import process.management.ActionValidator;
 import process.management.BuildingManager;
 import process.management.MapBuilder;
 import process.management.UnitManager;
+import sun.security.util.Length;
 
 public class GameLoop {
 	
@@ -29,6 +30,14 @@ public class GameLoop {
 		initActionArray();
 		this.map = map;
 		this.powers = powers;
+	}
+	
+	public int getPlayerNumber() {
+		return powers.length;
+	}
+	
+	public Power[] getPowers() {
+		return powers;
 	}
 	
 	public void addAction(int actionType, Action action) {
