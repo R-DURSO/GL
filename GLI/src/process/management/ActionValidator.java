@@ -145,11 +145,20 @@ public class ActionValidator {
 		
 		Box fromBox = getBoxFromMap(from);
 		Box targetBox = getBoxFromMap(target);
-		
+		Power boxOwner = fromBox.getOwner();
 		//check if from Box is powerConcerned's
-		if (fromBox.getOwner() != powerConcerned) {
+		
+		if (boxOwner != powerConcerned && !powerConcerned.isAllied()) {
 			throw new IllegalArgumentException("Cette case n'appartient pas a " + powerConcerned.getName());
 		}
+		
+		//if has allied, we must check if targetBox is ally's
+		if(powerConcerned.isAllied()) {
+			Power ally = powerConcerned.getAlly();
+			if(targetBox.getOwner() != ally)
+				throw new IllegalArgumentException("Cette case n'appartient ni à vous, ni à votre allié");
+		}
+		
 		//check if there is any Units on the fromBox
 		if (!fromBox.hasUnit()) {
 			throw new IllegalArgumentException("Il n'y a pas d'unite a deplacer ici");
@@ -163,7 +172,7 @@ public class ActionValidator {
 		}
 
 		//check if there is "obstacle" on target : either wall / ennemy door, or units
-		//TODO Pathfinding ne verifie pas la presence d'unite, donc survoler des annemis est possible
+		//TODO Pathfinding ne verifie pas la presence d'unite, donc survoler des ennemis est possible
 		if (!pathFinding(from, movingUnits, target)) {
 			throw new IllegalArgumentException("Impossible de determiner un chemin jusqu'a la destination");
 		}
