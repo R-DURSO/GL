@@ -101,6 +101,7 @@ public class GamePanel extends JPanel{
 	public void addAction(Action action, int actionType) {
 		gameLoop.addAction(actionType, action);
 		resetPositions();
+		gameButtonsPanel.getActionsBoutonsPanel().setStateWaitingFromPosition();
 		mapPanel.refreshSelection(fromPosition, targetPosition);
 		mapPanel.repaint();
 	}
