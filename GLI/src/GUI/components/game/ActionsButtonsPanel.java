@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -34,7 +35,7 @@ import process.management.UnitManager;
  * @author rdurs this class is use for implements the button of gameButtonPanel
  *
  */
-public class ActionsButtonsPanel extends JPanel {
+public class ActionsButtonsPanel extends JPanel{
 
 	private JButton actionBreakAllianceButton = new JButton("Briser une alliance");
 	private JButton actionMakeAllianceButton = new JButton("Créer une alliance");
@@ -59,57 +60,61 @@ public class ActionsButtonsPanel extends JPanel {
 	private final int STATE_WAITING_TARGET_POSTION = 1;
 	private int state = STATE_WAITING_FROM_POSTION;
 
-	// allows to get Positions, which are in GamePanel
-	// TODO : peut-être qu'il y aura une position par défaut, du coup plus besoin de
-	// ça...
 	private GamePanel context;
+	private GameButtonsPanel gameButtonsPanel;
 	private MapPanel game;
 	private ActionsButtonsPanel panel = this;
 	private Action action;
+	private boolean waitTargetPosition = false;
 
-	public ActionsButtonsPanel(GamePanel context) {
+	public ActionsButtonsPanel(GamePanel context, GameButtonsPanel gameButtonsPanel) {
 		this.context = context;
+		this.gameButtonsPanel = gameButtonsPanel;
 		this.game = context.getMapPanel();
 		setLayout(new GridLayout(0, 3));
 
 		actionBreakAllianceButton.addActionListener(new ActionBreakAlliance());
-		add(actionBreakAllianceButton);
-
 		actionMakeAllianceButton.addActionListener(new ActionMakeAlliance());
-		add(actionMakeAllianceButton);
-
 		createActionAttackButton.addActionListener(new ActionListenerAttack());
-		add(createActionAttackButton);
-
 		createActionMoveButton.addActionListener(new ActionListenerMoveUnits());
-		add(createActionMoveButton);
-
 		createActionDestroyUnitButton.addActionListener(new ActionListenerDestroyUnits());
-		add(createActionDestroyUnitButton);
-
 		createActionDestroyBuildingtButton.addActionListener(new ActionListenerDestroyBuilding());
-		add(createActionDestroyBuildingtButton);
-
 		createActionCreateUnitButton.addActionListener(new ActionListenerCreateUnits());
-		add(createActionCreateUnitButton);
-
-		createActionConstructButton.addActionListener(new ActionListenerConstrcut());
-		add(createActionConstructButton);
-		createUdapteCapitalButton.addActionListener(new ActionListenerUdapteCapital());
+		createActionConstructButton.addActionListener(new ActionListenerConstruct());
+		createUdapteCapitalButton.addActionListener(new ActionListenerUpdateCapital());
+		
 		add(createUdapteCapitalButton);
+		add(createActionMoveButton);
+		add(createActionAttackButton);
+		add(actionMakeAllianceButton);
+		add(createActionConstructButton);
+		add(createActionDestroyBuildingtButton);
+		add(actionBreakAllianceButton);
+		add(createActionCreateUnitButton);
+		add(createActionDestroyUnitButton);
+		
+		setMajorButtonsVisibility(false);
+	}
 
+	public void setMajorButtonsVisibility(boolean visibility) {
+		createActionMoveButton.setVisible(visibility);
+		createActionConstructButton.setVisible(visibility);
+		createActionCreateUnitButton.setVisible(visibility);
+		createActionAttackButton.setVisible(visibility);
+		createActionDestroyBuildingtButton.setVisible(visibility);
+		createActionDestroyUnitButton.setVisible(visibility);
 	}
 
 	public int getState() {
 		return state;
 	}
 
-	public void setStateWaitingFromPosition() { // TODO change to private ?? (pas besoin peut-être de l'utiliser à
-												// l'extérieur
+	public void setStateWaitingFromPosition() {
+												
 		state = STATE_WAITING_FROM_POSTION;
 	}
 
-	public void setStateWaitingTargetPosition() { // TODO change to private ??
+	public void setStateWaitingTargetPosition() {
 		state = STATE_WAITING_TARGET_POSTION;
 	}
 
@@ -137,10 +142,26 @@ public class ActionsButtonsPanel extends JPanel {
 		}
 
 	}
+	
+	class ActionListenerUpdateCapital implements ActionListener {
 
-	class ActionListenerConstrcut implements ActionListener {
-		String[] choices = { "caserne (100 bois)", "écurie", "port", "mine", "scierie", "moulin", "carière", "porte",
-				"mur", "temple" };
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int result = 0;
+			result = JOptionPane.showConfirmDialog(null, "Voulez-vous améliorer votre capitale?");
+			if (result == 0) {
+				try {
+					action = context.getActionValidator().createActionUpgradeCapital(context.getPlayer());
+					context.addAction(action, ActionTypes.ACTION_UPGRADE_CAPITAL);
+				} catch (IllegalArgumentException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+			}
+		}
+	}
+
+	class ActionListenerConstruct implements ActionListener {
+		String[] choices = { "caserne (100 bois)", "écurie", "port", "mine", "scierie", "moulin", "carière", "porte", "mur", "temple" };
 
 		public void actionPerformed(ActionEvent e) {
 			JComboBox<String> buildingComboBox = new JComboBox<>(choices);
@@ -149,7 +170,7 @@ public class ActionsButtonsPanel extends JPanel {
 			// System.out.println(context.getfromPosition().getX());
 			try {
 				action = context.getActionValidator().createActionConstruct(context.getPlayer(),
-						buildingComboBox.getSelectedIndex() + 1, context.getPositionFrom());
+						buildingComboBox.getSelectedIndex() + 1, context.getFromPosition());
 //				gameLoop.addAction(ActionTypes.ACTION_CONSTRUCT, action);
 				context.addAction(action, ActionTypes.ACTION_CONSTRUCT);
 			} catch (IllegalArgumentException e1) {
@@ -162,28 +183,31 @@ public class ActionsButtonsPanel extends JPanel {
 
 	}
 
-	
-	//NE FONCTIONNE PAS, PAS MOYEN DE CHOISIR LA TARGET POUR L'INSTANT (à venir tkt pas)
+	//now, this action is done in ValidationPanel, to ensure double click
 	class ActionListenerMoveUnits implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// first, we want to wait user to select where he wants to move his units
-			int result;
-			result = JOptionPane.showConfirmDialog(null, "Voulez-vous déplacer vos troupes?");
-			if (result == JOptionPane.YES_OPTION) {
-				try {
-					Power power = context.getPlayer();
-					Position targetPosition = context.getPositiontarget();
-					Position fromPosition = context.getPositionFrom();
-					action = context.getActionValidator().createActionMove(power, fromPosition, targetPosition);
-					context.addAction(action, ActionTypes.ACTION_MOVE);
-				} catch (IllegalArgumentException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage());
-				}
-			}
+			// User will have a change in the GUI, which causes to avoid to set up multiple actions, and wait his second selection to be done
+			JOptionPane.showMessageDialog(null, "Choisissez une cible");
+			gameButtonsPanel.changeMiddlePanel();
+			gameButtonsPanel.setValidationActionType(ActionTypes.ACTION_MOVE);
+			setStateWaitingTargetPosition();
+			
+			//set "order" in infos panel
+			context.setOrder("Choisissez un lieu ou déplacer vos unité(s)");
 		}
 	}
+
+	class ActionListenerAttack implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog(null, "Choisissez une cible à attaquer");
+			gameButtonsPanel.changeMiddlePanel();
+			gameButtonsPanel.setValidationActionType(ActionTypes.ACTION_ATTACK);
+			setStateWaitingTargetPosition();
+		}
+	}
+	
 
 	class ActionListenerCreateUnits implements ActionListener {
 		String[] choices = { "Infantrie", "Archer", "Cavalier", "Piquier", "Char", "Trébuchet", "Bateau" };
@@ -205,7 +229,7 @@ public class ActionsButtonsPanel extends JPanel {
 					try {
 						Power power = context.getPlayer();
 						int numberUnits = sliderNumber.getValue();
-						Position fromPosition = context.getPositionFrom();
+						Position fromPosition = context.getFromPosition();
 						action = context.getActionValidator().createActionCreateUnit(power, unitType, numberUnits,
 								fromPosition);
 						context.addAction(action, ActionTypes.ACTION_CREATE_UNITS);
@@ -222,11 +246,11 @@ public class ActionsButtonsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int result = 0;
-			result = JOptionPane.showConfirmDialog(null, "voulez vous détruire ce batiment");
+			result = JOptionPane.showConfirmDialog(null, "Voulez-vous détruire ce batiment?");
 			if (result == 0) {
 				try {
 					action = context.getActionValidator().createActionDestroyBuilding(context.getPlayer(),
-							context.getPositionFrom());
+							context.getFromPosition());
 					context.addAction(action, ActionTypes.ACTION_DESTROY_BUILDING);
 				} catch (IllegalArgumentException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -241,11 +265,11 @@ public class ActionsButtonsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int result = 0;
-			result = JOptionPane.showConfirmDialog(null, "voulez vous détruire ces unité ");
+			result = JOptionPane.showConfirmDialog(null, "Voulez-vous détruire ce(s) unitée(s)?");
 			if (result == 0) {
 				try {
 					action = context.getActionValidator().createActionDestroyUnits(context.getPlayer(),
-							context.getPositionFrom());
+							context.getFromPosition());
 					context.addAction(action, ActionTypes.ACTION_DESTROY_UNITS);
 				} catch (IllegalArgumentException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -256,48 +280,12 @@ public class ActionsButtonsPanel extends JPanel {
 
 	}
 
-	class ActionListenerUdapteCapital implements ActionListener {
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int result = 0;
-			result = JOptionPane.showConfirmDialog(null, "voulez vous améliorer votre capital");
-			if (result == 0) {
-				try {
-					action = context.getActionValidator().createActionUpgradeCapital(context.getPlayer());
-					context.addAction(action, ActionTypes.ACTION_UPGRADE_CAPITAL);
-				} catch (IllegalArgumentException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage());
-				}
-			}
-		}
-	}
-
-	class ActionListenerAttack implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int result = 0;
-			result = JOptionPane.showConfirmDialog(null, "voulez vous lancer une attaque");
-			if (result == 0) {
-				try {
-					action = context.getActionValidator().createActionAttack(context.getPlayer(),
-							context.getPositiontarget(), context.getPositionFrom());
-					context.addAction(action, ActionTypes.ACTION_ATTACK);
-				} catch (IllegalArgumentException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage());
-				}
-			}
-		}
-
-	}
-	
 	class MouseTargetPosition implements MouseListener{
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			
-			
+			Position position = context.getMapPanel().getPositionFromCoordinates(arg0.getX(), arg0.getY());
 		}
 
 		@Override

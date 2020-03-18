@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.concurrent.Semaphore;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -99,18 +100,24 @@ public class GamePanel extends JPanel{
 	
 	public void addAction(Action action, int actionType) {
 		gameLoop.addAction(actionType, action);
-		fromPosition = new Position(0,0);
-		targetPosition=fromPosition;
+		resetPositions();
 		mapPanel.refreshSelection(fromPosition, targetPosition);
 		mapPanel.repaint();
 	}
 	
 	public void endPlayerTurn() {
-		gameLoop.doActions();
+		resetPositions();
+		gameButtonsPanel.getActionsBoutonsPanel().setMajorButtonsVisibility(false);
+		gameLoop.endTurn();
 		repaint();		
 	}
 	
-	
+	public void cancelAction() {
+		resetPositions();
+		gameButtonsPanel.getActionsBoutonsPanel().setStateWaitingFromPosition();
+		gameButtonsPanel.changeMiddlePanel();
+		repaint();
+	}
 	
 	class MouseMotionManager implements MouseMotionListener{
 
@@ -138,49 +145,49 @@ public class GamePanel extends JPanel{
 			}else if(actionsButtonsPanel.isWaitingTargetPosition()) {
 				targetPosition = position;
 			}
+			actionsButtonsPanel.setMajorButtonsVisibility(true);
 			mapPanel.refreshSelection(fromPosition, targetPosition);
 			mapPanel.repaint();
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseEntered(MouseEvent e) {}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseExited(MouseEvent e) {}
 
 		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mousePressed(MouseEvent e) {}
 
 		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseReleased(MouseEvent e) {}
 
 		
 	}
+	
+	public void resetPositions() {
+		fromPosition = null;
+		targetPosition = null;
+	}
+	
 	public MapPanel getMapPanel() {
 		return mapPanel ;
 	}
 	public ActionValidator getActionValidator() {
 		return actionValidator;
 	}
-	public Position getPositionFrom() {
+	public Position getFromPosition() {
 		return fromPosition;
 	}
 	public Power getPlayer() {
 		return player;
 	}
-	public Position getPositiontarget() {
+	public Position getTargetPosition() {
 		return targetPosition;
 	}
+
+	public void setOrder(String order) {
+		infosPanel.changeOrder(order);
+	}
+
 }
