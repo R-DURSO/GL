@@ -31,6 +31,14 @@ public class GameLoop {
 		this.powers = powers;
 	}
 	
+	public int getPlayerNumber() {
+		return powers.length;
+	}
+	
+	public Power[] getPowers() {
+		return powers;
+	}
+	
 	public void addAction(int actionType, Action action) {
 		actions[actionType].add(action);
 	}

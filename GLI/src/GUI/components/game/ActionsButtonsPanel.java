@@ -129,16 +129,40 @@ public class ActionsButtonsPanel extends JPanel {
 	class ActionListenerBreakAlliance implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment détruire cette alliance?",
-					"Fin d'alliance ?", JOptionPane.YES_NO_OPTION);
+			Power power = context.getPlayer();
+			if (!power.isAllied()) {
+				JOptionPane.showMessageDialog(null, "Vous n'avez pas d'allié", "Erreur", JOptionPane.ERROR_MESSAGE);
+			} else {
+				int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment mettre fin à votre alliance?",
+						"Fin d'alliance?", JOptionPane.YES_NO_OPTION);
+				if (answer == JOptionPane.YES_OPTION) {
+					action = context.getActionValidator().createActionBreakAlliance(power, power.getAlly());
+				}
+			}
 		}
 	}
 
 	class ActionListenerMakeAlliance implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			Power power = context.getPlayer();
+			if(power.isAllied())
+				JOptionPane.showMessageDialog(null, "Vous avez déjà un allié", "Erreur", JOptionPane.ERROR_MESSAGE);
+			else {
+				//get player number
+				String choices[] = new String[context.getPlayersNumber() - 1];
+				Power[] powers = context.getPowers();
+				for(int i = 1; i < powers.length; i++){
+					choices[i - 1] = powers[i].getName();
+				}
+				JComboBox<String> powersComboBox = new JComboBox<>(choices);
+				int answer = JOptionPane.showConfirmDialog(null, powersComboBox,
+						"Avec quelle puissance voulez-vous vous allier?", JOptionPane.YES_NO_OPTION);
+				if (answer == JOptionPane.YES_OPTION) {
+					int selectedIndex = powersComboBox.getSelectedIndex();
+					action = context.getActionValidator().createActionBreakAlliance(power, power.getAlly());
+				}
+			}
 		}
 
 	}
@@ -215,7 +239,8 @@ public class ActionsButtonsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JComboBox<String> unitComboBox = new JComboBox<>(choices);
-			int answer = JOptionPane.showConfirmDialog(null, unitComboBox, "Quelle(s) unité(s) voulez-vous?", JOptionPane.YES_NO_CANCEL_OPTION);
+			int answer = JOptionPane.showConfirmDialog(null, unitComboBox, "Quelle(s) unité(s) voulez-vous?",
+					JOptionPane.YES_NO_CANCEL_OPTION);
 			// we check if user has canceled his choice
 			if (answer == JOptionPane.YES_OPTION) {
 				int unitType = unitComboBox.getSelectedIndex();
@@ -284,14 +309,22 @@ public class ActionsButtonsPanel extends JPanel {
 		public void mouseClicked(MouseEvent arg0) {
 			Position position = context.getMapPanel().getPositionFromCoordinates(arg0.getX(), arg0.getY());
 		}
+
 		@Override
-		public void mouseEntered(MouseEvent arg0) {}
+		public void mouseEntered(MouseEvent arg0) {
+		}
+
 		@Override
-		public void mouseExited(MouseEvent arg0) {}
+		public void mouseExited(MouseEvent arg0) {
+		}
+
 		@Override
-		public void mousePressed(MouseEvent arg0) {}
+		public void mousePressed(MouseEvent arg0) {
+		}
+
 		@Override
-		public void mouseReleased(MouseEvent arg0) {}
+		public void mouseReleased(MouseEvent arg0) {
+		}
 	}
 
 }
