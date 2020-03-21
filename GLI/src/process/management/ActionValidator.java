@@ -180,7 +180,10 @@ public class ActionValidator {
 		
 		//check if there isn't any ennemy Unit or Different UnitTypes
 		if (targetBox.hasUnit()) {
-			if (targetBox.getOwner() == powerConcerned) {
+			//check if units already want to go to target, ergo if a PhantomUnit is on targetBox
+			if(targetBox.getUnit() instanceof PhantomUnit)
+				throw new IllegalArgumentException("Une unité compte se rendre à cette position");
+			if (targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAlly()) {
 				Units unitsOnTarget = targetBox.getUnit();
 				if (unitsOnTarget.getTypes() == UnitTypes.UNIT_BOAT) {
 					//moves Units on the boat
@@ -205,6 +208,8 @@ public class ActionValidator {
 		}
 		
 		powerConcerned.removeActionPoint();
+		//add phantom unit on the target box, to ensure that no other unit could go there
+		targetBox.setUnit(new PhantomUnit());
 		return new ActionMove(powerConcerned, from, target);
 	}
 	
@@ -418,9 +423,16 @@ public class ActionValidator {
 			throw new IllegalArgumentException("Pas assez de ressources pour construire ceci");
 		
 		GroundBox groundBox = (GroundBox) targetBox;
+		
+		
+		
 		//check if there is already a building on this box
-		if(groundBox.hasBuilding())
+		if(groundBox.hasBuilding()) {
+			//check if a building is going to be builded there, that is to say if instance of PhantomBuilding is on the targetBox
+			if(groundBox.getBuilding() instanceof PhantomBuilding)
+				throw new IllegalArgumentException("Un autre batiment va être construit sur cette case");
 			throw new IllegalArgumentException("Impossible de construire sur une case qui possede deja un batiment"); 
+		}
 		
 		if (buildingType == BuildingTypes.BUILDING_DOCK) {
 			if (!isNearWater(target)) {
@@ -437,6 +449,8 @@ public class ActionValidator {
 		powerConcerned.removeActionPoint();
 		//remove building cost
 		powerConcerned.getResource(neededResource.getType()).subValue(neededResource.getCost());
+		//add phantom building on the target box, to ensure that no other building could be constructed on targetBox
+		groundBox.setBuilding(new PhantomBuilding());
 		return new ActionConstruct(powerConcerned, buildingType, target);
 	}
 	
