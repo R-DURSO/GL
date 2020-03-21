@@ -158,7 +158,7 @@ public class UnitManager {
 	
 	
 	public void moveUnits(Power powerConcerned, Box[] pathToTake) {
-		for (int i=0; i<pathToTake.length; i++) {
+		for (int i=0; i<pathToTake.length - 1; i++) {
 			moveUnitsBox(powerConcerned, pathToTake[i], pathToTake[i+1]);
 		}
 	}
