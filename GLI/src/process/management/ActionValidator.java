@@ -400,8 +400,8 @@ public class ActionValidator {
 				visited.add(visitPosition);
 			}
 		}
-		//TODO l'unite qui passe va conquerir le territoire qu'il survole
 		//La node stock un code pour retrouver son chemin (String path)
+		//Si on atteins ce point du code, le chemin n'a pas été trouvé
 		return null;
 	}
 	
@@ -410,10 +410,11 @@ public class ActionValidator {
 		Position checkPos = StartingPos;
 		//Array of Position
 		Position[] pathPos = new Position[pathFinding.length()];
-		for(int i=pathFinding.length()-1; i>=0; i--) {
+		for(int i=0; i<pathFinding.length(); i++) {
 			char d = pathFinding.charAt(i);
-			pathPos[pathFinding.length()-i-1] = checkPos;
 			switch(d) {
+			case '0':
+				break;
 			case '1':
 				checkPos = map.getUpPos(checkPos);
 				break;
@@ -430,6 +431,7 @@ public class ActionValidator {
 				checkPos = null;
 				break;
 			}
+			pathPos[i] = checkPos;
 		}
 		//convert Position to Box
 		Box[] pathBox = new Box[pathPos.length];
