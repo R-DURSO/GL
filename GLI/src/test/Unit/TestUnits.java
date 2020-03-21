@@ -49,8 +49,9 @@ public class TestUnits {
 		for (int i = 0 ; i < map.getSize() ; i++) {
 			for (int j = 0 ; j < map.getSize() ; j++) {
 				target = new Position(i,j);
-				if (map.getBox(target).hasOwner()) {
-					UnitManager.getInstance().deleteUnits(map.getBox(target).getOwner(), map.getBox(target));
+				if (map.getBox(target).hasUnit()) {
+					Box BoxUnitToDelete = map.getBox(target);
+					UnitManager.getInstance().deleteUnits(BoxUnitToDelete.getUnit().getOwner(), BoxUnitToDelete);
 				}
 			}
 		}
@@ -111,17 +112,22 @@ public class TestUnits {
 	@Test
 	public void createUnitMovementAllied() {
 		power = powers[0];
-		Power powerA = powers[1];
+		Power powerAllied = powers[1];
+		UnitManager.getInstance().makeAlliance(power, powerAllied);
+		
 		from = new Position(0,1);
 		target = new Position(0,2);
 		
-		UnitManager.getInstance().addUnits(power, map.getBox(from), UnitTypes.UNIT_INFANTRY, 5);
+		map.getBox(from).setOwner(power);
+		map.getBox(target).setOwner(powerAllied);
+		
+		UnitManager.getInstance().addUnits(power, map.getBox(from), UnitTypes.UNIT_CAVALRY, 5);
 		Units unit = map.getBox(from).getUnit();
 		
 		UnitManager.getInstance().moveUnits(power, map.getBox(from), map.getBox(target));
 		assertEquals(null, map.getBox(from).getUnit());
-		
 		assertEquals(unit, map.getBox(target).getUnit());
+		assertEquals(powerAllied, map.getBox(target).getOwner());
 	}
 	
 	@Test
