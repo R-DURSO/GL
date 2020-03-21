@@ -206,6 +206,8 @@ public class MapPanel extends JPanel{
 		case BuildingTypes.BUILDING_WALL:
 			g.setColor(ColorData.WALL_COLOR);
 			break;
+		default:
+			return false;
 		}
 		return true;
 	}
@@ -239,6 +241,8 @@ public class MapPanel extends JPanel{
 		case UnitTypes.UNIT_PIKEMAN:
 			g.setColor(ColorData.PIKEMAN_COLOR);
 			break;
+		default:
+			return false;
 		}
 		return true;
 	}
