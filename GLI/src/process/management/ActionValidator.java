@@ -189,8 +189,8 @@ public class ActionValidator {
 
 		//check if there is "obstacle" on target : either wall / ennemy door, or units
 		//TODO Pathfinding ne verifie pas la presence d'unite, donc survoler des ennemis est possible
-		//Use Power of Unit
-		if (!pathFinding(from, movingUnits, target)) {
+		String pathFinding = pathFinding(from, movingUnits, target);
+		if (pathFinding == null) {
 			throw new IllegalArgumentException("Impossible de determiner un chemin jusqu'a la destination");
 		}
 		
@@ -232,7 +232,8 @@ public class ActionValidator {
 		powerConcerned.removeActionPoint();
 		//add phantom unit on the target box, to ensure that no other unit could go there
 		targetBox.setUnit(new PhantomUnit());
-		return new ActionMove(powerConcerned, from, target);
+		Box[] ListBox = convertPathToBoxArray(pathFinding, from);
+		return new ActionMove(powerConcerned, from, target, ListBox);
 	}
 	
 	/**
@@ -243,7 +244,7 @@ public class ActionValidator {
 	 * @param target Box where the Units wants to go
 	 * @return true if Units have a path
 	 */
-	public boolean pathFinding(Position from, Units units, Position target) {
+	public String pathFinding(Position from, Units units, Position target) {
 		//Get the Power from the Starting Point
 		Power powerConcerned = units.getOwner();
 		//How far the Unit can go
@@ -282,7 +283,7 @@ public class ActionValidator {
 							if (units.getTypes() == UnitTypes.UNIT_BOAT) {
 								//A boat on the sea
 								if (visitPosition.equals(target)) {
-									return true;
+									return path;
 								}
 								else {
 									canVisit = true;
@@ -292,7 +293,7 @@ public class ActionValidator {
 								if (visitBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
 									//You can move on a Boat ( TODO check if you own it)
 									if (visitPosition.equals(target)) {
-										return true;
+										return path;
 									}
 									else {
 										canVisit = true;
@@ -313,7 +314,7 @@ public class ActionValidator {
 											//Does the Door belong to us
 											if (gdataMap.getOwner() == powerConcerned) {
 												if (visitPosition.equals(target)) {
-													return true;
+													return path;
 												}
 												else {
 													canVisit = true;
@@ -324,7 +325,7 @@ public class ActionValidator {
 												//And does the Door belong to Ally
 												if (gdataMap.getOwner() == powerConcerned.getAlly()) {
 													if (visitPosition.equals(target)) {
-														return true;
+														return path;
 													}
 													else {
 														canVisit = true;
@@ -336,7 +337,7 @@ public class ActionValidator {
 										else {
 											//canVisit is true because it isn't a Wall, Door or Capital
 											if (visitPosition.equals(target)) {
-												return true;
+												return path;
 											}
 											else {
 												canVisit = true;
@@ -347,7 +348,7 @@ public class ActionValidator {
 										//does Capital belong to us
 										if (gdataMap.getOwner() == powerConcerned) {
 											if (visitPosition.equals(target)) {
-												return true;
+												return path;
 											}
 											else {
 												canVisit = true;
@@ -359,7 +360,7 @@ public class ActionValidator {
 							}
 							//GroundBox without Building
 							else if (visitPosition.equals(target)) {
-								return true;
+								return path;
 							}
 							else {
 								canVisit = true;
@@ -389,7 +390,7 @@ public class ActionValidator {
 									break;
 								}
 								if (dataToAdd != null) {
-									toVisit.put(Integer.toString(d)+path,dataToAdd);
+									toVisit.put(path+Integer.toString(d),dataToAdd);
 								}
 							}
 						}
@@ -401,7 +402,41 @@ public class ActionValidator {
 		}
 		//TODO l'unite qui passe va conquerir le territoire qu'il survole
 		//La node stock un code pour retrouver son chemin (String path)
-		return false;
+		return null;
+	}
+	
+	private Box[] convertPathToBoxArray(String pathFinding, Position StartingPos) {
+		//startingPosition
+		Position checkPos = StartingPos;
+		//Array of Position
+		Position[] pathPos = new Position[pathFinding.length()];
+		for(int i=pathFinding.length()-1; i>=0; i--) {
+			char d = pathFinding.charAt(i);
+			pathPos[pathFinding.length()-i-1] = checkPos;
+			switch(d) {
+			case '1':
+				checkPos = map.getUpPos(checkPos);
+				break;
+			case '2':
+				checkPos = map.getLeftPos(checkPos);
+				break;
+			case '3':
+				checkPos = map.getRightPos(checkPos);
+				break;
+			case '4':
+				checkPos = map.getDownPos(checkPos);
+				break;
+			default:
+				checkPos = null;
+				break;
+			}
+		}
+		//convert Position to Box
+		Box[] pathBox = new Box[pathPos.length];
+		for(int i=0; i<pathPos.length; i++) {
+			pathBox[i] = map.getBox(pathPos[i]);
+		}
+		return pathBox;
 	}
 	
 	/**

@@ -58,6 +58,8 @@ public abstract class Units {
 	 * @return the Max you can have on a stack of {@link data.unit.Units Unit}
 	 */
 	public abstract int getMaxNumber();
+	public abstract boolean isSiegeUnit();
+	public abstract int getSiegeDamage();
 	
 	
 	public int getNumber() {

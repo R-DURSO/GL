@@ -48,4 +48,14 @@ public class PhantomUnit extends Units{
 		return 0;
 	}
 
+	@Override
+	public boolean isSiegeUnit() {
+		return false;
+	}
+
+	@Override
+	public int getSiegeDamage() {
+		return 0;
+	}
+
 }

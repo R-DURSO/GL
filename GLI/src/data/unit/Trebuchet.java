@@ -75,6 +75,14 @@ public class Trebuchet  extends Units {
 	public int getMaxNumber() {
 		return NUMBER_MAX_UNITS;
 	}
+
+	public boolean isSiegeUnit() {
+		return true;
+	}
+	
+	public int getSiegeDamage() {
+		return getDamage();
+	}
 	
 	public void changeState() {
 		switch(this.state) {

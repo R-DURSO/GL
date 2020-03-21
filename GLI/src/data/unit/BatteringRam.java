@@ -6,9 +6,9 @@ public class BatteringRam extends Units {
 	private static final int BASE_HEALTH = 10;
 	private static final int RANGE = 1;
 	private static final int MOVEMENT = 1;
-	private static final int DAMAGE = 0;
+	private static final int DAMAGE = 5;
 	private static final int DAMAGE_SIEGE = 50;
-	private static final int DEFENSE = 1;
+	private static final int DEFENSE = 2;
 	
 	public static final int COST = 10;
 	public static final int COST_PER_TURN = 3;
@@ -44,6 +44,14 @@ public class BatteringRam extends Units {
 	
 	public int getMaxNumber() {
 		return NUMBER_MAX_UNITS;
+	}
+
+	public boolean isSiegeUnit() {
+		return true;
+	}
+	
+	public int getSiegeDamage() {
+		return DAMAGE_SIEGE;
 	}
 	
 	public String toString() {

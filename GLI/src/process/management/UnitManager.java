@@ -143,7 +143,7 @@ public class UnitManager {
 	
 	/**
 	 * Remove all {@link Units} on a defined {@link Box}
-	 * @param power the power who have those units
+	 * @param power who have those units (gain production based on deleted unit)
 	 * @param box where are units to be destroyed
 	 */
 	public void deleteUnits(Power power, Box box) {
@@ -163,19 +163,24 @@ public class UnitManager {
 	 * 		-move Unit en 2 cas,
 	 * 			-1 pour le deplacement global
 	 * 			*-l'autre pour la gestion de Box en Box
-	 *  			*-Doit conquérir chaque Boxes
 	 *  L'unite peut arriver sur un Boat
-	 *  	*-Rentrer dans le bateau
 	 *  	-peut passer de bateau en bateau (comme un pont ?) s'il y en a plusieurs cote à cote
-	 *  	-boat qui va sur terre -> déposer unit
 	 */
+	public void pathMoving(Power powerConcerned, Box[] pathToTake) {
+		for (int i=0; i<pathToTake.length; i++) {
+			moveUnits(powerConcerned, pathToTake[i], pathToTake[i+1]);
+		}
+	}
+	
 	public void moveUnits(Power powerConcerned, Box fromBox, Box targetBox) {
 		Units movingUnits = fromBox.getUnit();
 		if (targetBox instanceof WaterBox) {
 			if (targetBox.hasUnit()) {
 				if (targetBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
-					//target est sur l'eau & target possede un bateau
-					((Boat) targetBox.getUnit()).setContainedUnits(movingUnits);
+					if (fromBox.getUnit().getTypes() != UnitTypes.UNIT_BOAT) {
+						//target est sur l'eau & target possede un bateau
+						((Boat) targetBox.getUnit()).setContainedUnits(movingUnits);
+					}
 				}
 			}
 			else {
@@ -187,7 +192,17 @@ public class UnitManager {
 		}
 		else {
 			//sur terre, les vérifications se font dans ActionValidator
-			targetBox.setUnit(movingUnits);
+			if (movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
+				//Si on bouge un bateau, on vide son contenu
+				Boat BoatMovingUnit = (Boat)movingUnits;
+				if (BoatMovingUnit.hasContainedUnits()) {
+					targetBox.setUnit(BoatMovingUnit.getContainedUnits());
+					BoatMovingUnit.setContainedUnits(null);
+				}
+			}
+			else {
+				targetBox.setUnit(movingUnits);
+			}
 		}
 		
 		//Vérification qu'il y a eu un déplacement
@@ -304,7 +319,7 @@ public class UnitManager {
 				Units attacker = fromBox.getUnit();
 				Building buildDef = targetGBox.getBuilding();
 				//calculate damage done, with each defense reducing damage by 10%
-				double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - buildDef.getDefense()) / 10.0));
+				double AttackerDamageDealt = (attacker.getSiegeDamage() * attacker.getNumber()) * (((10.0 - buildDef.getDefense()) / 10.0));
 				//Building take damage
 				buildDef.applyDamage((int)AttackerDamageDealt);
 				if (buildDef.isDestroyed()) {

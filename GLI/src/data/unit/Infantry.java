@@ -45,6 +45,14 @@ public class Infantry extends Units {
 	public int getMaxNumber() {
 		return NUMBER_MAX_UNITS;
 	}
+
+	public boolean isSiegeUnit() {
+		return false;
+	}
+	
+	public int getSiegeDamage() {
+		return DAMAGE;
+	}
 	
 	public String toString() {
 		return "Infantry " + super.toString() ;

@@ -2,6 +2,8 @@ package test.Unit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -175,12 +177,12 @@ public class TestActionValidator {
 	
 	@Test
 	public void testPathFindingFail() {
-		assertFalse(actionValidator.pathFinding(new Position(0,0), map.getBox(new Position(0,0)).getUnit(), new Position(0,1)));
+		assertNull(actionValidator.pathFinding(new Position(0,0), map.getBox(new Position(0,0)).getUnit(), new Position(0,1)));
 	}
 	
 	@Test
 	public void testPathFindingSuccess() {
-		assertTrue(actionValidator.pathFinding(new Position(0,0), map.getBox(new Position(0,0)).getUnit(), new Position(1,1)));
+		assertNotNull(actionValidator.pathFinding(new Position(0,0), map.getBox(new Position(0,0)).getUnit(), new Position(1,1)));
 	}
 	
 	private void placeUnitsAndBuildings() {

@@ -77,7 +77,7 @@ public class TestBoat {
 //		System.out.println(boat3);
 		
 		assertFalse(boat1.hasContainedUnits());
-		assertEquals(boat2.getContainedUnits(), boat1);
-		assertEquals(boat3.getContainedUnits(), boat2);
+		assertFalse(boat2.hasContainedUnits());
+		assertFalse(boat3.hasContainedUnits());
 	}
 }
