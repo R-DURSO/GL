@@ -23,7 +23,7 @@ public class Boat extends Units {
 	private Units containedUnits;
 
 	public Boat (Power owner) {
-		super(owner, BASE_HEALTH, RANGE, MOVEMENT, 1, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
+		super(owner, BASE_HEALTH, MOVEMENT, 1);
 		this.containedUnits = null;
 	}
 	
@@ -53,6 +53,22 @@ public class Boat extends Units {
 	
 	public int getFoodCost() {
 		return COST_PER_TURN;
+	}
+	
+	public int getRange() {
+		return RANGE;
+	}
+
+	public int getDamage() {
+		return DAMAGE;
+	}
+	
+	public int getDefense() {
+		return DEFENSE;
+	}
+	
+	public int getMaxNumber() {
+		return NUMBER_MAX_UNITS;
 	}
 	
 	public String toString() {

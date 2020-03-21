@@ -13,8 +13,9 @@ public class Archer extends Units {
 	public static final int COST_PER_TURN = 3;
 	public static final int NUMBER_MAX_UNITS = 20;
 	
+	
 	public Archer (int numberUnits, Power owner) {
-		super(owner, BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
+		super(owner, BASE_HEALTH, MOVEMENT, numberUnits);
 	}
 
 	public int getTypes() {
@@ -27,6 +28,22 @@ public class Archer extends Units {
 	
 	public int getFoodCost() {
 		return COST_PER_TURN;
+	}
+	
+	public int getRange() {
+		return RANGE;
+	}
+	
+	public int getDamage() {
+		return DAMAGE;
+	}
+	
+	public int getDefense() {
+		return DEFENSE;
+	}
+	
+	public int getMaxNumber() {
+		return NUMBER_MAX_UNITS;
 	}
 	
 	public String toString() {

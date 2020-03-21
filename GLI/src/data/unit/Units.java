@@ -17,30 +17,47 @@ import data.Power;
  */
 public abstract class Units {
 	private int health;
-	private int range;
 	private int movement;
 	private int number;
-	private int damage;
-	private int defense;
-	private int maxNumber;
 	
 	private Power owner;
 	
-	public Units(Power owner, int health, int range, int move, int number, int damage, int defense, int maxNumber) {
+	public Units(Power owner, int health, int move, int number) {
 		this.owner = owner;
 		this.health = health;
-		this.range = range;
 		this.movement = move;
 		this.number = number;
-		this.damage = damage;
-		this.defense = defense;
-		this.maxNumber = maxNumber;
 	}
 	
+	/**
+	 * @return Which Types the Unit is
+	 * @see {@link data.unit.UnitTypes UnitTypes}
+	 */
 	public abstract int getTypes();
 	public abstract int getCost();
 	public abstract int getFoodCost();
-	
+	/**
+	 * <p>get the Range of the {@link data.unit.Units Unit}</p>
+	 * @return
+	 * <ul>
+	 * 		<li>0 if it can't attack</li>
+	 * 		<li>1 if it attack on melee</li>
+	 * 		<li>More if it can attack at distance</li>
+	 * </ul>
+	 */
+	public abstract int getRange();
+	/**
+	 * @return the effective Attack of the {@link data.unit.Units Unit}
+	 */
+	public abstract int getDamage();
+	/**
+	 * @return the effective Defense of the {@link data.unit.Units Unit}
+	 */
+	public abstract int getDefense();
+	/**
+	 * @return the Max you can have on a stack of {@link data.unit.Units Unit}
+	 */
+	public abstract int getMaxNumber();
 	
 	
 	public int getNumber() {
@@ -69,31 +86,11 @@ public abstract class Units {
 		return health;
 	}
 
-
-	public int getRange() {
-		return range;
-	}
-
-
 	public int getMovement() {
 		return movement;
 	}
 
-
-	public int getDamage() {
-		return damage;
-	}
-
-
-	public int getDefense() {
-		return defense;
-	}
-	
-	public int getMaxNumber() {
-		return maxNumber;
-	}
-
 	public String toString() {
-		return ": "+number+", attaque:"+damage+" defense:"+defense;
+		return ": "+number+", attaque:"+getDamage()+" defense:"+getDefense();
 	}
 }

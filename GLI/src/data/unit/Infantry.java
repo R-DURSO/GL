@@ -15,7 +15,7 @@ public class Infantry extends Units {
 	
 
 	public Infantry (int numberUnits, Power owner) {
-		super(owner, BASE_HEALTH, RANGE, MOVEMENT, numberUnits, DAMAGE, DEFENSE, NUMBER_MAX_UNITS);
+		super(owner, BASE_HEALTH, MOVEMENT, numberUnits);
 	}
 
 	public int getTypes() {
@@ -28,6 +28,22 @@ public class Infantry extends Units {
 	
 	public int getFoodCost() {
 		return COST_PER_TURN;
+	}
+	
+	public int getRange() {
+		return RANGE;
+	}
+
+	public int getDamage() {
+		return DAMAGE;
+	}
+	
+	public int getDefense() {
+		return DEFENSE;
+	}
+	
+	public int getMaxNumber() {
+		return NUMBER_MAX_UNITS;
 	}
 	
 	public String toString() {

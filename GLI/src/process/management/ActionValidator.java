@@ -155,8 +155,9 @@ public class ActionValidator {
 		//if has allied, we must check if targetBox is ally's
 		if(boxOwner != powerConcerned && powerConcerned.isAllied()) {
 			Power ally = powerConcerned.getAlly();
-			if(targetBox.getOwner() != ally)
+			if(boxOwner != ally) {
 				throw new IllegalArgumentException("Cette case n'appartient ni à vous, ni à votre allié");
+			}
 		}
 		
 		//check if there is any Units on the fromBox
@@ -186,17 +187,23 @@ public class ActionValidator {
 					//moves Units on the boat
 					Boat boatTarget = ((Boat)unitsOnTarget);
 					if (boatTarget.hasContainedUnits()) {
-						if (boatTarget.getContainedUnitsTypes() == movingUnits.getTypes()) {
-							//You can re-group those Units
-						}
-						else {
+						Units containedUnit = boatTarget.getContainedUnits();
+						//You can re-group same Units Types
+						if (containedUnit.getTypes() != movingUnits.getTypes()) {
 							throw new IllegalArgumentException("Des Unités de types différents sont dans ce bateau");
 						}
+						//But, make sure you dont exceed the limit
+						else if (containedUnit.getNumber() + movingUnits.getNumber() > movingUnits.getTypes()) {
+							throw new IllegalArgumentException("Le déplacement fait dépasser la limite d'unite");
+						}
 					}
-					//boatTarget.setContainedUnits(movingUnits);
 				}
 				else if (movingUnits.getTypes() != unitsOnTarget.getTypes()) {
 					throw new IllegalArgumentException("Des unites d'un type different sont sur le lieu cible");
+				}
+				//But, make sure you dont exceed the limit
+				else if (movingUnits.getNumber() + unitsOnTarget.getNumber() > movingUnits.getTypes()) {
+					throw new IllegalArgumentException("Le déplacement fait dépasser la limite d'unite");
 				}
 			}
 			else {
@@ -218,7 +225,7 @@ public class ActionValidator {
 	 */
 	public boolean pathFinding(Position from, Units units, Position target) {
 		//Get the Power from the Starting Point
-		Power power = map.getBox(from).getOwner();
+		Power powerConcerned = units.getOwner();
 		//How far the Unit can go
 		int unitsMovement = units.getMovement();
 		//HashMap created, with the next Boxes to go
@@ -263,7 +270,7 @@ public class ActionValidator {
 							}
 							else if (visitBox.hasUnit()) {
 								if (visitBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
-									//You can move on a Boat (will check later if you own it)
+									//You can move on a Boat ( TODO check if you own it)
 									if (visitPosition.equals(target)) {
 										return true;
 									}
@@ -278,22 +285,13 @@ public class ActionValidator {
 							GroundBox gdataMap = (GroundBox) visitBox;
 							//if there is a Building, it can be a Wall or Capital
 							if (gdataMap.hasBuilding()) {
-								if ((gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_WALL) && (gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_CAPITAL)) {
-									//if it isn't a Wall, is it a Door that we can go through
-									if (gdataMap.getBuilding().getType() == BuildingTypes.BUILDING_DOOR) {
-										//Does the Door belong to us
-										if (gdataMap.getOwner() == power) {
-											if (visitPosition.equals(target)) {
-												return true;
-											}
-											else {
-												canVisit = true;
-											}
-										}
-										//Do we have an Ally
-										else if (power.isAllied()) {
-											//And does the Door belong to Ally
-											if (gdataMap.getOwner() == power.getAlly()) {
+								if (gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_WALL) {
+									//if it isn't a Wall, is it a Capital
+									if (gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_CAPITAL) {
+										//if it isn't a Wall, is it a Door that we can go through
+										if (gdataMap.getBuilding().getType() == BuildingTypes.BUILDING_DOOR) {
+											//Does the Door belong to us
+											if (gdataMap.getOwner() == powerConcerned) {
 												if (visitPosition.equals(target)) {
 													return true;
 												}
@@ -301,21 +299,45 @@ public class ActionValidator {
 													canVisit = true;
 												}
 											}
-										}
-										//Cannot go trough enemy Door
-									}
-									//canVisit is true because it isn't a Wall or Door
-									else {
-										if (visitPosition.equals(target)) {
-											return true;
+											//Do we have an Ally
+											else if (powerConcerned.isAllied()) {
+												//And does the Door belong to Ally
+												if (gdataMap.getOwner() == powerConcerned.getAlly()) {
+													if (visitPosition.equals(target)) {
+														return true;
+													}
+													else {
+														canVisit = true;
+													}
+												}
+											}
+											//Cannot go trough enemy Door
 										}
 										else {
-											canVisit = true;
+											//canVisit is true because it isn't a Wall, Door or Capital
+											if (visitPosition.equals(target)) {
+												return true;
+											}
+											else {
+												canVisit = true;
+											}
+										}
+									}
+									else {
+										//does Capital belong to us
+										if (gdataMap.getOwner() == powerConcerned) {
+											if (visitPosition.equals(target)) {
+												return true;
+											}
+											else {
+												canVisit = true;
+											}
 										}
 									}
 								}
-								//canVisit stay false because it is a Wall or Capital blocking the path
+								//canVisit stay false because it is a Wall blocking the path
 							}
+							//GroundBox without Building
 							else if (visitPosition.equals(target)) {
 								return true;
 							}
@@ -323,6 +345,8 @@ public class ActionValidator {
 								canVisit = true;
 							}
 						}
+						//TODO Boat that go to a coast to deposit Unit
+						
 						//check if the Box visited can be walk upon
 						if (canVisit) {
 							Position dataToAdd;

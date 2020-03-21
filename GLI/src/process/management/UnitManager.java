@@ -113,10 +113,14 @@ public class UnitManager {
 		}
 	}
 	
+	/**
+	 * check if Unit can attack from a distance
+	 * @param unit, the Unit
+	 * @return true if Unit is ranged
+	 */
 	private boolean isRanged (Units unit) {
 		return unit.getRange() > 1;
 	}
-	
 	
 	/**
 	 * Remove a defined amount of units in a {@link Box}.<p> 
@@ -163,6 +167,7 @@ public class UnitManager {
 	 *  L'unite peut arriver sur un Boat
 	 *  	*-Rentrer dans le bateau
 	 *  	-peut passer de bateau en bateau (comme un pont ?) s'il y en a plusieurs cote à cote
+	 *  	-boat qui va sur terre -> déposer unit
 	 */
 	public void moveUnits(Power powerConcerned, Box fromBox, Box targetBox) {
 		Units movingUnits = fromBox.getUnit();
@@ -201,9 +206,10 @@ public class UnitManager {
 		}
 		else {
 			if (targetBoxPower != powerConcerned) {
-				//La case ne nous appartient pas
+				//Box doesn't belong to us
 				if (powerConcerned.isAllied()) {
 					if (powerConcerned.getAlly() != targetBoxPower) {
+						//Not a Ally
 						conquerBox = true;
 					}
 				}
@@ -260,30 +266,32 @@ public class UnitManager {
 		if (targetBox.hasUnit()) {
 			Units attacker = fromBox.getUnit();
 			Units defender = targetBox.getUnit();
-			//calcul des degats par le nombre, et chaque point de defense reduit de 10% les degats subits
+			//calculate damage done, with each defense reducing damage by 10%
 			double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
-			//Les défenseurs subissent les dégats
+			//defense take those damage
 			int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
 			int casualityAtt = 0;
-			//Si les attaquant sont à portés, ils ne subissent pas de perte
+			//If attacker are range, they dont take damage
+//			System.out.println("degat de l'attaque: "+AttackerDamageDealt+"\nMort des defenseurs: "+casualityDef);
 			if (!isRanged(attacker)) {
-				//Round 2, contre-attaque si pas à distance
-				//int DefenderDamageDealt = (defender.getDamage() - attacker.getDefense()) * defender.getNumber();
-				double DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense()) / 10.0));
-				//Les attaquant subissent les dégats
+				//Round 2, counter-strike (attacker gain 10% damage reduction)
+				double DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense() + 1) / 10.0));
+//				System.out.println("degat de la defense: "+DefenderDamageDealt+"\t");
+				//attacker take dammage
 				casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
 			}
-			//Les 2 Units perdent en nombres
+//			System.out.println("Mort des attaquant: "+casualityAtt+"\n\n");
+			//Those 2 Unit loses Units
 			removeUnits(targetBox.getOwner(), targetBox, casualityDef);
 			removeUnits(fromBox.getOwner(), fromBox, casualityAtt);
-			//s'il n'y a plus de défenseur, ils sont morts
+			//If there isn't defender, they are dead
 			if (!targetBox.hasUnit()) {
-				//Les defenseurs sont morts !
-				//s'il reste des attaquants...
+				//Defender are dead !
+				//if there is attacker...
 				if (fromBox.hasUnit()) {
-					//La place est libre
+					//the Box is our to take
 					if (!isRanged(attacker)) {
-						//Les unités qui attaquent à distance ne se déplace pas après le combat
+						//But if Unit is Ranged, it doesn't move
 						moveUnits(powerConcerned, fromBox, targetBox);
 					}
 				}
@@ -292,12 +300,12 @@ public class UnitManager {
 		else if (targetBox instanceof GroundBox) {
 			GroundBox targetGBox = (GroundBox)targetBox;
 			if (targetGBox.hasBuilding()) {
-				//attaque du batiment
+				//attacking a building
 				Units attacker = fromBox.getUnit();
 				Building buildDef = targetGBox.getBuilding();
-				//calcul des degats par le nombre, et chaque point de defense reduit de 10% les degats subits
+				//calculate damage done, with each defense reducing damage by 10%
 				double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - buildDef.getDefense()) / 10.0));
-				//Le batiment subit les dégats
+				//Building take damage
 				buildDef.applyDamage((int)AttackerDamageDealt);
 				if (buildDef.isDestroyed()) {
 					targetGBox.setBuilding(null);

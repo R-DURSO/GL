@@ -135,15 +135,41 @@ public class TestUnits {
 		map.getBox(target).setOwner(powers[1]);
 		powers[1].addBox(map.getBox(target));
 		
-		int nbUnit = 20;
-		UnitManager.getInstance().addUnits(powers[0], map.getBox(from), UnitTypes.UNIT_INFANTRY, nbUnit);
-		UnitManager.getInstance().addUnits(powers[1], map.getBox(target), UnitTypes.UNIT_INFANTRY, nbUnit/2);
+		int nbUnitAtt = 40;
+		int nbUnitDef = 10;
+		UnitManager.getInstance().addUnits(powers[0], map.getBox(from), UnitTypes.UNIT_INFANTRY, nbUnitAtt);
+		UnitManager.getInstance().addUnits(powers[1], map.getBox(target), UnitTypes.UNIT_INFANTRY, nbUnitDef);
 		UnitManager.getInstance().attack(powers[0], map.getBox(from), map.getBox(target));
 		if (map.getBox(from).hasUnit()) {
-			assertNotEquals(nbUnit, map.getBox(from).getUnit().getNumber());
+			assertNotEquals(nbUnitAtt, map.getBox(from).getUnit().getNumber());
+			assertNotEquals(nbUnitDef, map.getBox(target).getUnit().getNumber());
 		}
 		else {
-			assertNotEquals(nbUnit, map.getBox(target).getUnit().getNumber());
+			assertNotEquals(nbUnitAtt, map.getBox(target).getUnit().getNumber());
+		}
+	}
+	
+	@Test
+	public void createUnitAttackRanged() {
+		
+		from = new Position(0,1);
+		map.getBox(from).setOwner(powers[0]);
+		powers[0].addBox(map.getBox(from));
+		
+		target = new Position(2,2);
+		map.getBox(target).setOwner(powers[1]);
+		powers[1].addBox(map.getBox(target));
+		
+		int nbUnitAtt = 20;
+		int nbUnitDef = 5;
+		UnitManager.getInstance().addUnits(powers[0], map.getBox(from), UnitTypes.UNIT_ARCHER, nbUnitAtt);
+		UnitManager.getInstance().addUnits(powers[1], map.getBox(target), UnitTypes.UNIT_INFANTRY, nbUnitDef);
+		UnitManager.getInstance().attack(powers[0], map.getBox(from), map.getBox(target));
+		if (map.getBox(target).hasUnit()) {
+			assertNotEquals(nbUnitDef, map.getBox(target).getUnit().getNumber());
+		}
+		else {
+			assertEquals(nbUnitAtt, map.getBox(from).getUnit().getNumber());
 		}
 	}
 	

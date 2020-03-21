@@ -196,6 +196,7 @@ public class TestActionValidator {
 		
 		//obstacles
 		((GroundBox)map.getBox(0,1)).setBuilding(new Wall());
+		map.getBox(mapSize -1, 1).setOwner(powers[2]);
 		((GroundBox)map.getBox(mapSize - 1, 1)).setBuilding(new Door());
 		
 		//2 powers are allied here
