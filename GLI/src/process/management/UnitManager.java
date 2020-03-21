@@ -156,23 +156,14 @@ public class UnitManager {
 		}
 	}
 	
-	/*
-	 * TODO MoveUnit a modifier
-	 * 	L'unite passe sur plusieurs case
-	 * 		-Convertir path en Array de Box ou faire cas par cas depuis un String
-	 * 		-move Unit en 2 cas,
-	 * 			-1 pour le deplacement global
-	 * 			*-l'autre pour la gestion de Box en Box
-	 *  L'unite peut arriver sur un Boat
-	 *  	-peut passer de bateau en bateau (comme un pont ?) s'il y en a plusieurs cote à cote
-	 */
-	public void pathMoving(Power powerConcerned, Box[] pathToTake) {
+	
+	public void moveUnits(Power powerConcerned, Box[] pathToTake) {
 		for (int i=0; i<pathToTake.length; i++) {
-			moveUnits(powerConcerned, pathToTake[i], pathToTake[i+1]);
+			moveUnitsBox(powerConcerned, pathToTake[i], pathToTake[i+1]);
 		}
 	}
 	
-	public void moveUnits(Power powerConcerned, Box fromBox, Box targetBox) {
+	public void moveUnitsBox(Power powerConcerned, Box fromBox, Box targetBox) {
 		Units movingUnits = fromBox.getUnit();
 		if (targetBox instanceof WaterBox) {
 			if (targetBox.hasUnit()) {
@@ -307,7 +298,7 @@ public class UnitManager {
 					//the Box is our to take
 					if (!isRanged(attacker)) {
 						//But if Unit is Ranged, it doesn't move
-						moveUnits(powerConcerned, fromBox, targetBox);
+						moveUnitsBox(powerConcerned, fromBox, targetBox);
 					}
 				}
 			}
@@ -323,12 +314,12 @@ public class UnitManager {
 				//Building take damage
 				buildDef.applyDamage((int)AttackerDamageDealt);
 				if (buildDef.isDestroyed()) {
-					targetGBox.setBuilding(null);
-					moveUnits(powerConcerned, fromBox, targetBox);
+					BuildingManager.getInstance().destroyBuilding(targetGBox);
+					moveUnitsBox(powerConcerned, fromBox, targetBox);
 				}
 			}
 			else {
-				moveUnits(powerConcerned, fromBox, targetBox);
+				moveUnitsBox(powerConcerned, fromBox, targetBox);
 			}
 		}
 		else {

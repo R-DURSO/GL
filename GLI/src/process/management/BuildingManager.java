@@ -83,13 +83,14 @@ public class BuildingManager {
 	 * @param powerConcerned the power who want to destroy a building
 	 * @param targetBox where the building to be destroy is
 	 */
-	public void destroyBuilding(Power powerConcerned, GroundBox targetBox) {
+	public void destroyBuilding(GroundBox targetBox) {
+		Power powerConcerned = targetBox.getOwner();
 		Building building = targetBox.getBuilding();
 		//if building is a production building, we can't just destroy it
-		if(building instanceof BuildingProduct) {
+		if (building instanceof BuildingProduct) {
 			BuildingProduct buildingProduct = (BuildingProduct)building;
 			//we check if building is enabled
-			if(buildingProduct.getBuildTime() > 0) {
+			if (buildingProduct.getBuildTime() > 0) {
 				//we get resource type and production
 				int resourceType = buildingProduct.getProductionType();
 				int resourceProdPerTurn = buildingProduct.getProductionPerTurn();

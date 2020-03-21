@@ -70,9 +70,9 @@ public class TestBoat {
 		UnitManager.getInstance().addUnits(power, map.getBox(wPos3), UnitTypes.UNIT_BOAT, 1);
 		Boat boat3 = (Boat) map.getBox(wPos3).getUnit();
 		
-		UnitManager.getInstance().moveUnits(power, map.getBox(wPos1), map.getBox(wPos2));
-		UnitManager.getInstance().moveUnits(power, map.getBox(wPos2), map.getBox(wPos3));
-		UnitManager.getInstance().moveUnits(power, map.getBox(wPos3), map.getBox( new Position(map.getSize()/2, map.getSize()/2) ));
+		UnitManager.getInstance().moveUnitsBox(power, map.getBox(wPos1), map.getBox(wPos2));
+		UnitManager.getInstance().moveUnitsBox(power, map.getBox(wPos2), map.getBox(wPos3));
+		UnitManager.getInstance().moveUnitsBox(power, map.getBox(wPos3), map.getBox( new Position(map.getSize()/2, map.getSize()/2) ));
 		
 //		System.out.println(boat3);
 		

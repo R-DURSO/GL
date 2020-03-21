@@ -5,14 +5,12 @@ import data.building.BuildingTypes;
 public class Wall extends BuildingSpecial{
 	private static final int BUILD_TIME = 0;
 	public static final int COST = 100;
-	private static final int BASE_HEALTH = 3;
+	private static final int BASE_HEALTH = 20;
 	
 	public Wall() {
 		super(BUILD_TIME, BASE_HEALTH);
 	}
 	
-
-	@Override
 	public int getType() {
 		return BuildingTypes.BUILDING_WALL;
 	}

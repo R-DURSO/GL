@@ -11,7 +11,7 @@ import data.building.BuildingTypes;
 public class Capital extends BuildingSpecial {
 	private static final int BUILD_TIME = 0;
 	public static final int COST = 0;
-	private static final int BASE_HEALTH = 3;
+	private static final int BASE_HEALTH = 50;
 	
 	/*Specific to Capital: level system with gold requirements, each level will increase ressources production of the Capital
  		==> will produce all ressources

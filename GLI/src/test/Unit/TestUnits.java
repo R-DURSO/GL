@@ -103,7 +103,7 @@ public class TestUnits {
 		UnitManager.getInstance().addUnits(power, map.getBox(from), UnitTypes.UNIT_INFANTRY, 5);
 		Units unit = map.getBox(from).getUnit();
 		
-		UnitManager.getInstance().moveUnits(power, map.getBox(from), map.getBox(target));
+		UnitManager.getInstance().moveUnitsBox(power, map.getBox(from), map.getBox(target));
 		assertEquals(null, map.getBox(from).getUnit());
 		
 		assertEquals(unit, map.getBox(target).getUnit());
@@ -124,7 +124,7 @@ public class TestUnits {
 		UnitManager.getInstance().addUnits(power, map.getBox(from), UnitTypes.UNIT_CAVALRY, 5);
 		Units unit = map.getBox(from).getUnit();
 		
-		UnitManager.getInstance().moveUnits(power, map.getBox(from), map.getBox(target));
+		UnitManager.getInstance().moveUnitsBox(power, map.getBox(from), map.getBox(target));
 		assertEquals(null, map.getBox(from).getUnit());
 		assertEquals(unit, map.getBox(target).getUnit());
 		assertEquals(powerAllied, map.getBox(target).getOwner());
@@ -187,17 +187,50 @@ public class TestUnits {
 		fromBox.setOwner(powers[0]);
 		powers[0].addBox(fromBox);
 		
-		target = new Position(2,2);
+		target = new Position(1,1);
 		Box targetBox = map.getBox(target);
 		targetBox.setOwner(powers[1]);
 		powers[1].addBox(targetBox);
 		
-		int nbUnit = 20;
+		int nbUnit = 34;
 		GroundBox targetGBox = (GroundBox) targetBox;
 		
 		UnitManager.getInstance().addUnits(powers[0], fromBox, UnitTypes.UNIT_INFANTRY, nbUnit);
 		Units unit = fromBox.getUnit();
-		BuildingManager.getInstance().addNewBuilding(powers[1], BuildingTypes.BUILDING_WINDMILL, targetGBox);
+		BuildingManager.getInstance().addNewBuilding(powers[1], BuildingTypes.BUILDING_WALL, targetGBox);
+		int baseHP = targetGBox.getBuilding().getHealth();
+		
+		UnitManager.getInstance().attack(powers[0], fromBox, targetBox);
+		
+		if (fromBox.hasUnit()) {
+//			System.out.println("le batiment tiens toujours");
+			assertNotEquals(baseHP, ((GroundBox) targetBox).getBuilding().getHealth());
+		}
+		else {
+//			System.out.println("le batiment s'est effondre");
+			assertEquals(unit, targetBox.getUnit());
+			assertEquals(false, targetGBox.hasBuilding());
+		}
+	}
+	
+	@Test
+	public void createUnitAttackBuildingBySiegeUnit() {
+		
+		from = new Position(0,1);
+		Box fromBox = map.getBox(from);
+		fromBox.setOwner(powers[0]);
+		powers[0].addBox(fromBox);
+		
+		target = new Position(1,1);
+		Box targetBox = map.getBox(target);
+		targetBox.setOwner(powers[1]);
+		powers[1].addBox(targetBox);
+		
+		GroundBox targetGBox = (GroundBox) targetBox;
+		
+		UnitManager.getInstance().addUnits(powers[0], fromBox, UnitTypes.UNIT_BATTERING_RAM, 1);
+		Units unit = fromBox.getUnit();
+		BuildingManager.getInstance().addNewBuilding(powers[1], BuildingTypes.BUILDING_WALL, targetGBox);
 		int baseHP = targetGBox.getBuilding().getHealth();
 		
 		UnitManager.getInstance().attack(powers[0], fromBox, targetBox);

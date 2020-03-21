@@ -233,7 +233,7 @@ public class ActionValidator {
 		//add phantom unit on the target box, to ensure that no other unit could go there
 		targetBox.setUnit(new PhantomUnit());
 		Box[] ListBox = convertPathToBoxArray(pathFinding, from);
-		return new ActionMove(powerConcerned, from, target, ListBox);
+		return new ActionMove(powerConcerned, ListBox);
 	}
 	
 	/**

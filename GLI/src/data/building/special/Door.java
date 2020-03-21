@@ -5,7 +5,7 @@ import data.building.BuildingTypes;
 public class Door extends BuildingSpecial{
 	private static final int BUILD_TIME = 0;
 	public static final int COST = 100;
-	private static final int BASE_HEALTH = 3;
+	private static final int BASE_HEALTH = 10;
 	
 	public Door() {
 		super(BUILD_TIME, BASE_HEALTH);

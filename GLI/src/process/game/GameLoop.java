@@ -121,9 +121,8 @@ public class GameLoop {
 		for(Action a : arrayList) {
 			ActionMove action = (ActionMove)a;
 			Power powerConcerned = action.getPowerConcerned();
-			Box fromBox = map.getBox(action.getFrom());
-			Box targetBox = map.getBox(action.getTarget());
-			UnitManager.getInstance().moveUnits(powerConcerned, fromBox, targetBox);
+			Box[] path = action.getPath();
+			UnitManager.getInstance().moveUnits(powerConcerned, path);
 		}
 	}
 
@@ -149,10 +148,9 @@ public class GameLoop {
 	private void executeActionsDestroyBuilding(ArrayList<Action> arrayList) {
 		for(Action a : arrayList) {
 			ActionDestroyBuilding action = (ActionDestroyBuilding)a;
-			Power powerConcerned = action.getPowerConcerned();
 			Position targetPosition = action.getTarget();
 			Box targetBox = map.getBox(targetPosition);
-			BuildingManager.getInstance().destroyBuilding(powerConcerned, (GroundBox)targetBox);
+			BuildingManager.getInstance().destroyBuilding((GroundBox)targetBox);
 		}
 	}
 
