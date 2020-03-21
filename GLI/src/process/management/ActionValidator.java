@@ -98,22 +98,37 @@ public class ActionValidator {
 		Box fromBox = getBoxFromMap(from);
 		Box targetBox = getBoxFromMap(target);
 		
-		//check if from Box is powerConcerned's
-		if (fromBox.getOwner() != powerConcerned)
-			throw new IllegalArgumentException("Cette case n'appartient pas a " + powerConcerned.getName());
-		
 		//check if there is any unit on the fromBox
 		if (!fromBox.hasUnit()) {
 			throw new IllegalArgumentException("Il n'y a pas d'unite pour lancer l'attaque");
 		}
+		
+		Units unitsAtt = fromBox.getUnit();
+		
+		if (!targetBox.hasUnit()) {
+			//Pas d'unite a attaquer, mais peut-etre un batiment
+			if (targetBox instanceof WaterBox) {
+				throw new IllegalArgumentException("Vous attaquez une case d'eau vide");
+			}
+			else {
+				if (!( (GroundBox)fromBox).hasBuilding()) {
+					throw new IllegalArgumentException("Il n'y a pas d'unite ou de batiment a attaquer");
+				}
+			}
+		}
+		
+		//check if from Box is powerConcerned's
+		if (unitsAtt.getOwner() != powerConcerned)
+			throw new IllegalArgumentException("Ces unites n'appartiennent pas a " + powerConcerned.getName());
+		
 		//check if units are on range
-		if (!isUnitsOnRange(from, fromBox.getUnit().getRange(), target)) {
+		if (!isUnitsOnRange(from, unitsAtt.getRange(), target)) {
 			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
 		}
 		//check if there is units on target, in this case, check the owner of those units
 		//if player himself or his ally, no attack
-		if (!targetBox.hasUnit() || targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAlly()) {
-			throw new IllegalArgumentException("Vous ne pouvez pas attaquer ici");
+		if ((targetBox.getOwner() == powerConcerned) || (targetBox.getOwner() == powerConcerned.getAlly())) {
+			throw new IllegalArgumentException("Vous ne pouvez pas attaquer votre terrain ou celui d'un allie");
 		}
 		
 		powerConcerned.removeActionPoint();

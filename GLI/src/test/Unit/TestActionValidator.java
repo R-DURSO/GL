@@ -1,5 +1,6 @@
 package test.Unit;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -41,7 +42,7 @@ public class TestActionValidator {
 		placeUnitsAndBuildings();
 		actionValidator = new ActionValidator(map);
 	}
-
+	
 	@Test
 	public void testAttackUnitSuccess1() throws IllegalArgumentException{
 		actionValidator.createActionAttack(powers[2], new Position(mapSize - 1, mapSize - 3), new Position(mapSize - 1, mapSize - 2));
@@ -113,10 +114,17 @@ public class TestActionValidator {
 	
 	@Test 
 	public void testMoveAlly() throws IllegalArgumentException{
+		Position from = new Position(mapSize - 1, mapSize - 2);
+		Position target = new Position(mapSize - 4, mapSize - 3);
 		//deplacer le cavalier chez l'allie
-		actionValidator.createActionMove(powers[1], new Position(mapSize -1, mapSize -2), new Position(mapSize -4, mapSize -3));
+		actionValidator.createActionMove(powers[1], from, target);
+		assertEquals(new PhantomUnit().getTypes(), map.getBox(target).getUnit().getTypes());
+		
 		//le ramener a la base
-		actionValidator.createActionMove(powers[1], new Position(mapSize -4, mapSize -3), new Position(mapSize -1, mapSize -2));
+		map.getBox(target).setUnit(map.getBox(from).getUnit());
+		map.getBox(from).setUnit(null);
+		actionValidator.createActionMove(powers[1], target, from);
+		assertEquals(new PhantomUnit().getTypes(), map.getBox(from).getUnit().getTypes());
 	}
 	
 	@Test
@@ -183,10 +191,11 @@ public class TestActionValidator {
 		//we add several units on different places
 		map.getBox(0,0).setUnit(new Archer(20, powers[0]));
 		map.getBox(0,mapSize - 1).setUnit(new Infantry(20, powers[3]));
-		map.getBox(mapSize-1, 2).setOwner(powers[1]);
-		map.getBox(mapSize-4, mapSize-3).setOwner(powers[0]);
-		map.getBox(mapSize - 1,2).setUnit(new Archer(20, powers[2]));
-		map.getBox(mapSize - 1 ,mapSize - 2).setUnit(new Cavalry(20, powers[1]));
+		map.getBox(mapSize - 1, mapSize - 2).setOwner(powers[1]);
+		map.getBox(mapSize - 1, mapSize - 2).setUnit(new Cavalry(20, powers[1]));
+		map.getBox(mapSize - 4, mapSize - 3).setOwner(powers[0]);
+		map.getBox(mapSize - 1, mapSize - 3).setOwner(powers[2]);
+		map.getBox(mapSize - 1, mapSize - 3).setUnit(new Archer(20, powers[2]));
 		
 		//and buildings
 		((GroundBox)map.getBox(mapSize/2 -1, 0)).setBuilding(new Barrack());
