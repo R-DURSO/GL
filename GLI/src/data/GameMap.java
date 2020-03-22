@@ -21,7 +21,10 @@ public class GameMap {
 	}
 	
 	public Box getBox(Position position) {
-		return boxes[position.getY()][position.getX()];
+		if (position != null) {
+			return boxes[position.getY()][position.getX()];
+		}
+		return null;
 	}
 
 	public Position getLeftPos(Position position) {

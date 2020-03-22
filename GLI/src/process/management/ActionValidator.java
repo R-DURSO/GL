@@ -605,6 +605,7 @@ public class ActionValidator {
 			switch(d) {
 			case 0:
 				wBox = map.getBox(target);
+				break;
 			case 1:
 				wBox = map.getBox(map.getUpPos(target));
 				break;
@@ -621,8 +622,10 @@ public class ActionValidator {
 				wBox = null;
 				break;
 			}
-			if (wBox instanceof WaterBox) {
-				return true;
+			if (wBox != null) {
+				if (wBox instanceof WaterBox) {
+					return true;
+				}
 			}
 		}
 		return false;
