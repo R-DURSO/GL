@@ -293,8 +293,6 @@ public class ActionValidator {
 					Position visitPosition = visiting.get(path);
 					//visitBox get the Box on the Map
 					Box visitBox = map.getBox(visitPosition);
-					//visitPower get Power of visitBox
-					Power visitPower = visitBox.getOwner();
 					
 					//if we haven't visited the Position
 					if (!visited.contains(visitPosition)) {
@@ -302,38 +300,6 @@ public class ActionValidator {
 						checkUnit = false;
 						canVisit = false;
 						
-						/*
-						if (visitBox.hasUnit()) {
-							if (visitBox.getUnit().getOwner() != powerConcerned) {
-								if (Allied) {
-									if (visitBox.getUnit().getOwner() != Ally) {
-										//Pas notre allie
-									}
-									else {
-										//there is Ally unit, we can continue our visit, but can't stop here
-										canVisit = true;
-									}
-								}
-								else {
-									//There is ennemy Unit on the way
-								}
-							}
-							else {
-								//Our own Box, with our Unit
-								canVisit = true;
-							}
-						}
-						else {
-							//no Unit here
-							//verification about the Box made earlier
-							if (visitPosition.equals(target)) {
-								return path;
-							}
-							else {
-								canVisit = true;
-							}
-						}
-						*/
 						
 						if (visitBox instanceof WaterBox) {
 							//On the sea
@@ -347,12 +313,7 @@ public class ActionValidator {
 									//there is a Boat
 									if (visitBox.getUnit().getOwner() == powerConcerned) {
 										//You can go on your own boat
-										if (visitPosition.equals(target)) {
-											return path;
-										}
-										else {
-											canVisit = true;
-										}
+										checkUnit = true;
 									}
 									//Boat is controlled by another power
 								}
@@ -371,123 +332,122 @@ public class ActionValidator {
 										if (visitGBox.getBuilding().getType() == BuildingTypes.BUILDING_DOOR) {
 											//Does the Door belong to us
 											if (visitGBox.getOwner() == powerConcerned) {
-												if (visitPosition.equals(target)) {
-													return path;
-												}
-												else {
-													canVisit = true;
-												}
+												checkUnit = true;
 											}
 											//Do we have an Ally
 											else if (Allied) {
 												//And does the Door belong to Ally
 												if (visitGBox.getOwner() == powerConcerned.getAlly()) {
-													if (visitPosition.equals(target)) {
-														return path;
-													}
-													else {
-														canVisit = true;
-													}
+													checkUnit = true;
 												}
 											}
 											//Cannot go trough enemy Door
 										}
 										else {
 											//canVisit is true because it isn't a Wall, Door or Capital
-											if (visitPosition.equals(target)) {
-												return path;
-											}
-											else {
-												canVisit = true;
-											}
+											checkUnit = true;
 										}
 									}
 									else {
 										//does Capital belong to us
 										if (visitGBox.getOwner() == powerConcerned) {
-											if (visitPosition.equals(target)) {
-												return path;
-											}
-											else {
-												canVisit = true;
-											}
+											checkUnit = true;
 										}
 									}
 								}
 								//canVisit stay false because it is a Wall blocking the path
 							}
 							//GroundBox without Building
-							else if (visitPosition.equals(target)) {
-								return path;
-							}
 							else {
-								canVisit = true;
+								checkUnit = true;
 							}
 						}
 						else if ((visitBox instanceof GroundBox) && (units.getTypes() == UnitTypes.UNIT_BOAT)) {
 							//Boat that go to a coast to deposit Unit
 							if (isNearWater(visitPosition)) {
 								//Coast near Water you can go on
-								if (!(visitBox.hasUnit())) {
-									//Peut passer pour déposer des unités s'il n'y en a pas
-									if (visitPosition.equals(target)) {
-										return path;
+								checkUnit = true;
+							}
+						}
+						
+						if (checkUnit) {
+							if (visitBox.hasUnit()) {
+								Units visitUnit = visitBox.getUnit();
+								if (visitBox.getUnit().getOwner() != powerConcerned) {
+									if (Allied) {
+										if (visitBox.getUnit().getOwner() != Ally) {
+											//there is Ally unit, we can continue our visit, but can't stop here
+											canVisit = true;
+										}
+										//Not our Ally
+									}
+									//There is ennemy Unit on the way
+								}
+								else {
+									//Our own Box, with our Unit
+									if (visitUnit.getTypes() == UnitTypes.UNIT_BOAT) {
+										//Our own Boat
+										if (visitPosition.equals(target)) {
+											return path;
+										}
+										else {
+											canVisit = true;
+										}
+									}
+									else if (visitUnit.getTypes() == units.getTypes()) {
+										//Same UnitTypes, we can go there
+										if (visitPosition.equals(target)) {
+											return path;
+										}
+										else {
+											canVisit = true;
+										}
 									}
 									else {
+										//Nor a Boat or Same UnitTypes, we can only visit
 										canVisit = true;
 									}
 								}
 							}
-						}
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						//check if the Box visited can be walk upon
-						if (canVisit) {
-							Position dataToAdd;
-							for (int d=1 ; d<=4 ; d++) {
-								switch(d) {
-								case 1:
-									dataToAdd = map.getUpPos(visitPosition);
-									break;
-								case 2:
-									dataToAdd = map.getLeftPos(visitPosition);
-									break;
-								case 3:
-									dataToAdd = map.getRightPos(visitPosition);
-									break;
-								case 4:
-									dataToAdd = map.getDownPos(visitPosition);
-									break;
-								default:
-									dataToAdd = null;
-									break;
+							else {
+								//no Unit here
+								//verification about the Box made earlier
+								if (visitPosition.equals(target)) {
+									return path;
 								}
-								if (dataToAdd != null) {
-									toVisit.put(path+Integer.toString(d),dataToAdd);
+								else {
+									canVisit = true;
 								}
 							}
+							
+							//check if the Box visited can be walk upon
+							if (canVisit) {
+								Position dataToAdd;
+								for (int d=1 ; d<=4 ; d++) {
+									switch(d) {
+									case 1:
+										dataToAdd = map.getUpPos(visitPosition);
+										break;
+									case 2:
+										dataToAdd = map.getLeftPos(visitPosition);
+										break;
+									case 3:
+										dataToAdd = map.getRightPos(visitPosition);
+										break;
+									case 4:
+										dataToAdd = map.getDownPos(visitPosition);
+										break;
+									default:
+										dataToAdd = null;
+										break;
+									}
+									if (dataToAdd != null) {
+										toVisit.put(path+Integer.toString(d),dataToAdd);
+									}
+								}
+								//Added all near Boxes
+							}
+							//end of the visit
 						}
 						//Added the Position to Visited and Remove it in toVisit 
 						visited.add(visitPosition);
