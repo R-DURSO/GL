@@ -52,10 +52,20 @@ public class Power {
 		return resources[resourceType-1 ].getAmount();
 	}
 	
+	/**
+	 * @return true is Power has an Ally
+	 */
 	public boolean isAllied() {
 		return ally != null;
 	}
 	
+	/**
+	 * @return	<ul>
+	 * 				<li>the Ally of Power</li>
+	 * 				<li>null if Power isn't Allied</li>
+	 * 			</ul>
+	 * @see isAllied()
+	 */
 	public Power getAlly() {
 		return ally;
 	}

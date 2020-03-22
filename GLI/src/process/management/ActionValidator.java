@@ -247,72 +247,130 @@ public class ActionValidator {
 	public String pathFinding(Position from, Units units, Position target) {
 		//Get the Power from the Starting Point
 		Power powerConcerned = units.getOwner();
+		//Get the Allied Power (if there is one)
+		boolean Allied;
+		Power Ally = null;
+		if (powerConcerned.isAllied()) {
+			Ally = powerConcerned.getAlly();
+			Allied = true;
+		}
+		else {
+			Allied = false;
+		}
+		
 		//How far the Unit can go
 		int unitsMovement = units.getMovement();
 		//HashMap created, with the next Boxes to go
 		HashMap<String,Position> visiting = new HashMap<String,Position>(8*unitsMovement);
 		//HashMap created which contains the next Boxes to visit
 		HashMap<String,Position> toVisit = new HashMap<String,Position>(8*unitsMovement);
-		//Boolean that will check if we can visit adjacent Boxes
-		boolean canVisit = false;
 		//ArrayList created, to stock visited Boxes
 		ArrayList<Position> visited = new ArrayList<Position>(4*unitsMovement);
 		//Adding the Starting Box
 		toVisit.put("0", from);
-		//We continue to search for 
+		
+		//Boolean that will check if there is Unit blocking the path
+		boolean checkUnit = false;
+		//Boolean that will check if we can visit adjacent Boxes
+		boolean canVisit = false;
+
+		//We search as far as we can (while there is Box toVisit)
 		while (!toVisit.isEmpty()) {
+			//Clear visiting list, and add those we need to visit next
 			visiting.clear();
 			visiting.putAll(toVisit);
 			toVisit.clear();
+			
 			//Iterator trough all visiting Boxes
 			for (Iterator<String> i = visiting.keySet().iterator(); i.hasNext(); ) {
 				//Get some data from the received Box
-				//path will get the path taken to get here
+				//path is the path taken to get here
 				String path = i.next();
-				//visitPosition get the actual Position
-				Position visitPosition = visiting.get(path);
-				//dataMap get the Box on the Map
-				Box visitBox = map.getBox(visitPosition);
 				//if path is too long, enough Position have been visited, can't go any further
 				if (path.length() <= unitsMovement + 1) {
+				
+					//visitPosition get the actual Position
+					Position visitPosition = visiting.get(path);
+					//visitBox get the Box on the Map
+					Box visitBox = map.getBox(visitPosition);
+					//visitPower get Power of visitBox
+					Power visitPower = visitBox.getOwner();
+					
 					//if we haven't visited the Position
 					if (!visited.contains(visitPosition)) {
-						//reset canVisit, we will see if we can go further
+						//reset canVisit and checkUnit, we will see if we can go further
+						checkUnit = false;
 						canVisit = false;
-						if (visitBox instanceof WaterBox) {
-							if (units.getTypes() == UnitTypes.UNIT_BOAT) {
-								//A boat on the sea
-								if (visitPosition.equals(target)) {
-									return path;
-								}
-								else {
-									canVisit = true;
-								}
-							}
-							else if (visitBox.hasUnit()) {
-								if (visitBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
-									//You can move on a Boat ( TODO check if you own it)
-									if (visitPosition.equals(target)) {
-										return path;
+						
+						/*
+						if (visitBox.hasUnit()) {
+							if (visitBox.getUnit().getOwner() != powerConcerned) {
+								if (Allied) {
+									if (visitBox.getUnit().getOwner() != Ally) {
+										//Pas notre allie
 									}
 									else {
+										//there is Ally unit, we can continue our visit, but can't stop here
 										canVisit = true;
 									}
 								}
+								else {
+									//There is ennemy Unit on the way
+								}
 							}
+							else {
+								//Our own Box, with our Unit
+								canVisit = true;
+							}
+						}
+						else {
+							//no Unit here
+							//verification about the Box made earlier
+							if (visitPosition.equals(target)) {
+								return path;
+							}
+							else {
+								canVisit = true;
+							}
+						}
+						*/
+						
+						if (visitBox instanceof WaterBox) {
+							//On the sea
+							if (units.getTypes() == UnitTypes.UNIT_BOAT) {
+								//A boat on the sea
+								checkUnit = true;
+							}
+							else if (visitBox.hasUnit()) {
+								//check if there is a boat you can move on
+								if (visitBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
+									//there is a Boat
+									if (visitBox.getUnit().getOwner() == powerConcerned) {
+										//You can go on your own boat
+										if (visitPosition.equals(target)) {
+											return path;
+										}
+										else {
+											canVisit = true;
+										}
+									}
+									//Boat is controlled by another power
+								}
+							}
+							//Not a Boat and there isn't a Unit, can't go through Water
 						}
 						else if ((visitBox instanceof GroundBox) && (units.getTypes() != UnitTypes.UNIT_BOAT)) {
 							//A man on land
-							GroundBox gdataMap = (GroundBox) visitBox;
+							GroundBox visitGBox = (GroundBox) visitBox;
 							//if there is a Building, it can be a Wall or Capital
-							if (gdataMap.hasBuilding()) {
-								if (gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_WALL) {
+							if (visitGBox.hasBuilding()) {
+								if (visitGBox.getBuilding().getType() != BuildingTypes.BUILDING_WALL) {
 									//if it isn't a Wall, is it a Capital
-									if (gdataMap.getBuilding().getType() != BuildingTypes.BUILDING_CAPITAL) {
+									if (visitGBox.getBuilding().getType() != BuildingTypes.BUILDING_CAPITAL) {
 										//if it isn't a Wall, is it a Door that we can go through
-										if (gdataMap.getBuilding().getType() == BuildingTypes.BUILDING_DOOR) {
+										if (visitGBox.getBuilding().getType() == BuildingTypes.BUILDING_DOOR) {
 											//Does the Door belong to us
-											if (gdataMap.getOwner() == powerConcerned) {
+											if (visitGBox.getOwner() == powerConcerned) {
 												if (visitPosition.equals(target)) {
 													return path;
 												}
@@ -321,9 +379,9 @@ public class ActionValidator {
 												}
 											}
 											//Do we have an Ally
-											else if (powerConcerned.isAllied()) {
+											else if (Allied) {
 												//And does the Door belong to Ally
-												if (gdataMap.getOwner() == powerConcerned.getAlly()) {
+												if (visitGBox.getOwner() == powerConcerned.getAlly()) {
 													if (visitPosition.equals(target)) {
 														return path;
 													}
@@ -346,7 +404,7 @@ public class ActionValidator {
 									}
 									else {
 										//does Capital belong to us
-										if (gdataMap.getOwner() == powerConcerned) {
+										if (visitGBox.getOwner() == powerConcerned) {
 											if (visitPosition.equals(target)) {
 												return path;
 											}
@@ -366,7 +424,44 @@ public class ActionValidator {
 								canVisit = true;
 							}
 						}
-						//TODO Boat that go to a coast to deposit Unit
+						else if ((visitBox instanceof GroundBox) && (units.getTypes() == UnitTypes.UNIT_BOAT)) {
+							//Boat that go to a coast to deposit Unit
+							if (isNearWater(visitPosition)) {
+								//Coast near Water you can go on
+								if (!(visitBox.hasUnit())) {
+									//Peut passer pour déposer des unités s'il n'y en a pas
+									if (visitPosition.equals(target)) {
+										return path;
+									}
+									else {
+										canVisit = true;
+									}
+								}
+							}
+						}
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						
 						//check if the Box visited can be walk upon
 						if (canVisit) {
@@ -394,11 +489,14 @@ public class ActionValidator {
 								}
 							}
 						}
+						//Added the Position to Visited and Remove it in toVisit 
+						visited.add(visitPosition);
 					}
+					//visited has already seen visitPosition
 				}
-				//Added the Position to Visited and Remove it in toVisit 
-				visited.add(visitPosition);
+				//too far to reach
 			}
+			//No more visiting Boxes
 		}
 		//La node stock un code pour retrouver son chemin (String path)
 		//Si on atteins ce point du code, le chemin n'a pas été trouvé
