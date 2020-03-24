@@ -146,6 +146,7 @@ public class TestActionValidator {
 		
 		//le ramener a la base
 		map.getBox(target).setUnit(map.getBox(from).getUnit());
+		map.getBox(target).getUnit().resetIsMoving();
 		map.getBox(from).setUnit(null);
 		actionValidator.createActionMove(powers[1], target, from);
 		assertEquals(new PhantomUnit(powers[1], map.getBox(target).getUnit().getTypes()).getTypes(), map.getBox(from).getUnit().getTypes());

@@ -161,6 +161,7 @@ public class UnitManager {
 		for (int i=0; i<pathToTake.length - 1; i++) {
 			moveUnitsBox(powerConcerned, pathToTake[i], pathToTake[i+1]);
 		}
+		pathToTake[pathToTake.length-1].getUnit().resetIsMoving();
 	}
 	
 	public void moveUnitsBox(Power powerConcerned, Box fromBox, Box targetBox) {

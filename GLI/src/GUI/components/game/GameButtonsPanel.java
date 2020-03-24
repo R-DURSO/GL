@@ -86,6 +86,7 @@ public class GameButtonsPanel extends JPanel{
 	class ActionQuit implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			//c'est deja la commande pour quitter?
 		}
 	}
 }

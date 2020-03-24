@@ -171,7 +171,11 @@ public class ActionValidator {
 		Power UnitsOwner = movingUnits.getOwner();
 		
 		if (UnitsOwner != powerConcerned) {
-			throw new IllegalArgumentException("Vous essayer de bouger des unites qui ne vous appartiennent pas");
+			throw new IllegalArgumentException("Vous essayez de bouger des unites qui ne vous appartiennent pas");
+		}
+		
+		if (movingUnits.getIsMoving()) {
+			throw new IllegalArgumentException("Vous bougez des unites qui sont en train de se deplacer");
 		}
 		
 		//check if units are on range
@@ -221,6 +225,8 @@ public class ActionValidator {
 		}
 		
 		powerConcerned.removeActionPoint();
+		//set the unit in movement
+		movingUnits.setIsMoving();
 		//add phantom unit on the target box, to ensure that no other unit could go there
 		targetBox.setUnit(new PhantomUnit(powerConcerned, movingUnits.getTypes()));
 		Box[] ListBox = convertPathToBoxArray(pathFinding, from);

@@ -17,5 +17,9 @@ public class PhantomBuilding extends BuildingSpecial{
 	public int getType() {
 		return -1;
 	}
+	
+	public String toString() {
+		return "Phantom";
+	}
 
 }

@@ -1,2 +1,17 @@
 INFO AWT-EventQueue-0 GUI.components.game.ActionsButtonsPanel - test
 WARN AWT-EventQueue-0 GUI.components.game.ActionsButtonsPanel - test
+INFO main process.management.ActionValidator - 2lose 1 actionPoint 
+INFO main process.management.ActionValidator - 2 level capital
+WARN main process.management.ActionValidator - 3max level capital
+INFO main process.management.ActionValidator - 2lose 1 actionPoint 
+INFO main process.management.ActionValidator - 2 level capital
+WARN main process.management.ActionValidator - 3max level capital
+INFO main process.management.ActionValidator - 2lose 1 actionPoint 
+INFO main process.management.ActionValidator - 2 level capital
+WARN main process.management.ActionValidator - 3max level capital
+INFO main process.management.ActionValidator - 2lose 1 actionPoint 
+INFO main process.management.ActionValidator - 2 level capital
+WARN main process.management.ActionValidator - 3max level capital
+INFO main process.management.ActionValidator - 2lose 1 actionPoint 
+INFO main process.management.ActionValidator - 2 level capital
+WARN main process.management.ActionValidator - 3max level capital
