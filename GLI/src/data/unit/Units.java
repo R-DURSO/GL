@@ -19,6 +19,7 @@ public abstract class Units {
 	private int health;
 	private int movement;
 	private int number;
+	private boolean isMoving = false;
 	
 	private Power owner;
 	
@@ -90,6 +91,14 @@ public abstract class Units {
 
 	public int getMovement() {
 		return movement;
+	}
+	
+	public boolean getIsMoving() {
+		return isMoving;
+	}
+	
+	public void setIsMoving(boolean isMoving) {
+		this.isMoving = isMoving;
 	}
 
 	public String toString() {

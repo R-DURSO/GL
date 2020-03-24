@@ -793,9 +793,11 @@ public class ActionValidator {
 			GroundBox groundBox = (GroundBox) targetBox;
 			if(!groundBox.hasBuilding())
 				throw new IllegalArgumentException("Il n'y a pas de building sur cette case");
+			//check if the building is the Capital (we don't allow player to destroy his own Capital)
+			Building building = groundBox.getBuilding();
+			if(building instanceof Capital)
+				throw new IllegalArgumentException("Vous ne pouvez pas détruire votre capitale");
 		}
-		
-		
 		powerConcerned.removeActionPoint();
 		return new ActionDestroyBuilding(powerConcerned, target);
 	}
@@ -816,8 +818,10 @@ public class ActionValidator {
 	public ActionDestroyUnits createActionDestroyUnits(Power powerConcerned, Position target) throws IllegalArgumentException{
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
-		if(targetBox.getOwner() != powerConcerned)
-			throw new IllegalArgumentException("Impossible de faire une suppression d'unite sur une case qui ne nous appartient pas");
+		Units units = targetBox.getUnit();
+		//check if powerConcerned owns those units
+		if(units.getOwner() != powerConcerned)
+			throw new IllegalArgumentException("Ces unités ne vous appartiennent pas");
 		
 		//check if there is any unit on this box
 		if(!targetBox.hasUnit())
