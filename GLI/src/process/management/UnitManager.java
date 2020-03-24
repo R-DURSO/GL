@@ -4,6 +4,10 @@ import data.building.Building;
 import data.building.product.BuildingProduct;
 import data.resource.ResourceTypes;
 import data.unit.*;
+import log.LoggerUtility;
+
+import org.apache.log4j.Logger;
+
 import data.Power;
 
 /**
@@ -14,7 +18,7 @@ public class UnitManager {
 	
 	private static UnitManager instance = new UnitManager();
 	public static UnitManager getInstance() { return instance; }
-	
+	private static Logger Logger = LoggerUtility.getLogger(UnitManager.class, "text");
 	/**
 	 * Add {@link Units} on a {@link Box} (will always be on an {@link BuildingArmy})
 	 * @param power the power who want to create units 
@@ -36,6 +40,7 @@ public class UnitManager {
 					unitsOnBox.addNumber(numberUnitsNeeded);
 					//modify amount of food earned between each turn
 					int foodCostToRemove = numberUnits * unitsOnBox.getFoodCost();
+					Logger.info(power.getName()+" remove food : "+foodCostToRemove);
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 				}
 				//TODO La gestion d'or devrait se faire ici ?
@@ -45,8 +50,10 @@ public class UnitManager {
 					unitsOnBox.addNumber(numberUnits - numberExcessUnits);
 					//reduce adapted production
 					int foodCostToRemove = (numberUnits - numberExcessUnits) * unitsOnBox.getFoodCost();
+					Logger.info(power.getName()+" remove "+foodCostToRemove+" per turn ");
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 					//and refound gold 
+					Logger.info(power.getName()+" remove gold "+unitsOnBox.getCost()*numberExcessUnits);
 					power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(unitsOnBox.getCost() * numberExcessUnits); 
 				}
 			}
@@ -59,12 +66,17 @@ public class UnitManager {
 						int numberExcessUnits = numberUnits - units.getMaxNumber();
 						units.subNumber(numberExcessUnits);
 						//refund gold
-						power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(units.getCost() * numberExcessUnits); 
+						power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(units.getCost() * numberExcessUnits);
 					}
 					//add those unit
 					box.setUnit(units);
 					//tax of food per turn
+					
+						// j'ai pas le type d'unité en anglais ou francais 
+					Logger.info(power.getName()+" units type "+unitType+" number "+numberUnits);
+					Logger.info(power.getName()+" remove gold "+units.getCost()*numberUnits);
 					int foodCostToRemove = units.getNumber() * units.getFoodCost();
+					Logger.info(power.getName()+" remove  "+foodCostToRemove+" food per turn");
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 				}
 			}
@@ -132,11 +144,13 @@ public class UnitManager {
 	public void removeUnits(Power power, Box box, int numberUnitsRemoved) {
 		Units units = box.getUnit();
 		int numberUnits = units.getNumber() - numberUnitsRemoved;
+		Logger.info(power.getName()+" delete "+numberUnitsRemoved);
 		if (numberUnits <= 0) {
 			deleteUnits(power, box);
 		}
 		else {
 			units.subNumber(numberUnitsRemoved);
+			Logger.info(power.getName()+" add food "+numberUnitsRemoved * box.getUnit().getFoodCost()+" per turn " );
 			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, numberUnitsRemoved * box.getUnit().getFoodCost());
 		}
 	}
@@ -151,6 +165,7 @@ public class UnitManager {
 			if (box.hasUnit()) {
 				int foodProdToAdd = box.getUnit().getFoodCost() * box.getUnit().getNumber();
 				power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
+				Logger.info(power.getName()+" add food "+ foodProdToAdd+" per turn " );
 				box.setUnit(null);
 			}
 		}
@@ -244,6 +259,7 @@ public class UnitManager {
 							int productionType = buildingProduct.getProductionType();
 							int productionPerTurn = buildingProduct.getProductionPerTurn();
 							powerConcerned.addResourcesProductionPerTurn(productionType, productionPerTurn);
+							Logger.info(powerConcerned.getName()+" add"+productionType+" "+productionPerTurn+" per turn " );
 							targetBoxPower.substractResourcesProductionPerTurn(productionType, productionPerTurn);
 						}
 					}
