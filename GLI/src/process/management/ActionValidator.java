@@ -680,17 +680,24 @@ public class ActionValidator {
 		if(targetBox.getOwner() != powerConcerned) {
 			throw new IllegalArgumentException("Impossible de creer des unites sur une case etrangere");
 		}
-
-		//check if not in water
-		if(targetBox instanceof WaterBox)
-			throw new IllegalArgumentException("Impossible de creer des unites sur une case d'eau");
 		
 		//check if have enough gold to create units 
 		ResourceCost neededResource = getUnitCost(powerConcerned, unitType, numberUnits);
 		if(!checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
 			throw new IllegalArgumentException("Pas assez de ressources pour creer ces unites");
+				
+		//check if not in water
+		if(targetBox instanceof WaterBox)
+			throw new IllegalArgumentException("Impossible de creer des unites sur une case d'eau");
 		
 		GroundBox groundBox = (GroundBox) targetBox;
+		//check if there is unit
+		if (groundBox.hasUnit()) {
+			//check if same unitType (for grouping)
+			if (groundBox.getUnit().getTypes() != unitType) {
+				throw new IllegalArgumentException("des unites differentes sont presents sur la case");
+			}
+		}
 		//check if this box has a building
 		if(!groundBox.hasBuilding())
 			throw new IllegalArgumentException("La creation d'unites demande la presence d'un batiment specifique");
