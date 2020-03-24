@@ -63,7 +63,7 @@ public class PhantomUnit extends Units{
 	}
 	
 	public String toString() {
-		return "PhantomUnit of"+getTypes();
+		return "PhantomUnit of "+getTypes();
 	}
 
 }

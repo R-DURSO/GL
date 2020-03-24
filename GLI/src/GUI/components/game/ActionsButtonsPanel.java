@@ -22,6 +22,9 @@ import data.Position;
 import data.Power;
 import data.actions.Action;
 import data.actions.ActionTypes;
+import data.building.army.*;
+import data.building.product.*;
+import data.building.special.*;
 import process.management.UnitManager;
 
 /**
@@ -220,8 +223,9 @@ public class ActionsButtonsPanel extends JPanel {
 	}
 
 	class ActionListenerConstruct implements ActionListener {
-		String[] choices = { "caserne (100 bois)", "écurie", "port", "mine", "scierie", "moulin", "carière", "porte",
-				"mur", "temple" };
+		String[] choices = { "Caserne ("+Barrack.COST+")", "Atelier ("+Workshop.COST+")", "Port ("+Dock.COST+")",
+				"Mine d'Or ("+Mine.COST+")", "Scierie ("+Sawmill.COST+")", "Moulin ("+Windmill.COST+")", "carière ("+Quarry.COST+")",
+				"Porte ("+Door.COST+")","Mur ("+Wall.COST+")", "Temple ("+Temple.COST+")" };
 
 		public void actionPerformed(ActionEvent e) {
 			JComboBox<String> buildingComboBox = new JComboBox<>(choices);
@@ -265,7 +269,7 @@ public class ActionsButtonsPanel extends JPanel {
 	}
 
 	class ActionListenerCreateUnits implements ActionListener {
-		String[] choices = { "Infantrie", "Archer", "Cavalier", "Piquier", "Char", "Trébuchet", "Bateau" };
+		String[] choices = { "Infantrie", "Archer", "Cavalier", "Piquier", "Bélier", "Trébuchet", "Bateau" };
 		int maxUnit = 0;
 
 		@Override
@@ -275,7 +279,7 @@ public class ActionsButtonsPanel extends JPanel {
 					JOptionPane.YES_NO_CANCEL_OPTION);
 			// we check if user has canceled his choice
 			if (answer == JOptionPane.YES_OPTION) {
-				int unitType = unitComboBox.getSelectedIndex();
+				int unitType = unitComboBox.getSelectedIndex()+1;
 				maxUnit = UnitManager.getInstance().maxNumberUnit(unitType);
 				SliderPanel sliderNumber = new SliderPanel("Nombre d'unités", maxUnit, 1, 1);
 				answer = JOptionPane.showConfirmDialog(null, sliderNumber, "Combien d'unité(s) voulez-vous",
