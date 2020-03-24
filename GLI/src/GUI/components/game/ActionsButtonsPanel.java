@@ -1,12 +1,10 @@
 package GUI.components.game;
 
-import data.unit.Archer;
-import data.unit.Units;
-import java.awt.Dimension;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -14,20 +12,16 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
+import javax.swing.UIManager;
 
+import GUI.colors.ColorData;
+import GUI.components.GuiPreferences;
 import GUI.components.SliderPanel;
 import GUI.sub_panels.GamePanel;
 import data.Position;
 import data.Power;
 import data.actions.Action;
-import data.actions.ActionBreakAlliance;
-import data.actions.ActionConstruct;
 import data.actions.ActionTypes;
-import data.boxes.GroundBox;
-import data.building.BuildingTypes;
-import process.management.ActionValidator;
-import process.management.BuildingManager;
 import process.management.UnitManager;
 
 /**
@@ -45,7 +39,7 @@ public class ActionsButtonsPanel extends JPanel {
 	private JButton createActionCreateUnitButton = new JButton("Créer de nouvelles troupes");
 	private JButton createActionDestroyUnitButton = new JButton("Détruire des unités");
 	private JButton createActionDestroyBuildingtButton = new JButton("Détruire un batiment");
-	private JButton createUdapteCapitalButton = new JButton("Améliorer la capitale");
+	private JButton createUpgradeCapitalButton = new JButton("Améliorer la capitale");
 
 	/*
 	 * State system : decide what to do whan user click on map, either modify
@@ -65,7 +59,6 @@ public class ActionsButtonsPanel extends JPanel {
 	private MapPanel game;
 	private ActionsButtonsPanel panel = this;
 	private Action action;
-	private boolean waitTargetPosition = false;
 
 	public ActionsButtonsPanel(GamePanel context, GameButtonsPanel gameButtonsPanel) {
 		this.context = context;
@@ -73,6 +66,7 @@ public class ActionsButtonsPanel extends JPanel {
 		this.game = context.getMapPanel();
 		setLayout(new GridLayout(0, 3));
 
+		//add Action listeners
 		actionBreakAllianceButton.addActionListener(new ActionListenerBreakAlliance());
 		actionMakeAllianceButton.addActionListener(new ActionListenerMakeAlliance());
 		createActionAttackButton.addActionListener(new ActionListenerAttack());
@@ -81,9 +75,26 @@ public class ActionsButtonsPanel extends JPanel {
 		createActionDestroyBuildingtButton.addActionListener(new ActionListenerDestroyBuilding());
 		createActionCreateUnitButton.addActionListener(new ActionListenerCreateUnits());
 		createActionConstructButton.addActionListener(new ActionListenerConstruct());
-		createUdapteCapitalButton.addActionListener(new ActionListenerUpdateCapital());
-
-		add(createUdapteCapitalButton);
+		createUpgradeCapitalButton.addActionListener(new ActionListenerUpdateCapital());
+		
+		
+		//change Button's color
+		actionBreakAllianceButton.setBackground(ColorData.BUTTON_ALLIANCE_COLOR);
+		actionMakeAllianceButton.setBackground(ColorData.BUTTON_ALLIANCE_COLOR);
+		
+		createActionAttackButton.setBackground(ColorData.BUTTON_MOVE_COLOR);
+		createActionMoveButton.setBackground(ColorData.BUTTON_MOVE_COLOR);
+		
+		createActionDestroyUnitButton.setBackground(ColorData.BUTTON_DESTROY_COLOR);
+		createActionDestroyBuildingtButton.setBackground(ColorData.BUTTON_DESTROY_COLOR);
+		
+		createActionCreateUnitButton.setBackground(ColorData.BUTTON_CREATE_COLOR);
+		createActionConstructButton.setBackground(ColorData.BUTTON_CREATE_COLOR);
+		
+		createUpgradeCapitalButton.setBackground(ColorData.BUTTON_CAPITAL_COLOR);
+		
+		//add Buttons to Panel
+		add(createUpgradeCapitalButton);
 		add(createActionMoveButton);
 		add(createActionAttackButton);
 		add(actionMakeAllianceButton);
@@ -92,6 +103,14 @@ public class ActionsButtonsPanel extends JPanel {
 		add(actionBreakAllianceButton);
 		add(createActionCreateUnitButton);
 		add(createActionDestroyUnitButton);
+		
+		
+		//change buttons Font
+		for (Component comp : getComponents()) {
+		    if (comp instanceof JButton) {
+		        ((JButton)comp).setFont(GuiPreferences.BASE_FONT);
+		    }
+		}
 
 		setMajorButtonsVisibility(false);
 	}
@@ -104,6 +123,22 @@ public class ActionsButtonsPanel extends JPanel {
 		createActionDestroyBuildingtButton.setVisible(visibility);
 		createActionDestroyUnitButton.setVisible(visibility);
 	}
+	
+	public void setUnitsButtonsVisibility(boolean visibility) {
+		createActionAttackButton.setVisible(visibility);
+		createActionMoveButton.setVisible(visibility);
+		createActionDestroyUnitButton.setVisible(visibility);
+	}
+	
+	public void setBuildingButtonsVisibility(boolean visibility) {
+		createActionDestroyBuildingtButton.setVisible(visibility);
+		createActionCreateUnitButton.setVisible(visibility);
+	}
+	
+	public void setCreationButtonsVisibility(boolean visibility) {
+		createActionConstructButton.setVisible(visibility);
+	}
+
 
 	public int getState() {
 		return state;
@@ -216,9 +251,6 @@ public class ActionsButtonsPanel extends JPanel {
 			gameButtonsPanel.changeMiddlePanel();
 			gameButtonsPanel.setValidationActionType(ActionTypes.ACTION_MOVE);
 			setStateWaitingTargetPosition();
-
-			// set "order" in infos panel
-			context.setOrder("Choisissez un lieu ou déplacer vos unité(s)");
 		}
 	}
 

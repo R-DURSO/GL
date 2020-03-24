@@ -1,10 +1,14 @@
 package GUI.components.game;
 
+import java.awt.Color;
+
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import GUI.components.GuiPreferences;
 import data.resource.Resource;
 
 /**
@@ -22,6 +26,9 @@ public class ResourcePanel extends JPanel{
 		resourceName = name;
 		this.resource = resource;
 		resourceLabel = new JLabel("", SwingConstants.CENTER);
+		resourceLabel.setFont(GuiPreferences.BASE_FONT);
+		
+		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		refresh();
 		

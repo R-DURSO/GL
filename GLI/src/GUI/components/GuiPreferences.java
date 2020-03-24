@@ -16,7 +16,7 @@ public class GuiPreferences {
 
 	public static final int SCALE = BASIC * 20;
 	
-	public static final int FONT_SIZE = WIDTH / 50;
+	public static final int FONT_SIZE = WIDTH / 80;
 	
 	public static final Font BASE_FONT = new Font("Arial", Font.PLAIN, FONT_SIZE);
 	
