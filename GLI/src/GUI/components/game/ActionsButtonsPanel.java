@@ -35,14 +35,14 @@ import process.management.UnitManager;
 public class ActionsButtonsPanel extends JPanel {
 
 	private JButton actionBreakAllianceButton = new JButton("Briser une alliance");
-	private JButton actionMakeAllianceButton = new JButton("Cr√©er une alliance");
+	private JButton actionMakeAllianceButton = new JButton("CrÈer une alliance");
 	private JButton createActionAttackButton = new JButton("Lancer une attaque");
-	private JButton createActionMoveButton = new JButton("D√©placer les troupes");
+	private JButton createActionMoveButton = new JButton("DÈplacer les troupes");
 	private JButton createActionConstructButton = new JButton("Construire un batiment");
-	private JButton createActionCreateUnitButton = new JButton("Cr√©er de nouvelles troupes");
-	private JButton createActionDestroyUnitButton = new JButton("D√©truire des unit√©s");
-	private JButton createActionDestroyBuildingtButton = new JButton("D√©truire un batiment");
-	private JButton createUpgradeCapitalButton = new JButton("Am√©liorer la capitale");
+	private JButton createActionCreateUnitButton = new JButton("CrÈer de nouvelles troupes");
+	private JButton createActionDestroyUnitButton = new JButton("DÈtruire des unitÈs");
+	private JButton createActionDestroyBuildingtButton = new JButton("DÈtruire un batiment");
+	private JButton createUpgradeCapitalButton = new JButton("AmÈliorer la capitale");
 
 	/*
 	 * State system : decide what to do whan user click on map, either modify
@@ -169,9 +169,9 @@ public class ActionsButtonsPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			Power power = context.getPlayer();
 			if (!power.isAllied()) {
-				JOptionPane.showMessageDialog(null, "Vous n'avez pas d'alli√©", "Erreur", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Vous n'avez pas d'alliÈ", "Erreur", JOptionPane.ERROR_MESSAGE);
 			} else {
-				int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment mettre fin √† votre alliance?",
+				int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment mettre fin ‡ votre alliance?",
 						"Fin d'alliance?", JOptionPane.YES_NO_OPTION);
 				if (answer == JOptionPane.YES_OPTION) {
 					action = context.getActionValidator().createActionBreakAlliance(power, power.getAlly());
@@ -185,7 +185,7 @@ public class ActionsButtonsPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			Power power = context.getPlayer();
 			if(power.isAllied())
-				JOptionPane.showMessageDialog(null, "Vous avez d√©j√† un alli√©", "Erreur", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Vous avez dÈj‡ un alliÈ", "Erreur", JOptionPane.ERROR_MESSAGE);
 			else {
 				//get player number
 				String choices[] = new String[context.getPlayersNumber() - 1];
@@ -210,7 +210,7 @@ public class ActionsButtonsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int result = 0;
-			result = JOptionPane.showConfirmDialog(null, "Voulez-vous am√©liorer votre capitale?");
+			result = JOptionPane.showConfirmDialog(null, "Voulez-vous amÈliorer votre capitale?");
 			if (result == 0) {
 				try {
 					action = context.getActionValidator().createActionUpgradeCapital(context.getPlayer());
@@ -224,7 +224,7 @@ public class ActionsButtonsPanel extends JPanel {
 
 	class ActionListenerConstruct implements ActionListener {
 		String[] choices = { "Caserne ("+Barrack.COST+")", "Atelier ("+Workshop.COST+")", "Port ("+Dock.COST+")",
-				"Mine d'Or ("+Mine.COST+")", "Scierie ("+Sawmill.COST+")", "Moulin ("+Windmill.COST+")", "cari√®re ("+Quarry.COST+")",
+				"Mine d'Or ("+Mine.COST+")", "Scierie ("+Sawmill.COST+")", "Moulin ("+Windmill.COST+")", "cariËre ("+Quarry.COST+")",
 				"Porte ("+Door.COST+")","Mur ("+Wall.COST+")", "Temple ("+Temple.COST+")" };
 
 		public void actionPerformed(ActionEvent e) {
@@ -261,7 +261,7 @@ public class ActionsButtonsPanel extends JPanel {
 	class ActionListenerAttack implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "Choisissez une cible √† attaquer");
+			JOptionPane.showMessageDialog(null, "Choisissez une cible ‡ attaquer");
 			gameButtonsPanel.changeMiddlePanel();
 			gameButtonsPanel.setValidationActionType(ActionTypes.ACTION_ATTACK);
 			setStateWaitingTargetPosition();
@@ -269,20 +269,20 @@ public class ActionsButtonsPanel extends JPanel {
 	}
 
 	class ActionListenerCreateUnits implements ActionListener {
-		String[] choices = { "Infantrie", "Archer", "Cavalier", "Piquier", "B√©lier", "Tr√©buchet", "Bateau" };
+		String[] choices = { "Infantrie", "Archer", "Cavalier", "Piquier", "BÈlier", "TrÈbuchet", "Bateau" };
 		int maxUnit = 0;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JComboBox<String> unitComboBox = new JComboBox<>(choices);
-			int answer = JOptionPane.showConfirmDialog(null, unitComboBox, "Quelle(s) unit√©(s) voulez-vous?",
+			int answer = JOptionPane.showConfirmDialog(null, unitComboBox, "Quelle(s) unitÈ(s) voulez-vous?",
 					JOptionPane.YES_NO_CANCEL_OPTION);
 			// we check if user has canceled his choice
 			if (answer == JOptionPane.YES_OPTION) {
 				int unitType = unitComboBox.getSelectedIndex()+1;
 				maxUnit = UnitManager.getInstance().maxNumberUnit(unitType);
-				SliderPanel sliderNumber = new SliderPanel("Nombre d'unit√©s", maxUnit, 1, 1);
-				answer = JOptionPane.showConfirmDialog(null, sliderNumber, "Combien d'unit√©(s) voulez-vous",
+				SliderPanel sliderNumber = new SliderPanel("Nombre d'unitÈs", maxUnit, 1, 1);
+				answer = JOptionPane.showConfirmDialog(null, sliderNumber, "Combien d'unitÈ(s) voulez-vous",
 						JOptionPane.YES_NO_CANCEL_OPTION);
 				if (answer == JOptionPane.YES_OPTION) {
 					try {
@@ -305,7 +305,7 @@ public class ActionsButtonsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int result = 0;
-			result = JOptionPane.showConfirmDialog(null, "Voulez-vous d√©truire ce batiment?");
+			result = JOptionPane.showConfirmDialog(null, "Voulez-vous dÈtruire ce batiment?");
 			if (result == 0) {
 				try {
 					action = context.getActionValidator().createActionDestroyBuilding(context.getPlayer(),
@@ -324,7 +324,7 @@ public class ActionsButtonsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int result = 0;
-			result = JOptionPane.showConfirmDialog(null, "Voulez-vous d√©truire ce(s) unit√©e(s)?");
+			result = JOptionPane.showConfirmDialog(null, "Voulez-vous dÈtruire ce(s) unitÈe(s)?");
 			if (result == 0) {
 				try {
 					action = context.getActionValidator().createActionDestroyUnits(context.getPlayer(),
