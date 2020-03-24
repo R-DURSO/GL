@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import data.boxes.*;
 import data.building.Building;
+import data.unit.PhantomUnit;
 
 
 /**
@@ -46,7 +47,7 @@ public class BoxSelectedPanel extends JPanel {
 			OwnerLabel.setText("Aucun propriétaire");
 		}
 		
-		if (box.hasUnit()) {
+		if (box.hasUnit() && !(box.getUnit() instanceof PhantomUnit)) {
 			UnitsLabel.setText(box.getUnit().toString());
 		}
 		else {
