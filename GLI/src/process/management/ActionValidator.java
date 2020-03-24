@@ -109,6 +109,7 @@ public class ActionValidator {
 		if (!targetBox.hasUnit()) {
 			//Pas d'unite a attaquer, mais peut-etre un batiment
 			if (targetBox instanceof WaterBox) {
+				Logger.warn(powerConcerned.getName()+"attack in water case ");
 				throw new IllegalArgumentException("Vous attaquez une case d'eau vide");
 			}
 			else {
@@ -119,20 +120,24 @@ public class ActionValidator {
 		}
 		
 		//check if from Box is powerConcerned's
-		if (unitsAtt.getOwner() != powerConcerned)
+		if (unitsAtt.getOwner() != powerConcerned) {
+			Logger.warn(powerConcerned.getName()+"is not here units ");
 			throw new IllegalArgumentException("Ces unites n'appartiennent pas a " + powerConcerned.getName());
 		
 		//check if units are on range
 		if (!isUnitsOnRange(from, unitsAtt.getRange(), target)) {
+			Logger.warn(powerConcerned.getName()+"units is out of range ");
 			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
 		}
 		//check if there is units on target, in this case, check the owner of those units
 		//if player himself or his ally, no attack
 		if ((targetBox.getOwner() == powerConcerned) || (targetBox.getOwner() == powerConcerned.getAlly())) {
+			Logger.warn(powerConcerned.getName()+"don't attack your territory");
 			throw new IllegalArgumentException("Vous ne pouvez pas attaquer votre terrain ou celui d'un allie");
 		}
 		
 		powerConcerned.removeActionPoint();
+		Logger.info(powerConcerned.getName()+"remove action point ");
 		return new ActionAttack(powerConcerned, from, target);
 	}
 
@@ -156,6 +161,7 @@ public class ActionValidator {
 	public ActionMove createActionMove (Power powerConcerned, Position from, Position target) throws IllegalArgumentException {
 		//Check if you want to move to the same Box
 		if (from.equals(target)) {
+			Logger.warn(powerConcerned.getName()+"units is here ");
 			throw new IllegalArgumentException("On ne peut pas se deplacer la ou on est deja");
 		}
 		
@@ -164,6 +170,7 @@ public class ActionValidator {
 		
 		//check if there is any Units on the fromBox
 		if (!fromBox.hasUnit()) {
+			Logger.warn(powerConcerned.getName()+"not units here");
 			throw new IllegalArgumentException("Il n'y a pas d'unite a deplacer ici");
 		}
 		
@@ -171,6 +178,7 @@ public class ActionValidator {
 		Power UnitsOwner = movingUnits.getOwner();
 		
 		if (UnitsOwner != powerConcerned) {
+			Logger.warn(powerConcerned.getName()+"test move enemy units");
 			throw new IllegalArgumentException("Vous essayez de bouger des unites qui ne vous appartiennent pas");
 		}
 		
@@ -180,20 +188,24 @@ public class ActionValidator {
 		
 		//check if units are on range
 		if (!isUnitsOnRange(from, movingUnits.getMovement(), target)) {
+			Logger.warn(powerConcerned.getName()+"units is over range of cible");
 			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
 		}
 
 		//check if there is "obstacle" on target : either wall / ennemy door, or units
 		String pathFinding = pathFinding(from, movingUnits, target);
 		if (pathFinding == null) {
+			Logger.warn(powerConcerned.getName()+"impossible found path to destination");
 			throw new IllegalArgumentException("Impossible de determiner un chemin jusqu'a la destination");
 		}
 		
 		//check if there isn't any ennemy Unit or Different UnitTypes
 		if (targetBox.hasUnit()) {
 			//check if units already want to go to target, ergo if a PhantomUnit is on targetBox
-			if(targetBox.getUnit() instanceof PhantomUnit)
+			if(targetBox.getUnit() instanceof PhantomUnit) {
+				Logger.warn(powerConcerned.getName()+"units could go here ");
 				throw new IllegalArgumentException("Une unité compte se rendre à cette position");
+			}
 			if (targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAlly()) {
 				Units unitsOnTarget = targetBox.getUnit();
 				if (unitsOnTarget.getTypes() == UnitTypes.UNIT_BOAT) {
@@ -203,23 +215,28 @@ public class ActionValidator {
 						Units containedUnit = boatTarget.getContainedUnits();
 						//You can re-group same Units Types
 						if (containedUnit.getTypes() != movingUnits.getTypes()) {
+							Logger.warn(powerConcerned.getName()+"diffent unit in this boat");
 							throw new IllegalArgumentException("Des Unités de types différents sont dans ce bateau");
 						}
 						//But, make sure you dont exceed the limit
 						else if (containedUnit.getNumber() + movingUnits.getNumber() > movingUnits.getMaxNumber()) {
+							Logger.warn(powerConcerned.getName()+"moce cause maxunit possibility");
 							throw new IllegalArgumentException("Le déplacement fait dépasser la limite d'unite");
 						}
 					}
 				}
 				else if (movingUnits.getTypes() != unitsOnTarget.getTypes()) {
+					Logger.warn(powerConcerned.getName()+"is different type of unit ");
 					throw new IllegalArgumentException("Des unites d'un type different sont sur le lieu cible");
 				}
 				//But, make sure you dont exceed the limit
 				else if (movingUnits.getNumber() + unitsOnTarget.getNumber() > movingUnits.getTypes()) {
+					Logger.warn(powerConcerned.getName()+"move cause maxunit possibility");
 					throw new IllegalArgumentException("Le déplacement fait dépasser la limite d'unite");
 				}
 			}
 			else {
+				Logger.warn(powerConcerned.getName()+"he have enemis units in is select case ");
 				throw new IllegalArgumentException("Il y a des unites ennemies sur la case cible");
 			}
 		}
@@ -547,18 +564,21 @@ public class ActionValidator {
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() != powerConcerned) {
+			Logger.warn(powerConcerned.getName()+"don't construct in other power case ");
 			throw new IllegalArgumentException("Impossible de construire sur une case etrangere");
 		}
 		
 		//check if targetBox is a WaterBox or not
-		if(targetBox instanceof WaterBox)
+		if(targetBox instanceof WaterBox) {
+			Logger.warn(powerConcerned.getName()+"don't construct in water case ");
 			throw new IllegalArgumentException("Impossible de construire sur une case d'eau");
-		
+		}
 		//check if have enough resources to build
 		ResourceCost neededResource = getBuildingCost(buildingType); 
-		if(!checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
+		if(!checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost())) {
+			Logger.warn(powerConcerned.getName()+"not this type units");
 			throw new IllegalArgumentException("Pas assez de ressources pour construire ceci");
-		
+		}
 		GroundBox groundBox = (GroundBox) targetBox;
 		
 		
@@ -566,25 +586,31 @@ public class ActionValidator {
 		//check if there is already a building on this box
 		if(groundBox.hasBuilding()) {
 			//check if a building is going to be builded there, that is to say if instance of PhantomBuilding is on the targetBox
-			if(groundBox.getBuilding() instanceof PhantomBuilding)
+			if(groundBox.getBuilding() instanceof PhantomBuilding) {
+				Logger.warn(powerConcerned.getName()+"other constrcut here ");
 				throw new IllegalArgumentException("Un autre batiment va être construit sur cette case");
+			}
+			Logger.warn(powerConcerned.getName()+"one constrcut is here already");
 			throw new IllegalArgumentException("Impossible de construire sur une case qui possede deja un batiment"); 
 		}
 		
 		if (buildingType == BuildingTypes.BUILDING_DOCK) {
 			if (!isNearWater(target)) {
+				Logger.warn(powerConcerned.getName()+"dock is not beside water");
 				throw new IllegalArgumentException("Le port n'est pas a poximite de case d'eau"); 
 			}
 		}
 		
 		if (buildingType == BuildingTypes.BUILDING_TEMPLE) {
 			if (groundBox.getResourceType() != ResourceTypes.RESOURCE_ARTIFACT) {
+				Logger.warn(powerConcerned.getName()+"this case doesn't have temple");
 				throw new IllegalArgumentException("La case ne possede pas l'Artefact"); 
 			}
 		}
 		
 		powerConcerned.removeActionPoint();
 		//remove building cost
+		Logger.info(powerConcerned.getName()+"remove 1 actionpoint");
 		powerConcerned.getResource(neededResource.getType()).subValue(neededResource.getCost());
 		//add phantom building on the target box, to ensure that no other building could be constructed on targetBox
 		groundBox.setBuilding(new PhantomBuilding());
@@ -685,24 +711,29 @@ public class ActionValidator {
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() != powerConcerned) {
+			Logger.warn(powerConcerned.getName()+"don't create unit in other power case");
 			throw new IllegalArgumentException("Impossible de creer des unites sur une case etrangere");
 		}
 		
 		//check if have enough gold to create units 
 		ResourceCost neededResource = getUnitCost(powerConcerned, unitType, numberUnits);
-		if(!checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost()))
+		if(!checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost())) {
+			Logger.warn(powerConcerned.getName()+"not ressource for buy unit ");
 			throw new IllegalArgumentException("Pas assez de ressources pour creer ces unites");
+		}
 				
 		//check if not in water
-		if(targetBox instanceof WaterBox)
+		if(targetBox instanceof WaterBox) {
+			Logger.warn(powerConcerned.getName()+"not create unit in water's case ");
 			throw new IllegalArgumentException("Impossible de creer des unites sur une case d'eau");
-		
+		}
 		GroundBox groundBox = (GroundBox) targetBox;
 		boolean createPhantom = true;
 		//check if there is unit
 		if (groundBox.hasUnit()) {
 			//check if same unitType (for grouping)
 			if (groundBox.getUnit().getTypes() != unitType) {
+				Logger.warn(powerConcerned.getName()+"different unit in this same case ");
 				throw new IllegalArgumentException("des unites differentes sont presents sur la case");
 			}
 			else {
@@ -710,33 +741,44 @@ public class ActionValidator {
 			}
 		}
 		//check if this box has a building
-		if(!groundBox.hasBuilding())
+		if(!groundBox.hasBuilding()) {
+			Logger.warn(powerConcerned.getName()+"need special building for this units");
 			throw new IllegalArgumentException("La creation d'unites demande la presence d'un batiment specifique");
-		
+		}
 		Building building = groundBox.getBuilding();
 		
 		//check if thoses units can be created here
-		if(! (building instanceof BuildingArmy))
+		if(! (building instanceof BuildingArmy)) {
+			Logger.warn(powerConcerned.getName()+"impossible create unit here batiment ");
 			throw new IllegalArgumentException("Impossible de creer des unites dans ce batiment");
+		}
 		else {
 			//we need to know if this building is enabled (or if Building#buildTime == 0)
-			if(building.getBuildTime() > 0)
+			if(building.getBuildTime() > 0) {
+				Logger.warn(powerConcerned.getName()+"construct is not able");
 				throw new IllegalArgumentException("Ce batiment n'est pas encore utilisable");
-			
+			}
 			switch(building.getType()) {
 			case BuildingTypes.BUILDING_BARRACK:
-				if(unitType >= UnitTypes.UNITS_IN_BARRACK || unitType < 0)
+				if(unitType >= UnitTypes.UNITS_IN_BARRACK || unitType < 0) {
+					Logger.warn(powerConcerned.getName()+"units is not create in barrack");
 					throw new IllegalArgumentException("Ces unites ne sont pas creees dans des casernes");
+				}
 				break;
 			case BuildingTypes.BUILDING_WORKSHOP:
-				if(unitType < UnitTypes.UNITS_IN_BARRACK || unitType >= UnitTypes.UNITS_IN_WORKSHOP)
+				if(unitType < UnitTypes.UNITS_IN_BARRACK || unitType >= UnitTypes.UNITS_IN_WORKSHOP) {
+					Logger.warn(powerConcerned.getName()+"unit is not create in workshop");
 					throw new IllegalArgumentException("Ces unites ne sont pas creees dans des ateliers");
+				}
 				break;
 			case BuildingTypes.BUILDING_DOCK:
-				if(unitType < UnitTypes.UNITS_IN_WORKSHOP)
+				if(unitType < UnitTypes.UNITS_IN_WORKSHOP) {
+					Logger.warn(powerConcerned.getName()+"unit is not create in port");
 					throw new IllegalArgumentException("Ces unites ne sont pas creees dans des ports");
+				}
 				break;
 			default:
+				Logger.warn(powerConcerned.getName()+"not this type units");
 				throw new IllegalArgumentException("Il n'y a pas d'unite de ce type");	
 			}
 		}
@@ -788,21 +830,28 @@ public class ActionValidator {
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() != powerConcerned) {
+			Logger.warn(powerConcerned.getName()+"not case's onwer");
 			throw new IllegalArgumentException("Impossible de faire une destruction sur une case qui ne nous appartient pas");
 		}
 		
 		//check if there is indeed a building here
 		//we first need to know the type of the box
-		if(targetBox instanceof WaterBox)
+		if(targetBox instanceof WaterBox) {
+			Logger.warn(powerConcerned.getName()+"water case");
 			throw new IllegalArgumentException("Il n'y a rien a detruire sur une case d'eau");
+		}
 		else {
 			GroundBox groundBox = (GroundBox) targetBox;
-			if(!groundBox.hasBuilding())
+			if(!groundBox.hasBuilding()) {
+				Logger.warn(powerConcerned.getName()+"not building here ");
 				throw new IllegalArgumentException("Il n'y a pas de building sur cette case");
+			}
 			//check if the building is the Capital (we don't allow player to destroy his own Capital)
 			Building building = groundBox.getBuilding();
-			if(building instanceof Capital)
+			if(building instanceof Capital) {
+				Logger.warn(powerConcerned.getName()+"don't destroy Capital");
 				throw new IllegalArgumentException("Vous ne pouvez pas détruire votre capitale");
+			}
 		}
 		powerConcerned.removeActionPoint();
 		return new ActionDestroyBuilding(powerConcerned, target);
@@ -836,6 +885,8 @@ public class ActionValidator {
 			throw new IllegalArgumentException("Il n'y a pas d'unites a supprimer ici");
 		}
 		powerConcerned.removeActionPoint();
+		Logger.info(powerConcerned.getName()+"remove 1 actionPoint ");
+		Logger.info(powerConcerned.getName()+"destoy unit  position x "+target.getX()+"y "+target.getY());
 		return new ActionDestroyUnits(powerConcerned, target);
 	}
 	
@@ -879,7 +930,7 @@ public class ActionValidator {
 				powerConcerned.getResource(ResourceTypes.RESOURCE_GOLD).subValue(goldCost);
 		
 		powerConcerned.removeActionPoint();
-		Logger.info(powerConcerned.getName()+"lose 1 actionPoint ");
+		Logger.info(powerConcerned.getName()+"remove 1 actionPoint ");
 		Logger.info(powerConcerned.getName()+" level capital");
 		return new ActionUpgradeCapital(powerConcerned);
 	}
