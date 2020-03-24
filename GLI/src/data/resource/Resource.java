@@ -1,5 +1,7 @@
 package data.resource;
 
+import data.resource.ActionPoints;
+
 /**
  * <p>Resource have all methods applicable to infant classes.</p>
  * <p>You can change the amount or productionPerTurn of a Resource here.</p>
@@ -35,6 +37,11 @@ public abstract class Resource {
 	
 	public void addValue(int value) {
 		this.amount += value;
+		if (getResourceType() == ResourceTypes.RESOURCE_ACTIONS) {
+			if (this.amount > ActionPoints.MAX_ACTIONS) {
+				this.amount = ActionPoints.MAX_ACTIONS;
+			}
+		}
 	}
 
 	public void subValue(int value) {
@@ -45,7 +52,7 @@ public abstract class Resource {
 	 * Apply the Production of Selected Resource
 	 */
 	public void productionOfTurn() {
-		this.amount += this.productionPerTurn;
+		addValue(this.productionPerTurn);
 	}
 	
 	public void addProductionPerTurn(int production) {

@@ -9,7 +9,7 @@ package data.resource;
 
 public class ActionPoints extends Resource {
 //	private static final int ACTIONS_NUMBER= 3;
-//	private static final int MAX_ACTIONS = 6 ;
+	public static final int MAX_ACTIONS = 6 ;
 	public ActionPoints(int number) {
 		super(number);
 	}
