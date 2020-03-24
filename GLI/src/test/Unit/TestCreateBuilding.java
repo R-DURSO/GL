@@ -5,7 +5,7 @@ import org.junit.Test;
 import data.GameMap;
 import data.InitialValue;
 import data.Power;
-import data.boxes.GroundBox;
+import data.boxes.*;
 import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
 import process.management.BuildingManager;
@@ -22,13 +22,12 @@ public class TestCreateBuilding {
 	}
 	@Test
 	public void createBarrack(){
-			BuildingManager.getInstance().addNewBuilding(powers[0],BuildingTypes.BUILDING_BARRACK , (GroundBox) powers[0].getTerritory().get(1));
+		BuildingManager.getInstance().addNewBuilding(powers[0],BuildingTypes.BUILDING_BARRACK , (GroundBox) powers[0].getTerritory().get(1));
 	}
-	
 	@Test
 	public void createWorkshop() {
 		BuildingManager.getInstance().addNewBuilding(powers[0],BuildingTypes.BUILDING_WORKSHOP , (GroundBox) powers[0].getTerritory().get(1));
-		}
+	}
 	@Test
 	public void createDock() {
 		BuildingManager.getInstance().addNewBuilding(powers[0],BuildingTypes.BUILDING_DOCK , (GroundBox) powers[0].getTerritory().get(1));
@@ -65,6 +64,15 @@ public class TestCreateBuilding {
 	public void createCapital() {
 		BuildingManager.getInstance().addNewBuilding(powers[0],BuildingTypes.BUILDING_CAPITAL , (GroundBox) powers[0].getTerritory().get(1));
 	}
+	@Test
+	public void createWindmillOnFood() {
+		Box target = powers[0].getTerritory().get(1);
+		if (target instanceof GroundBox) {
+			GroundBox targetGBox = (GroundBox)target;
+		}
+		BuildingManager.getInstance().addNewBuilding(powers[0],BuildingTypes.BUILDING_CAPITAL , (GroundBox) powers[0].getTerritory().get(1));
+	}
+	
 	
 	
 	private void generatePowers() {

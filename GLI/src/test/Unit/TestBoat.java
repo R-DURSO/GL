@@ -80,4 +80,19 @@ public class TestBoat {
 		assertFalse(boat2.hasContainedUnits());
 		assertFalse(boat3.hasContainedUnits());
 	}
+	
+	@Test
+	public void moveBoat() {
+		power = powers[0];
+		
+		UnitManager.getInstance().addUnits(power, map.getBox(wPos1), UnitTypes.UNIT_BOAT, 1);
+		Boat boat1 = (Boat) map.getBox(wPos1).getUnit();
+		
+		UnitManager.getInstance().moveUnitsBox(power, map.getBox(wPos1), map.getBox(wPos2));
+		UnitManager.getInstance().moveUnitsBox(power, map.getBox(wPos2), map.getBox(wPos3));
+		
+		assertEquals(boat1, map.getBox(wPos3).getUnit());
+	}
+	
+	
 }

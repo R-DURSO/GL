@@ -97,8 +97,12 @@ public abstract class Units {
 		return isMoving;
 	}
 	
-	public void setIsMoving(boolean isMoving) {
-		this.isMoving = isMoving;
+	public void setIsMoving() {
+		this.isMoving = true;
+	}
+	
+	public void resetIsMoving() {
+		this.isMoving = false;
 	}
 
 	public String toString() {

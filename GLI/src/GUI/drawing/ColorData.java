@@ -1,6 +1,7 @@
-package GUI.colors;
+package GUI.drawing;
 
 import java.awt.Color;
+import java.awt.Image;
 
 public class ColorData {
 
@@ -60,6 +61,5 @@ public class ColorData {
 	public static final Color BUTTON_DESTROY_COLOR = new Color(190, 49, 14);
 	public static final Color BUTTON_MOVE_COLOR = new Color(0, 153, 255);
 	public static final Color BUTTON_CAPITAL_COLOR = new Color(242, 242, 242);
-	
 
 }
