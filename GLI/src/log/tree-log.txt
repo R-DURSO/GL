@@ -1,0 +1,2 @@
+INFO AWT-EventQueue-0 GUI.components.game.ActionsButtonsPanel - test
+WARN AWT-EventQueue-0 GUI.components.game.ActionsButtonsPanel - test
