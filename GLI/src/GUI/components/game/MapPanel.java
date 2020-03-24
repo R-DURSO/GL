@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
-import GUI.colors.ColorData;
+import GUI.drawing.ColorData;
 import GUI.sub_panels.GamePanel;
 import data.GameMap;
 import data.Position;
@@ -105,7 +105,7 @@ public class MapPanel extends JPanel{
                 g2.setColor(ColorData.NO_POWER_COLOR);
                 g2.drawRect(x, y, rectWidth, rectHeight);
                 
-                /*We draw resources, units, building here (just colored rectangles for now*/
+                /*We draw resources, units, building here (just colored rectangles for now, except for Units)*/
 
                 int startX = x + (rectWidth/MINI_BOX_PART);
                 int startY = y + (rectHeight/MINI_BOX_PART);
@@ -117,15 +117,15 @@ public class MapPanel extends JPanel{
                 	}
                 	Building building = groundBox.getBuilding();
                 	if(determineBuildingColor(g2, building)) {
-                		int drawX = startX;
-                		int drawY = startY + miniBoxHeight + miniBoxHeight/2;
-                		g2.fillRect( drawX, drawY, miniBoxWidth, miniBoxHeight);
+                		int drawX = startX + miniBoxWidth + miniBoxWidth/2;
+                		int drawY = startY;
+                		g2.fillRect( drawX, drawY, miniBoxWidth, miniBoxHeight * 5 / 2);
                 		//we check if building is enabled or not, in order to change opacity in this case
                 		if(building.getBuildTime() > 0) { //never null (checked in 'determineBuildingColor()')
                 			//in this case, we simply draw a crossed white line to show his "state"
                 			g2.setColor(Color.WHITE); //capital can't be disabled
                             g2.setStroke(new BasicStroke(2));
-                			g2.drawLine(drawX, drawY, drawX + miniBoxWidth, drawY + miniBoxHeight);
+                			g2.drawLine(drawX, drawY, drawX + miniBoxWidth, drawY + miniBoxHeight * 5 / 2);
                 			g2.setStroke(new BasicStroke(1));
                 		}
                 	}
@@ -135,11 +135,13 @@ public class MapPanel extends JPanel{
                 //if there is any unit to draw
                 Units units = box.getUnit();
                 if(determineUnitColor(g, units)) {
-            		g2.fillRect(startX + miniBoxWidth + miniBoxWidth/2, startY + miniBoxHeight + miniBoxHeight/2, miniBoxWidth, miniBoxHeight);
+                	int drawX = startX;
+                	int drawY = startY + miniBoxHeight + miniBoxHeight/2;
+            		g2.fillRect(drawX, drawY, miniBoxWidth, miniBoxHeight);
             		//we need to know who have those units (if units are on ally's territory)
             		determineBoxBorder(g2, units.getOwner());
             		g2.setStroke(new BasicStroke(3));
-            		g2.drawRect(startX + miniBoxWidth + miniBoxWidth/2, startY + miniBoxHeight + miniBoxHeight/2, miniBoxWidth, miniBoxHeight);
+            		g2.drawRect(drawX, drawY, miniBoxWidth, miniBoxHeight);
             		g2.setStroke(new BasicStroke(1));
             	}
                 

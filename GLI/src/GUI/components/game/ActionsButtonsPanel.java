@@ -14,9 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-import GUI.colors.ColorData;
 import GUI.components.GuiPreferences;
 import GUI.components.SliderPanel;
+import GUI.drawing.ColorData;
 import GUI.sub_panels.GamePanel;
 import data.Position;
 import data.Power;
