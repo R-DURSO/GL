@@ -1,6 +1,5 @@
 package process.game;
 
-import GUI.components.menu.PreferencesPanel;
 import data.GameMap;
 import data.Power;
 import process.management.MapBuilder;

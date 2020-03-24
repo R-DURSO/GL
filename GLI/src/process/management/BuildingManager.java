@@ -100,4 +100,16 @@ public class BuildingManager {
 		//now we simply remove building from map
 		targetBox.setBuilding(null);
 	}
+	
+	public void decreaseBuildTime(Power power, Building building) {
+		building.decreaseBuildTime();
+		if (building.isFinish()) {
+			if (building instanceof BuildingProduct) {
+				BuildingProduct buildingP = (BuildingProduct)building;
+				if (buildingP.getOnRightResource()) {
+					power.addResourcesProductionPerTurn(buildingP.getProductionType(), buildingP.getProductionPerTurn());
+				}
+			}
+		}
+	}
 }

@@ -18,12 +18,12 @@ import process.management.UnitManager;
 public class GameLoop {
 	
 	@SuppressWarnings("unchecked")
-	private ArrayList<Action> actions[]= (ArrayList<Action>[]) new ArrayList[ActionTypes.NUMBER_ACTIONS];
+	private ArrayList<Action> actions[] = (ArrayList<Action>[]) new ArrayList[ActionTypes.NUMBER_ACTIONS];
 	
 	// constante temporaire 
 	private boolean isPlaying = true;
 	private Power powers[];
-	GameMap map;
+	private GameMap map;
 	
 	public GameLoop(GameMap map, Power powers[] ) {
 		initActionArray();
@@ -72,9 +72,10 @@ public class GameLoop {
 	 * End the current turn
 	 */
 	public void endTurn() {
+		//decrease build time
+		decreaseBuildTime();
 		//Apply all stored action
 		doActions();
-		//decrease build time
 		//add resource from building product
 		applyProduction();
 		//if no more food, kill some unit
@@ -214,7 +215,22 @@ public class GameLoop {
 		for (int i = 0; i < getPlayerNumber(); i++) {
 			powers[i].applyProductionOfTurn();
 		}
-		
+	}
+	
+	private void decreaseBuildTime() {
+		for (int i=0; i < map.getSize(); i++) {
+			for (int j=0; j < map.getSize(); j++) {
+				Box visitBox = map.getBox(i, j);
+				if (visitBox instanceof GroundBox) {
+					GroundBox visitGBox = (GroundBox)visitBox;
+					if (visitGBox.hasBuilding()) {
+						if (!visitGBox.getBuilding().isFinish()) {
+							BuildingManager.getInstance().decreaseBuildTime(visitGBox.getOwner(), visitGBox.getBuilding());
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	public Boolean canContinueTurn(Resource actionPoints) {

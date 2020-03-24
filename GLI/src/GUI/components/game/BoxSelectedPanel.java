@@ -28,12 +28,13 @@ public class BoxSelectedPanel extends JPanel {
 	private void init() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		OwnerLabel = new JLabel();
-		add(OwnerLabel);
 		UnitsLabel = new JLabel();
-		add(UnitsLabel);
 		BuildingLabel = new JLabel();
-		add(BuildingLabel);
 		ResourceLabel = new JLabel();
+		
+		add(OwnerLabel);
+		add(UnitsLabel);
+		add(BuildingLabel);
 		add(ResourceLabel);
 	}
 	
@@ -56,7 +57,7 @@ public class BoxSelectedPanel extends JPanel {
 			GroundBox GBox = (GroundBox)box;
 			if (GBox.hasBuilding()) {
 				Building building = GBox.getBuilding();
-				if(building.getBuildTime() > 0)
+				if (!building.isFinish())
 					BuildingLabel.setText(building.toString() + " (" + building.getBuildTime() + " tour(s) avant activation)");
 				else
 					BuildingLabel.setText(building.toString());

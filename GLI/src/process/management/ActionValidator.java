@@ -160,7 +160,6 @@ public class ActionValidator {
 		
 		Box fromBox = getBoxFromMap(from);
 		Box targetBox = getBoxFromMap(target);
-		Power boxOwner = fromBox.getOwner();
 		
 		//check if there is any Units on the fromBox
 		if (!fromBox.hasUnit()) {
@@ -173,27 +172,13 @@ public class ActionValidator {
 		if (UnitsOwner != powerConcerned) {
 			throw new IllegalArgumentException("Vous essayer de bouger des unites qui ne vous appartiennent pas");
 		}
-		/*
-		//check if from Box is powerConcerned's
-		if (boxOwner != powerConcerned && !powerConcerned.isAllied()) {
-			throw new IllegalArgumentException("Cette case n'appartient pas a " + powerConcerned.getName());
-		}
 		
-		//if has allied, we must check if targetBox is ally's
-		if(boxOwner != powerConcerned && powerConcerned.isAllied()) {
-			Power ally = powerConcerned.getAlly();
-			if(boxOwner != ally) {
-				throw new IllegalArgumentException("Cette case n'appartient ni à vous, ni à votre allié");
-			}
-		}
-		*/
 		//check if units are on range
 		if (!isUnitsOnRange(from, movingUnits.getMovement(), target)) {
 			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
 		}
 
 		//check if there is "obstacle" on target : either wall / ennemy door, or units
-		//TODO Pathfinding ne verifie pas la presence d'unite, donc survoler des ennemis est possible
 		String pathFinding = pathFinding(from, movingUnits, target);
 		if (pathFinding == null) {
 			throw new IllegalArgumentException("Impossible de determiner un chemin jusqu'a la destination");
@@ -216,7 +201,7 @@ public class ActionValidator {
 							throw new IllegalArgumentException("Des Unités de types différents sont dans ce bateau");
 						}
 						//But, make sure you dont exceed the limit
-						else if (containedUnit.getNumber() + movingUnits.getNumber() > movingUnits.getTypes()) {
+						else if (containedUnit.getNumber() + movingUnits.getNumber() > movingUnits.getMaxNumber()) {
 							throw new IllegalArgumentException("Le déplacement fait dépasser la limite d'unite");
 						}
 					}
@@ -739,6 +724,7 @@ public class ActionValidator {
 		}
 		
 		powerConcerned.removeActionPoint();
+		targetBox.setUnit(new PhantomUnit(powerConcerned, unitType));
 		powerConcerned.getResource(neededResource.getType()).subValue(neededResource.getCost());
 		return new ActionCreateUnit(powerConcerned, unitType, numberUnits, target);
 	}
