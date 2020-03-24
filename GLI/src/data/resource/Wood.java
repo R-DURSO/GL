@@ -13,6 +13,10 @@ public class Wood extends Resource {
 		super(number);
 	}
 
+	public Wood(int woodInitialValue, int woodBaseProduction) {
+		super(woodInitialValue, woodBaseProduction);
+	}
+	
 	public int getResourceType() {
 		return ResourceTypes.RESOURCE_WOOD;
 	}

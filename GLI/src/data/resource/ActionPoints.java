@@ -13,6 +13,10 @@ public class ActionPoints extends Resource {
 	public ActionPoints(int number) {
 		super(number);
 	}
+
+	public ActionPoints(int ActionInitialValue, int ActionBaseProduction) {
+		super(ActionInitialValue, ActionBaseProduction);
+	}
 	
 	public int getResourceType() {
 		return ResourceTypes.RESOURCE_ACTIONS;

@@ -14,8 +14,14 @@ public abstract class Resource {
 	public Resource () {
 		this.amount = 0;
 	}
-	public Resource(int amount) {
-		this.amount = amount;
+	
+	public Resource(int baseAmount) {
+		this.amount = baseAmount;
+	}
+	
+	public Resource(int baseAmount, int baseProduction) {
+		this.amount = baseAmount;
+		this.productionPerTurn = baseProduction;
 	}
 	
 	
@@ -35,6 +41,9 @@ public abstract class Resource {
 		this.amount -= value;
 	}
 	
+	/**
+	 * Apply the Production of Selected Resource
+	 */
 	public void productionOfTurn() {
 		this.amount += this.productionPerTurn;
 	}

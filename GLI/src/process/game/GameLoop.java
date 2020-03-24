@@ -58,9 +58,9 @@ public class GameLoop {
 			//for others non-human players 
 			for( int i = 1 ; i < powers.length;  i++) {
 				
-				//they will do all actions thay can 
+				//they will do all actions they can 
 				while(canContinueTurn(powers[i].getResource(ResourceTypes.RESOURCE_ACTIONS))) {
-					// test des action possible 
+					// test action possible 
 
 
 				}
@@ -68,8 +68,16 @@ public class GameLoop {
 		}
 	}
 	
+	/**
+	 * End the current turn
+	 */
 	public void endTurn() {
+		//Apply all stored action
 		doActions();
+		//decrease build time
+		//add resource from building product
+		applyProduction();
+		//if no more food, kill some unit
 	}
 	
 	public void doActions() {
@@ -201,9 +209,18 @@ public class GameLoop {
 		}
 
 	}
+	
+	private void applyProduction() {
+		for (int i = 0; i < getPlayerNumber(); i++) {
+			powers[i].applyProductionOfTurn();
+		}
+		
+	}
+	
 	public Boolean canContinueTurn(Resource actionPoints) {
 		return actionPoints.getAmount() > 0;
 	}
+	
 	public  void createPower(int number) {
 		this.powers =new Power[number];
 		for(int i = 0; i < number; i++){

@@ -130,7 +130,7 @@ public class TestActionValidator {
 		actionValidator.createActionMove(powers[2], new Position(mapSize - 1, mapSize - 3), new Position(mapSize - 3, mapSize - 3));
 		assertEquals(new PhantomUnit(powers[2]).getTypes(), map.getBox(mapSize - 3, mapSize - 3).getUnit().getTypes());
 		assertEquals(powers[2], map.getBox(mapSize - 3, mapSize - 3).getUnit().getOwner());
-		//cavalier pas bloque par l'archer car meme power
+		//cavalier bloque par l'archer car power ennemi
 		actionValidator.createActionMove(powers[1], new Position(mapSize - 1, mapSize - 2), new Position(mapSize - 4, mapSize - 3));
 		assertEquals(new PhantomUnit(powers[1]).getTypes(), map.getBox(mapSize - 4, mapSize - 3).getUnit().getTypes());
 		
@@ -243,9 +243,9 @@ public class TestActionValidator {
 			powers[i] = PowerFactory.createPower("" + (i+1));
 		}
 		//remove power 2's wood resources (to check failure of building construct)
-		powers[1].getResource(ResourceTypes.RESOURCE_WOOD).subValue(InitialValue.WOOD_INITAL_VALUE);
+		powers[1].getResource(ResourceTypes.RESOURCE_WOOD).subValue(InitialValue.WOOD_INITIAL_VALUE);
 		//and power 3' gold resources (to check capital ugrade failure)
-		powers[2].getResource(ResourceTypes.RESOURCE_GOLD).subValue(InitialValue.GOLD_INITAL_VALUE);
+		powers[2].getResource(ResourceTypes.RESOURCE_GOLD).subValue(InitialValue.GOLD_INITIAL_VALUE);
 	}
 
 	private void generateSpecialMap() {

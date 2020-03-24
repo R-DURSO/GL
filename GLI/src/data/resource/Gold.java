@@ -12,7 +12,11 @@ public class Gold extends Resource {
 		super(number);
 	}
 
-	
+	public Gold(int goldInitialValue, int goldBaseProduction) {
+		super(goldInitialValue, goldBaseProduction);
+	}
+
+
 	public int getResourceType() {
 		return ResourceTypes.RESOURCE_GOLD;
 	}

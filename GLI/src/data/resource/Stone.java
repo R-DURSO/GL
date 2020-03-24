@@ -13,6 +13,9 @@ public class Stone extends Resource {
 		super(number);
 	}
 
+	public Stone(int stoneInitialValue, int stoneBaseProduction) {
+		super(stoneInitialValue, stoneBaseProduction);
+	}
 	
 	public int getResourceType() {
 		return ResourceTypes.RESOURCE_STONE;

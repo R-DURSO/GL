@@ -81,6 +81,14 @@ public class Power {
 	public void substractResourcesProductionPerTurn(int resourceType, int amount) {
 		resources[resourceType-1].subProductionPerTurn(amount);
 	}
+	
+	public void applyProductionOfTurn() {
+		resources[ResourceTypes.RESOURCE_ACTIONS - 1].productionOfTurn();
+		resources[ResourceTypes.RESOURCE_FOOD - 1].productionOfTurn();
+		resources[ResourceTypes.RESOURCE_GOLD - 1].productionOfTurn();
+		resources[ResourceTypes.RESOURCE_WOOD - 1].productionOfTurn();
+		resources[ResourceTypes.RESOURCE_STONE - 1].productionOfTurn();
+	}
 
 	public void setAlly(Power ally) {
 		this.ally = ally;

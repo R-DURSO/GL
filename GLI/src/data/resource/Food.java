@@ -12,6 +12,9 @@ public class Food extends Resource {
 		super(number);
 	}
 
+	public Food(int foodInitialValue, int foodBaseProduction) {
+		super(foodInitialValue, foodBaseProduction);
+	}
 	
 	public int getResourceType() {
 		return ResourceTypes.RESOURCE_FOOD;
