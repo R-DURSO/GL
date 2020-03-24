@@ -123,7 +123,7 @@ public class ActionValidator {
 		if (unitsAtt.getOwner() != powerConcerned) {
 			Logger.warn(powerConcerned.getName()+"is not here units ");
 			throw new IllegalArgumentException("Ces unites n'appartiennent pas a " + powerConcerned.getName());
-		
+		}
 		//check if units are on range
 		if (!isUnitsOnRange(from, unitsAtt.getRange(), target)) {
 			Logger.warn(powerConcerned.getName()+"units is out of range ");
