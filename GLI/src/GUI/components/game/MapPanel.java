@@ -88,7 +88,8 @@ public class MapPanel extends JPanel{
 
 
 	private void drawMap(Graphics g) {
-        g.clearRect(0, 0, getWidth(), getHeight());
+		Graphics2D g2 = (Graphics2D) g;
+        g2.clearRect(0, 0, getWidth(), getHeight());
         int miniBoxWidth = rectWidth * 4 / MINI_BOX_PART;
         int miniBoxHeight = rectHeight * 4 / MINI_BOX_PART;
         
@@ -97,12 +98,12 @@ public class MapPanel extends JPanel{
                 int x = i * rectWidth;
                 int y = j * rectHeight;
                 //draw background of box 
-                determineBoxColor(g, i, j);
-                g.fillRect(x, y, rectWidth, rectHeight);
+                determineBoxColor(g2, i, j);
+                g2.fillRect(x, y, rectWidth, rectHeight);
                 
                 //border color
-                g.setColor(ColorData.NO_POWER_COLOR);
-                g.drawRect(x, y, rectWidth, rectHeight);
+                g2.setColor(ColorData.NO_POWER_COLOR);
+                g2.drawRect(x, y, rectWidth, rectHeight);
                 
                 /*We draw resources, units, building here (just colored rectangles for now*/
 
@@ -112,18 +113,17 @@ public class MapPanel extends JPanel{
                 if(map.getBox(i, j) instanceof GroundBox) {
                 	GroundBox groundBox = (GroundBox) map.getBox(i, j);
                 	if(determineResourceColor(g, groundBox)) {
-						g.fillRect(startX, startY, miniBoxWidth, miniBoxHeight);
+						g2.fillRect(startX, startY, miniBoxWidth, miniBoxHeight);
                 	}
                 	Building building = groundBox.getBuilding();
-                	if(determineBuildingColor(g, building)) {
+                	if(determineBuildingColor(g2, building)) {
                 		int drawX = startX;
                 		int drawY = startY + miniBoxHeight + miniBoxHeight/2;
-                		g.fillRect( drawX, drawY, miniBoxWidth, miniBoxHeight);
+                		g2.fillRect( drawX, drawY, miniBoxWidth, miniBoxHeight);
                 		//we check if building is enabled or not, in order to change opacity in this case
                 		if(building.getBuildTime() > 0) { //never null (checked in 'determineBuildingColor()')
                 			//in this case, we simply draw a crossed white line to show his "state"
-                			g.setColor(Color.WHITE); //capital can't be disabled
-                			Graphics2D g2 = (Graphics2D) g;
+                			g2.setColor(Color.WHITE); //capital can't be disabled
                             g2.setStroke(new BasicStroke(2));
                 			g2.drawLine(drawX, drawY, drawX + miniBoxWidth, drawY + miniBoxHeight);
                 			g2.setStroke(new BasicStroke(1));
@@ -132,8 +132,15 @@ public class MapPanel extends JPanel{
                 	
                 }
                 Box box = map.getBox(i, j);
-                if(determineUnitColor(g, box)) {
-            		g.fillRect(startX + miniBoxWidth + miniBoxWidth/2, startY + miniBoxHeight + miniBoxHeight/2, miniBoxWidth, miniBoxHeight);
+                //if there is any unit to draw
+                Units units = box.getUnit();
+                if(determineUnitColor(g, units)) {
+            		g2.fillRect(startX + miniBoxWidth + miniBoxWidth/2, startY + miniBoxHeight + miniBoxHeight/2, miniBoxWidth, miniBoxHeight);
+            		//we need to know who have those units (if units are on ally's territory)
+            		determineBoxBorder(g2, units.getOwner());
+            		g2.setStroke(new BasicStroke(3));
+            		g2.drawRect(startX + miniBoxWidth + miniBoxWidth/2, startY + miniBoxHeight + miniBoxHeight/2, miniBoxWidth, miniBoxHeight);
+            		g2.setStroke(new BasicStroke(1));
             	}
                 
             }
@@ -143,8 +150,9 @@ public class MapPanel extends JPanel{
             for (int j = 0; j < map.getSize(); j++) {
                 int x = i * rectWidth;
                 int y = j * rectHeight;
-                determineBoxBorder(g, i, j);
-                Graphics2D g2 = (Graphics2D) g;
+                Box box = map.getBox(i,j);
+                Power power = box.getOwner();
+                determineBoxBorder(g2, power);
                 g2.setStroke(new BasicStroke(3));
                 if(g2.getColor() != ColorData.NO_POWER_COLOR)
                 	g2.drawRect(x, y, rectWidth, rectHeight);
@@ -214,8 +222,7 @@ public class MapPanel extends JPanel{
 
 
 
-	private boolean determineUnitColor(Graphics g, Box box) {
-		Units units = box.getUnit();
+	private boolean determineUnitColor(Graphics g, Units units) {
 		if(units == null)
 			return false;
 		
@@ -282,10 +289,8 @@ public class MapPanel extends JPanel{
      *		-Yellow : player 2
      *		-Green : player 3
      *		-White : player 4*/
-	private void determineBoxBorder(Graphics g, int i, int j) {
-		Box box = map.getBox(i, j);
-		if(box.hasOwner()) {
-			Power power = box.getOwner();
+	private void determineBoxBorder(Graphics g, Power power) {
+		if(power != null) {
 			if(powers[0] == power) {
 				g.setColor(ColorData.POWER_1_COLOR);
 			}else if(powers[1] == power) {
