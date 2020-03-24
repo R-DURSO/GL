@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import GUI.components.GuiPreferences;
@@ -30,8 +31,8 @@ public class GameButtonsPanel extends JPanel{
 	private JButton endTurnButton = new JButton("Fin du tour");
 	private JButton quitButton = new JButton("Quitter");
 	
-	private final Dimension LEFT_DIMENSION = new Dimension(3 * GuiPreferences.WIDTH / 4, GuiPreferences.HEIGHT / 10);
-	private final Dimension RIGHT_DIMENSION = new Dimension(GuiPreferences.WIDTH / 4, GuiPreferences.HEIGHT / 10);
+	private final Dimension LEFT_DIMENSION = new Dimension(4 * GuiPreferences.WIDTH / 5, GuiPreferences.HEIGHT / 10);
+	private final Dimension RIGHT_DIMENSION = new Dimension(GuiPreferences.WIDTH / 5, GuiPreferences.HEIGHT / 10);
 
 	public GameButtonsPanel(GamePanel context) {
 		
@@ -49,6 +50,7 @@ public class GameButtonsPanel extends JPanel{
 		
 		contextPanel.setLayout(new GridLayout(0,1));
 		endTurnButton.addActionListener(new ActionEndTurn());
+		quitButton.addActionListener(new ActionQuit());
 		contextPanel.add(endTurnButton);
 		contextPanel.add(quitButton);
 		contextPanel.setPreferredSize(RIGHT_DIMENSION);
@@ -64,6 +66,10 @@ public class GameButtonsPanel extends JPanel{
 		return actionsPanel;
 	}
 	
+	public void hideActionButtons() {
+		actionsPanel.setMajorButtonsVisibility(false);
+	}
+	
 	public void setValidationActionType(int actionType) {
 		validationPanel.setActionType(actionType);
 	}
@@ -71,8 +77,15 @@ public class GameButtonsPanel extends JPanel{
 	class ActionEndTurn implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			context.endPlayerTurn();
+			int answer = JOptionPane.showConfirmDialog(context, "Voulez-vous vraiment terminer votre tour?", "Fin de tour", JOptionPane.YES_NO_OPTION);
+			if(answer == JOptionPane.YES_OPTION)
+				context.endPlayerTurn();
 		}
 	}
-
+	
+	class ActionQuit implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
 }

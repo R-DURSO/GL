@@ -53,6 +53,13 @@ public class ColorData {
 	public static final Color FROM_SELECTION_COLOR = new Color(1.0f, 1.0f, 1.0f, 0.5f);
 	public static final Color TARGET_SELECTION_COLOR = new Color(0.0f, 0.0f, 0.0f, 0.5f);
 	
+	//Buttons
+	
+	public static final Color BUTTON_ALLIANCE_COLOR = new Color(230, 230, 0);
+	public static final Color BUTTON_CREATE_COLOR = new Color(0, 153, 0);
+	public static final Color BUTTON_DESTROY_COLOR = new Color(190, 49, 14);
+	public static final Color BUTTON_MOVE_COLOR = new Color(0, 153, 255);
+	public static final Color BUTTON_CAPITAL_COLOR = new Color(242, 242, 242);
 	
 
 }
