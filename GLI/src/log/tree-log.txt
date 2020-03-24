@@ -1,2 +1,4 @@
 INFO AWT-EventQueue-0 GUI.components.game.ActionsButtonsPanel - test
 WARN AWT-EventQueue-0 GUI.components.game.ActionsButtonsPanel - test
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionPoint 
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1destoy unit 11
