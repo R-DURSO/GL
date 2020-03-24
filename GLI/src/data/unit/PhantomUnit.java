@@ -10,14 +10,16 @@ import data.Power;
  * @see process.management.ActionValidator
  */
 public class PhantomUnit extends Units{
+	private int unitTypes;
 
-	public PhantomUnit (Power owner) {
+	public PhantomUnit (Power owner, int unitTypes) {
 		super(owner, 0, 0, 0);
+		this.unitTypes = -unitTypes;
 	}
 
 	@Override
 	public int getTypes() {
-		return -1;
+		return this.unitTypes;
 	}
 
 	@Override
@@ -58,6 +60,10 @@ public class PhantomUnit extends Units{
 	@Override
 	public int getSiegeDamage() {
 		return 0;
+	}
+	
+	public String toString() {
+		return "PhantomUnit of"+getTypes();
 	}
 
 }

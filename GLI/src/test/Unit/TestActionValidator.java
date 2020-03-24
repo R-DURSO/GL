@@ -118,7 +118,7 @@ public class TestActionValidator {
 	public void testMoveFailurePhantom() throws IllegalArgumentException {
 		//cavalier au milieu
 		actionValidator.createActionMove(powers[1], new Position(mapSize - 1, mapSize - 2), new Position(mapSize - 3, mapSize - 3));
-		assertEquals(new PhantomUnit(powers[1]).getTypes(), map.getBox(mapSize - 3, mapSize - 3).getUnit().getTypes());
+		assertEquals(new PhantomUnit(powers[1], map.getBox(mapSize - 1, mapSize - 2).getUnit().getTypes()).getTypes(), map.getBox(mapSize - 3, mapSize - 3).getUnit().getTypes());
 		//l'archer essaie de s'y déplacer aussi
 		actionValidator.createActionMove(powers[2], new Position(mapSize - 1, mapSize - 3), new Position(mapSize - 3, mapSize - 3));
 		assertEquals(new Archer(1, powers[1]).getTypes(), map.getBox(mapSize - 1, mapSize - 3).getUnit().getTypes());
@@ -128,11 +128,11 @@ public class TestActionValidator {
 	public void testMoveFailedEnnemyPhantomInPath() throws IllegalArgumentException {
 		//l'archer se déplace
 		actionValidator.createActionMove(powers[2], new Position(mapSize - 1, mapSize - 3), new Position(mapSize - 3, mapSize - 3));
-		assertEquals(new PhantomUnit(powers[2]).getTypes(), map.getBox(mapSize - 3, mapSize - 3).getUnit().getTypes());
+		assertEquals(new PhantomUnit(powers[2], map.getBox(mapSize - 1, mapSize - 3).getUnit().getTypes()).getTypes(), map.getBox(mapSize - 3, mapSize - 3).getUnit().getTypes());
 		assertEquals(powers[2], map.getBox(mapSize - 3, mapSize - 3).getUnit().getOwner());
 		//cavalier bloque par l'archer car power ennemi
 		actionValidator.createActionMove(powers[1], new Position(mapSize - 1, mapSize - 2), new Position(mapSize - 4, mapSize - 3));
-		assertEquals(new PhantomUnit(powers[1]).getTypes(), map.getBox(mapSize - 4, mapSize - 3).getUnit().getTypes());
+		assertEquals(new PhantomUnit(powers[1], map.getBox(mapSize - 1, mapSize - 2).getUnit().getTypes()).getTypes(), map.getBox(mapSize - 4, mapSize - 3).getUnit().getTypes());
 		
 	}
 	
@@ -142,13 +142,13 @@ public class TestActionValidator {
 		Position target = new Position(mapSize - 4, mapSize - 3);
 		//deplacer le cavalier chez l'allie
 		actionValidator.createActionMove(powers[1], from, target);
-		assertEquals(new PhantomUnit(powers[1]).getTypes(), map.getBox(target).getUnit().getTypes());
+		assertEquals(new PhantomUnit(powers[1], map.getBox(from).getUnit().getTypes()).getTypes(), map.getBox(target).getUnit().getTypes());
 		
 		//le ramener a la base
 		map.getBox(target).setUnit(map.getBox(from).getUnit());
 		map.getBox(from).setUnit(null);
 		actionValidator.createActionMove(powers[1], target, from);
-		assertEquals(new PhantomUnit(powers[1]).getTypes(), map.getBox(from).getUnit().getTypes());
+		assertEquals(new PhantomUnit(powers[1], map.getBox(target).getUnit().getTypes()).getTypes(), map.getBox(from).getUnit().getTypes());
 	}
 	
 	@Test

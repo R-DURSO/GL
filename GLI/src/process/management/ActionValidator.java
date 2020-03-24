@@ -236,7 +236,7 @@ public class ActionValidator {
 		
 		powerConcerned.removeActionPoint();
 		//add phantom unit on the target box, to ensure that no other unit could go there
-		targetBox.setUnit(new PhantomUnit(powerConcerned));
+		targetBox.setUnit(new PhantomUnit(powerConcerned, movingUnits.getTypes()));
 		Box[] ListBox = convertPathToBoxArray(pathFinding, from);
 		return new ActionMove(powerConcerned, ListBox);
 	}
@@ -722,7 +722,7 @@ public class ActionValidator {
 			
 			switch(building.getType()) {
 			case BuildingTypes.BUILDING_BARRACK:
-				if(unitType >= UnitTypes.UNITS_IN_BARRACK)
+				if(unitType >= UnitTypes.UNITS_IN_BARRACK || unitType < 0)
 					throw new IllegalArgumentException("Ces unites ne sont pas creees dans des casernes");
 				break;
 			case BuildingTypes.BUILDING_WORKSHOP:
