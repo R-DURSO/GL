@@ -27,7 +27,7 @@ public class UnitManager {
 		//cant add negative or none Unit
 		if (numberUnits > 0) {
 			//we will check if there is already units of the same type on the box
-			if (box.hasUnit()) {
+			if (box.hasUnit() && !(box.getUnit() instanceof PhantomUnit)) {
 				Units unitsOnBox = box.getUnit();
 				int numberUnitsOnBox = unitsOnBox.getNumber();
 				int numberUnitsNeeded = numberUnits + numberUnitsOnBox;
