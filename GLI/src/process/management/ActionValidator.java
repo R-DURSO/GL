@@ -162,6 +162,18 @@ public class ActionValidator {
 		Box targetBox = getBoxFromMap(target);
 		Power boxOwner = fromBox.getOwner();
 		
+		//check if there is any Units on the fromBox
+		if (!fromBox.hasUnit()) {
+			throw new IllegalArgumentException("Il n'y a pas d'unite a deplacer ici");
+		}
+		
+		Units movingUnits = fromBox.getUnit();
+		Power UnitsOwner = movingUnits.getOwner();
+		
+		if (UnitsOwner != powerConcerned) {
+			throw new IllegalArgumentException("Vous essayer de bouger des unites qui ne vous appartiennent pas");
+		}
+		/*
 		//check if from Box is powerConcerned's
 		if (boxOwner != powerConcerned && !powerConcerned.isAllied()) {
 			throw new IllegalArgumentException("Cette case n'appartient pas a " + powerConcerned.getName());
@@ -174,14 +186,7 @@ public class ActionValidator {
 				throw new IllegalArgumentException("Cette case n'appartient ni à vous, ni à votre allié");
 			}
 		}
-		
-		//check if there is any Units on the fromBox
-		if (!fromBox.hasUnit()) {
-			throw new IllegalArgumentException("Il n'y a pas d'unite a deplacer ici");
-		}
-		
-		Units movingUnits = fromBox.getUnit();
-		
+		*/
 		//check if units are on range
 		if (!isUnitsOnRange(from, movingUnits.getMovement(), target)) {
 			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
@@ -231,7 +236,7 @@ public class ActionValidator {
 		
 		powerConcerned.removeActionPoint();
 		//add phantom unit on the target box, to ensure that no other unit could go there
-		targetBox.setUnit(new PhantomUnit());
+		targetBox.setUnit(new PhantomUnit(powerConcerned));
 		Box[] ListBox = convertPathToBoxArray(pathFinding, from);
 		return new ActionMove(powerConcerned, ListBox);
 	}
@@ -375,13 +380,13 @@ public class ActionValidator {
 								Units visitUnit = visitBox.getUnit();
 								if (visitBox.getUnit().getOwner() != powerConcerned) {
 									if (Allied) {
-										if (visitBox.getUnit().getOwner() != Ally) {
+										if (visitBox.getUnit().getOwner() == Ally) {
 											//there is Ally unit, we can continue our visit, but can't stop here
 											canVisit = true;
 										}
 										//Not our Ally
 									}
-									//There is ennemy Unit on the way
+									//There is only ennemy on this map
 								}
 								else {
 									//Our own Box, with our Unit

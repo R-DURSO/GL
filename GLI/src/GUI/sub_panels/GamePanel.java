@@ -110,6 +110,7 @@ public class GamePanel extends JPanel{
 		resetPositions();
 		gameButtonsPanel.getActionsBoutonsPanel().setMajorButtonsVisibility(false);
 		gameLoop.endTurn();
+		playerResourcesPanel.refreshAll();
 		repaint();		
 	}
 	

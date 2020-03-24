@@ -1,5 +1,7 @@
 package data.unit;
 
+import data.Power;
+
 /**
  * This Unit type is not a playable Unit, it simply ensures that 2 Units never want to go on the same box
  * during preparation time. 
@@ -9,8 +11,8 @@ package data.unit;
  */
 public class PhantomUnit extends Units{
 
-	public PhantomUnit() {
-		super(null, 0, 0, 0);
+	public PhantomUnit (Power owner) {
+		super(owner, 0, 0, 0);
 	}
 
 	@Override

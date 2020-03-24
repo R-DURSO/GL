@@ -85,33 +85,55 @@ public class TestActionValidator {
 	}
 
 	@Test
-	public void testMoveSuccess1() throws IllegalArgumentException{
+	public void testMoveSuccess() throws IllegalArgumentException{
 		//deplacer le cavalier au milieu de la carte
 		actionValidator.createActionMove(powers[1], new Position(mapSize -1, mapSize -2), new Position(mapSize/2, mapSize/2));
 	}
 	
 	@Test
-	public void testMoveSuccess2() throws IllegalArgumentException{
+	public void testMoveSuccessOwnDoor() throws IllegalArgumentException{
 		//can move in his Door
 		actionValidator.createActionMove(powers[2], new Position(mapSize -1, mapSize -3), new Position(mapSize -1, mapSize - 4));
 	}
 	
 	@Test
-	public void testMoveSuccess3() throws IllegalArgumentException{
+	public void testMoveSuccessBoat() throws IllegalArgumentException{
 		//Boat can move on water
 		actionValidator.createActionMove(powers[0], new Position(mapSize/2, 0), new Position(mapSize/2, 1));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testMoveFailure1() throws IllegalArgumentException{
+	public void testMoveFailureTooFar() throws IllegalArgumentException{
 		//too far
 		actionValidator.createActionMove(powers[0], new Position(0, 0), new Position(mapSize/2, mapSize/2));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testMoveFailure2() throws IllegalArgumentException{
+	public void testMoveFailureObstacle() throws IllegalArgumentException{
 		//obstacle
 		actionValidator.createActionMove(powers[0], new Position(0, 0), new Position(0, 2));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testMoveFailurePhantom() throws IllegalArgumentException {
+		//cavalier au milieu
+		actionValidator.createActionMove(powers[1], new Position(mapSize - 1, mapSize - 2), new Position(mapSize - 3, mapSize - 3));
+		assertEquals(new PhantomUnit(powers[1]).getTypes(), map.getBox(mapSize - 3, mapSize - 3).getUnit().getTypes());
+		//l'archer essaie de s'y déplacer aussi
+		actionValidator.createActionMove(powers[2], new Position(mapSize - 1, mapSize - 3), new Position(mapSize - 3, mapSize - 3));
+		assertEquals(new Archer(1, powers[1]).getTypes(), map.getBox(mapSize - 1, mapSize - 3).getUnit().getTypes());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testMoveFailedEnnemyPhantomInPath() throws IllegalArgumentException {
+		//l'archer se déplace
+		actionValidator.createActionMove(powers[2], new Position(mapSize - 1, mapSize - 3), new Position(mapSize - 3, mapSize - 3));
+		assertEquals(new PhantomUnit(powers[2]).getTypes(), map.getBox(mapSize - 3, mapSize - 3).getUnit().getTypes());
+		assertEquals(powers[2], map.getBox(mapSize - 3, mapSize - 3).getUnit().getOwner());
+		//cavalier pas bloque par l'archer car meme power
+		actionValidator.createActionMove(powers[1], new Position(mapSize - 1, mapSize - 2), new Position(mapSize - 4, mapSize - 3));
+		assertEquals(new PhantomUnit(powers[1]).getTypes(), map.getBox(mapSize - 4, mapSize - 3).getUnit().getTypes());
+		
 	}
 	
 	@Test 
@@ -120,13 +142,13 @@ public class TestActionValidator {
 		Position target = new Position(mapSize - 4, mapSize - 3);
 		//deplacer le cavalier chez l'allie
 		actionValidator.createActionMove(powers[1], from, target);
-		assertEquals(new PhantomUnit().getTypes(), map.getBox(target).getUnit().getTypes());
+		assertEquals(new PhantomUnit(powers[1]).getTypes(), map.getBox(target).getUnit().getTypes());
 		
 		//le ramener a la base
 		map.getBox(target).setUnit(map.getBox(from).getUnit());
 		map.getBox(from).setUnit(null);
 		actionValidator.createActionMove(powers[1], target, from);
-		assertEquals(new PhantomUnit().getTypes(), map.getBox(from).getUnit().getTypes());
+		assertEquals(new PhantomUnit(powers[1]).getTypes(), map.getBox(from).getUnit().getTypes());
 	}
 	
 	@Test

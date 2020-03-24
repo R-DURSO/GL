@@ -41,6 +41,11 @@ public class PlayerResourcesPanel extends JPanel{
 	}
 	
 	public void refreshAll() {
+		actionPointsPanel.refresh();
+		goldPanel.refresh();
+		stonePanel.refresh();
+		woodPanel.refresh();
+		foodPanel.refresh();
 	}
 
 }
