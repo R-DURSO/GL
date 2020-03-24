@@ -187,14 +187,12 @@ public class ActionValidator {
 		Power UnitsOwner = movingUnits.getOwner();
 		
 		if (UnitsOwner != powerConcerned) {
-
-			Logger.warn(powerConcerned.getName()+"test move enemy units");
-			throw new IllegalArgumentException("Vous essayez de bouger des unites qui ne vous appartiennent pas");
+			Logger.warn(powerConcerned.getName()+" test move enemy units");
+			throw new IllegalArgumentException("Vous essayer de bouger des unites qui ne vous appartiennent pas");
 		}
 		
 		if (movingUnits.getIsMoving()) {
 			throw new IllegalArgumentException("Vous bougez des unites qui sont en train de se deplacer");
-
 		}
 		
 		//check if units are on range
@@ -892,7 +890,6 @@ public class ActionValidator {
 		}
 		//check if there is any unit on this box
 		if(!targetBox.hasUnit()) {
-
 			Logger.warn(powerConcerned.getName()+" not unit here "+this);
 			throw new IllegalArgumentException("Il n'y a pas d'unites a supprimer ici");
 		}
@@ -947,3 +944,4 @@ public class ActionValidator {
 		return new ActionUpgradeCapital(powerConcerned);
 	}
 }
+
