@@ -691,11 +691,15 @@ public class ActionValidator {
 			throw new IllegalArgumentException("Impossible de creer des unites sur une case d'eau");
 		
 		GroundBox groundBox = (GroundBox) targetBox;
+		boolean createPhantom = true;
 		//check if there is unit
 		if (groundBox.hasUnit()) {
 			//check if same unitType (for grouping)
 			if (groundBox.getUnit().getTypes() != unitType) {
 				throw new IllegalArgumentException("des unites differentes sont presents sur la case");
+			}
+			else {
+				createPhantom = false;
 			}
 		}
 		//check if this box has a building
@@ -731,7 +735,9 @@ public class ActionValidator {
 		}
 		
 		powerConcerned.removeActionPoint();
-		targetBox.setUnit(new PhantomUnit(powerConcerned, unitType));
+		if (createPhantom) {
+			targetBox.setUnit(new PhantomUnit(powerConcerned, unitType));
+		}
 		powerConcerned.getResource(neededResource.getType()).subValue(neededResource.getCost());
 		return new ActionCreateUnit(powerConcerned, unitType, numberUnits, target);
 	}
