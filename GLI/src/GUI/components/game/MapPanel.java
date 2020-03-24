@@ -4,10 +4,15 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import GUI.drawing.ColorData;
+import GUI.drawing.ImagesUtility;
 import GUI.sub_panels.GamePanel;
 import data.GameMap;
 import data.Position;
@@ -18,6 +23,7 @@ import data.boxes.WaterBox;
 import data.building.Building;
 import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
+import data.unit.PhantomUnit;
 import data.unit.UnitTypes;
 import data.unit.Units;
 import process.management.BuildingManager;
@@ -36,6 +42,8 @@ public class MapPanel extends JPanel{
 	
 	private Position fromPosition;
 	private Position targetPosition;
+	
+	private ImagesUtility imagesUtility = new ImagesUtility();
 
 	
 	public MapPanel(GamePanel context, GameMap map, Power powers[]) {
@@ -134,10 +142,11 @@ public class MapPanel extends JPanel{
                 Box box = map.getBox(i, j);
                 //if there is any unit to draw
                 Units units = box.getUnit();
-                if(determineUnitColor(g, units)) {
+                if(units != null && !(units instanceof PhantomUnit)) {
                 	int drawX = startX;
                 	int drawY = startY + miniBoxHeight + miniBoxHeight/2;
-            		g2.fillRect(drawX, drawY, miniBoxWidth, miniBoxHeight);
+                	Image img = imagesUtility.getUnitsImage(units.getTypes());
+            		g2.drawImage(img, drawX, drawY, miniBoxWidth, miniBoxHeight, null);
             		//we need to know who have those units (if units are on ally's territory)
             		determineBoxBorder(g2, units.getOwner());
             		g2.setStroke(new BasicStroke(3));
@@ -163,6 +172,16 @@ public class MapPanel extends JPanel{
         }  
 	}
 	
+	private Image readimage() {
+		try {
+			return ImageIO.read(new File("GLI/src/images/Units/infantry.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	private void drawFromPostion(Graphics g) {
 		g.setColor(ColorData.FROM_SELECTION_COLOR);
 		drawSelectionRect(g, fromPosition);

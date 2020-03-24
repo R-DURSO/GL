@@ -1,2 +1,15 @@
 INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
 INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1units is not create in barrack
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint

@@ -21,6 +21,10 @@ public class UnitTypes {
 	public static final int UNIT_BOAT = 7;
 	
 	public static final int UNITS_IN_DOCK = 8;
+	
+	public static final int NUMBER_UNITS = 7;
+	
+	
 
 	private UnitTypes() {}
 

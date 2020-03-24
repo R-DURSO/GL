@@ -187,17 +187,12 @@ public class ActionValidator {
 		Power UnitsOwner = movingUnits.getOwner();
 		
 		if (UnitsOwner != powerConcerned) {
-<<<<<<< HEAD
 			Logger.warn(powerConcerned.getName()+" test move enemy units");
 			throw new IllegalArgumentException("Vous essayer de bouger des unites qui ne vous appartiennent pas");
-=======
-			Logger.warn(powerConcerned.getName()+"test move enemy units");
-			throw new IllegalArgumentException("Vous essayez de bouger des unites qui ne vous appartiennent pas");
 		}
 		
 		if (movingUnits.getIsMoving()) {
 			throw new IllegalArgumentException("Vous bougez des unites qui sont en train de se deplacer");
->>>>>>> branch 'master' of https://github.com/R-DURSO/GL
 		}
 		
 		//check if units are on range
@@ -895,11 +890,7 @@ public class ActionValidator {
 		}
 		//check if there is any unit on this box
 		if(!targetBox.hasUnit()) {
-<<<<<<< HEAD
 			Logger.warn(powerConcerned.getName()+" not unit here "+this);
-=======
-			Logger.warn(powerConcerned.getName()+"not unit here ");
->>>>>>> branch 'master' of https://github.com/R-DURSO/GL
 			throw new IllegalArgumentException("Il n'y a pas d'unites a supprimer ici");
 		}
 		powerConcerned.removeActionPoint();
