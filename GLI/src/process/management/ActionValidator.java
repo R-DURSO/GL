@@ -17,7 +17,8 @@ import data.building.special.*;
 import data.resource.ResourceCost;
 import data.resource.ResourceTypes;
 import data.unit.*;
-
+import log.LoggerUtility;
+import org.apache.log4j.*;
 /**
  * <p>This class ensures that every action the player does is possible
  * and allows to create Actions to be performed at the end of the turn in the game.</p>
@@ -27,7 +28,7 @@ import data.unit.*;
  */
 public class ActionValidator {
 	private GameMap map;
-
+	private static Logger Logger = LoggerUtility.getLogger(ActionValidator.class, "text");
 	/**
 	 * ActionManager just needs to have access to the game map
 	 * @param map The game map
@@ -806,13 +807,15 @@ public class ActionValidator {
 		Box targetBox = getBoxFromMap(target);
 		Units units = targetBox.getUnit();
 		//check if powerConcerned owns those units
-		if(units.getOwner() != powerConcerned)
+		if(units.getOwner() != powerConcerned) {
+			Logger.warn(powerConcerned.getName()+"not unit's onwer");
 			throw new IllegalArgumentException("Ces unités ne vous appartiennent pas");
-		
+		}
 		//check if there is any unit on this box
-		if(!targetBox.hasUnit())
+		if(!targetBox.hasUnit()) {
+			Logger.warn(powerConcerned.getName()+"not unit here ");
 			throw new IllegalArgumentException("Il n'y a pas d'unites a supprimer ici");
-		
+		}
 		powerConcerned.removeActionPoint();
 		return new ActionDestroyUnits(powerConcerned, target);
 	}
@@ -841,12 +844,15 @@ public class ActionValidator {
 		
 		//check if capital is already level max
 		if (capital.getLevel() == Capital.MAX_LEVEL) {
+			Logger.warn(powerConcerned.getName()+"max level capital");
 			throw new IllegalArgumentException("La capitale est deja au niveau maximal");
+			
 		}
 		
 		//check if have enough resources
 		int goldCost = capital.getUpgradeCost();
 		if(powerConcerned.getResourceAmount(ResourceTypes.RESOURCE_GOLD) < goldCost) {
+			Logger.warn(powerConcerned.getName()+"max level capital");
 			throw new IllegalArgumentException("Pas assez de ressources pour ameliorer la capitale (cout : " + goldCost + ")");
 		}
 		
@@ -854,6 +860,8 @@ public class ActionValidator {
 				powerConcerned.getResource(ResourceTypes.RESOURCE_GOLD).subValue(goldCost);
 		
 		powerConcerned.removeActionPoint();
+		Logger.info(powerConcerned.getName()+"lose 1 actionPoint ");
+		Logger.info(powerConcerned.getName()+" level capital");
 		return new ActionUpgradeCapital(powerConcerned);
 	}
 }
