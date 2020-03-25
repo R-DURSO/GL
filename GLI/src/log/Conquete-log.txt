@@ -1,0 +1,22 @@
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of workshop 
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 5 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 5 number 20
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 200
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  60 food per turn
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 try to attack grass
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 try to attack himself
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of workshop 
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 5 number 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 100
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  30 food per turn
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 3 destroy Capitale
