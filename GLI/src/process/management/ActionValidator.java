@@ -270,7 +270,9 @@ public class ActionValidator {
 		//set the unit in movement
 		movingUnits.setIsMoving();
 		//add phantom unit on the target box, to ensure that no other unit could go there
-		targetBox.setUnit(new PhantomUnit(powerConcerned, movingUnits.getTypes()));
+		if (!targetBox.hasUnit()) {
+			targetBox.setUnit(new PhantomUnit(powerConcerned, movingUnits.getTypes()));
+		}
 		Box[] ListBox = convertPathToBoxArray(pathFinding, from);
 		return new ActionMove(powerConcerned, ListBox);
 	}
@@ -405,7 +407,7 @@ public class ActionValidator {
 							//Boat that go to a coast to deposit Unit
 							if (isNearWater(visitPosition)) {
 								//Coast near Water you can go on
-								checkUnit = true;
+								//checkUnit = true;
 							}
 						}
 						
@@ -417,6 +419,8 @@ public class ActionValidator {
 									//WaterBox
 									if (visitBox.hasUnit()) {
 										//there is unit where we want to go
+										/*
+										//as moveUnit crush unit, dont move where there is unit
 										if (visitBox.getUnit().getOwner() != powerConcerned) {
 											//so if we dont own the unit, check if it's an allied one
 											if (Allied) {
@@ -432,6 +436,7 @@ public class ActionValidator {
 											//our unit, on Water
 											canVisit = true;
 										}
+										*/
 									}
 									else {
 										//WaterBox without unit
@@ -449,9 +454,14 @@ public class ActionValidator {
 										if (visitBox.hasUnit()) {
 											//there is unit where we want to go
 											if (visitBox.getUnit().getOwner() == powerConcerned) {
-												if (visitPosition.equals(target)) {
-													return path;
+												//our unit on coast
+												if (visitBox.getUnit().getTypes() == visitBoat.getContainedUnitsTypes()) {
+													//Same type, so we can deposit
+													if (visitPosition.equals(target)) {
+														return path;
+													}
 												}
+												//different type, dont go there
 											}
 											//not our unit, cannot unload the boat
 										}
@@ -471,7 +481,7 @@ public class ActionValidator {
 									if (Allied) {
 										if (visitBox.getUnit().getOwner() == Ally) {
 											//there is Ally unit, we can continue our visit, but can't stop here
-											canVisit = true;
+											//canVisit = true;
 										}
 										//Not our Ally
 									}
@@ -499,7 +509,7 @@ public class ActionValidator {
 									}
 									else {
 										//Nor a Boat or Same UnitTypes, we can only visit
-										canVisit = true;
+										//canVisit = true;
 									}
 								}
 							}

@@ -173,6 +173,11 @@ public class UnitManager {
 	
 	
 	public void moveUnits(Power powerConcerned, Box[] pathToTake) {
+		/*
+		if (pathToTake[0].getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
+			//moving a boat that will go to ground
+		}
+		*/
 		for (int i=0; i<pathToTake.length - 1; i++) {
 			moveUnitsBox(powerConcerned, pathToTake[i], pathToTake[i+1]);
 		}
