@@ -60,6 +60,6 @@ public class InfosPanel extends JPanel{
 			dataset.setValue(powers[i].getName() + " : " + territorySize, territorySize);
 		}
 		
-		return ChartFactory.createPieChart("Territoires PossÃ©dÃ©s", dataset, false, false, false);
+		return ChartFactory.createPieChart("Territoires Possédés", dataset, false, false, false);
 	}
 }
