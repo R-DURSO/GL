@@ -12,7 +12,7 @@ public class BatteringRam extends Units {
 	
 	public static final int COST = 10;
 	public static final int COST_PER_TURN = 3;
-	public static final int NUMBER_MAX_UNITS = 20;
+	public static final int NUMBER_MAX_UNITS = 1;
 	
 	public BatteringRam (int numberUnits, Power owner) {
 		super(owner, BASE_HEALTH, MOVEMENT, numberUnits);
@@ -55,6 +55,6 @@ public class BatteringRam extends Units {
 	}
 	
 	public String toString() {
-		return super.toString() ;
+		return "Belier"+super.toString() ;
 	}
 }

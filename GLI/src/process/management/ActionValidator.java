@@ -133,7 +133,7 @@ public class ActionValidator {
 				throw new IllegalArgumentException("Vous attaquez une case d'eau vide");
 			}
 			else {
-				if (!( (GroundBox)fromBox).hasBuilding()) {
+				if (!( (GroundBox)targetBox).hasBuilding()) {
 					Logger.warn(powerConcerned.getName()+" try to attack grass");
 					throw new IllegalArgumentException("Il n'y a pas d'unite ou de batiment a attaquer");
 				}
