@@ -205,6 +205,7 @@ public class UnitManager {
 			}
 		}
 		else {
+			//GroundBox
 			//sur terre, les vérifications se font dans ActionValidator
 			//seul cas, la creation d'un bateau
 			if (movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
@@ -217,6 +218,11 @@ public class UnitManager {
 				else if (BoatMovingUnit.hasContainedUnits()) {
 					targetBox.setUnit(BoatMovingUnit.getContainedUnits());
 					BoatMovingUnit.setContainedUnits(null);
+				}
+				else {
+					//ne vient pas de la terre et ne possède pas d'unit
+					//on essaie de bouger un bateau sur un phantom
+					targetBox.setUnit(null);
 				}
 			}
 			else {
