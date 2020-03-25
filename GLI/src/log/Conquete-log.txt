@@ -13,3 +13,96 @@ INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 acti
 INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
 WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1units is not create in barrack
 INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of barrack 
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of quarry 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 3 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of dock 
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of swawill 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Scierie 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of windmill 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Moulin 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Moulin 20
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Scierie 20
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 different unit in this same case 
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 7 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 one constrcut is here already
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 other constrcut here 
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of windmill 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Moulin 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of barrack 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Moulin 20
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 3 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of dock 
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 7 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of mine 
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of barrack 
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of windmill 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Moulin 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Moulin 20
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 3 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of swawill 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Scierie 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of swawill 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Scierie 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Scierie 20
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Scierie 20
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 not this type units
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of quarry 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of quarry 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of mur 
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of mur 
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of mur 
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 impossible found path to destination
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of dock 
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of swawill 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Scierie 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of quarry 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Scierie 20
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of quarry 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 7 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+ERROR AWT-EventQueue-0 process.management.UnitManager - Boat: 1, attaque:0 defense:0, contain :null couldn't move to WaterBox  Unit=PhantomUnit of -7 | , there is a PhantomUnit of -7
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 impossible found path to destination
