@@ -47,14 +47,18 @@ public class ActionValidator {
 	 * @throws IllegalArgumentException If the conditions are not met 
 	 */
 	public ActionMakeAlliance createActionMakeAlliance(Power powerConcerned, Power potentialAlly) throws IllegalArgumentException{
+		//check if Power have ActionPoints to use
+		if (!powerConcerned.canPlay()) {
+			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+		}
 		//check if one of players has already an allied
 		if (powerConcerned.isAllied() || potentialAlly.isAllied()) {
-			Logger.warn(" one power have already ally ");
+			Logger.warn(powerConcerned.getName()+" or "+potentialAlly.getName()+" already have an ally ");
 			throw new IllegalArgumentException("Une des puissances est deja en alliance");
 		}
 		
 		powerConcerned.removeActionPoint();
-		Logger.info(powerConcerned.getName()+" remove action point ");
+		Logger.info(powerConcerned.getName()+" use an action point ");
 		return new ActionMakeAlliance(powerConcerned, potentialAlly);
 	}
 	
@@ -67,6 +71,10 @@ public class ActionValidator {
 	 * @throws IllegalArgumentException If the conditions are not met 
 	 */
 	public ActionBreakAlliance createActionBreakAlliance(Power powerConcerned, Power formerAlly) throws IllegalArgumentException{
+		//check if Power have ActionPoints to use
+		if (!powerConcerned.canPlay()) {
+			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+		}
 		//check if player has ally and if this ally is the right Power
 		if(!powerConcerned.isAllied()) {
 			Logger.warn(powerConcerned.getName()+" don't have ally ");
@@ -99,6 +107,10 @@ public class ActionValidator {
 	 * @throws IllegalArgumentException If the conditions are not met
 	 */
 	public ActionAttack createActionAttack(Power powerConcerned, Position from,  Position target) throws IllegalArgumentException{
+		//check if Power have ActionPoints to use
+		if (!powerConcerned.canPlay()) {
+			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+		}
 		if(from.equals(target)) {			
 			Logger.warn(powerConcerned.getName()+" don't attack because you are case onwer's ");
 			throw new IllegalArgumentException("On ne peut pas attaquer sur sa propre case");
@@ -168,6 +180,10 @@ public class ActionValidator {
 	 * @throws IllegalArgumentException If the conditions are not met
 	 */
 	public ActionMove createActionMove (Power powerConcerned, Position from, Position target) throws IllegalArgumentException {
+		//check if Power have ActionPoints to use
+		if (!powerConcerned.canPlay()) {
+			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+		}
 		//Check if you want to move to the same Box
 		if (from.equals(target)) {
 			Logger.warn(powerConcerned.getName()+" units is here ");
@@ -394,6 +410,61 @@ public class ActionValidator {
 						}
 						
 						if (checkUnit) {
+							if (units.getTypes() == UnitTypes.UNIT_BOAT) {
+								Boat visitBoat = (Boat)units;
+								//Boat have special movement
+								if (visitBox instanceof WaterBox) {
+									//WaterBox
+									if (visitBox.hasUnit()) {
+										//there is unit where we want to go
+										if (visitBox.getUnit().getOwner() != powerConcerned) {
+											//so if we dont own the unit, check if it's an allied one
+											if (Allied) {
+												if (visitBox.getUnit().getOwner() == Ally) {
+													//there is Ally unit, we can continue our visit, but can't stop here
+													canVisit = true;
+												}
+												//unit isn't a allied one
+											}
+											//not allied, not our unit
+										}
+										else {
+											//our unit, on Water
+											canVisit = true;
+										}
+									}
+									else {
+										//WaterBox without unit
+										if (visitPosition.equals(target)) {
+											return path;
+										}
+										else {
+											canVisit = true;
+										}
+									}
+								}
+								else {
+									//GroundBox
+									if (visitBoat.hasContainedUnits()) {
+										if (visitBox.hasUnit()) {
+											//there is unit where we want to go
+											if (visitBox.getUnit().getOwner() == powerConcerned) {
+												if (visitPosition.equals(target)) {
+													return path;
+												}
+											}
+											//not our unit, cannot unload the boat
+										}
+										//Boat goes to GroundBox without unit to deposit stocked one
+										else if (visitPosition.equals(target)) {
+											return path;
+										}
+										//cannot visit nearby Box, you're a boat
+									}
+									//boat doesn't have unit inside, dont go on ground
+								}
+							}
+							//Not a Boat, so a normal unit
 							if (visitBox.hasUnit()) {
 								Units visitUnit = visitBox.getUnit();
 								if (visitBox.getUnit().getOwner() != powerConcerned) {
@@ -570,6 +641,10 @@ public class ActionValidator {
 	 * @throws IllegalArgumentException If the conditions are not met
 	 */
 	public ActionConstruct createActionConstruct(Power powerConcerned, int buildingType, Position target) throws IllegalArgumentException, NullPointerException{
+		//check if Power have ActionPoints to use
+		if (!powerConcerned.canPlay()) {
+			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+		}
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() != powerConcerned) {
@@ -717,6 +792,10 @@ public class ActionValidator {
 	 */
 	
 	public ActionCreateUnit createActionCreateUnit(Power powerConcerned, int unitType, int numberUnits, Position target) throws IllegalArgumentException{
+		//check if Power have ActionPoints to use
+		if (!powerConcerned.canPlay()) {
+			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+		}
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() != powerConcerned) {
@@ -836,6 +915,12 @@ public class ActionValidator {
 	 * @throws IllegalArgumentException If the conditions are not met
 	 */
 	public ActionDestroyBuilding createActionDestroyBuilding(Power powerConcerned, Position target) throws IllegalArgumentException{
+		/*
+		//check if Power have ActionPoints to use
+		if (!powerConcerned.canPlay()) {
+			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+		}
+		*/
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() != powerConcerned) {
@@ -880,6 +965,12 @@ public class ActionValidator {
 	 * @throws IllegalArgumentException If the conditions are not met
 	 */
 	public ActionDestroyUnits createActionDestroyUnits(Power powerConcerned, Position target) throws IllegalArgumentException{
+		/*
+		//check if Power have ActionPoints to use
+		if (!powerConcerned.canPlay()) {
+			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+		}
+		*/
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		Units units = targetBox.getUnit();
@@ -918,6 +1009,10 @@ public class ActionValidator {
 	 */
 	
 	public ActionUpgradeCapital createActionUpgradeCapital (Power powerConcerned) throws IllegalArgumentException {
+		//check if Power have ActionPoints to use
+		if (!powerConcerned.canPlay()) {
+			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+		}
 		
 		Capital capital = powerConcerned.getCapital();
 		

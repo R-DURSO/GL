@@ -102,6 +102,10 @@ public class Power {
 		resources[ResourceTypes.RESOURCE_ACTIONS - 1].addValue(-1);
 	}
 	
+	public boolean canPlay() {
+		return resources[ResourceTypes.RESOURCE_ACTIONS - 1].getAmount() > 0;
+	}
+	
 	public void addBox(Box box) {
 		this.territory.add(box);
 	}

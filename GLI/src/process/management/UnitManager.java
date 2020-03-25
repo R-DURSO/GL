@@ -189,6 +189,13 @@ public class UnitManager {
 						((Boat) targetBox.getUnit()).setContainedUnits(movingUnits);
 					}
 				}
+				else if (fromBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
+					//un bateau qui va dans l'eau
+					if (targetBox.getUnit().getTypes() != UnitTypes.UNIT_BOAT) { //note, cette verification est faites plus haut
+						//c'est qu'un phantom
+						targetBox.setUnit(movingUnits);
+					}
+				}
 			}
 			else {
 				//dans l'eau sans unite a destination, on bouge surement un bateau
@@ -199,10 +206,15 @@ public class UnitManager {
 		}
 		else {
 			//sur terre, les vérifications se font dans ActionValidator
+			//seul cas, la creation d'un bateau
 			if (movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
 				//Si on bouge un bateau, on vide son contenu
 				Boat BoatMovingUnit = (Boat)movingUnits;
-				if (BoatMovingUnit.hasContainedUnits()) {
+				if ((fromBox instanceof GroundBox) && (targetBox instanceof WaterBox)) {
+					//Boat move to water
+					targetBox.setUnit(movingUnits);
+				}
+				else if (BoatMovingUnit.hasContainedUnits()) {
 					targetBox.setUnit(BoatMovingUnit.getContainedUnits());
 					BoatMovingUnit.setContainedUnits(null);
 				}
@@ -216,6 +228,9 @@ public class UnitManager {
 		if (targetBox.hasUnit()) {
 			if (targetBox.getUnit().equals(movingUnits)) {
 				fromBox.setUnit(null);
+			}
+			else {
+				Logger.error("<"+fromBox.getUnit()+"> couldn't move to <"+targetBox+">, there is a <"+targetBox.getUnit()+"> ");
 			}
 		}
 		
