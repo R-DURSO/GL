@@ -149,3 +149,52 @@ INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 7 num
 INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
 INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
 ERROR AWT-EventQueue-0 process.management.UnitManager - <Cavalier: 1, attaque:4 defense:1> couldn't move to <WaterBox  Unit=PhantomUnit of -3, Owner=Joueur 1 | >, there is a <PhantomUnit of -3> 
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of barrack 
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of swawill 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Scierie 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of quarry 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Scierie 20
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 3 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 impossible found path to destination
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 impossible found path to destination
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 impossible found path to destination
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of dock 
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of mine 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Mine 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Mine 20
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 7 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of barrack 
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 3 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of dock 
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 7 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of barrack 
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 3 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 remove 1 actionpoint
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of dock 
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 units type 7 number 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove gold 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 impossible found path to destination
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 units is here 
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 impossible found path to destination
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 impossible found path to destination
