@@ -20,3 +20,187 @@ INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  30 food 
 INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
 INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
 INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 3 destroy Capitale
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of quarry 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20 per turn
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of barrack 
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 2, number: 9
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 90
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  27 food per turn
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 try to attack his own or his ally territory
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 don't have an ally 
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 don't have an ally 
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of mine 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Mine 20 per turn
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Mine 20
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of mine 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Mine 20 per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of quarry 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20 per turn
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Carrière 20
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Mine 20
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.BuildingManager - creation of windmill 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Moulin 20 per turn
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 add Moulin 20
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Archer: 9, attaque:2 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 3.6 damage, 47HP remaining
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Archer: 9, attaque:2 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 3.6 damage, 44HP remaining
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 3, number: 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Archer: 9, attaque:2 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 3.6 damage, 41HP remaining
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Archer: 9, attaque:2 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 3.6 damage, 38HP remaining
+INFO AWT-EventQueue-0 process.management.BuildingManager -  creation of workshop 
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Archer: 9, attaque:2 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 3.6 damage, 35HP remaining
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 5, number: 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 10
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 remove  3 food per turn
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 try to move units too far
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Archer: 9, attaque:2 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 3.6 damage, 32HP remaining
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Archer: 9, attaque:2 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 3.6 damage, 29HP remaining
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Belier: 1, attaque:5 defense:2 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 10.0 damage, 19HP remaining
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Archer: 9, attaque:2 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 3.6 damage, 16HP remaining
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Cavalier: 1, attaque:4 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 0.8 damage, 50HP remaining
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Belier: 1, attaque:5 defense:2 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 10.0 damage, 6HP remaining
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Archer: 9, attaque:2 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 3.6 damage, 3HP remaining
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Cavalier: 1, attaque:4 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 0.8 damage, 50HP remaining
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Belier: 1, attaque:5 defense:2 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 10.0 damage, 0HP remaining
+INFO AWT-EventQueue-0 process.management.UnitManager - attacker have destroid the building:11
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 4 destroy Capitale
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Archer: 9, attaque:2 defense:1 to Belier: 1, attaque:5 defense:2 
+INFO AWT-EventQueue-0 process.management.UnitManager - attacker damage: 14.4	defender loses: 1
+INFO AWT-EventQueue-0 process.management.UnitManager - defender damage: 0.0	attacker loses:0
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 delete 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 add food 3 per turn 
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 delete 0
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 add food 0 per turn 
+INFO AWT-EventQueue-0 process.management.UnitManager - defender are dead !
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Cavalier: 1, attaque:4 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 0.8 damage, 50HP remaining
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Cavalier: 1, attaque:4 defense:1 to the building:Capitale 
+INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 0.8 damage, 50HP remaining
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
