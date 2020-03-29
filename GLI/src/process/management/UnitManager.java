@@ -6,6 +6,8 @@ import data.resource.ResourceTypes;
 import data.unit.*;
 import log.LoggerUtility;
 
+import java.util.Iterator;
+
 import org.apache.log4j.Logger;
 
 import data.Power;
@@ -30,7 +32,7 @@ public class UnitManager {
 	public void addUnits(Power power, Box box, int unitType, int numberUnits) {
 		//cant add negative or none Unit
 		if (numberUnits > 0) {
-			//we will check if there is already units of the same type on the box
+			//we have alreay check if there was units of the same type on the box
 			if (box.hasUnit() && !(box.getUnit() instanceof PhantomUnit)) {
 				Units unitsOnBox = box.getUnit();
 				int numberUnitsOnBox = unitsOnBox.getNumber();
@@ -43,7 +45,6 @@ public class UnitManager {
 					Logger.info(power.getName()+" remove food : "+foodCostToRemove);
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 				}
-				//TODO La gestion d'or devrait se faire ici ?
 				else {
 					//else, we have to add to max number
 					int numberExcessUnits = numberUnitsNeeded - unitsOnBox.getMaxNumber();
@@ -65,16 +66,17 @@ public class UnitManager {
 						//unit above max number
 						int numberExcessUnits = numberUnits - units.getMaxNumber();
 						units.subNumber(numberExcessUnits);
+						Logger.info(power.getName()+" create too much units, refunding "+numberExcessUnits+" units");
 						//refund gold
-						power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(units.getCost() * numberExcessUnits);
+						int refundCost = units.getCost() * numberExcessUnits;
+						power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(refundCost);
+						Logger.info(power.getName()+" got back"+refundCost+"gold ");
 					}
 					//add those unit
 					box.setUnit(units);
 					//tax of food per turn
-					
-						// j'ai pas le type d'unité en anglais ou francais 
-					Logger.info(power.getName()+" units type "+unitType+" number "+numberUnits);
-					Logger.info(power.getName()+" remove gold "+units.getCost()*numberUnits);
+					Logger.info(power.getName()+" create units type: "+unitType+", number: "+numberUnits);
+					Logger.info(power.getName()+" use "+units.getCost()*numberUnits);
 					int foodCostToRemove = units.getNumber() * units.getFoodCost();
 					Logger.info(power.getName()+" remove  "+foodCostToRemove+" food per turn");
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
@@ -285,8 +287,9 @@ public class UnitManager {
 							int productionType = buildingProduct.getProductionType();
 							int productionPerTurn = buildingProduct.getProductionPerTurn();
 							powerConcerned.addResourcesProductionPerTurn(productionType, productionPerTurn);
-							Logger.info(powerConcerned.getName()+" add"+productionType+" "+productionPerTurn+" per turn " );
+							Logger.info(powerConcerned.getName()+" gain "+productionPerTurn+" of ResourceType:"+productionType+" as production");
 							targetBoxPower.substractResourcesProductionPerTurn(productionType, productionPerTurn);
+							Logger.info(powerConcerned.getName()+" lose "+productionPerTurn+" of ResourceType:"+productionType+" as production");
 						}
 					}
 				}
@@ -315,34 +318,41 @@ public class UnitManager {
 		if (targetBox.hasUnit()) {
 			Units attacker = fromBox.getUnit();
 			Units defender = targetBox.getUnit();
+			Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to "+defender+" ");
 			//calculate damage done, with each defense reducing damage by 10%
 			double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
 			//defense take those damage
 			int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
+			Logger.info("attacker damage: "+AttackerDamageDealt+"\tdefender loses: "+casualityDef);
+			
+			double DefenderDamageDealt = 0;
 			int casualityAtt = 0;
 			//If attacker are range, they dont take damage
-//			System.out.println("degat de l'attaque: "+AttackerDamageDealt+"\nMort des defenseurs: "+casualityDef);
 			if (!isRanged(attacker)) {
 				//Round 2, counter-strike (attacker gain 10% damage reduction)
-				double DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense() + 1) / 10.0));
-//				System.out.println("degat de la defense: "+DefenderDamageDealt+"\t");
+				DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense() + 1) / 10.0));
 				//attacker take dammage
 				casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
 			}
-//			System.out.println("Mort des attaquant: "+casualityAtt+"\n\n");
+			Logger.info("defender damage: "+DefenderDamageDealt+"\tattacker loses:"+casualityAtt);
 			//Those 2 Unit loses Units
 			removeUnits(targetBox.getOwner(), targetBox, casualityDef);
 			removeUnits(fromBox.getOwner(), fromBox, casualityAtt);
 			//If there isn't defender, they are dead
 			if (!targetBox.hasUnit()) {
 				//Defender are dead !
+				Logger.info("defender are dead !");
 				//if there is attacker...
 				if (fromBox.hasUnit()) {
 					//the Box is our to take
 					if (!isRanged(attacker)) {
 						//But if Unit is Ranged, it doesn't move
 						moveUnitsBox(powerConcerned, fromBox, targetBox);
+						Logger.info("attacker are alive, and capture defender position");
 					}
+				}
+				else {
+					Logger.info("attacker are dead !");
 				}
 			}
 		}
@@ -352,17 +362,21 @@ public class UnitManager {
 				//attacking a building
 				Units attacker = fromBox.getUnit();
 				Building buildDef = targetGBox.getBuilding();
+				Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to the building:"+buildDef.toString()+" ");
 				//calculate damage done, with each defense reducing damage by 10%
 				double AttackerDamageDealt = (attacker.getSiegeDamage() * attacker.getNumber()) * (((10.0 - buildDef.getDefense()) / 10.0));
 				//Building take damage
 				buildDef.applyDamage((int)AttackerDamageDealt);
+				Logger.info("Building takes "+AttackerDamageDealt+" damage, "+buildDef.getHealth()+"HP remaining");
 				if (buildDef.isDestroyed()) {
+					Logger.info("attacker have destroid the building:"+buildDef.getType());
 					BuildingManager.getInstance().destroyBuilding(targetGBox);
 					moveUnitsBox(powerConcerned, fromBox, targetBox);
 				}
 			}
 			else {
 				moveUnitsBox(powerConcerned, fromBox, targetBox);
+				Logger.info("attacker launch an attack on plain, moving unit");
 			}
 		}
 		else {
@@ -370,16 +384,55 @@ public class UnitManager {
 		}
 	}
 	
+	/**
+	 * Create an alliance with those 2 powers, making attack and conquer of territory unavaible
+	 * @param power1 the power that want to launch the alliance
+	 * @param power2 the power that will become allied
+	 */
 	public void makeAlliance(Power power1, Power power2) {
 		power1.setAlly(power2);
 		power2.setAlly(power1);
+		Logger.info(power1.getName()+" is now allied with "+power2);
 	}
 	
+	/**
+	 * Break the alliance set by those 2 powers, making attack and conquer avaible again
+	 * @param power that doesn't want to be allied anymore
+	 */
 	public void breakAlliance(Power power) {
 		Power power2 = power.getAlly();
 		power.removeAlly();
 		power2.removeAlly();
+		Logger.info(power.getName()+" is no longer allied with "+power2);
 		
-		// TODO Vérifier si il y a des territoires a prendre
+		int k = 0;
+		for (Iterator<Box> i = power.getTerritory().iterator(); i.hasNext(); ) {
+			Box visitBox = i.next();
+			if (visitBox.hasUnit()) {
+				if (visitBox.getUnit().getOwner() == power2) {
+					visitBox.setOwner(power2);
+					power2.addBox(visitBox);
+					power.removeBox(visitBox);
+					k++;
+				}
+			}
+		}
+		Logger.info(power2.getName()+" gain "+k+"Box from breaking the alliance");
+		
+		k=0;
+		for (Iterator<Box> i = power2.getTerritory().iterator(); i.hasNext(); ) {
+			Box visitBox = i.next();
+			if (visitBox.hasUnit()) {
+				if (visitBox.getUnit().getOwner() == power) {
+					visitBox.setOwner(power);
+					power.addBox(visitBox);
+					power2.removeBox(visitBox);
+					k++;
+				}
+			}
+		}
+		Logger.info(power2.getName()+" gain "+k+"Box from breaking the alliance");
+		
+		
 	}
 }

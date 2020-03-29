@@ -230,7 +230,7 @@ public class ActionValidator {
 			//check if units already want to go to target, ergo if a PhantomUnit is on targetBox
 			if(targetBox.getUnit() instanceof PhantomUnit) {
 				Logger.warn(powerConcerned.getName()+" move an unit where another unit is already going");
-				throw new IllegalArgumentException("Une unité compte se rendre à cette position");
+				throw new IllegalArgumentException("Une unite compte se rendre a cette position");
 			}
 			if (targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAlly()) {
 				Units unitsOnTarget = targetBox.getUnit();
@@ -242,12 +242,12 @@ public class ActionValidator {
 						//You can re-group same Units Types
 						if (containedUnit.getTypes() != movingUnits.getTypes()) {
 							Logger.warn(powerConcerned.getName()+" move unit in a boat where there is a different type of unit");
-							throw new IllegalArgumentException("Des Unités de types différents sont dans ce bateau");
+							throw new IllegalArgumentException("Des Unites de types differents sont dans ce bateau");
 						}
 						//But, make sure you dont exceed the limit
 						else if (containedUnit.getNumber() + movingUnits.getNumber() > movingUnits.getMaxNumber()) {
 							Logger.warn(powerConcerned.getName()+" try to break the maximum capabilities of a boat");
-							throw new IllegalArgumentException("Le déplacement fait dépasser la limite d'unite");
+							throw new IllegalArgumentException("Le deplacement fait depasser la limite d'unite");
 						}
 					}
 				}
@@ -258,7 +258,7 @@ public class ActionValidator {
 				//But, make sure you dont exceed the limit
 				else if (movingUnits.getNumber() + unitsOnTarget.getNumber() > movingUnits.getTypes()) {
 					Logger.warn(powerConcerned.getName()+" try to overload an unit with more unit");
-					throw new IllegalArgumentException("Le déplacement fait dépasser la limite d'unite");
+					throw new IllegalArgumentException("Le deplacement fait depasser la limite d'unite");
 				}
 			}
 			else {
@@ -565,7 +565,7 @@ public class ActionValidator {
 			//No more visiting Boxes
 		}
 		//La node stock un code pour retrouver son chemin (String path)
-		//Si on atteins ce point du code, le chemin n'a pas �t� trouv�
+		//Si on atteins ce point du code, le chemin n'a pas ete trouve
 		return null;
 	}
 	
@@ -684,7 +684,7 @@ public class ActionValidator {
 			//check if a building is going to be builded there, that is to say if instance of PhantomBuilding is on the targetBox
 			if(groundBox.getBuilding() instanceof PhantomBuilding) {
 				Logger.warn(powerConcerned.getName()+" try to build on a construction site");
-				throw new IllegalArgumentException("Un autre batiment va être construit sur cette case");
+				throw new IllegalArgumentException("Un autre batiment va etre construit sur cette case");
 			}
 			Logger.warn(powerConcerned.getName()+" try to build on top of another building");
 			throw new IllegalArgumentException("Impossible de construire sur une case qui possede deja un batiment"); 
@@ -957,7 +957,7 @@ public class ActionValidator {
 			Building building = groundBox.getBuilding();
 			if(building instanceof Capital) {
 				Logger.warn(powerConcerned.getName()+" try to destroy Capital");
-				throw new IllegalArgumentException("Vous ne pouvez pas détruire votre capitale");
+				throw new IllegalArgumentException("Vous ne pouvez pas detruire votre capitale");
 			}
 		}
 		powerConcerned.removeActionPoint();
@@ -991,7 +991,7 @@ public class ActionValidator {
 		//check if powerConcerned owns those units
 		if(units.getOwner() != powerConcerned) {
 			Logger.warn(powerConcerned.getName()+" try to destroy ennemy unit");
-			throw new IllegalArgumentException("Ces unités ne vous appartiennent pas");
+			throw new IllegalArgumentException("Ces unites ne vous appartiennent pas");
 		}
 		//check if there is any unit on this box
 		if(!targetBox.hasUnit()) {
@@ -1048,7 +1048,7 @@ public class ActionValidator {
 		
 		powerConcerned.removeActionPoint();
 		Logger.info(powerConcerned.getName()+" create an ActionUpgradeCapitale");
-		//Logger.info(powerConcerned.getName()+" level capital"); pareil, dans sa fonction approprié
+		//Logger.info(powerConcerned.getName()+" level capital"); pareil, dans sa fonction approprie
 		return new ActionUpgradeCapital(powerConcerned);
 	}
 }
