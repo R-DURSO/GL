@@ -23,15 +23,17 @@ public class Trebuchet  extends Units {
 	/*specific to Trebuchet : 2 states (moving and installed)
 	  moving : can move but not attack
 	  installed : can attack but can't move anymore
-	  state can be changed at every moment (normally)
+	  state will change depending on Action (movement change to moving, attack change to installed)
 	 */
-	private final int STATE_MOVING = 0;
-	private final int STATE_INSTALLED = 1;
+	
+	public final static int STATE_MOVING = 0;
+	public final static int STATE_INSTALLED = 1;
+	
 	private int state = STATE_MOVING;
 	
 	//always 1 Trebuchet per Unit "stack"
 	public Trebuchet(Power owner) {
-		super(owner, BASE_HEALTH, MOVEMENT_MOVING, 1);
+		super(owner, 1);
 	}
 
 	public int getTypes() {
@@ -44,6 +46,21 @@ public class Trebuchet  extends Units {
 	
 	public int getFoodCost() {
 		return COST_PER_TURN;
+	}
+
+	public int getHealth() {
+		return BASE_HEALTH;
+	}
+	
+	public int getMovement() {
+		switch(this.state) {
+		case STATE_INSTALLED:
+			return MOVEMENT_INSTALLED;
+		case STATE_MOVING:
+			return MOVEMENT_MOVING;
+		default:
+			return 0;
+		}
 	}
 	
 	public int getRange() {
@@ -82,6 +99,10 @@ public class Trebuchet  extends Units {
 	
 	public int getSiegeDamage() {
 		return getDamage();
+	}
+	
+	public int getState() {
+		return this.state;
 	}
 	
 	public void changeState() {

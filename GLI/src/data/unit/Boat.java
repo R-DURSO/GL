@@ -23,7 +23,7 @@ public class Boat extends Units {
 	private Units containedUnits;
 
 	public Boat (Power owner) {
-		super(owner, BASE_HEALTH, MOVEMENT, 1);
+		super(owner, 1);
 		this.containedUnits = null;
 	}
 	
@@ -47,6 +47,14 @@ public class Boat extends Units {
 		return UnitTypes.UNIT_BOAT;
 	}
 
+	public int getHealth() {
+		return BASE_HEALTH;
+	}
+	
+	public int getMovement() {
+		return MOVEMENT;
+	}
+	
 	public int getCost() {
 		return COST;
 	}

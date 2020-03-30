@@ -15,7 +15,7 @@ public class BatteringRam extends Units {
 	public static final int NUMBER_MAX_UNITS = 1;
 	
 	public BatteringRam (int numberUnits, Power owner) {
-		super(owner, BASE_HEALTH, MOVEMENT, numberUnits);
+		super(owner, numberUnits);
 	}
 
 	public int getTypes() {
@@ -28,6 +28,14 @@ public class BatteringRam extends Units {
 	
 	public int getFoodCost() {
 		return COST_PER_TURN;
+	}
+
+	public int getHealth() {
+		return BASE_HEALTH;
+	}
+	
+	public int getMovement() {
+		return MOVEMENT;
 	}
 	
 	public int getRange() {

@@ -16,17 +16,13 @@ import data.Power;
  *
  */
 public abstract class Units {
-	private int health;
-	private int movement;
 	private int number;
 	private boolean isMoving = false;
 	
 	private Power owner;
 	
-	public Units(Power owner, int health, int move, int number) {
+	public Units(Power owner, int number) {
 		this.owner = owner;
-		this.health = health;
-		this.movement = move;
 		this.number = number;
 	}
 	
@@ -61,6 +57,8 @@ public abstract class Units {
 	public abstract int getMaxNumber();
 	public abstract boolean isSiegeUnit();
 	public abstract int getSiegeDamage();
+	public abstract int getHealth();
+	public abstract int getMovement();
 	
 	
 	public int getNumber() {
@@ -83,14 +81,6 @@ public abstract class Units {
 	
 	public Power getOwner() {
 		return owner;
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
-	public int getMovement() {
-		return movement;
 	}
 	
 	public boolean getIsMoving() {

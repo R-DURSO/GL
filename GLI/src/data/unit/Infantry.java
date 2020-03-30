@@ -10,12 +10,12 @@ public class Infantry extends Units {
 	private static final int DEFENSE = 2;
 	
 	public static final int COST = 10;
-	public static final int COST_PER_TURN = 3;
-	public static final int NUMBER_MAX_UNITS = 50;
+	public static final int COST_PER_TURN = 2;
+	public static final int NUMBER_MAX_UNITS = 40;
 	
 
 	public Infantry (int numberUnits, Power owner) {
-		super(owner, BASE_HEALTH, MOVEMENT, numberUnits);
+		super(owner, numberUnits);
 	}
 
 	public int getTypes() {
@@ -28,6 +28,14 @@ public class Infantry extends Units {
 	
 	public int getFoodCost() {
 		return COST_PER_TURN;
+	}
+
+	public int getHealth() {
+		return BASE_HEALTH;
+	}
+	
+	public int getMovement() {
+		return MOVEMENT;
 	}
 	
 	public int getRange() {

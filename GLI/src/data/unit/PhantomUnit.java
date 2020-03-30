@@ -13,7 +13,7 @@ public class PhantomUnit extends Units{
 	private int unitTypes;
 
 	public PhantomUnit (Power owner, int unitTypes) {
-		super(owner, 0, 0, 0);
+		super(owner, 0);
 		this.unitTypes = -unitTypes;
 	}
 
@@ -31,7 +31,17 @@ public class PhantomUnit extends Units{
 	public int getFoodCost() {
 		return -1;
 	}
-
+	
+	@Override
+	public int getHealth() {
+		return 0;
+	}
+	
+	@Override
+	public int getMovement() {
+		return 0;
+	}
+	
 	@Override
 	public int getRange() {
 		return 0;

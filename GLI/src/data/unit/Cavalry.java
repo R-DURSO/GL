@@ -3,19 +3,19 @@ package data.unit;
 import data.Power;
 
 public class Cavalry extends Units {
-	private static final int BASE_HEALTH = 2;
+	private static final int BASE_HEALTH = 5;
 	private static final int RANGE = 1;
 	private static final int MOVEMENT = 4;
 	private static final int DAMAGE = 4;
 	private static final int DEFENSE = 1;
 	
 	public static final int COST = 10;
-	public static final int COST_PER_TURN = 3;
+	public static final int COST_PER_TURN = 5;
 	public static final int NUMBER_MAX_UNITS = 10;
 	
 
 	public Cavalry (int numberUnits, Power owner) {
-		super(owner, BASE_HEALTH, MOVEMENT, numberUnits);
+		super(owner, numberUnits);
 	}
 
 	public int getTypes() {
@@ -28,6 +28,14 @@ public class Cavalry extends Units {
 	
 	public int getFoodCost() {
 		return COST_PER_TURN;
+	}
+
+	public int getHealth() {
+		return BASE_HEALTH;
+	}
+	
+	public int getMovement() {
+		return MOVEMENT;
 	}
 	
 	public int getRange() {
