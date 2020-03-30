@@ -660,19 +660,19 @@ public class ActionValidator {
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
 		if(targetBox.getOwner() != powerConcerned) {
-			Logger.warn(powerConcerned.getName()+" don't construct in other power case ");
+			Logger.warn(powerConcerned.getName()+" try to construct in other power case ");
 			throw new IllegalArgumentException("Impossible de construire sur une case etrangere");
 		}
 		
 		//check if targetBox is a WaterBox or not
 		if(targetBox instanceof WaterBox) {
-			Logger.warn(powerConcerned.getName()+" don't construct in water case ");
+			Logger.warn(powerConcerned.getName()+" try to construct in water case ");
 			throw new IllegalArgumentException("Impossible de construire sur une case d'eau");
 		}
 		//check if have enough resources to build
 		ResourceCost neededResource = getBuildingCost(buildingType); 
 		if(!checkPrice(powerConcerned.getResourceAmount(neededResource.getType()), neededResource.getCost())) {
-			Logger.warn(powerConcerned.getName()+" not this type units");
+			Logger.warn(powerConcerned.getName()+" try to construct without enough Resources");
 			throw new IllegalArgumentException("Pas assez de ressources pour construire ceci");
 		}
 		GroundBox groundBox = (GroundBox) targetBox;

@@ -40,6 +40,7 @@ public class BuildingManager {
 		Building building;
 		//create building depending on his type
 		building = createBuildingWithType(buildingType);
+		Logger.info(power.getName()+" create "+building.getClass().getSimpleName());
 		//add building to the box
 		box.setBuilding(building);
 		//now, we check if building is a production building and if he is on the right resource
@@ -48,10 +49,11 @@ public class BuildingManager {
 			if (buildingProduct.isOnRightResource(box.getResourceType())) {
 				buildingProduct.setOnRightResource(true);
 				// j'ai pas la ressource j'ai que le batiment 
-				Logger.info(power.getName()+" add "+buildingProduct+" "+buildingProduct.getProductionPerTurn()+" per turn");
+				Logger.info(power.getName()+" receive "+buildingProduct.getProductionPerTurn()+" "+ResourcesFactory.getResourceType(buildingProduct.getProductionType())+" per turn");
 			}
 			else {
 				buildingProduct.setOnRightResource(false);
+				Logger.info(power.getName()+" doesn't receive "+ResourcesFactory.getResourceType(buildingProduct.getProductionType())+" production, building isn't on right Resources");
 			}
 		}
 	}
@@ -59,35 +61,27 @@ public class BuildingManager {
 	private Building createBuildingWithType(int buildingType) {
 			switch(buildingType) {
 			case BuildingTypes.BUILDING_BARRACK:
-				Logger.info(" creation of barrack ");
 				return new Barrack();
 			case BuildingTypes.BUILDING_WORKSHOP:
-				Logger.info(" creation of workshop ");
 				return new Workshop();
 			case BuildingTypes.BUILDING_DOCK:
-				Logger.info(" creation of dock ");
 				return new Dock();
 			case BuildingTypes.BUILDING_MINE:
-				Logger.info(" creation of mine ");
 				return new Mine();
 			case BuildingTypes.BUILDING_QUARRY:
-				Logger.info("creation of quarry ");
 				return new Quarry();
 			case BuildingTypes.BUILDING_SAWMILL:
-				Logger.info("creation of swawill ");
 				return new Sawmill();
 			case BuildingTypes.BUILDING_WINDMILL:
-				Logger.info("creation of windmill ");
 				return new Windmill();
 			case BuildingTypes.BUILDING_DOOR:
-				Logger.info("creation of door ");
 				return new Door();
 			case BuildingTypes.BUILDING_WALL:
-				Logger.info("creation of mur ");
 				return new Wall();
 			case BuildingTypes.BUILDING_TEMPLE:
-				Logger.info("creation of temple ");
 				return new Temple();
+			case BuildingTypes.BUILDING_CAPITAL:
+				return new Capital();
 			default:
 				return null;
 			}
@@ -117,8 +111,7 @@ public class BuildingManager {
 		}
 		//now we simply remove building from map
 		targetBox.setBuilding(null);
-		
-		Logger.info(powerConcerned.getName()+" destroy "+building );
+		Logger.info(powerConcerned.getName()+" have destroid "+building.toString());
 	}
 	
 	public void decreaseBuildTime(Power power, Building building) {
@@ -127,7 +120,7 @@ public class BuildingManager {
 			if (building instanceof BuildingProduct) {
 				BuildingProduct buildingP = (BuildingProduct)building;
 				if (buildingP.getOnRightResource()) {
-					Logger.info(power.getName()+" add "+buildingP.toString()+" "+buildingP.getProductionPerTurn() );
+					Logger.info(power.getName()+" gain "+buildingP.getProductionPerTurn()+ResourcesFactory.getResourceType(buildingP.getProductionType())+" production each turn");
 					power.addResourcesProductionPerTurn(buildingP.getProductionType(), buildingP.getProductionPerTurn());
 				}
 			}
