@@ -62,6 +62,8 @@ public class UnitManager {
 				Units units = createUnit(unitType, numberUnits, power);
 				//Unit shouldn't be here if invalid type
 				if (units != null) {
+					Logger.info(power.getName()+" create units type: "+unitType+", number: "+numberUnits);
+					Logger.info(power.getName()+" use "+units.getCost()*numberUnits+" gold");
 					if (units.getNumber() > units.getMaxNumber()) {
 						//unit above max number
 						int numberExcessUnits = numberUnits - units.getMaxNumber();
@@ -70,15 +72,13 @@ public class UnitManager {
 						//refund gold
 						int refundCost = units.getCost() * numberExcessUnits;
 						power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(refundCost);
-						Logger.info(power.getName()+" got back"+refundCost+"gold ");
+						Logger.info(power.getName()+" got back "+refundCost+" gold");
 					}
 					//add those unit
 					box.setUnit(units);
 					//tax of food per turn
-					Logger.info(power.getName()+" create units type: "+unitType+", number: "+numberUnits);
-					Logger.info(power.getName()+" use "+units.getCost()*numberUnits);
 					int foodCostToRemove = units.getNumber() * units.getFoodCost();
-					Logger.info(power.getName()+" remove  "+foodCostToRemove+" food per turn");
+					Logger.info(power.getName()+" has maintenance cost of "+foodCostToRemove+" food each turn");
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 				}
 			}
@@ -146,14 +146,15 @@ public class UnitManager {
 	public void removeUnits(Power power, Box box, int numberUnitsRemoved) {
 		Units units = box.getUnit();
 		int numberUnits = units.getNumber() - numberUnitsRemoved;
-		Logger.info(power.getName()+" delete "+numberUnitsRemoved);
+		Logger.info(power.getName()+" lose "+numberUnitsRemoved+" unit");
 		if (numberUnits <= 0) {
 			deleteUnits(power, box);
 		}
 		else {
 			units.subNumber(numberUnitsRemoved);
-			Logger.info(power.getName()+" add food "+numberUnitsRemoved * box.getUnit().getFoodCost()+" per turn " );
-			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, numberUnitsRemoved * box.getUnit().getFoodCost());
+			int foodProdToAdd = box.getUnit().getFoodCost() * numberUnitsRemoved;
+			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
+			Logger.info(power.getName()+" get "+foodProdToAdd+" food production back");
 		}
 	}
 	
@@ -167,7 +168,7 @@ public class UnitManager {
 			if (box.hasUnit()) {
 				int foodProdToAdd = box.getUnit().getFoodCost() * box.getUnit().getNumber();
 				power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
-				Logger.info(power.getName()+" add food "+ foodProdToAdd+" per turn " );
+				Logger.info(power.getName()+" get "+ foodProdToAdd+" food production back");
 				box.setUnit(null);
 			}
 		}
@@ -214,7 +215,7 @@ public class UnitManager {
 		else {
 			//GroundBox
 			//sur terre, les vérifications se font dans ActionValidator
-			//seul cas, la creation d'un bateau
+			//exception, la creation d'un bateau et movement d'un trebuchet
 			if (movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
 				//Si on bouge un bateau, on vide son contenu
 				Boat BoatMovingUnit = (Boat)movingUnits;
@@ -230,6 +231,12 @@ public class UnitManager {
 					//ne vient pas de la terre et ne possède pas d'unit
 					//on essaie de bouger un bateau sur un phantom
 					targetBox.setUnit(null);
+				}
+			}
+			else if (movingUnits.getTypes() == UnitTypes.UNIT_TREBUCHET) {
+				Trebuchet TrebUnit = (Trebuchet)movingUnits;
+				if (TrebUnit.getState() == Trebuchet.STATE_MOVING) {
+					
 				}
 			}
 			else {
@@ -362,14 +369,14 @@ public class UnitManager {
 				//attacking a building
 				Units attacker = fromBox.getUnit();
 				Building buildDef = targetGBox.getBuilding();
-				Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to the building:"+buildDef.toString()+" ");
+				Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to the building: "+buildDef.toString()+" ");
 				//calculate damage done, with each defense reducing damage by 10%
 				double AttackerDamageDealt = (attacker.getSiegeDamage() * attacker.getNumber()) * (((10.0 - buildDef.getDefense()) / 10.0));
 				//Building take damage
 				buildDef.applyDamage((int)AttackerDamageDealt);
 				Logger.info("Building takes "+AttackerDamageDealt+" damage, "+buildDef.getHealth()+"HP remaining");
 				if (buildDef.isDestroyed()) {
-					Logger.info("attacker have destroid the building:"+buildDef.getType());
+					Logger.info("attacker have destroid the building: "+buildDef.toString());
 					BuildingManager.getInstance().destroyBuilding(targetGBox);
 					moveUnitsBox(powerConcerned, fromBox, targetBox);
 				}
