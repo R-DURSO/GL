@@ -66,11 +66,7 @@ public class TestCreateBuilding {
 	}
 	@Test
 	public void createWindmillOnFood() {
-		Box target = powers[0].getTerritory().get(1);
-		if (target instanceof GroundBox) {
-			GroundBox targetGBox = (GroundBox)target;
-		}
-		BuildingManager.getInstance().addNewBuilding(powers[0],BuildingTypes.BUILDING_CAPITAL , (GroundBox) powers[0].getTerritory().get(1));
+		BuildingManager.getInstance().addNewBuilding(powers[0], BuildingTypes.BUILDING_WINDMILL, (GroundBox) powers[0].getTerritory().get(1));
 	}
 	
 	
