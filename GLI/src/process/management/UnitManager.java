@@ -236,7 +236,11 @@ public class UnitManager {
 			else if (movingUnits.getTypes() == UnitTypes.UNIT_TREBUCHET) {
 				Trebuchet TrebUnit = (Trebuchet)movingUnits;
 				if (TrebUnit.getState() == Trebuchet.STATE_MOVING) {
-					
+					targetBox.setUnit(movingUnits);
+				}
+				else {
+					TrebUnit.changeState();
+					targetBox.setUnit(null);
 				}
 			}
 			else {

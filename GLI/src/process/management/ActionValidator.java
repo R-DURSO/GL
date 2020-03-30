@@ -184,11 +184,6 @@ public class ActionValidator {
 		if (!powerConcerned.canPlay()) {
 			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
 		}
-		//Check if you want to move to the same Box
-		if (from.equals(target)) {
-			Logger.warn(powerConcerned.getName()+" try to move where he is standing");
-			throw new IllegalArgumentException("On ne peut pas se deplacer la ou on est deja");
-		}
 		
 		Box fromBox = getBoxFromMap(from);
 		Box targetBox = getBoxFromMap(target);
@@ -201,6 +196,15 @@ public class ActionValidator {
 		
 		Units movingUnits = fromBox.getUnit();
 		Power UnitsOwner = movingUnits.getOwner();
+		
+		//Check if you want to move to the same Box
+		//Trebuchet are the only one allowed to move where they stand, as it let them change state
+		if (movingUnits.getTypes() != UnitTypes.UNIT_TREBUCHET) {
+			if (from.equals(target)) {
+				Logger.warn(powerConcerned.getName()+" try to move where he is standing");
+				throw new IllegalArgumentException("On ne peut pas se deplacer la ou on est deja");
+			}
+		}
 		
 		if (UnitsOwner != powerConcerned) {
 			Logger.warn(powerConcerned.getName()+" try to move ennemy unit");
@@ -227,13 +231,13 @@ public class ActionValidator {
 		
 		//check if there isn't any ennemy Unit or Different UnitTypes
 		if (targetBox.hasUnit()) {
-			//check if units already want to go to target, ergo if a PhantomUnit is on targetBox
-			if(targetBox.getUnit() instanceof PhantomUnit) {
+			Units unitsOnTarget = targetBox.getUnit();
+			//check if units already want to go to target, which means checking if a PhantomUnit is on targetBox
+			if(unitsOnTarget.getTypes() < 0) {
 				Logger.warn(powerConcerned.getName()+" move an unit where another unit is already going");
 				throw new IllegalArgumentException("Une unite compte se rendre a cette position");
 			}
-			if (targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAlly()) {
-				Units unitsOnTarget = targetBox.getUnit();
+			else if (unitsOnTarget.getOwner() == powerConcerned) {
 				if (unitsOnTarget.getTypes() == UnitTypes.UNIT_BOAT) {
 					//moves Units on the boat
 					Boat boatTarget = ((Boat)unitsOnTarget);
@@ -241,7 +245,7 @@ public class ActionValidator {
 						Units containedUnit = boatTarget.getContainedUnits();
 						//You can re-group same Units Types
 						if (containedUnit.getTypes() != movingUnits.getTypes()) {
-							Logger.warn(powerConcerned.getName()+" move unit in a boat where there is a different type of unit");
+							Logger.warn(powerConcerned.getName()+" try to move unit in a boat where there is a different type of unit");
 							throw new IllegalArgumentException("Des Unites de types differents sont dans ce bateau");
 						}
 						//But, make sure you dont exceed the limit
@@ -262,8 +266,8 @@ public class ActionValidator {
 				}
 			}
 			else {
-				Logger.warn(powerConcerned.getName()+" move where ennemy units are");
-				throw new IllegalArgumentException("Il y a des unites ennemies sur la case cible");
+				Logger.warn(powerConcerned.getName()+" try to move where another powers' units are");
+				throw new IllegalArgumentException("Il y a des unites d'un autre joueur sur la case cible");
 			}
 		}
 		

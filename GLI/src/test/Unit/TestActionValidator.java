@@ -2,6 +2,7 @@ package test.Unit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -150,6 +151,48 @@ public class TestActionValidator {
 		map.getBox(from).setUnit(null);
 		actionValidator.createActionMove(powers[1], target, from);
 		assertEquals(new PhantomUnit(powers[1], map.getBox(target).getUnit().getTypes()).getTypes(), map.getBox(from).getUnit().getTypes());
+	}
+	
+	@Test
+	public void moveTrebuchetMoving() throws IllegalArgumentException {
+		Power power = powers[0];
+		Position from = new Position(0,2);
+		Position target = new Position(1,2);
+		
+		UnitManager.getInstance().addUnits(power, map.getBox(from), UnitTypes.UNIT_TREBUCHET, 1);
+		Units unit = map.getBox(from).getUnit();
+		
+		try {
+			actionValidator.createActionMove(power, from, target);
+		}
+		catch (IllegalArgumentException e) {
+			System.err.println(e);
+		}
+		
+		assertEquals(unit, map.getBox(from).getUnit());
+		assertEquals(new PhantomUnit(power, UnitTypes.UNIT_TREBUCHET).getTypes(), map.getBox(target).getUnit().getTypes());
+	}
+	
+	@Test
+	public void moveTrebuchetInstalled() throws IllegalArgumentException {
+		Power power = powers[0];
+		Position from = new Position(0,2);
+		Position target = new Position(1,2);
+		
+		UnitManager.getInstance().addUnits(power, map.getBox(from), UnitTypes.UNIT_TREBUCHET, 1);
+		Trebuchet unitTreb = (Trebuchet)map.getBox(from).getUnit();
+		
+		unitTreb.changeState();
+		try {
+			actionValidator.createActionMove(power, from, from);
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println("\nErreur 2");
+			System.err.println(e);
+		}
+		
+		assertEquals(unitTreb, map.getBox(from).getUnit());
+		assertFalse(map.getBox(target).hasUnit());
 	}
 	
 	@Test
