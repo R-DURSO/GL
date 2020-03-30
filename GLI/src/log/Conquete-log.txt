@@ -1538,3 +1538,1243 @@ INFO main process.management.UnitManager - j1 remove 0 per turn
 INFO main process.management.UnitManager - j1 remove gold 10
 ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
 ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Capital
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Sawmill
+INFO main process.management.BuildingManager - 1 receive 20 Wood per turn
+INFO main process.management.BuildingManager - 1 create Workshop
+INFO main process.management.BuildingManager - 1 create Dock
+INFO main process.management.BuildingManager - 1 create Door
+INFO main process.management.BuildingManager - 1 create Mine
+INFO main process.management.BuildingManager - 1 doesn't receive Gold production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Wall
+INFO main process.management.BuildingManager - 1 create Quarry
+INFO main process.management.BuildingManager - 1 doesn't receive Stone production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Temple
+INFO main process.management.BuildingManager - 1 create Barrack
+INFO main process.management.UnitManager - j1 create units type: 1, number: 40
+INFO main process.management.UnitManager - j1 use 400 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 80 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 10
+INFO main process.management.UnitManager - j2 use 100 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 20 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 40, attaque:3 defense:2 to Infantry : 10, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 96.0	defender loses: 24
+INFO main process.management.UnitManager - defender damage: 27.0	attacker loses:7
+INFO main process.management.UnitManager - j2 lose 24 unit
+INFO main process.management.UnitManager - j2 get 20 food production back
+INFO main process.management.UnitManager - j1 lose 7 unit
+INFO main process.management.UnitManager - j1 get 14 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - attacker are alive, and capture defender position
+INFO main process.management.UnitManager - j1 get 66 food production back
+INFO main process.management.UnitManager - j1 is now allied with Power j2: 
+INFO main process.management.UnitManager - j1 create units type: 3, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 25 food each turn
+INFO main process.management.UnitManager - j1 get 25 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 34
+INFO main process.management.UnitManager - j1 use 340 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 68 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 34, attaque:3 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 20.400000000000002 damage, 0HP remaining
+INFO main process.management.UnitManager - attacker have destroid the building: Mur
+INFO main process.management.BuildingManager - j2 have destroid Mur
+INFO main process.management.UnitManager - j1 get 68 food production back
+INFO main process.management.UnitManager - j1 create units type: 5, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Belier: 1, attaque:5 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 10.0 damage, 10HP remaining
+INFO main process.management.UnitManager - j1 get 3 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 500
+INFO main process.management.UnitManager - j1 use 5000 gold
+INFO main process.management.UnitManager - j1 create too much units, refunding 480 units
+INFO main process.management.UnitManager - j1 got back 4800 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 20
+INFO main process.management.UnitManager - j1 use 200 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 5
+INFO main process.management.UnitManager - j2 use 50 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Archer: 20, attaque:2 defense:1 to Infantry : 5, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 32.0	defender loses: 8
+INFO main process.management.UnitManager - defender damage: 0.0	attacker loses:0
+INFO main process.management.UnitManager - j2 lose 8 unit
+INFO main process.management.UnitManager - j2 get 10 food production back
+INFO main process.management.UnitManager - j1 lose 0 unit
+INFO main process.management.UnitManager - j1 get 0 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 get 10 food production back
+INFO main process.management.UnitManager - j1 create units type: 6, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 get 3 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 remove 0 per turn 
+INFO main process.management.UnitManager - j1 remove gold 10
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Capital
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Sawmill
+INFO main process.management.BuildingManager - 1 receive 20 Wood per turn
+INFO main process.management.BuildingManager - 1 create Workshop
+INFO main process.management.BuildingManager - 1 create Dock
+INFO main process.management.BuildingManager - 1 create Door
+INFO main process.management.BuildingManager - 1 create Mine
+INFO main process.management.BuildingManager - 1 doesn't receive Gold production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Wall
+INFO main process.management.BuildingManager - 1 create Quarry
+INFO main process.management.BuildingManager - 1 doesn't receive Stone production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Temple
+INFO main process.management.BuildingManager - 1 create Barrack
+INFO main process.management.UnitManager - j1 create units type: 1, number: 40
+INFO main process.management.UnitManager - j1 use 400 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 80 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 10
+INFO main process.management.UnitManager - j2 use 100 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 20 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 40, attaque:3 defense:2 to Infantry : 10, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 96.0	defender loses: 24
+INFO main process.management.UnitManager - defender damage: 27.0	attacker loses:7
+INFO main process.management.UnitManager - j2 lose 24 unit
+INFO main process.management.UnitManager - j2 get 20 food production back
+INFO main process.management.UnitManager - j1 lose 7 unit
+INFO main process.management.UnitManager - j1 get 14 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - attacker are alive, and capture defender position
+INFO main process.management.UnitManager - j1 get 66 food production back
+INFO main process.management.UnitManager - j1 is now allied with Power j2: 
+INFO main process.management.UnitManager - j1 create units type: 3, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 25 food each turn
+INFO main process.management.UnitManager - j1 get 25 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 34
+INFO main process.management.UnitManager - j1 use 340 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 68 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 34, attaque:3 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 20.400000000000002 damage, 0HP remaining
+INFO main process.management.UnitManager - attacker have destroid the building: Mur
+INFO main process.management.BuildingManager - j2 have destroid Mur
+INFO main process.management.UnitManager - j1 get 68 food production back
+INFO main process.management.UnitManager - j1 create units type: 5, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Belier: 1, attaque:5 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 10.0 damage, 10HP remaining
+INFO main process.management.UnitManager - j1 get 3 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 500
+INFO main process.management.UnitManager - j1 use 5000 gold
+INFO main process.management.UnitManager - j1 create too much units, refunding 480 units
+INFO main process.management.UnitManager - j1 got back 4800 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 20
+INFO main process.management.UnitManager - j1 use 200 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 5
+INFO main process.management.UnitManager - j2 use 50 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Archer: 20, attaque:2 defense:1 to Infantry : 5, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 32.0	defender loses: 8
+INFO main process.management.UnitManager - defender damage: 0.0	attacker loses:0
+INFO main process.management.UnitManager - j2 lose 8 unit
+INFO main process.management.UnitManager - j2 get 10 food production back
+INFO main process.management.UnitManager - j1 lose 0 unit
+INFO main process.management.UnitManager - j1 get 0 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 get 10 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 remove 0 per turn 
+INFO main process.management.UnitManager - j1 remove gold 10
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Capital
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Sawmill
+INFO main process.management.BuildingManager - 1 receive 20 Wood per turn
+INFO main process.management.BuildingManager - 1 create Workshop
+INFO main process.management.BuildingManager - 1 create Dock
+INFO main process.management.BuildingManager - 1 create Door
+INFO main process.management.BuildingManager - 1 create Mine
+INFO main process.management.BuildingManager - 1 doesn't receive Gold production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Wall
+INFO main process.management.BuildingManager - 1 create Quarry
+INFO main process.management.BuildingManager - 1 doesn't receive Stone production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Temple
+INFO main process.management.BuildingManager - 1 create Barrack
+INFO main process.management.UnitManager - j1 create units type: 1, number: 40
+INFO main process.management.UnitManager - j1 use 400 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 80 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 10
+INFO main process.management.UnitManager - j2 use 100 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 20 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 40, attaque:3 defense:2 to Infantry : 10, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 96.0	defender loses: 24
+INFO main process.management.UnitManager - defender damage: 27.0	attacker loses:7
+INFO main process.management.UnitManager - j2 lose 24 unit
+INFO main process.management.UnitManager - j2 get 20 food production back
+INFO main process.management.UnitManager - j1 lose 7 unit
+INFO main process.management.UnitManager - j1 get 14 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - attacker are alive, and capture defender position
+INFO main process.management.UnitManager - j1 get 66 food production back
+INFO main process.management.UnitManager - j1 is now allied with Power j2: 
+INFO main process.management.UnitManager - j1 create units type: 3, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 25 food each turn
+INFO main process.management.UnitManager - j1 get 25 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 34
+INFO main process.management.UnitManager - j1 use 340 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 68 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 34, attaque:3 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 20.400000000000002 damage, 0HP remaining
+INFO main process.management.UnitManager - attacker have destroid the building: Mur
+INFO main process.management.BuildingManager - j2 have destroid Mur
+INFO main process.management.UnitManager - j1 get 68 food production back
+INFO main process.management.UnitManager - j1 create units type: 5, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Belier: 1, attaque:5 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 10.0 damage, 10HP remaining
+INFO main process.management.UnitManager - j1 get 3 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 500
+INFO main process.management.UnitManager - j1 use 5000 gold
+INFO main process.management.UnitManager - j1 create too much units, refunding 480 units
+INFO main process.management.UnitManager - j1 got back 4800 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 20
+INFO main process.management.UnitManager - j1 use 200 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 5
+INFO main process.management.UnitManager - j2 use 50 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Archer: 20, attaque:2 defense:1 to Infantry : 5, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 32.0	defender loses: 8
+INFO main process.management.UnitManager - defender damage: 0.0	attacker loses:0
+INFO main process.management.UnitManager - j2 lose 8 unit
+INFO main process.management.UnitManager - j2 get 10 food production back
+INFO main process.management.UnitManager - j1 lose 0 unit
+INFO main process.management.UnitManager - j1 get 0 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 get 10 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 remove 0 per turn 
+INFO main process.management.UnitManager - j1 remove gold 10
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Capital
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Sawmill
+INFO main process.management.BuildingManager - 1 receive 20 Wood per turn
+INFO main process.management.BuildingManager - 1 create Workshop
+INFO main process.management.BuildingManager - 1 create Dock
+INFO main process.management.BuildingManager - 1 create Door
+INFO main process.management.BuildingManager - 1 create Mine
+INFO main process.management.BuildingManager - 1 doesn't receive Gold production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Wall
+INFO main process.management.BuildingManager - 1 create Quarry
+INFO main process.management.BuildingManager - 1 doesn't receive Stone production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Temple
+INFO main process.management.BuildingManager - 1 create Barrack
+INFO main process.management.UnitManager - j1 create units type: 1, number: 40
+INFO main process.management.UnitManager - j1 use 400 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 80 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 10
+INFO main process.management.UnitManager - j2 use 100 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 20 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 40, attaque:3 defense:2 to Infantry : 10, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 96.0	defender loses: 24
+INFO main process.management.UnitManager - defender damage: 27.0	attacker loses:7
+INFO main process.management.UnitManager - j2 lose 24 unit
+INFO main process.management.UnitManager - j2 get 20 food production back
+INFO main process.management.UnitManager - j1 lose 7 unit
+INFO main process.management.UnitManager - j1 get 14 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - attacker are alive, and capture defender position
+INFO main process.management.UnitManager - j1 get 66 food production back
+INFO main process.management.UnitManager - j1 is now allied with Power j2: 
+INFO main process.management.UnitManager - j1 create units type: 3, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 25 food each turn
+INFO main process.management.UnitManager - j1 get 25 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 34
+INFO main process.management.UnitManager - j1 use 340 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 68 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 34, attaque:3 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 20.400000000000002 damage, 0HP remaining
+INFO main process.management.UnitManager - attacker have destroid the building: Mur
+INFO main process.management.BuildingManager - j2 have destroid Mur
+INFO main process.management.UnitManager - j1 get 68 food production back
+INFO main process.management.UnitManager - j1 create units type: 5, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Belier: 1, attaque:5 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 10.0 damage, 10HP remaining
+INFO main process.management.UnitManager - j1 get 3 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 500
+INFO main process.management.UnitManager - j1 use 5000 gold
+INFO main process.management.UnitManager - j1 create too much units, refunding 480 units
+INFO main process.management.UnitManager - j1 got back 4800 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 20
+INFO main process.management.UnitManager - j1 use 200 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 5
+INFO main process.management.UnitManager - j2 use 50 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Archer: 20, attaque:2 defense:1 to Infantry : 5, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 32.0	defender loses: 8
+INFO main process.management.UnitManager - defender damage: 0.0	attacker loses:0
+INFO main process.management.UnitManager - j2 lose 8 unit
+INFO main process.management.UnitManager - j2 get 10 food production back
+INFO main process.management.UnitManager - j1 lose 0 unit
+INFO main process.management.UnitManager - j1 get 0 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 get 10 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 remove 0 per turn 
+INFO main process.management.UnitManager - j1 remove gold 10
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Capital
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Sawmill
+INFO main process.management.BuildingManager - 1 receive 20 Wood per turn
+INFO main process.management.BuildingManager - 1 create Workshop
+INFO main process.management.BuildingManager - 1 create Dock
+INFO main process.management.BuildingManager - 1 create Door
+INFO main process.management.BuildingManager - 1 create Mine
+INFO main process.management.BuildingManager - 1 doesn't receive Gold production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Wall
+INFO main process.management.BuildingManager - 1 create Quarry
+INFO main process.management.BuildingManager - 1 doesn't receive Stone production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Temple
+INFO main process.management.BuildingManager - 1 create Barrack
+INFO main process.management.UnitManager - j1 create units type: 1, number: 40
+INFO main process.management.UnitManager - j1 use 400 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 80 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 10
+INFO main process.management.UnitManager - j2 use 100 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 20 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 40, attaque:3 defense:2 to Infantry : 10, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 96.0	defender loses: 24
+INFO main process.management.UnitManager - defender damage: 27.0	attacker loses:7
+INFO main process.management.UnitManager - j2 lose 24 unit
+INFO main process.management.UnitManager - j2 get 20 food production back
+INFO main process.management.UnitManager - j1 lose 7 unit
+INFO main process.management.UnitManager - j1 get 14 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - attacker are alive, and capture defender position
+INFO main process.management.UnitManager - j1 get 66 food production back
+INFO main process.management.UnitManager - j1 is now allied with Power j2: 
+INFO main process.management.UnitManager - j1 create units type: 3, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 25 food each turn
+INFO main process.management.UnitManager - j1 get 25 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 34
+INFO main process.management.UnitManager - j1 use 340 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 68 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 34, attaque:3 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 20.400000000000002 damage, 0HP remaining
+INFO main process.management.UnitManager - attacker have destroid the building: Mur
+INFO main process.management.BuildingManager - j2 have destroid Mur
+INFO main process.management.UnitManager - j1 get 68 food production back
+INFO main process.management.UnitManager - j1 create units type: 5, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Belier: 1, attaque:5 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 10.0 damage, 10HP remaining
+INFO main process.management.UnitManager - j1 get 3 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 500
+INFO main process.management.UnitManager - j1 use 5000 gold
+INFO main process.management.UnitManager - j1 create too much units, refunding 480 units
+INFO main process.management.UnitManager - j1 got back 4800 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 20
+INFO main process.management.UnitManager - j1 use 200 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 5
+INFO main process.management.UnitManager - j2 use 50 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Archer: 20, attaque:2 defense:1 to Infantry : 5, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 32.0	defender loses: 8
+INFO main process.management.UnitManager - defender damage: 0.0	attacker loses:0
+INFO main process.management.UnitManager - j2 lose 8 unit
+INFO main process.management.UnitManager - j2 get 10 food production back
+INFO main process.management.UnitManager - j1 lose 0 unit
+INFO main process.management.UnitManager - j1 get 0 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 get 10 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 remove 0 per turn 
+INFO main process.management.UnitManager - j1 remove gold 10
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 5
+INFO main process.management.UnitManager - 1 use 50 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+WARN main process.management.ActionValidator - 1 try to move units too far
+WARN main process.management.ActionValidator - 1 try to move where he is standing
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+WARN main process.management.ActionValidator - 1 try to move units too far
+WARN main process.management.ActionValidator - 1 move where ennemy units are
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionCreateUnit
+INFO main process.management.ActionValidator - 3 create an ActionMove
+WARN main process.management.ActionValidator - 2 cant find path to his destination
+INFO main process.management.ActionValidator - 2 create an ActionMove
+WARN main process.management.ActionValidator - 3 cant find path to his destination
+WARN main process.management.ActionValidator - 2 try to create unit without building
+INFO main process.management.ActionValidator - 1 do ActionBreakAlliance with 2
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 3 do ActionMakeAlliance with 4
+WARN main process.management.ActionValidator - 1 try to construct in other power case 
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+WARN main process.management.ActionValidator - 2 try to construct without enough Resources
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+WARN main process.management.ActionValidator - 1 try to move units too far
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+WARN main process.management.ActionValidator - 2 not in alliance with 4
+WARN main process.management.ActionValidator - 2 or 3 already have an ally 
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.ActionValidator - 1 create an ActionMove
+WARN main process.management.ActionValidator - 1 cant find path to his destination
+INFO main process.management.ActionValidator - 3 create an ActionMove
+INFO main process.management.ActionValidator - 2 create an ActionUpgradeCapitale
+WARN main process.management.ActionValidator - 3 try to upgrade his Capital without resource
+INFO main process.management.ActionValidator - 1 create an ActionConstruct
+INFO main process.management.UnitManager - 1 create units type: 6, number: 1
+INFO main process.management.UnitManager - 1 use 10 gold
+INFO main process.management.UnitManager - 1 has maintenance cost of 3 food each turn
+INFO main process.management.ActionValidator - 1 create an ActionMove
+INFO main process.management.ActionValidator - 3 create an ActionAttack
+WARN main process.management.ActionValidator - 1 try to launch an attack with faraway units
+INFO main process.management.ActionValidator - 2 create an ActionMove
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Capital
+INFO main process.management.BuildingManager - 1 create Windmill
+INFO main process.management.BuildingManager - 1 doesn't receive Food production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Sawmill
+INFO main process.management.BuildingManager - 1 receive 20 Wood per turn
+INFO main process.management.BuildingManager - 1 create Workshop
+INFO main process.management.BuildingManager - 1 create Dock
+INFO main process.management.BuildingManager - 1 create Door
+INFO main process.management.BuildingManager - 1 create Mine
+INFO main process.management.BuildingManager - 1 doesn't receive Gold production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Wall
+INFO main process.management.BuildingManager - 1 create Quarry
+INFO main process.management.BuildingManager - 1 doesn't receive Stone production, building isn't on right Resources
+INFO main process.management.BuildingManager - 1 create Temple
+INFO main process.management.BuildingManager - 1 create Barrack
+INFO main process.management.UnitManager - j1 create units type: 1, number: 40
+INFO main process.management.UnitManager - j1 use 400 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 80 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 10
+INFO main process.management.UnitManager - j2 use 100 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 20 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 40, attaque:3 defense:2 to Infantry : 10, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 96.0	defender loses: 24
+INFO main process.management.UnitManager - defender damage: 27.0	attacker loses:7
+INFO main process.management.UnitManager - j2 lose 24 unit
+INFO main process.management.UnitManager - j2 get 20 food production back
+INFO main process.management.UnitManager - j1 lose 7 unit
+INFO main process.management.UnitManager - j1 get 14 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - attacker are alive, and capture defender position
+INFO main process.management.UnitManager - j1 get 66 food production back
+INFO main process.management.UnitManager - j1 is now allied with Power j2: 
+INFO main process.management.UnitManager - j1 create units type: 3, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 25 food each turn
+INFO main process.management.UnitManager - j1 get 25 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 34
+INFO main process.management.UnitManager - j1 use 340 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 68 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Infantry : 34, attaque:3 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 20.400000000000002 damage, 0HP remaining
+INFO main process.management.UnitManager - attacker have destroid the building: Mur
+INFO main process.management.BuildingManager - j2 have destroid Mur
+INFO main process.management.UnitManager - j1 get 68 food production back
+INFO main process.management.UnitManager - j1 create units type: 5, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.BuildingManager - j2 create Wall
+INFO main process.management.UnitManager - j1 launch an attack with Belier: 1, attaque:5 defense:2 to the building: Mur 
+INFO main process.management.UnitManager - Building takes 10.0 damage, 10HP remaining
+INFO main process.management.UnitManager - j1 get 3 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 500
+INFO main process.management.UnitManager - j1 use 5000 gold
+INFO main process.management.UnitManager - j1 create too much units, refunding 480 units
+INFO main process.management.UnitManager - j1 got back 4800 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 2, number: 20
+INFO main process.management.UnitManager - j1 use 200 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 60 food each turn
+INFO main process.management.UnitManager - j2 create units type: 1, number: 5
+INFO main process.management.UnitManager - j2 use 50 gold
+INFO main process.management.UnitManager - j2 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 launch an attack with Archer: 20, attaque:2 defense:1 to Infantry : 5, attaque:3 defense:2 
+INFO main process.management.UnitManager - attacker damage: 32.0	defender loses: 8
+INFO main process.management.UnitManager - defender damage: 0.0	attacker loses:0
+INFO main process.management.UnitManager - j2 lose 8 unit
+INFO main process.management.UnitManager - j2 get 10 food production back
+INFO main process.management.UnitManager - j1 lose 0 unit
+INFO main process.management.UnitManager - j1 get 0 food production back
+INFO main process.management.UnitManager - defender are dead !
+INFO main process.management.UnitManager - j1 get 60 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 get 10 food production back
+INFO main process.management.UnitManager - j1 create units type: 1, number: 5
+INFO main process.management.UnitManager - j1 use 50 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 10 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 create units type: 7, number: 1
+INFO main process.management.UnitManager - j1 use 10 gold
+INFO main process.management.UnitManager - j1 has maintenance cost of 3 food each turn
+INFO main process.management.UnitManager - j1 remove 0 per turn 
+INFO main process.management.UnitManager - j1 remove gold 10
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
+ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
