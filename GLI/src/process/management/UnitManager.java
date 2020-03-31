@@ -182,27 +182,30 @@ public class UnitManager {
 	
 	
 	public void moveUnits(Power powerConcerned, Box[] pathToTake) {
-		/*
-		if (pathToTake[0].getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
-			//moving a boat that will go to ground
+		//Trebuchet that move on it's own Position is changing state
+		if (pathToTake[0].getUnit().getTypes() == UnitTypes.UNIT_TREBUCHET) {
+			if (pathToTake.length <= 1) {
+				((Trebuchet) pathToTake[0].getUnit()).changeState();
+			}
 		}
-		*/
 		for (int i=0; i<pathToTake.length - 1; i++) {
 			moveUnitsBox(powerConcerned, pathToTake[i], pathToTake[i+1]);
 		}
 		pathToTake[pathToTake.length-1].getUnit().resetIsMoving();
 	}
 	
-	public void moveUnitsBox(Power powerConcerned, Box fromBox, Box targetBox) {
+	private void moveUnitsBox(Power powerConcerned, Box fromBox, Box targetBox) {
 		Units movingUnits = fromBox.getUnit();
 		if (targetBox instanceof WaterBox) {
 			if (targetBox.hasUnit()) {
+				//si il y a un bateau
 				if (targetBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
 					if (fromBox.getUnit().getTypes() != UnitTypes.UNIT_BOAT) {
 						//target est sur l'eau & target possede un bateau
 						((Boat) targetBox.getUnit()).setContainedUnits(movingUnits);
 					}
 				}
+				//si on est un bateau
 				else if (fromBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
 					//un bateau qui va dans l'eau
 					if (targetBox.getUnit().getTypes() != UnitTypes.UNIT_BOAT) { //note, cette verification est faites plus haut
@@ -215,6 +218,9 @@ public class UnitManager {
 				//dans l'eau sans unite a destination, on bouge surement un bateau
 				if (movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
 					targetBox.setUnit(movingUnits);
+				}
+				else {
+					Logger.error("Moving a unit that isn't a Boat on WaterBox");
 				}
 			}
 		}
@@ -242,7 +248,10 @@ public class UnitManager {
 			else if (movingUnits.getTypes() == UnitTypes.UNIT_TREBUCHET) {
 				Trebuchet TrebUnit = (Trebuchet)movingUnits;
 				if (TrebUnit.getState() == Trebuchet.STATE_MOVING) {
-					
+					targetBox.setUnit(movingUnits);
+				}
+				else {
+					Logger.error("Moving a Trebuchet that is Installed");
 				}
 			}
 			else {
