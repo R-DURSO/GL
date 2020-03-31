@@ -64,4 +64,8 @@ public abstract class Resource {
 	}
 
 	public abstract int getResourceType();
+	
+	public void addScore(int value) {
+		this.amount +=value;
+	}
 }

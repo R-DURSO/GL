@@ -78,6 +78,10 @@ public class Power {
 		resources[resourceType-1].addProductionPerTurn(amount);
 	}
 	
+	public void  addScore(int amount) {
+		resources[ResourceTypes.RESOURCE_SCORE-1].addScore(amount);
+	}
+	
 	public void substractResourcesProductionPerTurn(int resourceType, int amount) {
 		resources[resourceType-1].subProductionPerTurn(amount);
 	}

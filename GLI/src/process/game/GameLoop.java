@@ -83,6 +83,7 @@ public class GameLoop {
 		applyProduction();
 		//if no more food, kill some unit
 		Logger.info("=== END OF TURN ===");
+	//	System.out.println(powers[0].getResource(ResourceTypes.RESOURCE_SCORE).getAmount());
 	}
 	
 	public void doActions() {

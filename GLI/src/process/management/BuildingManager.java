@@ -12,6 +12,7 @@ import log.LoggerUtility;
 import org.apache.log4j.Logger;
 
 import data.Power;
+import data.ScoreValue;
 
 /**
  * Singleton which permits to create and add buildings on map
@@ -43,12 +44,25 @@ public class BuildingManager {
 		Logger.info(power.getName()+" create "+building.getClass().getSimpleName());
 		//add building to the box
 		box.setBuilding(building);
+		// we add the score create by the batiment 
+			if(buildingType<4) {
+				power.addScore(ScoreValue.SCORE_VALUE_BUILDINGARMY);
+				Logger.info(power.getName()+" receive "+ScoreValue.SCORE_VALUE_BUILDINGARMY+" score ");
+			}else if(buildingType<10 ) {
+				power.addScore(ScoreValue.SCORE_VALUE_BUILDINGPRODUCT);
+				Logger.info(power.getName()+" receive "+ScoreValue.SCORE_VALUE_BUILDINGPRODUCT+" score ");
+				
+			}else {
+				power.addScore(ScoreValue.SCORE_VALUE_BUILDINGTEMPLE);
+				Logger.info(power.getName()+" receive "+ScoreValue.SCORE_VALUE_BUILDINGTEMPLE+" score ");
+			}
+		
 		//now, we check if building is a production building and if he is on the right resource
 		if (building instanceof BuildingProduct) {
 			BuildingProduct buildingProduct = (BuildingProduct) building;
 			if (buildingProduct.isOnRightResource(box.getResourceType())) {
 				buildingProduct.setOnRightResource(true);
-				// j'ai pas la ressource j'ai que le batiment 
+				// j'ai pas la ressource j'ai que le batiment
 				Logger.info(power.getName()+" receive "+buildingProduct.getProductionPerTurn()+" "+ResourcesFactory.getResourceType(buildingProduct.getProductionType())+" per turn");
 			}
 			else {
