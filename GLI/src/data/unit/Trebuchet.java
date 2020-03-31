@@ -7,7 +7,7 @@ public class Trebuchet  extends Units {
 	private static final int BASE_HEALTH = 5;
 	
 	private static final int RANGE_MOVING = 0;
-	private static final int MOVEMENT_MOVING = 1;
+	private static final int MOVEMENT_MOVING = 10;
 	private static final int DAMAGE_MOVING = 0;
 	
 	private static final int RANGE_INSTALLED = 3;
@@ -117,6 +117,15 @@ public class Trebuchet  extends Units {
 	}
 	
 	public String toString() {
-		return super.toString() ;
+		String str = "";
+		switch(this.state) {
+		case STATE_INSTALLED:
+			str = "pret a attaquer";
+			break;
+		case STATE_MOVING:
+			str = "en mouvement";
+			break;
+		}
+		return "Trebuchet "+str+super.toString() ;
 	}
 }

@@ -187,11 +187,12 @@ public class TestActionValidator {
 			actionValidator.createActionMove(power, from, from);
 		}
 		catch (IllegalArgumentException e) {
-			System.out.println("\nErreur 2");
+			System.out.println("\nErreur");
 			System.err.println(e);
 		}
 		
 		assertEquals(unitTreb, map.getBox(from).getUnit());
+		assertEquals(unitTreb.getState(), Trebuchet.STATE_INSTALLED);
 		assertFalse(map.getBox(target).hasUnit());
 	}
 	
