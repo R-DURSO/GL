@@ -4,6 +4,7 @@ import data.GameMap;
 import data.Position;
 import data.Power;
 import data.actions.ActionCreateUnit;
+import data.boxes.Box;
 import data.boxes.GroundBox;
 import data.building.BuildingTypes;
 import data.unit.UnitTypes;
@@ -58,7 +59,9 @@ public class TestAttack2 {
 		
 		try {
 			validator.createActionMove(powers[0], new Position(1,1), new Position(2,1));
-			UnitManager.getInstance().moveUnitsBox(powers[0], map.getBox(1, 1), map.getBox(1,2));;
+			Box[] Path = {map.getBox(1, 1),
+							map.getBox(1, 2)};
+			UnitManager.getInstance().moveUnits(powers[0], Path);
 		}catch(IllegalArgumentException e) {
 			e.printStackTrace();
 		}

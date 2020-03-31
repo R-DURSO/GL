@@ -69,10 +69,19 @@ public class TestBoat {
 		
 		UnitManager.getInstance().addUnits(power, map.getBox(wPos3), UnitTypes.UNIT_BOAT, 1);
 		Boat boat3 = (Boat) map.getBox(wPos3).getUnit();
+
+		Box[] Path1 = {map.getBox(wPos1),
+					map.getBox(wPos2)};
+
+		Box[] Path2 = {map.getBox(wPos2),
+					map.getBox(wPos3)};
+
+		Box[] Path3 = {map.getBox(wPos3),
+					map.getBox(new Position(map.getSize()/2, map.getSize()/2))};
 		
-		UnitManager.getInstance().moveUnitsBox(power, map.getBox(wPos1), map.getBox(wPos2));
-		UnitManager.getInstance().moveUnitsBox(power, map.getBox(wPos2), map.getBox(wPos3));
-		UnitManager.getInstance().moveUnitsBox(power, map.getBox(wPos3), map.getBox( new Position(map.getSize()/2, map.getSize()/2) ));
+		UnitManager.getInstance().moveUnits(power, Path1);
+		UnitManager.getInstance().moveUnits(power, Path2);
+		UnitManager.getInstance().moveUnits(power, Path3);
 		
 //		System.out.println(boat3);
 		
@@ -88,8 +97,14 @@ public class TestBoat {
 		UnitManager.getInstance().addUnits(power, map.getBox(wPos1), UnitTypes.UNIT_BOAT, 1);
 		Boat boat1 = (Boat) map.getBox(wPos1).getUnit();
 		
-		UnitManager.getInstance().moveUnitsBox(power, map.getBox(wPos1), map.getBox(wPos2));
-		UnitManager.getInstance().moveUnitsBox(power, map.getBox(wPos2), map.getBox(wPos3));
+		Box[] Path1 = {map.getBox(wPos1),
+					map.getBox(wPos2)};
+
+		Box[] Path2 = {map.getBox(wPos2),
+					map.getBox(wPos3)};
+		
+		UnitManager.getInstance().moveUnits(power, Path1);
+		UnitManager.getInstance().moveUnits(power, Path2);
 		
 		assertEquals(boat1, map.getBox(wPos3).getUnit());
 	}

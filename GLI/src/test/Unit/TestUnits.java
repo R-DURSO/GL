@@ -104,7 +104,9 @@ public class TestUnits {
 		UnitManager.getInstance().addUnits(power, map.getBox(from), UnitTypes.UNIT_INFANTRY, 5);
 		Units unit = map.getBox(from).getUnit();
 		
-		UnitManager.getInstance().moveUnitsBox(power, map.getBox(from), map.getBox(target));
+		Box[] Path = {map.getBox(from),
+					map.getBox(target)};
+		UnitManager.getInstance().moveUnits(power, Path);
 		assertEquals(null, map.getBox(from).getUnit());
 		
 		assertEquals(unit, map.getBox(target).getUnit());
@@ -124,8 +126,10 @@ public class TestUnits {
 		
 		UnitManager.getInstance().addUnits(power, map.getBox(from), UnitTypes.UNIT_CAVALRY, 5);
 		Units unit = map.getBox(from).getUnit();
-		
-		UnitManager.getInstance().moveUnitsBox(power, map.getBox(from), map.getBox(target));
+
+		Box[] Path = {map.getBox(from),
+					map.getBox(target)};
+		UnitManager.getInstance().moveUnits(power, Path);
 		assertEquals(null, map.getBox(from).getUnit());
 		assertEquals(unit, map.getBox(target).getUnit());
 		assertEquals(powerAllied, map.getBox(target).getOwner());

@@ -62,6 +62,6 @@ public class Pikeman extends Units {
 	}
 	
 	public String toString() {
-		return super.toString() ;
+		return "Piquier "+super.toString() ;
 	}
 }

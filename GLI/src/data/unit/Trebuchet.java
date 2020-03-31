@@ -117,6 +117,15 @@ public class Trebuchet  extends Units {
 	}
 	
 	public String toString() {
-		return super.toString() ;
+		String str = "";
+		switch(this.state) {
+		case STATE_INSTALLED:
+			str = "pret a attaquer";
+			break;
+		case STATE_MOVING:
+			str = "en mouvement";
+			break;
+		}
+		return "Trebuchet "+str+super.toString() ;
 	}
 }

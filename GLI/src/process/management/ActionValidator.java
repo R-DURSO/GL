@@ -50,6 +50,7 @@ public class ActionValidator {
 		//check if Power have ActionPoints to use
 		if (!powerConcerned.canPlay()) {
 			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+			throw new IllegalArgumentException("On ne possede plus aucun point d'action");
 		}
 		//check if one of players has already an allied
 		if (powerConcerned.isAllied() || potentialAlly.isAllied()) {
@@ -74,6 +75,7 @@ public class ActionValidator {
 		//check if Power have ActionPoints to use
 		if (!powerConcerned.canPlay()) {
 			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+			throw new IllegalArgumentException("On ne possede plus aucun point d'action");
 		}
 		//check if player has ally and if this ally is the right Power
 		if(!powerConcerned.isAllied()) {
@@ -110,6 +112,7 @@ public class ActionValidator {
 		//check if Power have ActionPoints to use
 		if (!powerConcerned.canPlay()) {
 			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+			throw new IllegalArgumentException("On ne possede plus aucun point d'action");
 		}
 		if(from.equals(target)) {			
 			Logger.warn(powerConcerned.getName()+" try to attack himself");
@@ -145,6 +148,11 @@ public class ActionValidator {
 			Logger.warn(powerConcerned.getName()+" try to laucnh an attack with unit that doesn't belong to him");
 			throw new IllegalArgumentException("Ces unites n'appartiennent pas a " + powerConcerned.getName());
 		}
+		//check if units can be used
+		if (unitsAtt.getIsMoving()) {
+			Logger.warn(powerConcerned.getName()+" try to move already moving unit");
+			throw new IllegalArgumentException("Vous bougez des unites qui sont en train de se deplacer");
+		}
 		//check if units are on range
 		if (!isUnitsOnRange(from, unitsAtt.getRange(), target)) {
 			Logger.warn(powerConcerned.getName()+" try to launch an attack with faraway units");
@@ -152,12 +160,33 @@ public class ActionValidator {
 		}
 		//check if there is units on target, in this case, check the owner of those units
 		//if player himself or his ally, no attack
-		if ((targetBox.getOwner() == powerConcerned) || (targetBox.getOwner() == powerConcerned.getAlly())) {
-			Logger.warn(powerConcerned.getName()+" try to attack his own or his ally territory");
-			throw new IllegalArgumentException("Vous ne pouvez pas attaquer votre terrain ou celui d'un allie");
+		if (targetBox.hasUnit()) {
+			if (targetBox.getUnit().getOwner() == powerConcerned) {
+				Logger.warn(powerConcerned.getName()+" try to attack his own units");
+				throw new IllegalArgumentException("Vous attaquez vos propres unites");
+			}
+			else if (powerConcerned.isAllied()) {
+				if (targetBox.getUnit().getOwner() == powerConcerned.getAlly()) {
+					Logger.warn(powerConcerned.getName()+" try attack allied units");
+					throw new IllegalArgumentException("Vous attaquez les unites de votre allie");
+				}
+			}
+		}
+		//check now if player try to attack the territory of himself or his ally
+		if (targetBox.getOwner() == powerConcerned) {
+			Logger.warn(powerConcerned.getName()+" try to attack his own territory");
+			throw new IllegalArgumentException("Vous attaquez vos propres cases");
+		}
+		else if (powerConcerned.isAllied()) {
+			if (targetBox.getOwner() == powerConcerned.getAlly()) {
+				Logger.warn(powerConcerned.getName()+" try attack allied territory");
+				throw new IllegalArgumentException("Vous attaquez le territoire de votre allie");
+			}
 		}
 		
 		powerConcerned.removeActionPoint();
+		//the unit has done an action this turn
+		unitsAtt.setIsMoving();
 		Logger.info(powerConcerned.getName()+" create an ActionAttack");
 		return new ActionAttack(powerConcerned, from, target);
 	}
@@ -183,11 +212,7 @@ public class ActionValidator {
 		//check if Power have ActionPoints to use
 		if (!powerConcerned.canPlay()) {
 			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
-		}
-		//Check if you want to move to the same Box
-		if (from.equals(target)) {
-			Logger.warn(powerConcerned.getName()+" try to move where he is standing");
-			throw new IllegalArgumentException("On ne peut pas se deplacer la ou on est deja");
+			throw new IllegalArgumentException("On ne possede plus aucun point d'action");
 		}
 		
 		Box fromBox = getBoxFromMap(from);
@@ -201,6 +226,15 @@ public class ActionValidator {
 		
 		Units movingUnits = fromBox.getUnit();
 		Power UnitsOwner = movingUnits.getOwner();
+		
+		//Check if you want to move to the same Box
+		//Trebuchet are the only one allowed to move where they stand, as it let them change state
+		if (movingUnits.getTypes() != UnitTypes.UNIT_TREBUCHET) {
+			if (from.equals(target)) {
+				Logger.warn(powerConcerned.getName()+" try to move where he is standing");
+				throw new IllegalArgumentException("On ne peut pas se deplacer la ou on est deja");
+			}
+		}
 		
 		if (UnitsOwner != powerConcerned) {
 			Logger.warn(powerConcerned.getName()+" try to move ennemy unit");
@@ -227,13 +261,13 @@ public class ActionValidator {
 		
 		//check if there isn't any ennemy Unit or Different UnitTypes
 		if (targetBox.hasUnit()) {
-			//check if units already want to go to target, ergo if a PhantomUnit is on targetBox
-			if(targetBox.getUnit() instanceof PhantomUnit) {
+			Units unitsOnTarget = targetBox.getUnit();
+			//check if units already want to go to target, which means checking if a PhantomUnit is on targetBox
+			if(unitsOnTarget.getTypes() < 0) {
 				Logger.warn(powerConcerned.getName()+" move an unit where another unit is already going");
 				throw new IllegalArgumentException("Une unite compte se rendre a cette position");
 			}
-			if (targetBox.getOwner() == powerConcerned || targetBox.getOwner() == powerConcerned.getAlly()) {
-				Units unitsOnTarget = targetBox.getUnit();
+			else if (unitsOnTarget.getOwner() == powerConcerned) {
 				if (unitsOnTarget.getTypes() == UnitTypes.UNIT_BOAT) {
 					//moves Units on the boat
 					Boat boatTarget = ((Boat)unitsOnTarget);
@@ -241,7 +275,7 @@ public class ActionValidator {
 						Units containedUnit = boatTarget.getContainedUnits();
 						//You can re-group same Units Types
 						if (containedUnit.getTypes() != movingUnits.getTypes()) {
-							Logger.warn(powerConcerned.getName()+" move unit in a boat where there is a different type of unit");
+							Logger.warn(powerConcerned.getName()+" try to move unit in a boat where there is a different type of unit");
 							throw new IllegalArgumentException("Des Unites de types differents sont dans ce bateau");
 						}
 						//But, make sure you dont exceed the limit
@@ -262,8 +296,8 @@ public class ActionValidator {
 				}
 			}
 			else {
-				Logger.warn(powerConcerned.getName()+" move where ennemy units are");
-				throw new IllegalArgumentException("Il y a des unites ennemies sur la case cible");
+				Logger.warn(powerConcerned.getName()+" try to move where another powers' units are");
+				throw new IllegalArgumentException("Il y a des unites d'un autre joueur sur la case cible");
 			}
 		}
 		
@@ -656,6 +690,7 @@ public class ActionValidator {
 		//check if Power have ActionPoints to use
 		if (!powerConcerned.canPlay()) {
 			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+			throw new IllegalArgumentException("On ne possede plus aucun point d'action");
 		}
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
@@ -807,6 +842,7 @@ public class ActionValidator {
 		//check if Power have ActionPoints to use
 		if (!powerConcerned.canPlay()) {
 			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+			throw new IllegalArgumentException("On ne possede plus aucun point d'action");
 		}
 		//check if target belongs to powerConcerned
 		Box targetBox = getBoxFromMap(target);
@@ -932,6 +968,7 @@ public class ActionValidator {
 		//check if Power have ActionPoints to use
 		if (!powerConcerned.canPlay()) {
 			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+			throw new IllegalArgumentException("On ne possede plus aucun point d'action");
 		}
 		*/
 		//check if target belongs to powerConcerned
@@ -983,6 +1020,7 @@ public class ActionValidator {
 		//check if Power have ActionPoints to use
 		if (!powerConcerned.canPlay()) {
 			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+			throw new IllegalArgumentException("On ne possede plus aucun point d'action");
 		}
 		*/
 		//check if target belongs to powerConcerned
@@ -1026,6 +1064,7 @@ public class ActionValidator {
 		//check if Power have ActionPoints to use
 		if (!powerConcerned.canPlay()) {
 			Logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
+			throw new IllegalArgumentException("On ne possede plus aucun point d'action");
 		}
 		
 		Capital capital = powerConcerned.getCapital();
