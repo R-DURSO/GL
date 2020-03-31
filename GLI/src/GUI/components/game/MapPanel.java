@@ -31,7 +31,7 @@ import process.management.UnitManager;
 
 public class MapPanel extends JPanel{
 	private static final long serialVersionUID = -4989371043690170741L;
-	private GamePanel context;
+	private GamePanel gamePanel;
 	
 	private final int MINI_BOX_PART = 12;
 	private GameMap map;
@@ -46,10 +46,10 @@ public class MapPanel extends JPanel{
 	private ImagesUtility imagesUtility = new ImagesUtility();
 
 	
-	public MapPanel(GamePanel context, GameMap map, Power powers[]) {
+	public MapPanel(GamePanel gamePanel, GameMap map, Power powers[]) {
 		super();
 		
-		this.context = context;
+		this.gamePanel = gamePanel;
 		this.powers = powers;
 		this.map = map;
 	}
@@ -120,14 +120,20 @@ public class MapPanel extends JPanel{
                 
                 if(map.getBox(i, j) instanceof GroundBox) {
                 	GroundBox groundBox = (GroundBox) map.getBox(i, j);
-                	if(determineResourceColor(g, groundBox)) {
-						g2.fillRect(startX, startY, miniBoxWidth, miniBoxHeight);
+                	//we check if groundBox have resource
+                	int resourceType = groundBox.getResourceType();
+                	if(resourceType != ResourceTypes.NO_RESOURCE) {
+						Image resourceImage = imagesUtility.getResourceImage(resourceType);
+						g2.drawImage(resourceImage, startX, startY, miniBoxWidth, miniBoxHeight, null);
                 	}
                 	Building building = groundBox.getBuilding();
-                	if(determineBuildingColor(g2, building)) {
+                	if(building != null) {
                 		int drawX = startX + miniBoxWidth + miniBoxWidth/2;
                 		int drawY = startY;
-                		g2.fillRect( drawX, drawY, miniBoxWidth, miniBoxHeight * 5 / 2);
+                		int buildingType = building.getType();
+                		//get building image
+                		Image buildingImage = imagesUtility.getBuildingImage(buildingType);
+                		g2.drawImage(buildingImage, drawX, drawY, miniBoxWidth, miniBoxHeight * 5 / 2, null);
                 		//we check if building is enabled or not, in order to change opacity in this case
                 		if(building.getBuildTime() > 0) { //never null (checked in 'determineBuildingColor()')
                 			//in this case, we simply draw a crossed white line to show his "state"
@@ -145,8 +151,8 @@ public class MapPanel extends JPanel{
                 if(units != null && !(units instanceof PhantomUnit)) {
                 	int drawX = startX;
                 	int drawY = startY + miniBoxHeight + miniBoxHeight/2;
-                	Image img = imagesUtility.getUnitsImage(units.getTypes());
-            		g2.drawImage(img, drawX, drawY, miniBoxWidth, miniBoxHeight, null);
+                	Image unitImage = imagesUtility.getUnitsImage(units.getTypes());
+            		g2.drawImage(unitImage, drawX, drawY, miniBoxWidth, miniBoxHeight, null);
             		//we need to know who have those units (if units are on ally's territory)
             		determineBoxBorder(g2, units.getOwner());
             		g2.setStroke(new BasicStroke(3));
@@ -170,16 +176,6 @@ public class MapPanel extends JPanel{
                 
             }
         }  
-	}
-	
-	private Image readimage() {
-		try {
-			return ImageIO.read(new File("GLI/src/images/Units/infantry.jpg"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	private void drawFromPostion(Graphics g) {

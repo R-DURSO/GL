@@ -15,4 +15,6 @@ public class BuildingTypes {
 	public static final int BUILDING_WALL = 9;
 	public static final int BUILDING_TEMPLE = 10;
 	public static final int BUILDING_CAPITAL = 11;
+	
+	public static final int NUMBER_BUILDINGS = 11;
 }

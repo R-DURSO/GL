@@ -1,216 +1,119 @@
-﻿ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
-ERROR main process.management.UnitManager - <Boat: 1, attaque:0 defense:0, contain :null> couldn't move to <WaterBox  Unit=Boat: 1, attaque:0 defense:0, contain :null, Owner=j1 | >, there is a <Boat: 1, attaque:0 defense:0, contain :null> 
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/infantry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Archer.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/BatteringRam.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Boat.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Cavalry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/spear.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Trebuchet.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/barrack.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/capital.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/dock.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/door.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/mine.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/quarry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/sawmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/temple.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/wall.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/windmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/workshop.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/artifact.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/food.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/gold.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/stone.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/wood.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/infantry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Archer.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/BatteringRam.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Boat.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Cavalry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/spear.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Trebuchet.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/barrack.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/capital.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/dock.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/door.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/mine.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/quarry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/sawmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/temple.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/wall.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/windmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/workshop.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/artifact.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/food.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/gold.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/stone.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/wood.jpg successfully loaded
 INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
 INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
 INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Barrack
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Workshop
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Quarry
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 receive 20 Stone per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 receive 50 score 
 INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 gain 20Stone production each turn
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 3, number: 3
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 30 gold
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 has maintenance cost of 15 food each turn
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 6, number: 1
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 10 gold
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 has maintenance cost of 3 food each turn
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 try to move units too far
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 try to attack grass
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 dont have any ActionPoints left
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 think dock doesn't belong near Water
 INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
 INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Workshop
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Windmill
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 receive 20 Food per turn
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Mine
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 receive 50 score 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 receive 20 Gold per turn
 INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 gain 20Food production each turn
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 6, number: 1
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 10 gold
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 has maintenance cost of 3 food each turn
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 try to move already moving unit
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/infantry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Archer.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/BatteringRam.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Boat.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Cavalry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/spear.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Trebuchet.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/barrack.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/capital.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/dock.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/door.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/mine.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/quarry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/sawmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/temple.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/wall.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/windmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/workshop.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/artifact.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/food.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/gold.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/stone.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/wood.jpg successfully loaded
 INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
 INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Workshop
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Barrack
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 receive 50 score 
 INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
 INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
 INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 6, number: 1
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 2, number: 1
 INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 10 gold
 INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 has maintenance cost of 3 food each turn
+INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 add 3 score
 INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
 INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
 INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
 INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Workshop
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 6, number: 1
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 10 gold
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 has maintenance cost of 3 food each turn
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Workshop
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 6, number: 1
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 10 gold
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 has maintenance cost of 3 food each turn
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-message de fonctionnement
-
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Workshop
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 6, number: 1
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 10 gold
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 has maintenance cost of 3 food each turn
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-message de fonctionnement 1
-
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-test du fonctionnement 2
-
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Workshop
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 6, number: 1
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 10 gold
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 has maintenance cost of 3 food each turn
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-message de fonctionnement 1
-
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-test du fonctionnement 2
-
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 try to move already moving unit
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Workshop
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 6, number: 1
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 10 gold
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 has maintenance cost of 3 food each turn
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-message de fonctionnement 1
-
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-test du fonctionnement 2
-
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Workshop
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionCreateUnit
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 create units type: 6, number: 1
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 use 10 gold
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 has maintenance cost of 3 food each turn
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-message de fonctionnement 1
-
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-test du fonctionnement 2
-
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-message de fonctionnement 1
-
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-test du fonctionnement 2
-
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionMove
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-message de fonctionnement 1
-
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-test du fonctionnement 2
-
-INFO AWT-EventQueue-0 process.management.UnitManager - 
-message de fonctionnement 3
-
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionAttack
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.management.UnitManager - Joueur 1 launch an attack with Trebuchet pret a attaquer: 1, attaque:40 defense:0 to the building: Capitale 
-INFO AWT-EventQueue-0 process.management.UnitManager - Building takes 8.0 damage, 42HP remaining
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 try to move already moving unit
-WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 try to move already moving unit
-INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
-INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
-WARN AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 try to move already moving unit
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/infantry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Archer.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/BatteringRam.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Boat.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Cavalry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/spear.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Trebuchet.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/barrack.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/capital.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/dock.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/door.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/mine.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/quarry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/sawmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/temple.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/wall.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/windmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/workshop.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/artifact.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/food.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/gold.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/stone.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/wood.jpg successfully loaded
