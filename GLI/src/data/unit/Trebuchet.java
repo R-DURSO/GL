@@ -7,7 +7,7 @@ public class Trebuchet  extends Units {
 	private static final int BASE_HEALTH = 5;
 	
 	private static final int RANGE_MOVING = 0;
-	private static final int MOVEMENT_MOVING = 10;
+	private static final int MOVEMENT_MOVING = 1;
 	private static final int DAMAGE_MOVING = 0;
 	
 	private static final int RANGE_INSTALLED = 3;
