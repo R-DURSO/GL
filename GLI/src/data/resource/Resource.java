@@ -68,4 +68,7 @@ public abstract class Resource {
 	public void addScore(int value) {
 		this.amount +=value;
 	}
+	public void supScore(int value) {
+		this.amount -=value;
+	}
 }

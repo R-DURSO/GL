@@ -45,10 +45,10 @@ public class BuildingManager {
 		//add building to the box
 		box.setBuilding(building);
 		// we add the score create by the batiment 
-			if(buildingType<4) {
+			if(buildingType<ScoreValue.INT_FOR_ARMY) {
 				power.addScore(ScoreValue.SCORE_VALUE_BUILDINGARMY);
 				Logger.info(power.getName()+" receive "+ScoreValue.SCORE_VALUE_BUILDINGARMY+" score ");
-			}else if(buildingType<10 ) {
+			}else if(buildingType<ScoreValue.INT_FOR_PRODUCT ) {
 				power.addScore(ScoreValue.SCORE_VALUE_BUILDINGPRODUCT);
 				Logger.info(power.getName()+" receive "+ScoreValue.SCORE_VALUE_BUILDINGPRODUCT+" score ");
 				
@@ -122,6 +122,18 @@ public class BuildingManager {
 				Logger.info(powerConcerned.getName()+" recover "+resourceProdPerTurn+" per turn");
 				powerConcerned.substractResourcesProductionPerTurn(resourceType, resourceProdPerTurn);
 			}
+		}
+		// we remove score 
+		if(building.getType()<ScoreValue.INT_FOR_ARMY) {
+			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDINGARMY);
+			Logger.info(powerConcerned.getName()+" remove "+ScoreValue.SCORE_VALUE_BUILDINGARMY+" score ");
+		}else if(building.getType()<ScoreValue.INT_FOR_PRODUCT ) {
+			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDINGPRODUCT);
+			Logger.info(powerConcerned.getName()+" remove "+ScoreValue.SCORE_VALUE_BUILDINGPRODUCT+" score ");
+			
+		}else {
+			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDINGTEMPLE);
+			Logger.info(powerConcerned.getName()+" reemove "+ScoreValue.SCORE_VALUE_BUILDINGTEMPLE+" score ");
 		}
 		//now we simply remove building from map
 		targetBox.setBuilding(null);

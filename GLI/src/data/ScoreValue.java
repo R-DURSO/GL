@@ -18,6 +18,11 @@ public class ScoreValue {
 	// score from ressource of player 
 	public static final int SCORE_VALUE_RESOURCE = 50 ;
 	
+	// value use for select building 
+	public static final int INT_FOR_ARMY=4;
+	public static final int INT_FOR_PRODUCT=10;
+	
+	
 	public ScoreValue() {
 		 
 	}

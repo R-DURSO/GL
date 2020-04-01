@@ -156,12 +156,14 @@ public class UnitManager {
 		Logger.info(power.getName()+" lose "+numberUnitsRemoved+" unit");
 		if (numberUnits <= 0) {
 			deleteUnits(power, box);
+			supScore(power,units);
 		}
 		else {
 			units.subNumber(numberUnitsRemoved);
 			int foodProdToAdd = box.getUnit().getFoodCost() * numberUnitsRemoved;
 			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
 			Logger.info(power.getName()+" get "+foodProdToAdd+" food production back");
+			supScore(power,units);
 		}
 	}
 	
@@ -176,7 +178,9 @@ public class UnitManager {
 				int foodProdToAdd = box.getUnit().getFoodCost() * box.getUnit().getNumber();
 				power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
 				Logger.info(power.getName()+" get "+ foodProdToAdd+" food production back");
+				supScore(power,box.getUnit());
 				box.setUnit(null);
+				
 			}
 		}
 	}
@@ -487,6 +491,38 @@ public class UnitManager {
 		case UnitTypes.UNIT_BOAT:
 			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBOAT);
 			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBOAT+" score");
+			break;
+		}
+	}
+	private void supScore(Power power ,Units units) {
+		switch(units.getTypes()) {
+		case UnitTypes.UNIT_INFANTRY:
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSINFANTRY);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSINFANTRY+" score");
+			break;
+		case UnitTypes.UNIT_ARCHER:
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSARCHER);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSARCHER+" score");
+			break;
+		case UnitTypes.UNIT_CAVALRY:
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSCAVALERY);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSCAVALERY+" score");
+			break;
+		case UnitTypes.UNIT_PIKEMAN:
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSPIKEMAN);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSPIKEMAN+" score");
+			break;
+		case UnitTypes.UNIT_BATTERING_RAM:
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBATTERING_RAM);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBATTERING_RAM+" score");
+			break;
+		case UnitTypes.UNIT_TREBUCHET:
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSTREBUCHET);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSTREBUCHET+" score");
+			break;
+		case UnitTypes.UNIT_BOAT:
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBOAT);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBOAT+" score");
 			break;
 		}
 	}
