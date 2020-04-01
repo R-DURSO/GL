@@ -79,10 +79,10 @@ public class Power {
 	}
 	
 	public void  addScore(int amount) {
-		resources[ResourceTypes.RESOURCE_SCORE-1].addScore(amount);
+		resources[ResourceTypes.RESOURCE_SCORE-1].addValue(amount);
 	}
 	public void suppScore(int amount) {
-		resources[ResourceTypes.RESOURCE_SCORE-1].supScore(amount);
+		resources[ResourceTypes.RESOURCE_SCORE-1].subValue(amount);
 	}
 	
 	public void substractResourcesProductionPerTurn(int resourceType, int amount) {
