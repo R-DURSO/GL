@@ -198,7 +198,7 @@ public class ActionsButtonsPanel extends JPanel {
 						"Avec quelle puissance voulez-vous vous allier?", JOptionPane.YES_NO_OPTION);
 				if (answer == JOptionPane.YES_OPTION) {
 					int selectedIndex = powersComboBox.getSelectedIndex();
-					action = context.getActionValidator().createActionBreakAlliance(power, power.getAlly());
+					action = context.getActionValidator().createActionMakeAlliance(power, powers[selectedIndex+1]);
 				}
 			}
 		}
