@@ -189,16 +189,22 @@ public class UnitManager {
 	
 	
 	public void moveUnits(Power powerConcerned, Box[] pathToTake) {
-		//Trebuchet that move on it's own Position is changing state
-		if (pathToTake[0].getUnit().getTypes() == UnitTypes.UNIT_TREBUCHET) {
-			if (pathToTake.length <= 1) {
-				((Trebuchet) pathToTake[0].getUnit()).changeState();
+		if (pathToTake[0].hasUnit()) {
+			Units movingUnit = pathToTake[0].getUnit();
+			//Trebuchet that move on it's own Position is changing state
+			if (pathToTake[0].getUnit().getTypes() == UnitTypes.UNIT_TREBUCHET) {
+				if (pathToTake.length <= 1) {
+					((Trebuchet) pathToTake[0].getUnit()).changeState();
+				}
 			}
+			for (int i=0; i<pathToTake.length - 1; i++) {
+				moveUnitsBox(powerConcerned, pathToTake[i], pathToTake[i+1]);
+			}
+			movingUnit.resetIsMoving();
 		}
-		for (int i=0; i<pathToTake.length - 1; i++) {
-			moveUnitsBox(powerConcerned, pathToTake[i], pathToTake[i+1]);
+		else {
+			Logger.error("No Unit was found, canceling movement");
 		}
-		pathToTake[pathToTake.length-1].getUnit().resetIsMoving();
 	}
 	
 	private void moveUnitsBox(Power powerConcerned, Box fromBox, Box targetBox) {
