@@ -44,18 +44,27 @@ public class BuildingManager {
 		Logger.info(power.getName()+" create "+building.getClass().getSimpleName());
 		//add building to the box
 		box.setBuilding(building);
-		// we add the score create by the batiment 
-			if(buildingType<ScoreValue.INT_FOR_ARMY) {
-				power.addScore(ScoreValue.SCORE_VALUE_BUILDINGARMY);
-				Logger.info(power.getName()+" receive "+ScoreValue.SCORE_VALUE_BUILDINGARMY+" score ");
-			}else if(buildingType<ScoreValue.INT_FOR_PRODUCT ) {
-				power.addScore(ScoreValue.SCORE_VALUE_BUILDINGPRODUCT);
-				Logger.info(power.getName()+" receive "+ScoreValue.SCORE_VALUE_BUILDINGPRODUCT+" score ");
-				
-			}else {
-				power.addScore(ScoreValue.SCORE_VALUE_BUILDINGTEMPLE);
-				Logger.info(power.getName()+" receive "+ScoreValue.SCORE_VALUE_BUILDINGTEMPLE+" score ");
+		//we add score from creating a Building
+		if(building.getType() < BuildingTypes.Building_ARMY) {
+			power.suppScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
+			Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_ARMY+" score ");
+		}else if(building.getType() < BuildingTypes.BUILDING_PRODUCT) {
+			power.suppScore(ScoreValue.SCORE_VALUE_BUILDING_PRODUCT);
+			Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_PRODUCT+" score ");
+		}
+		else if(building.getType() < BuildingTypes.BUILDING_SPECIAL) {
+			if (building.getType() == BuildingTypes.BUILDING_TEMPLE) {
+				power.suppScore(ScoreValue.SCORE_VALUE_BUILDING_TEMPLE);
+				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_TEMPLE+" score ");
 			}
+			else {
+				power.suppScore(ScoreValue.SCORE_VALUE_BUILDING_SPECIAL);
+				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_SPECIAL+" score ");
+			}
+		}else {
+			power.suppScore(ScoreValue.SCORE_VALUE_DEFAULT);
+			Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_DEFAULT+" score ");
+		}
 		
 		//now, we check if building is a production building and if he is on the right resource
 		if (building instanceof BuildingProduct) {
@@ -124,16 +133,25 @@ public class BuildingManager {
 			}
 		}
 		// we remove score 
-		if(building.getType()<ScoreValue.INT_FOR_ARMY) {
-			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDINGARMY);
-			Logger.info(powerConcerned.getName()+" remove "+ScoreValue.SCORE_VALUE_BUILDINGARMY+" score ");
-		}else if(building.getType()<ScoreValue.INT_FOR_PRODUCT ) {
-			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDINGPRODUCT);
-			Logger.info(powerConcerned.getName()+" remove "+ScoreValue.SCORE_VALUE_BUILDINGPRODUCT+" score ");
-			
+		if(building.getType() < BuildingTypes.Building_ARMY) {
+			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
+			Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_ARMY+" score ");
+		}else if(building.getType() < BuildingTypes.BUILDING_PRODUCT) {
+			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDING_PRODUCT);
+			Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_PRODUCT+" score ");
+		}
+		else if(building.getType() < BuildingTypes.BUILDING_SPECIAL) {
+			if (building.getType() == BuildingTypes.BUILDING_TEMPLE) {
+				powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDING_TEMPLE);
+				Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_TEMPLE+" score ");
+			}
+			else {
+				powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDING_SPECIAL);
+				Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_SPECIAL+" score ");
+			}
 		}else {
-			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDINGTEMPLE);
-			Logger.info(powerConcerned.getName()+" reemove "+ScoreValue.SCORE_VALUE_BUILDINGTEMPLE+" score ");
+			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_DEFAULT);
+			Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_DEFAULT+" score ");
 		}
 		//now we simply remove building from map
 		targetBox.setBuilding(null);

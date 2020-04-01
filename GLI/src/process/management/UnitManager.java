@@ -466,64 +466,64 @@ public class UnitManager {
 	private void addscore(Power power ,Units units) {
 		switch(units.getTypes()) {
 		case UnitTypes.UNIT_INFANTRY:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSINFANTRY);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSINFANTRY+" score");
+			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY);
+			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY+" score");
 			break;
 		case UnitTypes.UNIT_ARCHER:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSARCHER);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSARCHER+" score");
+			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER);
+			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER+" score");
 			break;
 		case UnitTypes.UNIT_CAVALRY:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSCAVALERY);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSCAVALERY+" score");
+			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY);
+			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY+" score");
 			break;
 		case UnitTypes.UNIT_PIKEMAN:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSPIKEMAN);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSPIKEMAN+" score");
+			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN);
+			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN+" score");
 			break;
 		case UnitTypes.UNIT_BATTERING_RAM:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBATTERING_RAM);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBATTERING_RAM+" score");
+			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM);
+			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM+" score");
 			break;
 		case UnitTypes.UNIT_TREBUCHET:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSTREBUCHET);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSTREBUCHET+" score");
+			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET);
+			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET+" score");
 			break;
 		case UnitTypes.UNIT_BOAT:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBOAT);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBOAT+" score");
+			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT);
+			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT+" score");
 			break;
 		}
 	}
 	private void supScore(Power power ,Units units) {
 		switch(units.getTypes()) {
 		case UnitTypes.UNIT_INFANTRY:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSINFANTRY);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSINFANTRY+" score");
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY+" score");
 			break;
 		case UnitTypes.UNIT_ARCHER:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSARCHER);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSARCHER+" score");
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER+" score");
 			break;
 		case UnitTypes.UNIT_CAVALRY:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSCAVALERY);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSCAVALERY+" score");
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY+" score");
 			break;
 		case UnitTypes.UNIT_PIKEMAN:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSPIKEMAN);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSPIKEMAN+" score");
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN+" score");
 			break;
 		case UnitTypes.UNIT_BATTERING_RAM:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBATTERING_RAM);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBATTERING_RAM+" score");
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM+" score");
 			break;
 		case UnitTypes.UNIT_TREBUCHET:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSTREBUCHET);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSTREBUCHET+" score");
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET+" score");
 			break;
 		case UnitTypes.UNIT_BOAT:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBOAT);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITSBOAT+" score");
+			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT);
+			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT+" score");
 			break;
 		}
 	}
