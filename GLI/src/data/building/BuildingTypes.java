@@ -6,7 +6,7 @@ public class BuildingTypes {
 	public static final int BUILDING_WORKSHOP = 2;
 	public static final int BUILDING_DOCK = 3;
 	
-	public static final int Building_ARMY = 4;
+	public static final int BUILDING_ARMY = 4;
 	
 	public static final int BUILDING_MINE = 4;
 	public static final int BUILDING_SAWMILL = 5;
