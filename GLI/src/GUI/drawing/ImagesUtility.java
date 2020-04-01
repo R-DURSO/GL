@@ -65,6 +65,8 @@ public class ImagesUtility {
 	}
 
 	private void loadImages() {
+		logger.info("=== Starting to load all image ===");
+		
 		//load Units images
 		loadUnitImage(UnitTypes.UNIT_INFANTRY, INFANTRY_IMAGE_PATH);
 		loadUnitImage(UnitTypes.UNIT_ARCHER, ARCHER_IMAGE_PATH);
@@ -93,6 +95,8 @@ public class ImagesUtility {
 		loadResourceImage(ResourceTypes.RESOURCE_GOLD, GOLD_IMAGE_PATH);
 		loadResourceImage(ResourceTypes.RESOURCE_STONE, STONE_IMAGE_PATH);
 		loadResourceImage(ResourceTypes.RESOURCE_WOOD, WOOD_IMAGE_PATH);
+
+		logger.info("=== DONE ===");
 	}
 	
 	/**
