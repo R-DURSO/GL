@@ -45,7 +45,7 @@ public class BuildingManager {
 		//add building to the box
 		box.setBuilding(building);
 		//we add score from creating a Building
-		if(building.getType() < BuildingTypes.Building_ARMY) {
+		if(building.getType() < BuildingTypes.BUILDING_ARMY) {
 			power.suppScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
 			Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_ARMY+" score ");
 		}else if(building.getType() < BuildingTypes.BUILDING_PRODUCT) {
@@ -133,7 +133,7 @@ public class BuildingManager {
 			}
 		}
 		// we remove score 
-		if(building.getType() < BuildingTypes.Building_ARMY) {
+		if(building.getType() < BuildingTypes.BUILDING_ARMY) {
 			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
 			Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_ARMY+" score ");
 		}else if(building.getType() < BuildingTypes.BUILDING_PRODUCT) {
