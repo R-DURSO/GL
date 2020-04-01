@@ -174,7 +174,13 @@ public class ActionsButtonsPanel extends JPanel {
 				int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment mettre fin à votre alliance?",
 						"Fin d'alliance?", JOptionPane.YES_NO_OPTION);
 				if (answer == JOptionPane.YES_OPTION) {
-					action = context.getActionValidator().createActionBreakAlliance(power, power.getAlly());
+					try {
+						action = context.getActionValidator().createActionBreakAlliance(power, power.getAlly());
+						context.addAction(action, ActionTypes.ACTION_BREAK_ALLIANCE);
+					}
+					catch (IllegalArgumentException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMessage());
+					}
 				}
 			}
 		}
@@ -197,8 +203,14 @@ public class ActionsButtonsPanel extends JPanel {
 				int answer = JOptionPane.showConfirmDialog(null, powersComboBox,
 						"Avec quelle puissance voulez-vous vous allier?", JOptionPane.YES_NO_OPTION);
 				if (answer == JOptionPane.YES_OPTION) {
-					int selectedIndex = powersComboBox.getSelectedIndex();
-					action = context.getActionValidator().createActionMakeAlliance(power, powers[selectedIndex+1]);
+					try {
+						int selectedIndex = powersComboBox.getSelectedIndex();
+						action = context.getActionValidator().createActionMakeAlliance(power, powers[selectedIndex+1]);
+						context.addAction(action, ActionTypes.ACTION_MAKE_ALLIANCE);
+					}
+					catch (IllegalArgumentException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMessage());
+					}
 				}
 			}
 		}

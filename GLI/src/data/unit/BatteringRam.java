@@ -5,7 +5,7 @@ import data.Power;
 public class BatteringRam extends Units {
 	private static final int BASE_HEALTH = 10;
 	private static final int RANGE = 1;
-	private static final int MOVEMENT = 1;
+	private static final int MOVEMENT = 10;
 	private static final int DAMAGE = 5;
 	private static final int DAMAGE_SIEGE = 50;
 	private static final int DEFENSE = 2;

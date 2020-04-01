@@ -7,6 +7,7 @@ import data.resource.ResourceTypes;
 import data.unit.*;
 import log.LoggerUtility;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
@@ -343,72 +344,77 @@ public class UnitManager {
 		 * S'il y a des unités, c'est un combat
 		 * Sinon, une attaque de batiment
 		 */
-		if (targetBox.hasUnit()) {
+		if (fromBox.hasUnit()) {
 			Units attacker = fromBox.getUnit();
-			Units defender = targetBox.getUnit();
-			Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to "+defender+" ");
-			//calculate damage done, with each defense reducing damage by 10%
-			double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
-			//defense take those damage
-			int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
-			Logger.info("attacker damage: "+AttackerDamageDealt+"\tdefender loses: "+casualityDef);
-			
-			double DefenderDamageDealt = 0;
-			int casualityAtt = 0;
-			//If attacker are range, they dont take damage
-			if (!isRanged(attacker)) {
-				//Round 2, counter-strike (attacker gain 10% damage reduction)
-				DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense() + 1) / 10.0));
-				//attacker take dammage
-				casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
+			if (targetBox.hasUnit()) {
+				//Fight between Units
+				Units defender = targetBox.getUnit();
+				Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to "+defender+" ");
+				//calculate damage done, with each defense reducing damage by 10%
+				double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
+				//defense take those damage
+				int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
+				Logger.info("attacker damage: "+AttackerDamageDealt+"\tdefender loses: "+casualityDef);
+				
+				double DefenderDamageDealt = 0;
+				int casualityAtt = 0;
+				//If attacker are range, they dont take damage
+				if (!isRanged(attacker)) {
+					//Round 2, counter-strike (attacker gain 10% damage reduction)
+					DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense() + 1) / 10.0));
+					//attacker take dammage
+					casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
+				}
+				Logger.info("defender damage: "+DefenderDamageDealt+"\tattacker loses:"+casualityAtt);
+				//Those 2 Unit loses Units
+				removeUnits(targetBox.getOwner(), targetBox, casualityDef);
+				removeUnits(fromBox.getOwner(), fromBox, casualityAtt);
+				//If there isn't defender, they are dead
+				if (!targetBox.hasUnit()) {
+					//Defender are dead !
+					Logger.info("defender are dead !");
+					//if there is attacker...
+					if (fromBox.hasUnit()) {
+						//the Box is our to take
+						if (!isRanged(attacker)) {
+							//But if Unit is Ranged, it doesn't move
+							Box[] Path = {fromBox, targetBox};
+							moveUnits(powerConcerned, Path);
+							Logger.info("attacker are alive, and capture defender position");
+						}
+					}
+					else {
+						Logger.info("attacker are dead !");
+					}
+				}
 			}
-			Logger.info("defender damage: "+DefenderDamageDealt+"\tattacker loses:"+casualityAtt);
-			//Those 2 Unit loses Units
-			removeUnits(targetBox.getOwner(), targetBox, casualityDef);
-			removeUnits(fromBox.getOwner(), fromBox, casualityAtt);
-			//If there isn't defender, they are dead
-			if (!targetBox.hasUnit()) {
-				//Defender are dead !
-				Logger.info("defender are dead !");
-				//if there is attacker...
-				if (fromBox.hasUnit()) {
-					//the Box is our to take
-					if (!isRanged(attacker)) {
-						//But if Unit is Ranged, it doesn't move
-						moveUnitsBox(powerConcerned, fromBox, targetBox);
-						Logger.info("attacker are alive, and capture defender position");
+			else if (targetBox instanceof GroundBox) {
+				GroundBox targetGBox = (GroundBox)targetBox;
+				if (targetGBox.hasBuilding()) {
+					//attacking a building
+					Building buildDef = targetGBox.getBuilding();
+					Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to the building: "+buildDef.toString()+" ");
+					//calculate damage done, with each defense reducing damage by 10%
+					double AttackerDamageDealt = (attacker.getSiegeDamage() * attacker.getNumber()) * (((10.0 - buildDef.getDefense()) / 10.0));
+					//Building take damage
+					buildDef.applyDamage((int)AttackerDamageDealt);
+					Logger.info("Building takes "+AttackerDamageDealt+" damage, "+buildDef.getHealth()+"HP remaining");
+					if (buildDef.isDestroyed()) {
+						Logger.info("attacker have destroid the building: "+buildDef.toString());
+						BuildingManager.getInstance().destroyBuilding(targetGBox);
+						Box[] Path = {fromBox, targetBox};
+						moveUnits(powerConcerned, Path);
 					}
 				}
 				else {
-					Logger.info("attacker are dead !");
-				}
-			}
-		}
-		else if (targetBox instanceof GroundBox) {
-			GroundBox targetGBox = (GroundBox)targetBox;
-			if (targetGBox.hasBuilding()) {
-				//attacking a building
-				Units attacker = fromBox.getUnit();
-				Building buildDef = targetGBox.getBuilding();
-				Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to the building: "+buildDef.toString()+" ");
-				//calculate damage done, with each defense reducing damage by 10%
-				double AttackerDamageDealt = (attacker.getSiegeDamage() * attacker.getNumber()) * (((10.0 - buildDef.getDefense()) / 10.0));
-				//Building take damage
-				buildDef.applyDamage((int)AttackerDamageDealt);
-				Logger.info("Building takes "+AttackerDamageDealt+" damage, "+buildDef.getHealth()+"HP remaining");
-				if (buildDef.isDestroyed()) {
-					Logger.info("attacker have destroid the building: "+buildDef.toString());
-					BuildingManager.getInstance().destroyBuilding(targetGBox);
-					moveUnitsBox(powerConcerned, fromBox, targetBox);
+					Box[] Path = {fromBox, targetBox};
+					moveUnits(powerConcerned, Path);
+					Logger.info("attacker launch an attack on plain, moving unit");
 				}
 			}
 			else {
-				moveUnitsBox(powerConcerned, fromBox, targetBox);
-				Logger.info("attacker launch an attack on plain, moving unit");
+				//On attaque de l'eau sans unité...
 			}
-		}
-		else {
-			//On attaque de l'eau sans unité...
 		}
 	}
 	
@@ -433,33 +439,41 @@ public class UnitManager {
 		power2.removeAlly();
 		Logger.info(power.getName()+" is no longer allied with "+power2);
 		
-		int k = 0;
+		ArrayList<Box> boxToGain = new ArrayList<Box>();
+		
 		for (Iterator<Box> i = power.getTerritory().iterator(); i.hasNext(); ) {
 			Box visitBox = i.next();
 			if (visitBox.hasUnit()) {
 				if (visitBox.getUnit().getOwner() == power2) {
-					visitBox.setOwner(power2);
-					power2.addBox(visitBox);
-					power.removeBox(visitBox);
-					k++;
+					boxToGain.add(visitBox);
 				}
 			}
 		}
-		Logger.info(power2.getName()+" gain "+k+"Box from breaking the alliance");
+		for (Iterator<Box> i = boxToGain.iterator(); i.hasNext(); ) {
+			Box visitBox = i.next();
+			visitBox.setOwner(power2);
+			power2.addBox(visitBox);
+			power.removeBox(visitBox);
+		}
+		Logger.info(power2.getName()+" gain "+boxToGain.size()+"Box from breaking the alliance");
 		
-		k=0;
+		boxToGain.clear();
+		
 		for (Iterator<Box> i = power2.getTerritory().iterator(); i.hasNext(); ) {
 			Box visitBox = i.next();
 			if (visitBox.hasUnit()) {
 				if (visitBox.getUnit().getOwner() == power) {
-					visitBox.setOwner(power);
-					power.addBox(visitBox);
-					power2.removeBox(visitBox);
-					k++;
+					boxToGain.add(visitBox);
 				}
 			}
 		}
-		Logger.info(power2.getName()+" gain "+k+"Box from breaking the alliance");
+		for (Iterator<Box> i = boxToGain.iterator(); i.hasNext(); ) {
+			Box visitBox = i.next();
+			visitBox.setOwner(power);
+			power.addBox(visitBox);
+			power2.removeBox(visitBox);
+		}
+		Logger.info(power.getName()+" gain "+boxToGain.size()+"Box from breaking the alliance");
 		
 		
 	}
@@ -467,31 +481,31 @@ public class UnitManager {
 		switch(units.getTypes()) {
 		case UnitTypes.UNIT_INFANTRY:
 			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY+" score");
+			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY+" score");
 			break;
 		case UnitTypes.UNIT_ARCHER:
 			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER+" score");
+			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER+" score");
 			break;
 		case UnitTypes.UNIT_CAVALRY:
 			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY+" score");
+			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY+" score");
 			break;
 		case UnitTypes.UNIT_PIKEMAN:
 			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN+" score");
+			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN+" score");
 			break;
 		case UnitTypes.UNIT_BATTERING_RAM:
 			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM+" score");
+			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM+" score");
 			break;
 		case UnitTypes.UNIT_TREBUCHET:
 			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET+" score");
+			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET+" score");
 			break;
 		case UnitTypes.UNIT_BOAT:
 			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT);
-			Logger.info(power.getName()+" add "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT+" score");
+			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT+" score");
 			break;
 		}
 	}
@@ -499,31 +513,31 @@ public class UnitManager {
 		switch(units.getTypes()) {
 		case UnitTypes.UNIT_INFANTRY:
 			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY+" score");
+			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY+" score");
 			break;
 		case UnitTypes.UNIT_ARCHER:
 			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER+" score");
+			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER+" score");
 			break;
 		case UnitTypes.UNIT_CAVALRY:
 			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY+" score");
+			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY+" score");
 			break;
 		case UnitTypes.UNIT_PIKEMAN:
 			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN+" score");
+			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN+" score");
 			break;
 		case UnitTypes.UNIT_BATTERING_RAM:
 			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM+" score");
+			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM+" score");
 			break;
 		case UnitTypes.UNIT_TREBUCHET:
 			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET+" score");
+			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET+" score");
 			break;
 		case UnitTypes.UNIT_BOAT:
 			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT);
-			Logger.info(power.getName()+" remove "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT+" score");
+			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT+" score");
 			break;
 		}
 	}
