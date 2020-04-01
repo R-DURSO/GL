@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 
+import data.GameConstants;
 import data.Power;
 import data.ScoreValue;
 
@@ -22,7 +23,7 @@ public class UnitManager {
 	
 	private static UnitManager instance = new UnitManager();
 	public static UnitManager getInstance() { return instance; }
-	private static Logger Logger = LoggerUtility.getLogger(UnitManager.class, "text");
+	private static Logger Logger = LoggerUtility.getLogger(UnitManager.class, GameConstants.LOG_TYPE);
 	/**
 	 * Add {@link Units} on a {@link Box} (will always be on an {@link BuildingArmy})
 	 * @param power the power who want to create units 

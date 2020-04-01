@@ -10,7 +10,7 @@ import javax.swing.SwingConstants;
 
 import GUI.components.GuiPreferences;
 import GUI.components.SliderPanel;
-import data.GameContants;
+import data.GameConstants;
 
 public class PreferencesPanel extends JPanel{
 	private static final long serialVersionUID = -714238221735387964L;
@@ -115,13 +115,13 @@ public class PreferencesPanel extends JPanel{
 	public int getWaterAmount() {
 		switch (waterAmountComboBox.getSelectedIndex()) {
 		case 0: //"peu"
-			return GameContants.WATER_AMOUNT_LITTLE;
+			return GameConstants.WATER_AMOUNT_LITTLE;
 		case 1: //"moyen"
-			return GameContants.WATER_AMOUNT_NORMAL;
+			return GameConstants.WATER_AMOUNT_NORMAL;
 		case 2: //"beaucoup"
-			return GameContants.WATER_AMOUNT_MANY;
+			return GameConstants.WATER_AMOUNT_MANY;
 		default:
-			return GameContants.WATER_AMOUNT_LITTLE; 
+			return GameConstants.WATER_AMOUNT_LITTLE; 
 		}
 		
 		//return (waterAmountComboBox.getSelectedIndex() + 1) * 20;

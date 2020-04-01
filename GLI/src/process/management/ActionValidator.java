@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import data.GameConstants;
 import data.GameMap;
 import data.Position;
 import data.Power;
@@ -28,7 +29,7 @@ import org.apache.log4j.*;
  */
 public class ActionValidator {
 	private GameMap map;
-	private static Logger Logger = LoggerUtility.getLogger(ActionValidator.class, "text");
+	private static Logger Logger = LoggerUtility.getLogger(ActionValidator.class, GameConstants.LOG_TYPE);
 	/**
 	 * ActionManager just needs to have access to the game map
 	 * @param map The game map

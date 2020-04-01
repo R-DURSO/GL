@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 
+import data.GameConstants;
 import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
 import data.unit.UnitTypes;
@@ -21,7 +22,7 @@ import process.management.UnitManager;
  */
 public class ImagesUtility {
 	/*For logs*/
-	private static Logger logger = LoggerUtility.getLogger(ImagesUtility.class, "text");
+	private static Logger logger = LoggerUtility.getLogger(ImagesUtility.class, GameConstants.LOG_TYPE);
 	
 	/*Units Paths & Images*/
 	private final String INFANTRY_IMAGE_PATH = "GLI/src/images/Units/infantry.jpg";
