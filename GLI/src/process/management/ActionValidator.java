@@ -444,7 +444,7 @@ public class ActionValidator {
 							//Boat that go to a coast to deposit Unit
 							if (isNearWater(visitPosition)) {
 								//Coast near Water you can go on
-								//checkUnit = true;
+								checkUnit = true;
 							}
 						}
 						
@@ -453,12 +453,11 @@ public class ActionValidator {
 								Boat visitBoat = (Boat)units;
 								//Boat have special movement
 								if (visitBox instanceof WaterBox) {
-									//WaterBox
+									//Boat on WaterBox
 									if (visitBox.hasUnit()) {
+										Units unitsOnBox = visitBox.getUnit();
 										//there is unit where we want to go
-										/*
-										//as moveUnit crush unit, dont move where there is unit
-										if (visitBox.getUnit().getOwner() != powerConcerned) {
+										if (unitsOnBox.getOwner() != powerConcerned) {
 											//so if we dont own the unit, check if it's an allied one
 											if (Allied) {
 												if (visitBox.getUnit().getOwner() == Ally) {
@@ -470,10 +469,15 @@ public class ActionValidator {
 											//not allied, not our unit
 										}
 										else {
+											//Maybe it's only a Phantom
+											if (unitsOnBox.getTypes() < 0) {
+												if (visitPosition.equals(target)) {
+													return path;
+												}
+											}
 											//our unit, on Water
 											canVisit = true;
 										}
-										*/
 									}
 									else {
 										//WaterBox without unit
@@ -508,7 +512,7 @@ public class ActionValidator {
 										}
 										//cannot visit nearby Box, you're a boat
 									}
-									//boat doesn't have unit inside, dont go on ground
+									//Boat doesn't have unit inside, dont go on ground
 								}
 							}
 							//Not a Boat, so a normal unit
@@ -518,7 +522,7 @@ public class ActionValidator {
 									if (Allied) {
 										if (visitBox.getUnit().getOwner() == Ally) {
 											//there is Ally unit, we can continue our visit, but can't stop here
-											//canVisit = true;
+											canVisit = true;
 										}
 										//Not our Ally
 									}
@@ -546,7 +550,7 @@ public class ActionValidator {
 									}
 									else {
 										//Nor a Boat or Same UnitTypes, we can only visit
-										//canVisit = true;
+										canVisit = true;
 									}
 								}
 							}

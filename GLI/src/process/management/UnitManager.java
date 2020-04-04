@@ -187,130 +187,165 @@ public class UnitManager {
 		}
 	}
 	
-	
+	/**
+	 * Move a {@link Units} depending on the Array of {@link Box} given
+	 * @param powerConcerned who have the unit moving
+	 * @param pathToTake Array of Box the unit will go through
+	 */
 	public void moveUnits(Power powerConcerned, Box[] pathToTake) {
 		if (pathToTake[0].hasUnit()) {
-			Units movingUnit = pathToTake[0].getUnit();
-			//Trebuchet that move on it's own Position is changing state
-			if (pathToTake[0].getUnit().getTypes() == UnitTypes.UNIT_TREBUCHET) {
-				if (pathToTake.length <= 1) {
-					((Trebuchet) pathToTake[0].getUnit()).changeState();
+			Box firstBox = pathToTake[0];
+			Units movingUnits = firstBox.getUnit();
+			if (movingUnits.getOwner() == powerConcerned) {
+				
+				//Trebuchet that move on it's own Position is changing state
+				if (movingUnits.getTypes() == UnitTypes.UNIT_TREBUCHET) {
+					if (pathToTake.length <= 1) {
+						((Trebuchet) movingUnits).changeState();
+					}
 				}
+				
+				Box lastBox = firstBox;
+				for( int i = 0; i < pathToTake.length; i++) {
+					if (moveUnitsBox(movingUnits, pathToTake[i])) {
+						lastBox = pathToTake[i];
+					}
+				}
+				
+				//Application du déplacement
+				firstBox.setUnit(null);
+				//Suppression du Phantom
+				if (pathToTake[pathToTake.length-1].getUnit().getTypes() < 0) {
+					pathToTake[pathToTake.length-1].setUnit(null);
+				}
+				//Verification du dechargement
+				if (lastBox.hasUnit()) {
+					if (lastBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
+						((Boat)lastBox.getUnit()).setContainedUnits(movingUnits);
+					}
+					else {
+						lastBox.setUnit(movingUnits);
+					}
+				}
+				else {
+					lastBox.setUnit(movingUnits);
+				}
+				movingUnits.resetIsMoving();
 			}
-			for (int i=0; i<pathToTake.length - 1; i++) {
-				moveUnitsBox(powerConcerned, pathToTake[i], pathToTake[i+1]);
+			else {
+				Logger.error(powerConcerned.getName()+" try to move another Power Units");
 			}
-			movingUnit.resetIsMoving();
 		}
 		else {
 			Logger.error("No Unit was found, canceling movement");
 		}
 	}
 	
-	private void moveUnitsBox(Power powerConcerned, Box fromBox, Box targetBox) {
-		Units movingUnits = fromBox.getUnit();
-		if (targetBox instanceof WaterBox) {
-			if (targetBox.hasUnit()) {
-				//si il y a un bateau
-				if (targetBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
-					if (fromBox.getUnit().getTypes() != UnitTypes.UNIT_BOAT) {
-						//target est sur l'eau & target possede un bateau
-						((Boat) targetBox.getUnit()).setContainedUnits(movingUnits);
+	/**
+	 * Private class made for a {@link data.unit.Units Unit} to move one {@link data.boxes.Box Box} to another
+	 * @param movingUnits the {@link data.unit.Units Unit} moving
+	 * @param visitBox the {@link data.boxes.Box Box} we are in
+	 * @return true if the {@link data.unit.Units Unit} can go to this {@link data.boxes.Box Box}
+	 */
+	private boolean moveUnitsBox(Units movingUnits, Box visitBox) {
+		boolean canMove = false;
+		//Verification du cas du bateau (pour charger/decharger les Units)
+		if (visitBox instanceof WaterBox) {
+			if (visitBox.hasUnit()) {
+				//il y a un bateau a destination ?
+				if (visitBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
+					//peut-on monter dans le bateau ?
+					if (movingUnits.getTypes() != UnitTypes.UNIT_BOAT) {
+						canMove = true;
 					}
 				}
 				//si on est un bateau
-				else if (fromBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
-					//un bateau qui va dans l'eau
-					if (targetBox.getUnit().getTypes() != UnitTypes.UNIT_BOAT) { //note, cette verification est faites plus haut
-						//c'est qu'un phantom
-						targetBox.setUnit(movingUnits);
-					}
+				else if (movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
+					//un bateau dans l'eau
+					canMove = true;
+				}
+				else {
+					Logger.error("Moving a unit that isn't a Boat on WaterBox");
+					return false;
 				}
 			}
 			else {
 				//dans l'eau sans unite a destination, on bouge surement un bateau
 				if (movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
-					targetBox.setUnit(movingUnits);
+					canMove = true;
 				}
 				else {
 					Logger.error("Moving a unit that isn't a Boat on WaterBox");
+					return false;
 				}
 			}
 		}
 		else {
-			//GroundBox
+			//explicit GroundBox
 			//sur terre, les vérifications se font dans ActionValidator
 			//exception, la creation d'un bateau et movement d'un trebuchet
 			if (movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
 				//Si on bouge un bateau, on vide son contenu
-				Boat BoatMovingUnit = (Boat)movingUnits;
-				if ((fromBox instanceof GroundBox) && (targetBox instanceof WaterBox)) {
-					//Boat move to water
-					targetBox.setUnit(movingUnits);
+				Boat movingUnitsBoat = (Boat)movingUnits;
+				if (movingUnitsBoat.hasContainedUnits()) {
+					visitBox.setUnit(movingUnitsBoat.getContainedUnits());
+					visitBox.getUnit().resetIsMoving();
+					movingUnitsBoat.setContainedUnits(null);
 				}
-				else if (BoatMovingUnit.hasContainedUnits()) {
-					targetBox.setUnit(BoatMovingUnit.getContainedUnits());
-					BoatMovingUnit.setContainedUnits(null);
-				}
-				else {
-					//ne vient pas de la terre et ne possède pas d'unit
-					//on essaie de bouger un bateau sur un phantom
-					targetBox.setUnit(null);
-				}
+				//Boat should move to water
+				canMove = false;
 			}
 			else if (movingUnits.getTypes() == UnitTypes.UNIT_TREBUCHET) {
 				Trebuchet TrebUnit = (Trebuchet)movingUnits;
 				if (TrebUnit.getState() == Trebuchet.STATE_MOVING) {
-					targetBox.setUnit(movingUnits);
+					canMove = true;
 				}
 				else {
+					//On devrait pas arriver ici, mais au-cas où...
 					Logger.error("Moving a Trebuchet that is Installed");
+					return false;
 				}
 			}
 			else {
-				targetBox.setUnit(movingUnits);
-			}
-		}
-		
-		//Vérification qu'il y a eu un déplacement
-		if (targetBox.hasUnit()) {
-			if (targetBox.getUnit().equals(movingUnits)) {
-				fromBox.setUnit(null);
-			}
-			else {
-				Logger.error("<"+fromBox.getUnit()+"> couldn't move to <"+targetBox+">, there is a <"+targetBox.getUnit()+"> ");
+				//Unite sur Terre
+				canMove = true;
 			}
 		}
 		
 		boolean conquerBox = false;
+		Power powerConcerned = movingUnits.getOwner();
 		//if targetBox is in ennemy's territory
-		Power targetBoxPower = targetBox.getOwner();
-		if (targetBoxPower == null) {
+		Power BoxPower = visitBox.getOwner();
+		if (BoxPower == null) {
 			//targetBox is free, take it !
 			conquerBox = true;
 		}
 		else {
-			if (targetBoxPower != powerConcerned) {
-				//Box doesn't belong to us
-				if (powerConcerned.isAllied()) {
-					if (powerConcerned.getAlly() != targetBoxPower) {
-						//Not a Ally
+			if (!visitBox.hasUnit()) {
+				if (BoxPower != powerConcerned) {
+					//Box doesn't belong to us
+					if (powerConcerned.isAllied()) {
+						if (powerConcerned.getAlly() != BoxPower) {
+							//Not a Ally
+							conquerBox = true;
+						}
+					}
+					else {
+						//Not Allied
 						conquerBox = true;
 					}
 				}
-				else {
-					//Not Allied
-					conquerBox = true;
-				}
 			}
+			//if there are Unit, we cannot conquer
 		}
+		
 		if (conquerBox) {
 			//powerConcerned will take this territory, and ressource gain per turn if any (inderictly, will gain the building on it too)  
-			powerConcerned.addBox(targetBox);
-			targetBox.setOwner(powerConcerned);
+			powerConcerned.addBox(visitBox);
+			visitBox.setOwner(powerConcerned);
 			//Are on Ground or on Water (checking for Building)
-			if (targetBox instanceof GroundBox) {
-				GroundBox targetGBox = (GroundBox)targetBox;
+			if (visitBox instanceof GroundBox) {
+				GroundBox targetGBox = (GroundBox)visitBox;
 				/*Special case for buildingProducts, if takes up territory/box with a production building, 
 			 	powerConcerned will 'steal' targetBoxPower's production*/
 				if (targetGBox.hasBuilding()) {
@@ -323,18 +358,18 @@ public class UnitManager {
 							int productionPerTurn = buildingProduct.getProductionPerTurn();
 							powerConcerned.addResourcesProductionPerTurn(productionType, productionPerTurn);
 							Logger.info(powerConcerned.getName()+" gain "+productionPerTurn+" of ResourceType:"+productionType+" as production");
-							targetBoxPower.substractResourcesProductionPerTurn(productionType, productionPerTurn);
+							BoxPower.substractResourcesProductionPerTurn(productionType, productionPerTurn);
 							Logger.info(powerConcerned.getName()+" lose "+productionPerTurn+" of ResourceType:"+productionType+" as production");
 						}
 					}
 				}
 			}
-			if (targetBoxPower != null) {
+			if (BoxPower != null) {
 				//obviously, targetBoxPower will lose what powerConcernced earned
-				targetBoxPower.removeBox(targetBox);
+				BoxPower.removeBox(visitBox);
 			}
 		}
-		
+		return canMove;
 	}
 	
 	/**

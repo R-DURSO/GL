@@ -83,14 +83,23 @@ public abstract class Units {
 		return owner;
 	}
 	
+	/**
+	 * @return true if the {@link data.unit.Units Unit} can move
+	 */
 	public boolean getIsMoving() {
 		return isMoving;
 	}
 	
+	/**
+	 * Set isMoving so that the {@link data.unit.Units Unit} cannot be used in ActionValidator
+	 */
 	public void setIsMoving() {
 		this.isMoving = true;
 	}
-	
+
+	/**
+	 * Set isMoving so that the {@link data.unit.Units Unit} can be used again
+	 */
 	public void resetIsMoving() {
 		this.isMoving = false;
 	}

@@ -106,7 +106,7 @@ public class TestBoat {
 		UnitManager.getInstance().moveUnits(power, Path1);
 		UnitManager.getInstance().moveUnits(power, Path2);
 		
-		assertEquals(boat1, map.getBox(wPos3).getUnit());
+		assertEquals(boat1.getTypes(), map.getBox(wPos3).getUnit().getTypes());
 	}
 	
 	
