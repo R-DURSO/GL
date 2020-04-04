@@ -336,6 +336,9 @@ public class UnitManager {
 					}
 				}
 			}
+			else if (visitBox.getUnit().getTypes() < 0) {
+				conquerBox = true;
+			}
 			//if there are Unit, we cannot conquer
 		}
 		
