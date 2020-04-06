@@ -14,5 +14,9 @@ public class Artifact extends Resource {
 	public int getResourceType() {
 		return ResourceTypes.RESOURCE_ARTIFACT;
 	}
+	
+	public String toString() {
+		return "Artéfact";
+	}
 
 }

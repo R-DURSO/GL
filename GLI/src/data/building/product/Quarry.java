@@ -35,6 +35,6 @@ public class Quarry extends BuildingProduct{
 	}
 	
 	public String toString() {
-		return "CarriÃ¨re";
+		return "Carrière";
 	}
 }

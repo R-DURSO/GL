@@ -162,7 +162,7 @@ public class InfosPanel extends JPanel {
 		DefaultPieDataset dataset = new DefaultPieDataset();
 		for(int i = 0; i < powers.length; i++) {
 			int territorySize = powerStats[i].getTerritorySize();
-			dataset.setValue(powers[0].getName() + " : " + territorySize, territorySize);
+			dataset.setValue(powers[i].getName() + " : " + territorySize, territorySize);
 		}
 		
 		return ChartFactory.createPieChart("Territoires Possédés", dataset, false, false, false);

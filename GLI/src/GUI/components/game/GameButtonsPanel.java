@@ -60,6 +60,12 @@ public class GameButtonsPanel extends JPanel{
 	
 	public void changeMiddlePanel() {
 		cardLayout.next(changingPanel);
+		//check if validation panel is inmiddle panel, in order to disable endTurnButton (errors can occur)
+		if (validationPanel.isVisible()) {
+			endTurnButton.setVisible(false);
+		}else {
+			endTurnButton.setVisible(true);
+		}
 	}
 
 	public ActionsButtonsPanel getActionsBoutonsPanel() {

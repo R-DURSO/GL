@@ -2,6 +2,7 @@ package GUI.components.game;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
@@ -21,7 +22,7 @@ import data.unit.PhantomUnit;
  */
 
 public class BoxSelectedPanel extends JPanel {
-	private JLabel titleLabel = new JLabel("Informations de la case survolée");
+	private JLabel titleLabel = new JLabel("<html><u>Informations de la case survolée</u></html>");
 	private JLabel ownerLabel;
 	private JLabel buildingLabel;
 	private JLabel unitsLabel;
@@ -39,6 +40,9 @@ public class BoxSelectedPanel extends JPanel {
 				((JLabel)component).setFont(GuiPreferences.BASE_FONT);
 			}
 		}
+		titleLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		
+		titleLabel.setFont(GuiPreferences.ITALIC_FONT);
 	}
 
 	private void init() {
@@ -47,8 +51,6 @@ public class BoxSelectedPanel extends JPanel {
 		unitsLabel = new JLabel();
 		buildingLabel = new JLabel();
 		resourceLabel = new JLabel();
-		
-		titleLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		
 		add(titleLabel);
 		add(ownerLabel);

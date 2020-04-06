@@ -63,7 +63,7 @@ public class Infantry extends Units {
 	}
 	
 	public String toString() {
-		return "Infantry " + super.toString() ;
+		return "Infanterie " + super.toString() ;
 	}
 
 }
