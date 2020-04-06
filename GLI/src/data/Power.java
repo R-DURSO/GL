@@ -137,6 +137,6 @@ public class Power {
 	}
 	
 	public String toString() {
-		return "Power "+name+": ";
+		return "Puissance : "+name+" ";
 	}
 }

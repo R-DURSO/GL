@@ -63,6 +63,6 @@ public class BatteringRam extends Units {
 	}
 	
 	public String toString() {
-		return "Belier"+super.toString() ;
+		return "Bélier"+super.toString() ;
 	}
 }

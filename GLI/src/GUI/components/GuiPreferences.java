@@ -20,6 +20,9 @@ public class GuiPreferences {
 	
 	public static final Font BASE_FONT = new Font("Arial", Font.PLAIN, FONT_SIZE);
 	
+	public static final Font ITALIC_FONT = new Font("Arial", Font.ITALIC, FONT_SIZE);
+	
 	public static final int GAME_PANELS_RATIO_HEIGHT = 10;
+	
 	public static final int GAME_PANELS_SUBSTRACT_HEIGHT = GAME_PANELS_RATIO_HEIGHT - 2;
 }
