@@ -46,9 +46,9 @@ public class UnitManager {
 					unitsOnBox.addNumber(numberUnitsNeeded);
 					//modify amount of food earned between each turn
 					int foodCostToRemove = numberUnits * unitsOnBox.getFoodCost();
-					Logger.info(power.getName()+" remove food : "+foodCostToRemove);
+					Logger.info(power.getName()+" lose "+foodCostToRemove+" Food per turn");
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
-					addscore(power, unitsOnBox);
+					addScore(power, unitsOnBox);
 				}
 				else {
 					//else, we have to add to max number
@@ -56,20 +56,20 @@ public class UnitManager {
 					unitsOnBox.addNumber(numberUnits - numberExcessUnits);
 					//reduce adapted production
 					int foodCostToRemove = (numberUnits - numberExcessUnits) * unitsOnBox.getFoodCost();
-					Logger.info(power.getName()+" remove "+foodCostToRemove+" per turn ");
+					Logger.info(power.getName()+" lose "+foodCostToRemove+" Food per turn ");
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 					//and refound gold 
-					Logger.info(power.getName()+" remove gold "+unitsOnBox.getCost()*numberExcessUnits);
+					Logger.info(power.getName()+" use "+unitsOnBox.getCost()*numberExcessUnits+" Gold");
 					power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(unitsOnBox.getCost() * numberExcessUnits); 
-					addscore(power, unitsOnBox);
+					addScore(power, unitsOnBox);
 				}
 			}
 			else {
 				Units units = createUnit(unitType, numberUnits, power);
 				//Unit shouldn't be here if invalid type
 				if (units != null) {
-					Logger.info(power.getName()+" create units type: "+unitType+", number: "+numberUnits);
-					Logger.info(power.getName()+" use "+units.getCost()*numberUnits+" gold");
+					Logger.info(power.getName()+" create units "+units.getClass().getSimpleName()+", number: "+numberUnits);
+					Logger.info(power.getName()+" use "+units.getCost()*numberUnits+" Gold");
 					if (units.getNumber() > units.getMaxNumber()) {
 						//unit above max number
 						int numberExcessUnits = numberUnits - units.getMaxNumber();
@@ -78,17 +78,17 @@ public class UnitManager {
 						//refund gold
 						int refundCost = units.getCost() * numberExcessUnits;
 						power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(refundCost);
-						Logger.info(power.getName()+" got back "+refundCost+" gold");
+						Logger.info(power.getName()+" got back "+refundCost+" Gold");
 						
 					}
 					//add those unit
 					box.setUnit(units);
 					//tax of food per turn
 					int foodCostToRemove = units.getNumber() * units.getFoodCost();
-					Logger.info(power.getName()+" has maintenance cost of "+foodCostToRemove+" food each turn");
+					Logger.info(power.getName()+" lose "+foodCostToRemove+" Food per turn");
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 					// add score 
-					addscore(power, units);
+					addScore(power, units);
 				}
 			}
 		}
@@ -196,6 +196,7 @@ public class UnitManager {
 		if (pathToTake[0].hasUnit()) {
 			Box firstBox = pathToTake[0];
 			Units movingUnits = firstBox.getUnit();
+			firstBox.setUnit(null);
 			if (movingUnits.getOwner() == powerConcerned) {
 				
 				//Trebuchet that move on it's own Position is changing state
@@ -213,7 +214,6 @@ public class UnitManager {
 				}
 				
 				//Application du déplacement
-				firstBox.setUnit(null);
 				//Suppression du Phantom
 				if (pathToTake[pathToTake.length-1].hasUnit()) {
 					if (pathToTake[pathToTake.length-1].getUnit().getTypes() < 0) {
@@ -526,7 +526,7 @@ public class UnitManager {
 		
 		
 	}
-	private void addscore(Power power ,Units units) {
+	private void addScore(Power power ,Units units) {
 		switch(units.getTypes()) {
 		case UnitTypes.UNIT_INFANTRY:
 			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY);
