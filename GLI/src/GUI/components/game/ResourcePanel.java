@@ -40,7 +40,7 @@ public class ResourcePanel extends JPanel{
 	 * Rewrite the amount of Resource owned and product each turn.
 	 */
 	public void refresh() {
-		resourceAmountAndProd = resource.getAmount() + "(" + withSign(resource.getProductionPerTurn()) + ")";		
+		resourceAmountAndProd = resource.getAmount() + " (" + withSign(resource.getProductionPerTurn()) + ")";		
 		resourceLabel.setText(resourceName + " : " + resourceAmountAndProd);
 		repaint();
 	}

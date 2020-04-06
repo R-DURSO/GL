@@ -26,6 +26,10 @@ public class GameMap {
 		}
 		return null;
 	}
+	
+	public Box[][] getBoxes(){
+		return boxes;
+	}
 
 	public Position getLeftPos(Position position) {
 		if ((position.getX()-1) >= 0) {

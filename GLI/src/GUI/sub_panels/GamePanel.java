@@ -223,6 +223,10 @@ public class GamePanel extends JPanel {
 		fromPosition = null;
 		targetPosition = null;
 	}
+	
+	public Dimension getInfosDimensions() {
+		return DIM_INFOS;
+	}
 
 	public MapPanel getMapPanel() {
 		return mapPanel;

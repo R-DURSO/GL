@@ -54,29 +54,6 @@ public class MapPanel extends JPanel{
 		this.map = map;
 	}
 	
-	public Box getBoxFromCoordinates(int x, int y) {
-		Position position = getPositionFromCoordinates(x, y);
-		return map.getBox(position.getX(), position.getY());
-	}
-	
-	public Position getPositionFromCoordinates(int x, int y) {
-		int w = getWidth() / map.getSize();
-		int h = getHeight() / map.getSize();
-		int xMapRelative = x  / w;
-		int yMapRelative = y  / h;
-		
-		//sometimes, map will be a little bit smaller than panel, so mouse can be out of the map
-		//and therefore, bugs can occur, so we check if mouse is still on map to avoid those problems
-		if(xMapRelative >= map.getSize())
-			xMapRelative = map.getSize() - 1;
-		if(yMapRelative >= map.getSize())
-			yMapRelative = map.getSize() - 1;
-		
-		return new Position(xMapRelative, yMapRelative);
-	}
-	
-	
-
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -193,111 +170,7 @@ public class MapPanel extends JPanel{
 		int posY = position.getY() * rectHeight;
 		g.fillRect(posX, posY, rectWidth, rectHeight);
 	}
-
-	private boolean determineBuildingColor(Graphics g, Building building) {
-		if(building == null)
-			return false;
-		switch(building.getType()) {
-		case BuildingTypes.BUILDING_BARRACK:
-			g.setColor(ColorData.BARRACK_COLOR);
-			break;
-		case BuildingTypes.BUILDING_DOCK:
-			g.setColor(ColorData.DOCK_COLOR);
-			break;
-		case BuildingTypes.BUILDING_WORKSHOP:
-			g.setColor(ColorData.WORKSHOP_COLOR);
-			break;
-		case BuildingTypes.BUILDING_MINE:
-			g.setColor(ColorData.MINE_COLOR);
-			break;
-		case BuildingTypes.BUILDING_QUARRY:
-			g.setColor(ColorData.QUARRY_COLOR);
-			break;
-		case BuildingTypes.BUILDING_SAWMILL:
-			g.setColor(ColorData.SAWMILL_COLOR);
-			break;
-		case BuildingTypes.BUILDING_WINDMILL:
-			g.setColor(ColorData.WINDMILL_COLOR);
-			break;
-		case BuildingTypes.BUILDING_CAPITAL:
-			g.setColor(ColorData.CAPITAL_COLOR);
-			break;
-		case BuildingTypes.BUILDING_DOOR:
-			g.setColor(ColorData.DOOR_COLOR);
-			break;
-		case BuildingTypes.BUILDING_TEMPLE:
-			g.setColor(ColorData.TEMPLE_COLOR);
-			break;
-		case BuildingTypes.BUILDING_WALL:
-			g.setColor(ColorData.WALL_COLOR);
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
-
-
-
-	private boolean determineUnitColor(Graphics g, Units units) {
-		if(units == null)
-			return false;
-		
-		switch(units.getTypes()) {
-		case UnitTypes.UNIT_ARCHER:
-			g.setColor(ColorData.ARCHER_COLOR);
-			break;
-		case UnitTypes.UNIT_BATTERING_RAM:
-			g.setColor(ColorData.BATTERING_RAM_COLOR);
-			break;
-		case UnitTypes.UNIT_BOAT:
-			g.setColor(ColorData.BOAT_COLOR);
-			break;
-		case UnitTypes.UNIT_CAVALRY:
-			g.setColor(ColorData.CAVALRY_COLOR);
-			break;
-		case UnitTypes.UNIT_INFANTRY:
-			g.setColor(ColorData.INFANTRY_COLOR);
-			break;
-		case UnitTypes.UNIT_TREBUCHET:
-			g.setColor(ColorData.TREBUCHET_COLOR);
-			break;
-		case UnitTypes.UNIT_PIKEMAN:
-			g.setColor(ColorData.PIKEMAN_COLOR);
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
-
-
-
-	private boolean determineResourceColor(Graphics g, GroundBox gBox) {
-		switch (gBox.getResourceType()) {
-		case ResourceTypes.RESOURCE_FOOD:
-			g.setColor(ColorData.FOOD_COLOR);
-			break;
-		case ResourceTypes.RESOURCE_GOLD:
-			g.setColor(ColorData.GOLD_COLOR);
-			break;
-		case ResourceTypes.RESOURCE_STONE:
-			g.setColor(ColorData.STONE_COLOR);
-			break;
-		case ResourceTypes.RESOURCE_WOOD:
-			g.setColor(ColorData.WOOD_COLOR);
-			break;
-		case ResourceTypes.RESOURCE_ARTIFACT:
-			g.setColor(ColorData.ARTIFACT_COLOR);
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
-
-
-
+	
 	/*
      * Border Color:
      * 	Each color represents a belonging
@@ -339,14 +212,48 @@ public class MapPanel extends JPanel{
 		this.targetPosition = targetPosition;
 		repaint();
 	}
+	
+
+	public Box getBoxFromCoordinates(int x, int y) {
+		Position position = getPositionFromCoordinates(x, y);
+		return map.getBox(position.getX(), position.getY());
+	}
+
+	
+	public Position getPositionFromCoordinates(int x, int y) {
+		int w = getWidth() / map.getSize();
+		int h = getHeight() / map.getSize();
+		int xMapRelative = x  / w;
+		int yMapRelative = y  / h;
+		
+		//sometimes, map will be a little bit smaller than panel, so mouse can be out of the map
+		//and therefore, bugs can occur, so we check if mouse is still on map to avoid those problems
+		if(xMapRelative >= map.getSize())
+			xMapRelative = map.getSize() - 1;
+		if(yMapRelative >= map.getSize())
+			yMapRelative = map.getSize() - 1;
+		
+		return new Position(xMapRelative, yMapRelative);
+	}
+	
 	public Position getPositionFrom() {
 		return fromPosition ;
 	}
+	
 	public Position getPositionTarget() {
 		return targetPosition;
 	}
+	
 	public Box getBoxByPosition(Position pos) {
 		return map.getBox(pos);
+	}
+	
+	public Box getBox(int x, int y) {
+		return map.getBox(x, y);
+	}
+	
+	public int getMapSize() {
+		return map.getSize();
 	}
 
 }
