@@ -162,7 +162,6 @@ public class UnitManager {
 		int numberUnits = units.getNumber() - numberUnitsRemoved;
 		Logger.info(power.getName()+" lose "+numberUnitsRemoved+" unit");
 		if (numberUnits <= 0) {
-			subScore(power, units.getTypes(), units.getNumber());
 			deleteUnits(power, box);
 		}
 		else {
