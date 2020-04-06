@@ -1,9 +1,15 @@
 package GUI.components.game;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.GridLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
+import GUI.components.GuiPreferences;
 import data.boxes.*;
 import data.building.Building;
 import data.unit.PhantomUnit;
@@ -15,43 +21,56 @@ import data.unit.PhantomUnit;
  */
 
 public class BoxSelectedPanel extends JPanel {
-	private static final long serialVersionUID = 1L;
-	private JLabel OwnerLabel;
-	private JLabel BuildingLabel;
-	private JLabel UnitsLabel;
-	private JLabel ResourceLabel;
+	private JLabel titleLabel = new JLabel("Informations de la case survolée");
+	private JLabel ownerLabel;
+	private JLabel buildingLabel;
+	private JLabel unitsLabel;
+	private JLabel resourceLabel;
 
 	public BoxSelectedPanel(Box box) {
 		init();
+		initFont();
 		refresh(box);
 	}
 	
+	private void initFont() {
+		for(Component component : this.getComponents()) {
+			if (component instanceof JLabel) {
+				((JLabel)component).setFont(GuiPreferences.BASE_FONT);
+			}
+		}
+	}
+
 	private void init() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		OwnerLabel = new JLabel();
-		UnitsLabel = new JLabel();
-		BuildingLabel = new JLabel();
-		ResourceLabel = new JLabel();
+		setLayout(new GridLayout(0,1));
+		ownerLabel = new JLabel();
+		unitsLabel = new JLabel();
+		buildingLabel = new JLabel();
+		resourceLabel = new JLabel();
 		
-		add(OwnerLabel);
-		add(UnitsLabel);
-		add(BuildingLabel);
-		add(ResourceLabel);
+		titleLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		
+		add(titleLabel);
+		add(ownerLabel);
+		add(unitsLabel);
+		add(buildingLabel);
+		add(resourceLabel);
 	}
 	
 	public void refresh(Box box) {
 		if (box.hasOwner()) {
-			OwnerLabel.setText(box.getOwner().toString());
+			ownerLabel.setText(box.getOwner().toString());
 		}
 		else {
-			OwnerLabel.setText("Aucun propriétaire");
+			ownerLabel.setText("Aucun propriétaire");
 		}
 		
 		if (box.hasUnit() && !(box.getUnit() instanceof PhantomUnit)) {
-			UnitsLabel.setText(box.getUnit().toString());
+			//permits to break line automatically
+			unitsLabel.setText("<html>" + box.getUnit().toString() +"</html>");
 		}
 		else {
-			UnitsLabel.setText("Pas d'unité");
+			unitsLabel.setText("Pas d'unité");
 		}
 		
 		if (box instanceof GroundBox) {
@@ -59,18 +78,18 @@ public class BoxSelectedPanel extends JPanel {
 			if (GBox.hasBuilding()) {
 				Building building = GBox.getBuilding();
 				if (!building.isFinish())
-					BuildingLabel.setText(building.toString() + " (" + building.getBuildTime() + " tour(s) avant activation)");
+					buildingLabel.setText(building.toString() + " (" + building.getBuildTime() + " tour(s) avant activation)");
 				else
-					BuildingLabel.setText(building.toString());
+					buildingLabel.setText(building.toString());
 			}
 			else {
-				BuildingLabel.setText("Pas de bâtiment");
+				buildingLabel.setText("Pas de bâtiment");
 			}
-			ResourceLabel.setText("Ressource: " + GBox.getResourceTypeName());
+			resourceLabel.setText("Ressource: " + GBox.getResourceTypeName());
 		}
 		else {
-			BuildingLabel.setText("Case d'eau");
-			ResourceLabel.setText("___");
+			buildingLabel.setText("Case d'eau");
+			resourceLabel.setText("___");
 		}
 	}
 

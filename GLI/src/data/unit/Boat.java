@@ -88,6 +88,10 @@ public class Boat extends Units {
 	}
 	
 	public String toString() {
-		return "Boat"+super.toString()+", contain :"+containedUnits;
+		if(containedUnits != null) {
+			return "Bateau, contient : " + containedUnits;
+		}else {
+			return "Bateau vide";
+		}
 	}
 }

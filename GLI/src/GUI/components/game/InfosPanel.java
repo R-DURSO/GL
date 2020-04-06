@@ -1,5 +1,6 @@
 package GUI.components.game;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -37,38 +38,55 @@ public class InfosPanel extends JPanel {
 	private Power powers[];
 	private ChartPanel generalChartPanel;
 	private ChartPanel territoryChartPanel;
-	private final Dimension CHART_DIMENSION = new Dimension(GuiPreferences.WIDTH / 5, GuiPreferences.HEIGHT / 3);
+	
+	private final Dimension DIM_INFOS = GamePanel.DIM_INFOS;
+	private final Dimension DIM_SELECTION = new Dimension((int)DIM_INFOS.getWidth(), (int)DIM_INFOS.getHeight() / 3);
+	private final Dimension DIM_STATS = new Dimension((int)DIM_INFOS.getWidth(), 2 * (int)DIM_INFOS.getHeight() / 3);
+	private final Dimension DIM_CHART = new Dimension((int)DIM_STATS.getWidth(), (int)DIM_STATS.getHeight() / 2);
 
 	public InfosPanel() {
-		setLayout(new GridLayout(0, 1));
+		setLayout(new BorderLayout());
 	}
 
 	public void initInfosPanel(GamePanel context, Power powers[]) {
 		this.gamePanel = context;
 		this.powers = powers;
+		
 		// select first box on map for box selectionPanel
 		MapPanel mapPanel = gamePanel.getMapPanel();
 		Box firstBox = mapPanel.getBoxByPosition(new Position(0, 0));
+		
 		boxSelectedPanel = new BoxSelectedPanel(firstBox);
-		add(boxSelectedPanel);
+		boxSelectedPanel.setPreferredSize(DIM_SELECTION);
+		add(boxSelectedPanel, BorderLayout.NORTH);
 
 		// set Stats panel, which contains... stats (and 2 ChartPanels)
+		statsPanel.setLayout(new GridLayout(0,1));
+		statsPanel.setPreferredSize(DIM_STATS);
+		
 		generalChartPanel = new ChartPanel(null);
-		generalChartPanel.setPreferredSize(CHART_DIMENSION);
+		generalChartPanel.setPreferredSize(DIM_CHART);
 		territoryChartPanel = new ChartPanel(null);
-		territoryChartPanel.setPreferredSize(CHART_DIMENSION);
+		territoryChartPanel.setPreferredSize(DIM_CHART);
 
 		statsPanel.add(generalChartPanel);
 		statsPanel.add(territoryChartPanel);
 
-		add(statsPanel);
+		add(statsPanel, BorderLayout.SOUTH);
 		refreshStatsPanel();
 	}
 
+	/**
+	 * Change display of selection panel depending on which box mouse is currently hover
+	 * @param box the box which mouse cursor is on
+	 */
 	public void refreshBoxHover(Box box) {
 		boxSelectedPanel.refresh(box);
 	}
 
+	/**
+	 * Change stats display (this method has to be called during 
+	 */
 	public void refreshStatsPanel() {
 		//search power stats
 		PowerStats powerStats[] = searchPowerStats();

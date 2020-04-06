@@ -44,10 +44,11 @@ public class GamePanel extends JPanel {
 	private static final long serialVersionUID = 7722109867943150729L;
 	private MainWindow window;
 
-	private final Dimension DIM_RESOURCES = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 30);
-	private final Dimension DIM_MAP = new Dimension(4 * GuiPreferences.WIDTH / 5, 4 * GuiPreferences.HEIGHT / 5);
-	private final Dimension DIM_INFOS = new Dimension(GuiPreferences.WIDTH / 5, 4 * GuiPreferences.HEIGHT / 5);
-	private final Dimension DIM_BUTTONS = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 10);
+	//public static to be reusable in aother classes
+	public static final Dimension DIM_RESOURCES = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 30);
+	public static final Dimension DIM_MAP = new Dimension(4 * GuiPreferences.WIDTH / 5, 4 * GuiPreferences.HEIGHT / 5);
+	public static final Dimension DIM_INFOS = new Dimension(GuiPreferences.WIDTH / 5, 4 * GuiPreferences.HEIGHT / 5);
+	public static final Dimension DIM_BUTTONS = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 10);
 
 	private PlayerResourcesPanel playerResourcesPanel;
 	private InfosPanel infosPanel;
@@ -222,10 +223,6 @@ public class GamePanel extends JPanel {
 	public void resetPositions() {
 		fromPosition = null;
 		targetPosition = null;
-	}
-	
-	public Dimension getInfosDimensions() {
-		return DIM_INFOS;
 	}
 
 	public MapPanel getMapPanel() {
