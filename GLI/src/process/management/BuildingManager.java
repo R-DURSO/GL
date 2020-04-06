@@ -49,23 +49,23 @@ public class BuildingManager {
 		box.setBuilding(building);
 		//we add score from creating a Building
 		if(building.getType() < BuildingTypes.BUILDING_ARMY) {
-			power.suppScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
+			power.subScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
 			Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_ARMY+" score ");
 		}else if(building.getType() < BuildingTypes.BUILDING_PRODUCT) {
-			power.suppScore(ScoreValue.SCORE_VALUE_BUILDING_PRODUCT);
+			power.subScore(ScoreValue.SCORE_VALUE_BUILDING_PRODUCT);
 			Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_PRODUCT+" score ");
 		}
 		else if(building.getType() < BuildingTypes.BUILDING_SPECIAL) {
 			if (building.getType() == BuildingTypes.BUILDING_TEMPLE) {
-				power.suppScore(ScoreValue.SCORE_VALUE_BUILDING_TEMPLE);
+				power.subScore(ScoreValue.SCORE_VALUE_BUILDING_TEMPLE);
 				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_TEMPLE+" score ");
 			}
 			else {
-				power.suppScore(ScoreValue.SCORE_VALUE_BUILDING_SPECIAL);
+				power.subScore(ScoreValue.SCORE_VALUE_BUILDING_SPECIAL);
 				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_SPECIAL+" score ");
 			}
 		}else {
-			power.suppScore(ScoreValue.SCORE_VALUE_DEFAULT);
+			power.subScore(ScoreValue.SCORE_VALUE_DEFAULT);
 			Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_DEFAULT+" score ");
 		}
 		
@@ -137,23 +137,23 @@ public class BuildingManager {
 		}
 		// we remove score 
 		if(building.getType() < BuildingTypes.BUILDING_ARMY) {
-			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
+			powerConcerned.subScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
 			Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_ARMY+" score ");
 		}else if(building.getType() < BuildingTypes.BUILDING_PRODUCT) {
-			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDING_PRODUCT);
+			powerConcerned.subScore(ScoreValue.SCORE_VALUE_BUILDING_PRODUCT);
 			Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_PRODUCT+" score ");
 		}
 		else if(building.getType() < BuildingTypes.BUILDING_SPECIAL) {
 			if (building.getType() == BuildingTypes.BUILDING_TEMPLE) {
-				powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDING_TEMPLE);
+				powerConcerned.subScore(ScoreValue.SCORE_VALUE_BUILDING_TEMPLE);
 				Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_TEMPLE+" score ");
 			}
 			else {
-				powerConcerned.suppScore(ScoreValue.SCORE_VALUE_BUILDING_SPECIAL);
+				powerConcerned.subScore(ScoreValue.SCORE_VALUE_BUILDING_SPECIAL);
 				Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_SPECIAL+" score ");
 			}
 		}else {
-			powerConcerned.suppScore(ScoreValue.SCORE_VALUE_DEFAULT);
+			powerConcerned.subScore(ScoreValue.SCORE_VALUE_DEFAULT);
 			Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_DEFAULT+" score ");
 		}
 		//now we simply remove building from map

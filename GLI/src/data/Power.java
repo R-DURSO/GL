@@ -81,7 +81,7 @@ public class Power {
 	public void addScore(int amount) {
 		resources[ResourceTypes.RESOURCE_SCORE-1].addValue(amount);
 	}
-	public void suppScore(int amount) {
+	public void subScore(int amount) {
 		resources[ResourceTypes.RESOURCE_SCORE-1].subValue(amount);
 	}
 	

@@ -11,7 +11,7 @@ public class ScoreValue {
 	//score for unit 
 	public static final int SCORE_VALUE_UNITS_INFANTRY = 1 ;
 	public static final int SCORE_VALUE_UNITS_ARCHER = 3 ;
-	public static final int SCORE_VALUE_UNITS_CAVALERY = 5 ;
+	public static final int SCORE_VALUE_UNITS_CAVALRY = 5 ;
 	public static final int SCORE_VALUE_UNITS_PIKEMAN = 10 ;
 	public static final int SCORE_VALUE_UNITS_BATTERING_RAM = 25 ;
 	public static final int SCORE_VALUE_UNITS_TREBUCHET = 30 ;

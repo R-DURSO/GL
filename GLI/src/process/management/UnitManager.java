@@ -43,32 +43,37 @@ public class UnitManager {
 				int numberUnitsNeeded = numberUnits + numberUnitsOnBox;
 				//if the number of units we want to add is less than the max number, we simply add thoses new units
 				if (numberUnitsNeeded <= unitsOnBox.getMaxNumber()) {
-					unitsOnBox.addNumber(numberUnitsNeeded);
+					unitsOnBox.addNumber(numberUnits);
+					
 					//modify amount of food earned between each turn
 					int foodCostToRemove = numberUnits * unitsOnBox.getFoodCost();
 					Logger.info(power.getName()+" lose "+foodCostToRemove+" Food per turn");
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
-					addScore(power, unitsOnBox);
+					addScore(power, unitType, numberUnits);
 				}
 				else {
 					//else, we have to add to max number
 					int numberExcessUnits = numberUnitsNeeded - unitsOnBox.getMaxNumber();
-					unitsOnBox.addNumber(numberUnits - numberExcessUnits);
+					int numberToAdd = numberUnits - numberExcessUnits;
+					unitsOnBox.addNumber(numberToAdd);
+					
 					//reduce adapted production
-					int foodCostToRemove = (numberUnits - numberExcessUnits) * unitsOnBox.getFoodCost();
+					int foodCostToRemove = numberToAdd * unitsOnBox.getFoodCost();
 					Logger.info(power.getName()+" lose "+foodCostToRemove+" Food per turn ");
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
-					//and refound gold 
-					Logger.info(power.getName()+" use "+unitsOnBox.getCost()*numberExcessUnits+" Gold");
-					power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(unitsOnBox.getCost() * numberExcessUnits); 
-					addScore(power, unitsOnBox);
+					
+					//and refound gold
+					int amountRefund = unitsOnBox.getCost() * numberExcessUnits;
+					Logger.info(power.getName()+" is refund "+amountRefund+" Gold");
+					power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(amountRefund); 
+					addScore(power, unitType, numberExcessUnits);
 				}
 			}
 			else {
 				Units units = createUnit(unitType, numberUnits, power);
 				//Unit shouldn't be here if invalid type
 				if (units != null) {
-					Logger.info(power.getName()+" create units "+units.getClass().getSimpleName()+", number: "+numberUnits);
+					Logger.info(power.getName()+" create "+numberUnits+" "+units.getClass().getSimpleName());
 					Logger.info(power.getName()+" use "+units.getCost()*numberUnits+" Gold");
 					if (units.getNumber() > units.getMaxNumber()) {
 						//unit above max number
@@ -88,7 +93,7 @@ public class UnitManager {
 					Logger.info(power.getName()+" lose "+foodCostToRemove+" Food per turn");
 					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 					// add score 
-					addScore(power, units);
+					addScore(power, unitType, units.getNumber());
 				}
 			}
 		}
@@ -157,15 +162,15 @@ public class UnitManager {
 		int numberUnits = units.getNumber() - numberUnitsRemoved;
 		Logger.info(power.getName()+" lose "+numberUnitsRemoved+" unit");
 		if (numberUnits <= 0) {
+			subScore(power, units.getTypes(), units.getNumber());
 			deleteUnits(power, box);
-			supScore(power,units);
 		}
 		else {
 			units.subNumber(numberUnitsRemoved);
 			int foodProdToAdd = box.getUnit().getFoodCost() * numberUnitsRemoved;
 			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
 			Logger.info(power.getName()+" get "+foodProdToAdd+" food production back");
-			supScore(power,units);
+			subScore(power, units.getTypes(), numberUnitsRemoved);
 		}
 	}
 	
@@ -177,12 +182,12 @@ public class UnitManager {
 	public void deleteUnits(Power power, Box box) {
 		if (power != null) {
 			if (box.hasUnit()) {
-				int foodProdToAdd = box.getUnit().getFoodCost() * box.getUnit().getNumber();
+				Units UnitsToDelete = box.getUnit();
+				int foodProdToAdd = UnitsToDelete.getFoodCost() * UnitsToDelete.getNumber();
 				power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
 				Logger.info(power.getName()+" get "+ foodProdToAdd+" food production back");
-				supScore(power,box.getUnit());
+				subScore(power, UnitsToDelete.getTypes(), UnitsToDelete.getNumber());
 				box.setUnit(null);
-				
 			}
 		}
 	}
@@ -214,12 +219,14 @@ public class UnitManager {
 				}
 				
 				//Application du déplacement
+				//TODO déposer les unités QUE à la fin du déplacement?
 				//Suppression du Phantom
 				if (pathToTake[pathToTake.length-1].hasUnit()) {
 					if (pathToTake[pathToTake.length-1].getUnit().getTypes() < 0) {
 						pathToTake[pathToTake.length-1].setUnit(null);
 					}
 				}
+				
 				//Verification du dechargement
 				if (lastBox.hasUnit()) {
 					if (lastBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
@@ -523,71 +530,64 @@ public class UnitManager {
 			power2.removeBox(visitBox);
 		}
 		Logger.info(power.getName()+" gain "+boxToGain.size()+"Box from breaking the alliance");
-		
-		
 	}
-	private void addScore(Power power ,Units units) {
-		switch(units.getTypes()) {
+	
+	private void addScore(Power power, int unitTypes, int number) {
+		int scoreGain = 0;
+		switch(unitTypes) {
 		case UnitTypes.UNIT_INFANTRY:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY);
-			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY+" score");
+			scoreGain = number*ScoreValue.SCORE_VALUE_UNITS_INFANTRY;
 			break;
 		case UnitTypes.UNIT_ARCHER:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER);
-			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER+" score");
+			scoreGain = number*ScoreValue.SCORE_VALUE_UNITS_ARCHER;
 			break;
 		case UnitTypes.UNIT_CAVALRY:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY);
-			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY+" score");
+			scoreGain = number*ScoreValue.SCORE_VALUE_UNITS_CAVALRY;
 			break;
 		case UnitTypes.UNIT_PIKEMAN:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN);
-			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN+" score");
+			scoreGain = number*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN;
 			break;
 		case UnitTypes.UNIT_BATTERING_RAM:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM);
-			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM+" score");
+			scoreGain = number*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM;
 			break;
 		case UnitTypes.UNIT_TREBUCHET:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET);
-			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET+" score");
+			scoreGain = number*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET;
 			break;
 		case UnitTypes.UNIT_BOAT:
-			power.addScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT);
-			Logger.info(power.getName()+" gain "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT+" score");
+			scoreGain = number*ScoreValue.SCORE_VALUE_UNITS_BOAT;
 			break;
 		}
+		power.addScore(scoreGain);
+		Logger.info(power.getName()+" gain "+scoreGain+" score");
 	}
-	private void supScore(Power power ,Units units) {
-		switch(units.getTypes()) {
+	
+	private void subScore(Power power, int unitTypes, int number) {
+		int scoreLost = 0;
+		switch(unitTypes) {
 		case UnitTypes.UNIT_INFANTRY:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY);
-			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_INFANTRY+" score");
+			scoreLost = number*ScoreValue.SCORE_VALUE_UNITS_INFANTRY;
 			break;
 		case UnitTypes.UNIT_ARCHER:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER);
-			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_ARCHER+" score");
+			scoreLost = number*ScoreValue.SCORE_VALUE_UNITS_ARCHER;
 			break;
 		case UnitTypes.UNIT_CAVALRY:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY);
-			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_CAVALERY+" score");
+			scoreLost = number*ScoreValue.SCORE_VALUE_UNITS_CAVALRY;
 			break;
 		case UnitTypes.UNIT_PIKEMAN:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN);
-			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN+" score");
+			scoreLost = number*ScoreValue.SCORE_VALUE_UNITS_PIKEMAN;
 			break;
 		case UnitTypes.UNIT_BATTERING_RAM:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM);
-			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM+" score");
+			scoreLost = number*ScoreValue.SCORE_VALUE_UNITS_BATTERING_RAM;
 			break;
 		case UnitTypes.UNIT_TREBUCHET:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET);
-			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET+" score");
+			scoreLost = number*ScoreValue.SCORE_VALUE_UNITS_TREBUCHET;
 			break;
 		case UnitTypes.UNIT_BOAT:
-			power.suppScore(units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT);
-			Logger.info(power.getName()+" lose "+units.getNumber()*ScoreValue.SCORE_VALUE_UNITS_BOAT+" score");
+			scoreLost = number*ScoreValue.SCORE_VALUE_UNITS_BOAT;
 			break;
 		}
+		power.subScore(scoreLost);
+		Logger.info(power.getName()+" lose "+scoreLost+" score");
 	}
+	
 }
