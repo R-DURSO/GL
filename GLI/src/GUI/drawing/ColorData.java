@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Image;
 
 public class ColorData {
+	
+	//main menu colors
+	public static final Color MAIN_MENU_BACKGROUND_COLOR = new Color(220, 220, 220);
 
 	public static final Color WATER_COLOR = new Color(25, 190, 200); // #053caa
 	public static final Color GROUND_COLOR = new Color(45, 186, 94); // 32a86d

@@ -1,5 +1,6 @@
 package GUI.components.menu;
 
+import java.awt.Component;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
@@ -16,8 +17,8 @@ public class PreferencesPanel extends JPanel{
 	private static final long serialVersionUID = -714238221735387964L;
 	
 	private final int MIN_MAP_SIZE = 10;
-	private final int INIT_MAP_SIZE = 15;
-	private final int MAX_MAP_SIZE = 20;
+	private final int INIT_MAP_SIZE = 12;
+	private final int MAX_MAP_SIZE = 15;
 	
 	//number players
 	private JPanel numberPlayersPanel = new JPanel();
@@ -50,7 +51,7 @@ public class PreferencesPanel extends JPanel{
 	public PreferencesPanel() {
 		init();
 	}
-	
+
 	private void init() {
 		int paddingWidth = GuiPreferences.WIDTH / 20;
 		int paddingHeight = GuiPreferences.HEIGHT / 20;

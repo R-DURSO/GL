@@ -1,5 +1,7 @@
 package GUI.components.menu;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,14 +12,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import GUI.MainWindow;
+import GUI.sub_panels.MenuPanel;
 
 
 public class ChoicePanel extends JPanel{
-	private static final long serialVersionUID = -5496095243931073915L;
 	private MainWindow context;
 	
 	private JButton newGameButton = new JButton("Nouvelle partie");
-	private JButton loadGameButton = new JButton("Charger une partie");
+	private JButton loadGameButton = new JButton("Charger une partie existante");
+	
+	private final int PANEL_WIDTH = (int)MenuPanel.CHOICE_DIMENSION.getWidth();
+	private final int PANEL_HEIGHT = (int)MenuPanel.CHOICE_DIMENSION.getHeight();
+	private final Dimension DIM_BUTTON = new Dimension(PANEL_WIDTH / 3, PANEL_HEIGHT / 2);
+	
 
 	public ChoicePanel(MainWindow context) {
 		init();
@@ -25,12 +32,14 @@ public class ChoicePanel extends JPanel{
 	}
 
 	private void init() {
-		setLayout(new GridLayout(1, 3));
+		this.setLayout(new FlowLayout(FlowLayout.CENTER, PANEL_WIDTH / 100, PANEL_HEIGHT / 3));
+		
 		newGameButton.addActionListener(new ActionNewGame());
+		newGameButton.setPreferredSize(DIM_BUTTON);
 		loadGameButton.addActionListener(new ActionLoadGame());
+		loadGameButton.setPreferredSize(DIM_BUTTON);
 		
 		add(newGameButton);
-		add(new JPanel()); //empty panel for letting space between buttons
 		add(loadGameButton);
 	}
 	

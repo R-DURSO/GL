@@ -5,6 +5,8 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import GUI.components.GuiPreferences;
 import GUI.components.game.MapPanel;
@@ -29,6 +31,11 @@ public class MainWindow extends JFrame{
 
 	public MainWindow() {
 		super("Conquête");
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 		setPreferredSize(new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT));
 		init();
 		getContentPane().add(gamePanel, "game");
