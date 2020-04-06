@@ -6,6 +6,7 @@ public class ScoreValue {
 	public static final int SCORE_VALUE_BUILDING_ARMY = 50 ;
 	public static final int SCORE_VALUE_BUILDING_SPECIAL = 50 ;
 	public static final int SCORE_VALUE_BUILDING_TEMPLE = 50 ;
+	public static final int SCORE_VALUE_UPGRADE_CAPITALE = 50;
 	
 	//score for unit 
 	public static final int SCORE_VALUE_UNITS_INFANTRY = 1 ;

@@ -37,11 +37,6 @@ public abstract class Resource {
 	
 	public void addValue(int value) {
 		this.amount += value;
-		if (getResourceType() == ResourceTypes.RESOURCE_ACTIONS) {
-			if (this.amount > ActionPoints.MAX_ACTIONS) {
-				this.amount = ActionPoints.MAX_ACTIONS;
-			}
-		}
 	}
 
 	public void subValue(int value) {

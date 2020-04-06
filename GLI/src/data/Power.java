@@ -78,7 +78,7 @@ public class Power {
 		resources[resourceType-1].addProductionPerTurn(amount);
 	}
 	
-	public void  addScore(int amount) {
+	public void addScore(int amount) {
 		resources[ResourceTypes.RESOURCE_SCORE-1].addValue(amount);
 	}
 	public void suppScore(int amount) {
@@ -91,6 +91,12 @@ public class Power {
 	
 	public void applyProductionOfTurn() {
 		resources[ResourceTypes.RESOURCE_ACTIONS - 1].productionOfTurn();
+		if (resources[ResourceTypes.RESOURCE_ACTIONS - 1].getAmount() > ((ActionPoints) resources[ResourceTypes.RESOURCE_ACTIONS - 1]).getMaxActions()) {
+			int max = ((ActionPoints) resources[ResourceTypes.RESOURCE_ACTIONS - 1]).getMaxActions();
+			int actual = resources[ResourceTypes.RESOURCE_ACTIONS - 1].getAmount();
+			int excess = actual - max;
+			resources[ResourceTypes.RESOURCE_ACTIONS - 1].subValue(excess);
+		}
 		resources[ResourceTypes.RESOURCE_FOOD - 1].productionOfTurn();
 		resources[ResourceTypes.RESOURCE_GOLD - 1].productionOfTurn();
 		resources[ResourceTypes.RESOURCE_WOOD - 1].productionOfTurn();

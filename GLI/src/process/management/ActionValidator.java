@@ -1084,11 +1084,11 @@ public class ActionValidator {
 		int goldCost = capital.getUpgradeCost();
 		if(powerConcerned.getResourceAmount(ResourceTypes.RESOURCE_GOLD) < goldCost) {
 			Logger.warn(powerConcerned.getName()+" try to upgrade his Capital without resource");
-			throw new IllegalArgumentException("Pas assez de ressources pour ameliorer la capitale (cout : " + goldCost + ")");
+			throw new IllegalArgumentException("Pas assez de ressources pour ameliorer la capitale (cout : "+goldCost+")");
 		}
 		
 		//conditions are met, so we can remove action cost and create the ActionUpgradeCapital
-				powerConcerned.getResource(ResourceTypes.RESOURCE_GOLD).subValue(goldCost);
+		powerConcerned.getResource(ResourceTypes.RESOURCE_GOLD).subValue(goldCost);
 		
 		powerConcerned.removeActionPoint();
 		Logger.info(powerConcerned.getName()+" create an ActionUpgradeCapitale");

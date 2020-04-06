@@ -215,8 +215,10 @@ public class UnitManager {
 				//Application du déplacement
 				firstBox.setUnit(null);
 				//Suppression du Phantom
-				if (pathToTake[pathToTake.length-1].getUnit().getTypes() < 0) {
-					pathToTake[pathToTake.length-1].setUnit(null);
+				if (pathToTake[pathToTake.length-1].hasUnit()) {
+					if (pathToTake[pathToTake.length-1].getUnit().getTypes() < 0) {
+						pathToTake[pathToTake.length-1].setUnit(null);
+					}
 				}
 				//Verification du dechargement
 				if (lastBox.hasUnit()) {
@@ -459,7 +461,10 @@ public class UnitManager {
 			else {
 				//On attaque de l'eau sans unité...
 			}
+			//Fin de l'attaque
+			attacker.resetIsMoving();
 		}
+		//Pas d'attaquant, pas d'attaque a lancer
 	}
 	
 	/**

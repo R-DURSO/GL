@@ -5,9 +5,7 @@ import org.apache.log4j.Logger;
 
 import GUI.components.menu.PreferencesPanel;
 import data.actions.*;
-import data.boxes.Box;
-import data.boxes.GroundBox;
-import data.building.special.Capital;
+import data.boxes.*;
 import data.GameMap;
 import data.Position;
 import data.Power;
@@ -83,7 +81,6 @@ public class GameLoop {
 		applyProduction();
 		//if no more food, kill some unit
 		Logger.info("=== END OF TURN ===");
-	//	System.out.println(powers[0].getResource(ResourceTypes.RESOURCE_SCORE).getAmount());
 	}
 	
 	public void doActions() {
@@ -126,8 +123,7 @@ public class GameLoop {
 		for(Action a : arrayList) {
 			ActionUpgradeCapital action = (ActionUpgradeCapital)a;
 			Power powerConcerned = action.getPowerConcerned();
-			Capital capital = powerConcerned.getCapital();
-			capital.upgrade();
+			BuildingManager.getInstance().upgradeCapitale(powerConcerned);
 		}
 	}
 

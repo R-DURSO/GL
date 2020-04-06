@@ -1,14 +1,17 @@
 package process.management;
+
 import data.boxes.Box;
 import data.boxes.GroundBox;
+
 import data.building.Building;
 import data.building.BuildingTypes;
 import data.building.army.*;
-
 import data.building.product.*;
 import data.building.special.*;
-import log.LoggerUtility;
+import data.resource.ActionPoints;
+import data.resource.ResourceTypes;
 
+import log.LoggerUtility;
 import org.apache.log4j.Logger;
 
 import data.Power;
@@ -170,4 +173,12 @@ public class BuildingManager {
 			}
 		}
 	}
+	
+	public void upgradeCapitale (Power power) {
+		power.getCapital().upgrade();
+		power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_ACTIONS, 1);
+		((ActionPoints) power.getResource(ResourceTypes.RESOURCE_ACTIONS)).addMaxActions(2);
+		power.addScore(ScoreValue.SCORE_VALUE_UPGRADE_CAPITALE);
+	}
+	
 }

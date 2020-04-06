@@ -8,9 +8,12 @@ package data.resource;
  */
 
 public class ActionPoints extends Resource {
-	public static final int MAX_ACTIONS = 6 ;
+	public static final int BASE_MAX_ACTIONS = 6 ;
+	private int MaxActions = BASE_MAX_ACTIONS;
+	
 	public ActionPoints(int number) {
 		super(number);
+		this.MaxActions = BASE_MAX_ACTIONS;
 	}
 
 	public ActionPoints(int ActionInitialValue, int ActionBaseProduction) {
@@ -19,6 +22,14 @@ public class ActionPoints extends Resource {
 	
 	public int getResourceType() {
 		return ResourceTypes.RESOURCE_ACTIONS;
+	}
+	
+	public int getMaxActions() {
+		return MaxActions;
+	}
+	
+	public void addMaxActions(int value) {
+		this.MaxActions += value;
 	}
 	
 	int variation () {
