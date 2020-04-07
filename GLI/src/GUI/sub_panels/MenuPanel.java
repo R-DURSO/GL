@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import GUI.MainWindow;
 import GUI.components.GuiPreferences;
 import GUI.components.menu.ChoicePanel;
+import GUI.components.menu.OptionsPanel;
 import GUI.components.menu.PreferencesPanel;
 import GUI.components.menu.TitlePanel;
 
@@ -18,6 +19,7 @@ public class MenuPanel extends JPanel {
 
 	private JPanel titlePanel = new TitlePanel();
 	private PreferencesPanel preferencesPanel = new PreferencesPanel();
+	private OptionsPanel optionsPanel = new OptionsPanel();
 	private JPanel choicePanel;
 
 	public static final Dimension TITLE_DIMENSION = new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT / 8);
@@ -37,13 +39,17 @@ public class MenuPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		titlePanel.setPreferredSize(TITLE_DIMENSION);
 		preferencesPanel.setPreferredSize(PREFERENCES_DIMENSION);
+		optionsPanel.setPreferredSize(PREFERENCES_DIMENSION);
 		choicePanel.setPreferredSize(CHOICE_DIMENSION);
 		// change background color to all panels
 		add(titlePanel);
-		add(preferencesPanel);
+		add(optionsPanel);
 		add(choicePanel);
+		
+		initFont(optionsPanel);
+		initFont(choicePanel);
 	}
-	
+
 	private void initFont(Container container) {
 		for(Component component : container.getComponents()) {
 			component.setFont(GuiPreferences.BASE_FONT);

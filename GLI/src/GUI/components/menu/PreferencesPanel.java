@@ -1,6 +1,5 @@
 package GUI.components.menu;
 
-import java.awt.Component;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;

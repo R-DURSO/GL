@@ -8,7 +8,7 @@ public class GuiPreferences {
 	
 	public static final int BAR_HEIGHT = 30;
 
-	public static final int HEIGHT = 1080;
+	public static final int HEIGHT = 720;
 	
 	public static final int WIDTH = HEIGHT * RATIO_WIDTH/RATIO_HEIGHT;
 	

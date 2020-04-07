@@ -17,7 +17,7 @@ public class TitlePanel extends JPanel{
 	private JLabel subtitleLabel = new JLabel("Création de la partie", SwingConstants.CENTER);
 	
 	//title is a little bit larger than other labels, so it has a différent font_size
-	private final Font titleFont = new Font("Serif", Font.BOLD, GuiPreferences.WIDTH / 30);
+	private final Font titleFont = new Font("Serif", Font.BOLD, GuiPreferences.WIDTH / 40);
 	private final Font subtitleFont = new Font("Serif", Font.PLAIN, GuiPreferences.FONT_SIZE);
 
 	public TitlePanel() {
