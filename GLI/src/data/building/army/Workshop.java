@@ -16,7 +16,7 @@ public class Workshop extends BuildingArmy {
 	}
 	
 	public String toString() {
-		return "Atelier";
+		return "Atelier "+super.toString();
 	}
 
 

@@ -37,6 +37,6 @@ public class Mine  extends BuildingProduct{
 	}
 	
 	public String toString() {
-		return "Mine";
+		return "Mine "+super.toString();
 	}
 }

@@ -17,7 +17,7 @@ public class Dock extends BuildingArmy {
 	}
 	
 	public String toString() {
-		return "Port";
+		return "Port "+super.toString();
 	}
 
 	

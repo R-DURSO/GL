@@ -16,6 +16,6 @@ public class Wall extends BuildingSpecial{
 	}
 	
 	public String toString() {
-		return "Mur";
+		return "Mur "+super.toString();
 	}
 }

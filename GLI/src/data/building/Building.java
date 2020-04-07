@@ -68,4 +68,8 @@ public abstract class Building {
 	public boolean isDestroyed() {
 		return this.health == 0;
 	}
+	
+	public String toString() {
+		return "["+health+"hp]";
+	}
 }

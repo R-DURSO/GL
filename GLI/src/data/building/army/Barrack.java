@@ -16,7 +16,7 @@ public class Barrack extends BuildingArmy {
 	}
 	
 	public String toString() {
-		return "Caserne";
+		return "Caserne "+super.toString();
 	}
 
 }

@@ -35,6 +35,6 @@ public class Windmill extends BuildingProduct {
 	}
 	
 	public String toString() {
-		return "Moulin";
+		return "Moulin "+super.toString();
 	}
 }

@@ -16,6 +16,6 @@ public class Door extends BuildingSpecial{
 	}
 	
 	public String toString() {
-		return "Portail";
+		return "Portail "+super.toString();
 	}
 }

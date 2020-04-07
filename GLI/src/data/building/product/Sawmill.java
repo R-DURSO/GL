@@ -36,6 +36,6 @@ public class Sawmill extends BuildingProduct {
 	}
 	
 	public String toString() {
-		return "Scierie";
+		return "Scierie "+super.toString();
 	}
 }

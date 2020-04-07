@@ -23,7 +23,7 @@ public class Temple extends BuildingSpecial {
 	
 	
 	public String toString() {
-		return "Temple";
+		return "Temple "+super.toString();
 	}
 
 }

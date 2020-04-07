@@ -64,13 +64,14 @@ public class Capital extends BuildingSpecial {
 	public boolean upgrade() {
 		if (getLevel() < MAX_LEVEL) {
 			this.level ++;
+			this.applyDamage(-20);
 			return true;
 		}
 		return false;
 	}
 	
 	public String toString() {
-		return "Capitale (niveau " + getLevel() + ")";
+		return "Capitale (niveau " + getLevel() + ") "+super.toString();
 	}
 
 
