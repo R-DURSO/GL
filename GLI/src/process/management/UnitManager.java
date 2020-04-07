@@ -48,7 +48,7 @@ public class UnitManager {
 					//modify amount of food earned between each turn
 					int foodCostToRemove = numberUnits * unitsOnBox.getFoodCost();
 					Logger.info(power.getName()+" lose "+foodCostToRemove+" Food per turn");
-					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
+					power.subResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 					addScore(power, unitType, numberUnits);
 				}
 				else {
@@ -60,7 +60,7 @@ public class UnitManager {
 					//reduce adapted production
 					int foodCostToRemove = numberToAdd * unitsOnBox.getFoodCost();
 					Logger.info(power.getName()+" lose "+foodCostToRemove+" Food per turn ");
-					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
+					power.subResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 					
 					//and refound gold
 					int amountRefund = unitsOnBox.getCost() * numberExcessUnits;
@@ -91,7 +91,7 @@ public class UnitManager {
 					//tax of food per turn
 					int foodCostToRemove = units.getNumber() * units.getFoodCost();
 					Logger.info(power.getName()+" lose "+foodCostToRemove+" Food per turn");
-					power.substractResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
+					power.subResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodCostToRemove);
 					// add score 
 					addScore(power, unitType, units.getNumber());
 				}
@@ -369,7 +369,7 @@ public class UnitManager {
 							int productionPerTurn = buildingProduct.getProductionPerTurn();
 							powerConcerned.addResourcesProductionPerTurn(productionType, productionPerTurn);
 							Logger.info(powerConcerned.getName()+" gain "+productionPerTurn+" of ResourceType:"+productionType+" as production");
-							BoxPower.substractResourcesProductionPerTurn(productionType, productionPerTurn);
+							BoxPower.subResourcesProductionPerTurn(productionType, productionPerTurn);
 							Logger.info(powerConcerned.getName()+" lose "+productionPerTurn+" of ResourceType:"+productionType+" as production");
 						}
 					}

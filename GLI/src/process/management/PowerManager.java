@@ -1,12 +1,14 @@
 package process.management;
 
 import data.building.special.Capital;
+import data.resource.ResourceTypes;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import data.GameConstants;
 import data.Power;
+import data.ScoreValue;
 import data.boxes.Box;
 
 import log.LoggerUtility;
@@ -96,5 +98,28 @@ public class PowerManager {
 		Logger.info(power.getName()+" gain "+boxToGain.size()+"Box from breaking the alliance");
 	}
 	
-	
+	/**
+	 * As the conquer grow, only the strongest remain
+	 * @param killer, the one who will prevail
+	 * @param killed, those who have failed
+	 */
+	public void killPower(Power killer, Power killed) {
+		//get all territory of the defeated
+		killer.getTerritory().addAll(killed.getTerritory());
+		//receive all production
+		killer.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, killed.getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD));
+		killer.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_WOOD, killed.getResourceProductionPerTurn(ResourceTypes.RESOURCE_WOOD));
+		killer.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_GOLD, killed.getResourceProductionPerTurn(ResourceTypes.RESOURCE_GOLD));
+		killer.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_STONE, killed.getResourceProductionPerTurn(ResourceTypes.RESOURCE_STONE));
+		//reveive half of his current ressource
+		killer.getResource(ResourceTypes.RESOURCE_FOOD).addValue(killed.getResource(ResourceTypes.RESOURCE_FOOD).getAmount() / 2);
+		killer.getResource(ResourceTypes.RESOURCE_WOOD).addValue(killed.getResource(ResourceTypes.RESOURCE_WOOD).getAmount() / 2);
+		killer.getResource(ResourceTypes.RESOURCE_GOLD).addValue(killed.getResource(ResourceTypes.RESOURCE_GOLD).getAmount() / 2);
+		killer.getResource(ResourceTypes.RESOURCE_STONE).addValue(killed.getResource(ResourceTypes.RESOURCE_STONE).getAmount() / 2);
+		//Receive score from the dead
+		killer.addScore(killed.getResource(ResourceTypes.RESOURCE_ACTIONS).getAmount() / 4);
+		killer.addScore(ScoreValue.SCORE_VALUE_POWER);
+		//so, the power who died is deleted from the game
+		killed = null;
+	}
 }

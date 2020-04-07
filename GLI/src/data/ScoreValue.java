@@ -17,9 +17,9 @@ public class ScoreValue {
 	public static final int SCORE_VALUE_UNITS_TREBUCHET = 30 ;
 	public static final int SCORE_VALUE_UNITS_BOAT= 30 ;
 
-
 	// score from ressource of player 
 	public static final int SCORE_VALUE_RESOURCE = 50 ;
+	public static final int SCORE_VALUE_POWER = 500 ;
 	
 	//default score if unknown type
 	public static final int SCORE_VALUE_DEFAULT = 10;

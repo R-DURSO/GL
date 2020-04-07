@@ -8,7 +8,7 @@ public class WinCondition {
 	 * Pour comment, je pense à une HashMap<Int,Power> où int est entre 1 et nombreJoueurMax
 	 * Donc, créer une classe Jeu qui contiendrait la Map, et une HashMap des joueurs
 	 */
-	private int temple;
+	private boolean temple;
 	/**
 	 * Pareil Ici, doit-on stocker la valeur de la construction du temple ?
 	 * On pourra la récupérer directement depuis Case->Building->ConstructionTime
@@ -17,7 +17,10 @@ public class WinCondition {
 	public WinCondition(int numberOfPower, boolean hasArtifact) {
 		this.numberOfPower = numberOfPower;
 		if (hasArtifact) {
-			temple = 0;
+			temple = true;
+		}
+		else {
+			temple = false;
 		}
 	}
 

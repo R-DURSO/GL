@@ -105,6 +105,6 @@ public abstract class Units {
 	}
 
 	public String toString() {
-		return ": "+number+", attaque:"+getDamage()+" defense:"+getDefense();
+		return "("+number+") attaque:"+getDamage()+" defense:"+getDefense();
 	}
 }

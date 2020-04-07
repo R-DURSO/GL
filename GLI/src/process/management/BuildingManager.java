@@ -132,7 +132,7 @@ public class BuildingManager {
 				int resourceProdPerTurn = buildingProduct.getProductionPerTurn();
 				// faut que je récupère la ressource 
 				Logger.info(powerConcerned.getName()+" recover "+resourceProdPerTurn+" per turn");
-				powerConcerned.substractResourcesProductionPerTurn(resourceType, resourceProdPerTurn);
+				powerConcerned.subResourcesProductionPerTurn(resourceType, resourceProdPerTurn);
 			}
 		}
 		// we remove score 
