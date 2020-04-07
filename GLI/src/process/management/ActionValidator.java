@@ -998,11 +998,11 @@ public class ActionValidator {
 			//check if the building is the Capital (we don't allow player to destroy his own Capital)
 			Building building = groundBox.getBuilding();
 			if(building instanceof Capital) {
-				Logger.warn(powerConcerned.getName()+" try to destroy Capital");
+				Logger.warn(powerConcerned.getName()+" try to destroy hiw own Capital");
 				throw new IllegalArgumentException("Vous ne pouvez pas detruire votre capitale");
 			}
 		}
-		powerConcerned.removeActionPoint();
+//		powerConcerned.removeActionPoint();
 		Logger.info(powerConcerned.getName()+" create an ActionDestroyBuilding");
 		return new ActionDestroyBuilding(powerConcerned, target);
 	}
@@ -1041,9 +1041,8 @@ public class ActionValidator {
 			Logger.warn(powerConcerned.getName()+" try to destroy nothing");
 			throw new IllegalArgumentException("Il n'y a pas d'unites a supprimer ici");
 		}
-		powerConcerned.removeActionPoint();
+//		powerConcerned.removeActionPoint();
 		Logger.info(powerConcerned.getName()+" create an ActionDestroyUnit");
-		//Logger.info(powerConcerned.getName()+" destoy unit  position x "+target.getX()+"y "+target.getY()); Pas ici, dans unitManager
 		return new ActionDestroyUnits(powerConcerned, target);
 	}
 	

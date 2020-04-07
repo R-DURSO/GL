@@ -18,7 +18,7 @@ public class Start {
 	
 	public Start(int numberPlayers, String playerNames[], int mapSize, int waterAmount, int aiLevels[]) {
 		Logger.info("=== START OF THE GAME ===");
-		Logger.info("Initialisation with: "+numberPlayers+" Power on a "+mapSize+"x"+mapSize+" Map. WaterAmount: " + waterAmount +".\n");
+		Logger.info("Initialisation with: "+numberPlayers+" Power on a "+mapSize+"x"+mapSize+" Map. WaterAmount: " + waterAmount +"%.\n");
 		initPowers(numberPlayers, playerNames, aiLevels);
 		this.map=null;
 		generateMap(mapSize, waterAmount, this.powers);

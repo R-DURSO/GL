@@ -169,8 +169,8 @@ public class BuildingManager {
 			if (building instanceof BuildingProduct) {
 				BuildingProduct buildingP = (BuildingProduct)building;
 				if (buildingP.getOnRightResource()) {
-					Logger.info(power.getName()+" gain "+buildingP.getProductionPerTurn()+ResourcesFactory.getResourceType(buildingP.getProductionType())+" production each turn");
 					power.addResourcesProductionPerTurn(buildingP.getProductionType(), buildingP.getProductionPerTurn());
+					Logger.info(power.getName()+" gain "+buildingP.getProductionPerTurn()+ResourcesFactory.getResourceType(buildingP.getProductionType())+" production each turn");
 				}
 			}
 		}
@@ -180,7 +180,9 @@ public class BuildingManager {
 		if (power.getCapital().upgrade()) {
 			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_ACTIONS, 1);
 			((ActionPoints) power.getResource(ResourceTypes.RESOURCE_ACTIONS)).addMaxActions(2);
+			Logger.info("Capital has been upgraded, +2 maxActionPoints, +1/tour ActionPoints");
 			power.addScore(ScoreValue.SCORE_VALUE_UPGRADE_CAPITALE);
+			Logger.info(power.getClass()+" receive "+ScoreValue.SCORE_VALUE_UPGRADE_CAPITALE+" score");
 		}
 	}
 	

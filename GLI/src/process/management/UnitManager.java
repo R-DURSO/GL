@@ -7,9 +7,6 @@ import data.resource.ResourceTypes;
 import data.unit.*;
 import log.LoggerUtility;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.apache.log4j.Logger;
 
 import data.GameConstants;
@@ -217,7 +214,8 @@ public class UnitManager {
 					}
 				}
 				
-				//Application du déplacement
+					//Application du déplacement
+				
 				//Suppression du Phantom
 				if (pathToTake[pathToTake.length-1].hasUnit()) {
 					if (pathToTake[pathToTake.length-1].getUnit().getTypes() < 0) {
@@ -235,8 +233,13 @@ public class UnitManager {
 					}
 				}
 				else {
-					//CAS D'ERREUR, NE PAS REMPLACER ._.
-					lastBox.setUnit(movingUnits);
+					//CAS D'ERREUR, NE PAS REMPLACER
+					//lastBox.setUnit(movingUnits);
+					/**
+					 * On peut arriver ici si:
+					 * 		-on est du même type
+					 * 		-un bateau qui doit déposer?
+					 */
 				}
 				movingUnits.resetIsMoving();
 			}
