@@ -11,14 +11,12 @@ import GUI.MainWindow;
 import GUI.components.GuiPreferences;
 import GUI.components.menu.ChoicePanel;
 import GUI.components.menu.OptionsPanel;
-import GUI.components.menu.PreferencesPanel;
 import GUI.components.menu.TitlePanel;
 
 public class MenuPanel extends JPanel {
 	private MainWindow context;
 
 	private JPanel titlePanel = new TitlePanel();
-	private PreferencesPanel preferencesPanel = new PreferencesPanel();
 	private OptionsPanel optionsPanel = new OptionsPanel();
 	private JPanel choicePanel;
 
@@ -31,14 +29,12 @@ public class MenuPanel extends JPanel {
 		choicePanel = new ChoicePanel(context);
 		init();
 //		apply base font to all components, except title panel 
-		initFont(preferencesPanel);
 		initFont(choicePanel);
 	}
 
 	private void init() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		titlePanel.setPreferredSize(TITLE_DIMENSION);
-		preferencesPanel.setPreferredSize(PREFERENCES_DIMENSION);
 		optionsPanel.setPreferredSize(PREFERENCES_DIMENSION);
 		choicePanel.setPreferredSize(CHOICE_DIMENSION);
 		// change background color to all panels
@@ -60,8 +56,7 @@ public class MenuPanel extends JPanel {
 		}
 	}
 
-	public PreferencesPanel getPreferencesPanel() {
-		return preferencesPanel;
+	public OptionsPanel getOptionsPanel() {
+		return optionsPanel;
 	}
-
 }

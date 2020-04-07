@@ -38,9 +38,9 @@ public class TestUnits {
 	
 	@BeforeClass
 	public static void prepareMap() {
-		powers[0] = new Power("j1");
-		powers[1] = new Power("j2");
-		powers[2] = new Power("basePlayer");
+		powers[0] = PowerManager.createPower(""+(1), 0);
+		powers[1] = PowerManager.createPower(""+(2), 0);
+		powers[2] = PowerManager.createPower(""+(3), 0);
 		MapBuilder mapBuilder = new MapBuilder(4, 0, powers);
 		map = mapBuilder.buildMap();
 //		mapBuilder.displayMap();

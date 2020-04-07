@@ -7,12 +7,17 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.apache.log4j.Logger;
+
 import GUI.components.GuiPreferences;
 import GUI.components.SliderPanel;
-import GUI.components.menu.preference_elements.NumberPlayerPanel;
-import GUI.components.menu.preference_elements.PlayersTabPanel;
-import GUI.components.menu.preference_elements.WaterAmountPanel;
+import GUI.components.menu.options_components.NumberPlayerPanel;
+import GUI.components.menu.options_components.PlayersTabPanel;
+import GUI.components.menu.options_components.WaterAmountPanel;
 import GUI.sub_panels.MenuPanel;
+import data.GameConstants;
+import log.LoggerUtility;
+import process.management.ActionValidator;
 
 /**
  * Gui class that display and treat all user informations needed to initialize the game
@@ -20,6 +25,8 @@ import GUI.sub_panels.MenuPanel;
  *
  */
 public class OptionsPanel extends JPanel {
+	
+	private static Logger logger = LoggerUtility.getLogger(OptionsPanel.class, GameConstants.LOG_TYPE);
 
 	//gui components
 	private NumberPlayerPanel numberPlayerPanel;
@@ -89,6 +96,32 @@ public class OptionsPanel extends JPanel {
 		this.add(bottomPanel, BorderLayout.SOUTH);
 	}
 	
+	/**
+	 * Hides or reveals a player tab (used by {@linkplain NumberPlayerPanel})
+	 * @param playerIndex the number of the player concerned
+	 * @param visible if this tab has to be visible or not
+	 */
+	public void setPlayerTabVisibility(int playerIndex, boolean visible) {
+		playerTabPanel.setPlayerVisibility(playerIndex, visible);
+	}
 	
+	public int getWaterAmount() {
+		return waterAmountPanel.getWaterAmount();
+	}
 
+	public int getNumberPlayers() {
+		return numberPlayerPanel.getNumberPlayers();
+	}
+	
+	public String getPlayerName(int playerIndex) {
+		return playerTabPanel.getPlayerName(playerIndex);
+	}
+	
+	public int getPlayerAILevel(int playerIndex) {
+		return playerTabPanel.getPlayerAILevel(playerIndex);
+	}
+	
+	public int getMapSize() {
+		return mapSizePanel.getValue();
+	}
 }

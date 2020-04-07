@@ -31,7 +31,8 @@ public class TestInitGame {
 	@Before
 	public void prepareMap() {
 		int aiLevels[] = {1, 2, 3};
-		start = new Start(4, 10, 60, aiLevels);
+		String names[] = {"albert", "alphonse", "alfred"};
+		start = new Start(4, names, 10, 60, aiLevels);
 		map = start.getMap();
 		mapSize = map.getSize();
 		powers = start.getPowers();

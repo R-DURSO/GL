@@ -4,16 +4,13 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import GUI.components.GuiPreferences;
-import GUI.components.game.MapPanel;
-import GUI.components.menu.PreferencesPanel;
+import GUI.components.menu.OptionsPanel;
 import GUI.sub_panels.GamePanel;
 import GUI.sub_panels.MenuPanel;
-import process.game.GameLoop;
 import process.game.Start;
 
 public class MainWindow extends JFrame{
@@ -38,9 +35,9 @@ public class MainWindow extends JFrame{
 		}
 		setPreferredSize(new Dimension(GuiPreferences.WIDTH, GuiPreferences.HEIGHT));
 		init();
-		getContentPane().add(gamePanel, "game");
-		getContentPane().add(menuPanel, "menu");
-		cardLayout.show(getContentPane(), "menu");
+		getContentPane().add(gamePanel, GAME_WINDOW);
+		getContentPane().add(menuPanel, MENU_WINDOW);
+		cardLayout.show(getContentPane(), MENU_WINDOW);
 	}
 
 	private void init() {
@@ -57,15 +54,29 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void newGame() {
-		PreferencesPanel preferences = menuPanel.getPreferencesPanel();
-		int numberPlayers = preferences.getNumberPlayers();
-		int mapSize = preferences.getMapSize();
-		int waterAmount = preferences.getWaterAmount();
-		int aiLevels[] = {preferences.getAi1Level(), preferences.getAi2Level(), preferences.getAi3Level()}; 
-		Start starter = new Start(numberPlayers, mapSize, waterAmount, aiLevels);
-		gamePanel.initGamePanel(starter.getMap(), starter.getPowers());
-		cardLayout.show(getContentPane(), "game");
+//		PreferencesPanel preferences = menuPanel.getPreferencesPanel();
+//		
+//		int numberPlayers = preferences.getNumberPlayers();
+//		int mapSize = preferences.getMapSize();
+//		int waterAmount = preferences.getWaterAmount();
+//		int aiLevels[] = {preferences.getAi1Level(), preferences.getAi2Level(), preferences.getAi3Level()}; 
 		
+		OptionsPanel optionsPanel = menuPanel.getOptionsPanel();
+
+		int numberPlayers = optionsPanel.getNumberPlayers();
+		int mapSize = optionsPanel.getMapSize();
+		int waterAmount = optionsPanel.getWaterAmount();
+		int aiLevels[] = new int[numberPlayers];
+		String playerNames[] = new String[numberPlayers];
+
+		for(int i = 0; i < numberPlayers; i++){
+			aiLevels[i] = optionsPanel.getPlayerAILevel(i + 1);
+			playerNames[i] = optionsPanel.getPlayerName(i + 1);
+		}
+		
+		Start starter = new Start(numberPlayers, playerNames, mapSize, waterAmount, aiLevels);
+		gamePanel.initGamePanel(starter.getMap(), starter.getPowers());
+		cardLayout.show(getContentPane(), GAME_WINDOW);
 	}
 	
 	public void loadGame() {
