@@ -129,7 +129,7 @@ public class TestRessource {
 private void generatePowers() {
 	powers = new Power[1];
 	for(int i = 0; i < 1; i++){
-		powers[i] = PowerManager.createPower("" + (i+1));
+		powers[i] = PowerManager.createPower("" + (i+1), 0);
 	}
 }
 private void initResource() {

@@ -24,13 +24,6 @@ public TestTurn() {
 		endturn();
 	}
 }
-	
-	
-	
-	
-	
-	
-	
 	public static void main(String[] args) {
 	 new TestTurn() ;	
 	}
@@ -126,7 +119,7 @@ public TestTurn() {
 	private static Power[] createPowers() {
 		Power powers[] = new Power[2];
 		for(int i = 0; i < 2; i++){
-			powers[i] = new Power("joueur " + (i+1));
+			powers[i] = PowerManager.createPower(""+(1), 0);
 		}
 		return powers;
 	}

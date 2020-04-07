@@ -21,8 +21,17 @@ public class Power {
 	private Power ally;
 	private Capital capital;
 	
-	public Power(String name) {
+	private int aiLevel;
+	
+	public Power(String name, int aiLevel, Capital capital) {
 		this.name = name;
+		this.capital = capital;
+		this.aiLevel = aiLevel;
+		createResources();
+	}
+	
+	private void createResources() {
+		// TODO Auto-generated method stub
 		resources[ResourceTypes.RESOURCE_ACTIONS - 1] = ResourcesFactory.createAction();
 		resources[ResourceTypes.RESOURCE_FOOD - 1] = ResourcesFactory.createFood();
 		resources[ResourceTypes.RESOURCE_GOLD - 1] = ResourcesFactory.createGold();
@@ -30,14 +39,13 @@ public class Power {
 		resources[ResourceTypes.RESOURCE_STONE - 1] = ResourcesFactory.createStone();
 		resources[ResourceTypes.RESOURCE_SCORE - 1] = ResourcesFactory.createScore();
 	}
-	
-	public Power(String name, Capital capital) {
-		this(name);
-		this.capital = capital;
-	}
-	
+
 	public String getName() {
 		return name;
+	}
+	
+	public int getAILevel() {
+		return aiLevel;
 	}
 	
 	public Resource[] getResources() {

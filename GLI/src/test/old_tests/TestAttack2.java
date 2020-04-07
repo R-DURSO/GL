@@ -11,13 +11,14 @@ import data.unit.UnitTypes;
 import process.management.ActionValidator;
 import process.management.BuildingManager;
 import process.management.MapBuilder;
+import process.management.PowerManager;
 import process.management.UnitManager;
 
 public class TestAttack2 {
 	public static void main(String[] args) {
 		Power powers[] = new Power[2];
-		powers[0] = new Power("j1");
-		powers[1] = new Power("j2");
+		powers[0] = PowerManager.createPower(""+(1), 0);
+		powers[1] = PowerManager.createPower(""+(2), 0);
 		GameMap map;
 		MapBuilder mapBuilder = new MapBuilder(4, 0, powers);
 		map = mapBuilder.buildMap();
@@ -79,18 +80,4 @@ public class TestAttack2 {
 		System.out.println(map);
 		
 	}
-
-
-	private static GameMap initMap(Power powers[]) {
-		MapBuilder mapBuilder = new MapBuilder(20, 0, powers);
-		return mapBuilder.buildMap();
-	}
-
-
-	private static void initPowers(Power powers[]) {
-		powers = new Power[2];
-		powers[0] = new Power("joueur 1");
-		powers[1] = new Power("joueur 2");
-	}
-
 }

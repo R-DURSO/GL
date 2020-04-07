@@ -6,13 +6,14 @@ import data.building.BuildingTypes;
 import data.resource.*;
 import data.unit.UnitTypes;
 import process.management.BuildingManager;
+import process.management.PowerManager;
 import process.management.UnitManager;
 
 public class ResourceTest {
 
 	public static void main(String[] args) {
-		Power pow1 = new Power("Albert");
-		Power pow2 = new Power("Roger");
+		Power pow1 = PowerManager.createPower(""+(1), 0);
+		Power pow2 = PowerManager.createPower(""+(2), 0);
 		
 		pow1.getResource(ResourceTypes.RESOURCE_FOOD).addValue(500);
 		pow1.getResource(ResourceTypes.RESOURCE_GOLD).addValue(500);

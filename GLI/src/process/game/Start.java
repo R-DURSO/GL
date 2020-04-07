@@ -16,23 +16,18 @@ public class Start {
 	private Power powers[];
 	private static Logger Logger = LoggerUtility.getLogger(UnitManager.class, GameConstants.LOG_TYPE);
 	
-	public Start(int numberPlayers, int mapSize, int waterAmount, int aiLevels[]) {
+	public Start(int numberPlayers, String playerNames[], int mapSize, int waterAmount, int aiLevels[]) {
 		Logger.info("\n=== START OF THE GAME ===");
-		Logger.info("Initialisation with: "+numberPlayers+" Power on a "+mapSize+"x"+mapSize+" Map\n");
-		initPowers(numberPlayers);
+		Logger.info("Initialisation with: "+numberPlayers+" Power on a "+mapSize+"x"+mapSize+" Map. WaterAmount: " + waterAmount +".\n");
+		initPowers(numberPlayers, playerNames, aiLevels);
 		this.map=null;
 		generateMap(mapSize, waterAmount, this.powers);
-		/* initinalisation des ia qui ne sont pas encore crée donc 
-		 * IA1 = IAFactory.createIA(aiLevels[0]);
-		 * IA2 = IAFactory.createIA(aiLevels[0]);
-		 * IA3 = IAFactory.createIA(aiLevels[0]);
-		 */
 	}
 	
-	public void initPowers(int numberplayer){
+	public void initPowers(int numberplayer, String playerNames[], int aiLevels[]){
 		this.powers = new Power[numberplayer];
 		for(int i = 0; i < numberplayer; i++) {
-			powers[i] = PowerManager.createPower("Joueur " + (i + 1));
+			powers[i] = PowerManager.createPower(playerNames[i], aiLevels[i]);
 		}
 		
 	}

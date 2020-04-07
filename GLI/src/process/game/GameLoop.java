@@ -240,12 +240,5 @@ public class GameLoop {
 	public Boolean canContinueTurn(Resource actionPoints) {
 		return actionPoints.getAmount() > 0;
 	}
-	
-	public  void createPower(int number) {
-		this.powers =new Power[number];
-		for(int i = 0; i < number; i++){
-			this.powers[i] = new Power("joueur " + (i+1));
-		}
-	}
 
 }

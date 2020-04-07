@@ -76,8 +76,8 @@ public class PowerManager {
 		Logger.info(power.getName()+" gain "+boxToGain.size()+"Box from breaking the alliance");
 	}
 	
-	public static Power createPower(String name) {
-		return new Power(name, new Capital());
+	public static Power createPower(String name, int aiLevel) {
+		return new Power(name, aiLevel, new Capital());
 	}
 	
 }
