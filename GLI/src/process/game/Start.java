@@ -17,7 +17,7 @@ public class Start {
 	private static Logger Logger = LoggerUtility.getLogger(UnitManager.class, GameConstants.LOG_TYPE);
 	
 	public Start(int numberPlayers, int mapSize, int waterAmount, int aiLevels[]) {
-		Logger.info("\n=== START OF THE GAME ===");
+		Logger.info("=== START OF THE GAME ===");
 		Logger.info("Initialisation with: "+numberPlayers+" Power on a "+mapSize+"x"+mapSize+" Map\n");
 		initPowers(numberPlayers);
 		this.map=null;

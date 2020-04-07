@@ -96,7 +96,7 @@ public class ImagesUtility {
 		loadResourceImage(ResourceTypes.RESOURCE_STONE, STONE_IMAGE_PATH);
 		loadResourceImage(ResourceTypes.RESOURCE_WOOD, WOOD_IMAGE_PATH);
 
-		logger.info("=== DONE ===");
+		logger.info("=== DONE ===\n");
 	}
 	
 	/**
