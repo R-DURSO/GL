@@ -139,7 +139,8 @@ public class BuildingManager {
 		if(building.getType() < BuildingTypes.BUILDING_ARMY) {
 			powerConcerned.subScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
 			Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_ARMY+" score ");
-		}else if(building.getType() < BuildingTypes.BUILDING_PRODUCT) {
+		}
+		else if(building.getType() < BuildingTypes.BUILDING_PRODUCT) {
 			powerConcerned.subScore(ScoreValue.SCORE_VALUE_BUILDING_PRODUCT);
 			Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_PRODUCT+" score ");
 		}
@@ -152,7 +153,8 @@ public class BuildingManager {
 				powerConcerned.subScore(ScoreValue.SCORE_VALUE_BUILDING_SPECIAL);
 				Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_BUILDING_SPECIAL+" score ");
 			}
-		}else {
+		}
+		else {
 			powerConcerned.subScore(ScoreValue.SCORE_VALUE_DEFAULT);
 			Logger.info(powerConcerned.getName()+" lose "+ScoreValue.SCORE_VALUE_DEFAULT+" score ");
 		}
@@ -175,10 +177,11 @@ public class BuildingManager {
 	}
 	
 	public void upgradeCapitale (Power power) {
-		power.getCapital().upgrade();
-		power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_ACTIONS, 1);
-		((ActionPoints) power.getResource(ResourceTypes.RESOURCE_ACTIONS)).addMaxActions(2);
-		power.addScore(ScoreValue.SCORE_VALUE_UPGRADE_CAPITALE);
+		if (power.getCapital().upgrade()) {
+			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_ACTIONS, 1);
+			((ActionPoints) power.getResource(ResourceTypes.RESOURCE_ACTIONS)).addMaxActions(2);
+			power.addScore(ScoreValue.SCORE_VALUE_UPGRADE_CAPITALE);
+		}
 	}
 	
 }

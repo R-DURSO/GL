@@ -57,10 +57,16 @@ public class Capital extends BuildingSpecial {
 		return 0;
 	}
 	
-	public void upgrade () {
+	/**
+	 * Upgrade the Capitale the Power hold
+	 * @return true if upgrade was successful
+	 */
+	public boolean upgrade() {
 		if (getLevel() < MAX_LEVEL) {
 			this.level ++;
+			return true;
 		}
+		return false;
 	}
 	
 	public String toString() {

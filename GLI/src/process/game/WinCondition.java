@@ -14,12 +14,14 @@ public class WinCondition {
 	 * On pourra la récupérer directement depuis Case->Building->ConstructionTime
 	 */
 
-	public WinCondition() {
-		numberOfPower = 4;
-		temple = 0;
+	public WinCondition(int numberOfPower, boolean hasArtifact) {
+		this.numberOfPower = numberOfPower;
+		if (hasArtifact) {
+			temple = 0;
+		}
 	}
 
-	public int howManeyCapital() {
+	public int howManyCapital() {
 		int count = 0;
 		
 		

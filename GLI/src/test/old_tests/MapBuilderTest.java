@@ -3,7 +3,7 @@ package test.old_tests;
 import data.GameMap;
 import data.Power;
 import process.management.MapBuilder;
-import process.management.PowerFactory;
+import process.management.PowerManager;
 
 public class MapBuilderTest {
 
@@ -11,7 +11,7 @@ public class MapBuilderTest {
 		int nbJoueur = 4;
 		Power powers[] = new Power[nbJoueur];
 		for(int i = 0; i < nbJoueur; i++) {
-			powers[i] = PowerFactory.createPower("Joueur " + (i + 1));
+			powers[i] = PowerManager.createPower("Joueur " + (i + 1));
 		}
 		MapBuilder mb = new MapBuilder(20, 20, powers);
 		mb.displayMap();

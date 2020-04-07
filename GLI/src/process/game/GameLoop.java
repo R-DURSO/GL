@@ -14,6 +14,7 @@ import log.LoggerUtility;
 import process.management.ActionValidator;
 import process.management.BuildingManager;
 import process.management.MapBuilder;
+import process.management.PowerManager;
 import process.management.UnitManager;
 
 public class GameLoop {
@@ -77,6 +78,8 @@ public class GameLoop {
 		decreaseBuildTime();
 		//Apply all stored action
 		doActions();
+		//check if Power are dead
+		//check Victory conditions
 		//add resource from building product
 		applyProduction();
 		//if no more food, kill some unit
@@ -87,14 +90,23 @@ public class GameLoop {
 		Logger.info("Starting the application of Action");
 		for(int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
 			switch(i) {
-			case ActionTypes.ACTION_ATTACK:
-				executeActionsAttack(actions[i]);
+			case ActionTypes.ACTION_MAKE_ALLIANCE:
+				executeActionsMakeAlliance(actions[i]);
 				break;
 			case ActionTypes.ACTION_BREAK_ALLIANCE:
 				executeActionsBreakAlliance(actions[i]);
 				break;
+			case ActionTypes.ACTION_ATTACK:
+				executeActionsAttack(actions[i]);
+				break;
+			case ActionTypes.ACTION_MOVE:
+				executeActionsMove(actions[i]);
+				break;
 			case ActionTypes.ACTION_CONSTRUCT:
 				executeActionsConstruct(actions[i]);
+				break;
+			case ActionTypes.ACTION_UPGRADE_CAPITAL:
+				executeActionsUpgradeCapital(actions[i]);
 				break;
 			case ActionTypes.ACTION_CREATE_UNITS:
 				executeActionsCreateUnits(actions[i]);
@@ -105,18 +117,26 @@ public class GameLoop {
 			case ActionTypes.ACTION_DESTROY_UNITS:
 				executeActionsDestroyUnits(actions[i]);
 				break;
-			case ActionTypes.ACTION_MAKE_ALLIANCE:
-				executeActionsMakeAlliance(actions[i]);
-				break;
-			case ActionTypes.ACTION_MOVE:
-				executeActionsMove(actions[i]);
-				break;
-			case ActionTypes.ACTION_UPGRADE_CAPITAL:
-				executeActionsUpgradeCapital(actions[i]);
-				break;
 			}
 		}
 		initActionArray();
+	}
+	
+	private void executeActionsMakeAlliance(ArrayList<Action> arrayList) {
+		for(Action a : arrayList) {
+			ActionMakeAlliance action = (ActionMakeAlliance)a;
+			Power powerConcerned = action.getPowerConcerned();
+			Power powerAllied = action.getPotentialAllied();
+			PowerManager.getInstance().makeAlliance(powerConcerned, powerAllied);
+		}
+	}
+	
+	private void executeActionsBreakAlliance(ArrayList<Action> arrayList) {
+		for(Action a : arrayList) {
+			ActionBreakAlliance action = (ActionBreakAlliance)a;
+			Power powerConcerned = action.getPowerConcerned();
+			PowerManager.getInstance().breakAlliance(powerConcerned);
+		}
 	}
 	
 	private void executeActionsUpgradeCapital(ArrayList<Action> arrayList) {
@@ -133,15 +153,6 @@ public class GameLoop {
 			Power powerConcerned = action.getPowerConcerned();
 			Box[] path = action.getPath();
 			UnitManager.getInstance().moveUnits(powerConcerned, path);
-		}
-	}
-
-	private void executeActionsMakeAlliance(ArrayList<Action> arrayList) {
-		for(Action a : arrayList) {
-			ActionMakeAlliance action = (ActionMakeAlliance)a;
-			Power powerConcerned = action.getPowerConcerned();
-			Power powerAllied = action.getPotentialAllied();
-			UnitManager.getInstance().makeAlliance(powerConcerned, powerAllied);
 		}
 	}
 
@@ -186,15 +197,7 @@ public class GameLoop {
 			BuildingManager.getInstance().addNewBuilding(powerConcerned, buildingType, (GroundBox)targetBox);
 		}
 	}
-
-	private void executeActionsBreakAlliance(ArrayList<Action> arrayList) {
-		for(Action a : arrayList) {
-			ActionBreakAlliance action = (ActionBreakAlliance)a;
-			Power powerConcerned = action.getPowerConcerned();
-			UnitManager.getInstance().breakAlliance(powerConcerned);
-		}
-	}
-
+	
 	private void executeActionsAttack(ArrayList<Action> arrayList) {
 		for(Action a : arrayList) {
 			ActionAttack action = (ActionAttack)a;

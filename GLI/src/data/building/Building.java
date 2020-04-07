@@ -33,7 +33,10 @@ public abstract class Building {
 	}
 	
 	public abstract int getType();
-
+	
+	/**
+	 * Reduce the BuildTime in the Building
+	 */
 	public void decreaseBuildTime() {
 		this.buildTime--;
 		if (this.buildTime <= 0) {
@@ -41,10 +44,17 @@ public abstract class Building {
 		}
 	}
 	
+	/**
+	 * @return true when the Building is Constucted
+	 */
 	public boolean isFinish() {
 		return this.buildTime == 0;
 	}
-
+	
+	/**
+	 * Receive damage from an attack
+	 * @param damage, the number of damage taken
+	 */
 	public void applyDamage(int damage) {
 		this.health -= damage;
 		if (this.health <= 0) {
@@ -52,6 +62,9 @@ public abstract class Building {
 		}
 	}
 	
+	/**
+	 * @return true if Health of the Building is 0
+	 */
 	public boolean isDestroyed() {
 		return this.health == 0;
 	}

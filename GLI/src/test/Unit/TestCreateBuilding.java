@@ -10,7 +10,7 @@ import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
 import process.management.BuildingManager;
 import process.management.MapBuilder;
-import process.management.PowerFactory;
+import process.management.PowerManager;
 public class TestCreateBuilding {
 	private GameMap map;
 	private Power powers[];
@@ -74,7 +74,7 @@ public class TestCreateBuilding {
 	private void generatePowers() {
 		powers = new Power[4];
 		for(int i = 0; i < 4; i++){
-			powers[i] = PowerFactory.createPower("" + (i+1));
+			powers[i] = PowerManager.createPower("" + (i+1));
 		}
 		//remove power 2's wood resources (to check failure of building construct)
 		powers[1].getResource(ResourceTypes.RESOURCE_WOOD).subValue(InitialValue.WOOD_INITIAL_VALUE);

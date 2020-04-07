@@ -21,6 +21,7 @@ import data.unit.*;
 import process.management.BuildingManager;
 import process.management.MapBuilder;
 import process.management.UnitManager;
+import process.management.PowerManager;
 
 /**
  * <p>JUnit of all {@link data.unit.Units Units}.</p>
@@ -116,7 +117,7 @@ public class TestUnits {
 	public void createUnitMovementAllied() {
 		power = powers[0];
 		Power powerAllied = powers[1];
-		UnitManager.getInstance().makeAlliance(power, powerAllied);
+		PowerManager.getInstance().makeAlliance(power, powerAllied);
 		
 		from = new Position(0,1);
 		target = new Position(0,2);

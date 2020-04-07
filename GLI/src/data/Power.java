@@ -132,8 +132,18 @@ public class Power {
 		return territory;
 	}
 	
+	/**
+	 * @return Capital that the Power hold
+	 */
 	public Capital getCapital() {
 		return this.capital;
+	}
+	
+	/**
+	 * @return true if Capital of the Power is destroid
+	 */
+	public boolean hasLost() {
+		return this.capital.isDestroyed();
 	}
 	
 	public String toString() {

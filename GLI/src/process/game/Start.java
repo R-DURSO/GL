@@ -3,7 +3,7 @@ package process.game;
 import data.GameMap;
 import data.Power;
 import process.management.MapBuilder;
-import process.management.PowerFactory;
+import process.management.PowerManager;
 
 public class Start {
 	private GameMap map;
@@ -23,7 +23,7 @@ public class Start {
 	public void initPowers(int numberplayer){
 		this.powers = new Power[numberplayer];
 		for(int i = 0; i < numberplayer; i++) {
-			powers[i] = PowerFactory.createPower("Joueur " + (i + 1));
+			powers[i] = PowerManager.createPower("Joueur " + (i + 1));
 		}
 		
 	}
