@@ -29,12 +29,8 @@ public class Start {
 		 */
 	}
 	
-	public void initPowers(int numberplayer){
-		this.powers = new Power[numberplayer];
-		for(int i = 0; i < numberplayer; i++) {
-			powers[i] = PowerManager.createPower("Joueur " + (i + 1));
-		}
-		
+	public void initPowers(int numberplayer) {
+		this.powers = PowerManager.createDefaultPowers(numberplayer);
 	}
 	
 	public void generateMap(int size , int waterAmout, Power powers[]) {

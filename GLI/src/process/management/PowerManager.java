@@ -18,6 +18,26 @@ public class PowerManager {
 	private static Logger Logger = LoggerUtility.getLogger(PowerManager.class, GameConstants.LOG_TYPE);
 	
 	
+	public static Power createPower(String name) {
+		return new Power(name, new Capital());
+	}
+	
+	public static Power[] createPowers (String[] names) {
+		Power[] powers = new Power[names.length];
+		for (int i = 0; i < names.length; i++) {
+			powers[i] = createPower(names[i]);
+		}
+		return powers;
+	}
+	
+	public static Power[] createDefaultPowers (int numberOfPower) {
+		Power[] powers = new Power[numberOfPower];
+		for (int i = 0; i < numberOfPower; i++) {
+			powers[i] = createPower("Joueur "+i);
+		}
+		return powers;
+	}
+	
 	/**
 	 * Create an alliance with those 2 powers, making attack and conquer of territory unavaible
 	 * @param power1 the power that want to launch the alliance
@@ -76,8 +96,5 @@ public class PowerManager {
 		Logger.info(power.getName()+" gain "+boxToGain.size()+"Box from breaking the alliance");
 	}
 	
-	public static Power createPower(String name) {
-		return new Power(name, new Capital());
-	}
 	
 }
