@@ -1,7 +1,6 @@
 package process.management;
 
 import data.building.special.Capital;
-import log.LoggerUtility;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,6 +9,7 @@ import data.GameConstants;
 import data.Power;
 import data.boxes.Box;
 
+import log.LoggerUtility;
 import org.apache.log4j.Logger;
 
 public class PowerManager {
