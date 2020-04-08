@@ -14,4 +14,9 @@ public class ActionMove extends Action {
 	public Box[] getPath() {
 		return path;
 	}
+	
+	@Override
+	public int getActionType() {
+		return ActionTypes.ACTION_MOVE;
+	}
 }

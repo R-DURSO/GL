@@ -17,4 +17,6 @@ public abstract class Action {
 	public Power getPowerConcerned() {
 		return power;
 	}
+	
+	public abstract int getActionType();
 }

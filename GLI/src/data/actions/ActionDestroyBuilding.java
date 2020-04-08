@@ -15,4 +15,8 @@ public class ActionDestroyBuilding extends Action{
 		return target;
 	}
 	
+	@Override
+	public int getActionType() {
+		return ActionTypes.ACTION_DESTROY_BUILDING;
+	}
 }

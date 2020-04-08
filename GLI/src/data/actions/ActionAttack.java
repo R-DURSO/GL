@@ -24,4 +24,9 @@ public class ActionAttack extends Action{
 	public Position getTarget() {
 		return target;
 	}
+
+	@Override
+	public int getActionType() {
+		return ActionTypes.ACTION_ATTACK;
+	}
 }
