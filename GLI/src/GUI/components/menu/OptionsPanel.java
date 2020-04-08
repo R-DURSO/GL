@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import GUI.components.GuiPreferences;
 import GUI.components.SliderPanel;
+import GUI.components.menu.options_components.ArtifactSelectionPanel;
 import GUI.components.menu.options_components.NumberPlayerPanel;
 import GUI.components.menu.options_components.PlayersTabPanel;
 import GUI.components.menu.options_components.WaterAmountPanel;
@@ -33,6 +34,7 @@ public class OptionsPanel extends JPanel {
 	private SliderPanel mapSizePanel;
 	private PlayersTabPanel playerTabPanel;
 	private WaterAmountPanel waterAmountPanel;
+	private ArtifactSelectionPanel artifactSelectionPanel;
 
 	private JPanel bottomPanel = new JPanel();
 
@@ -66,7 +68,6 @@ public class OptionsPanel extends JPanel {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		setLayout(new BorderLayout());
@@ -87,8 +88,12 @@ public class OptionsPanel extends JPanel {
 
 		waterAmountPanel = new WaterAmountPanel();
 		waterAmountPanel.setPreferredSize(INSIDE_SIDE_DIMENSION);
+		
+		artifactSelectionPanel = new ArtifactSelectionPanel();
+		artifactSelectionPanel.setPreferredSize(INSIDE_SIDE_DIMENSION);
 
 		sidePanel.add(numberPlayerPanel, BorderLayout.NORTH);
+		sidePanel.add(artifactSelectionPanel, BorderLayout.CENTER);
 		sidePanel.add(waterAmountPanel, BorderLayout.SOUTH);
 
 		this.add(playerTabPanel, BorderLayout.EAST);

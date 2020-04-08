@@ -333,14 +333,11 @@ public class ActionValidator {
 		//Get the Power from the Starting Point
 		Power powerConcerned = units.getOwner();
 		//Get the Allied Power (if there is one)
-		boolean Allied;
+		boolean Allied = false;
 		Power Ally = null;
 		if (powerConcerned.isAllied()) {
 			Ally = powerConcerned.getAlly();
 			Allied = true;
-		}
-		else {
-			Allied = false;
 		}
 		
 		//How far the Unit can go
