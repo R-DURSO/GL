@@ -49,10 +49,15 @@ public class AIManager {
 		
 		Action triedActions[] = tryActions(numberActionsToTry);
 		
+		//finally, get actions that power will really do
 		Action turnActions[] = getDesiredActions(numberActions, power.getAILevel());
-		
 	}
 	
+	/**
+	 * It will try to do actions, and keep those that are valid, until he has had enough.
+	 * @param numberActionsToTry the number of actions to return in the {@code Action} array
+	 * @return actions that passed the {@code ActionValidator} test
+	 */
 	private Action[] tryActions(int numberActionsToTry) {
 		Action actionTried[] = new Action[numberActionsToTry];
 		
@@ -61,7 +66,12 @@ public class AIManager {
 		return null;
 	}
 	
-	
+	/**
+	 * actions passed will be rated, and only part of them will be returned, depending on power ai level.
+	 * @param numberActions the number of actions returned
+	 * @param aiLevel the level intelligence of power
+	 * @return an array of actions
+	 */
 	private Action[] getDesiredActions(int numberActions, int aiLevel) {
 		// TODO Auto-generated method stub
 		return null;
