@@ -27,4 +27,9 @@ public class ActionCreateUnit extends Action{
 	public int getNumberUnits() {
 		return numberUnits;
 	}
+	
+	@Override
+	public int getActionType() {
+		return ActionTypes.ACTION_CREATE_UNITS;
+	}
 }

@@ -1,0 +1,165 @@
+INFO AWT-EventQueue-0 GUI.components.menu.options_components.NumberPlayerPanel - 3 players chosen
+INFO AWT-EventQueue-0 process.management.UnitManager - === START OF THE GAME ===
+INFO AWT-EventQueue-0 process.management.UnitManager - Initialisation with: 3 Power on a 12x12 Map. WaterAmount: 20%.
+
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - === Starting to load all image ===
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/infantry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Archer.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/BatteringRam.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Boat.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Cavalry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/spear.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Trebuchet.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/barrack.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/capital.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/dock.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/door.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/mine.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/quarry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/sawmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/temple.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/wall.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/windmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/workshop.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/artifact.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/food.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/gold.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/stone.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/wood.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - === DONE ===
+
+INFO AWT-EventQueue-0 process.management.UnitManager - === START OF THE GAME ===
+INFO AWT-EventQueue-0 process.management.UnitManager - Initialisation with: 4 Power on a 12x12 Map. WaterAmount: 20%.
+
+INFO AWT-EventQueue-0 process.management.UnitManager - === START OF THE GAME ===
+INFO AWT-EventQueue-0 process.management.UnitManager - Initialisation with: 4 Power on a 12x12 Map. WaterAmount: 20%.
+
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - === Starting to load all image ===
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/infantry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Archer.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/BatteringRam.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Boat.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Cavalry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/spear.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Trebuchet.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/barrack.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/capital.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/dock.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/door.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/mine.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/quarry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/sawmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/temple.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/wall.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/windmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/workshop.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/artifact.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/food.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/gold.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/stone.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/wood.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - === DONE ===
+
+INFO AWT-EventQueue-0 process.management.UnitManager - === START OF THE GAME ===
+INFO AWT-EventQueue-0 process.management.UnitManager - Initialisation with: 4 Power on a 12x12 Map. WaterAmount: 60%.
+
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - === Starting to load all image ===
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/infantry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Archer.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/BatteringRam.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Boat.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Cavalry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/spear.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Trebuchet.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/barrack.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/capital.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/dock.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/door.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/mine.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/quarry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/sawmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/temple.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/wall.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/windmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/workshop.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/artifact.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/food.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/gold.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/stone.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/wood.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - === DONE ===
+
+INFO AWT-EventQueue-0 process.management.UnitManager - === START OF THE GAME ===
+INFO AWT-EventQueue-0 process.management.UnitManager - Initialisation with: 4 Power on a 12x12 Map. WaterAmount: 20%.
+
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - === Starting to load all image ===
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/infantry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Archer.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/BatteringRam.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Boat.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Cavalry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/spear.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Trebuchet.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/barrack.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/capital.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/dock.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/door.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/mine.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/quarry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/sawmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/temple.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/wall.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/windmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/workshop.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/artifact.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/food.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/gold.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/stone.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/wood.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - === DONE ===
+
+INFO AWT-EventQueue-0 process.management.UnitManager - === START OF THE GAME ===
+INFO AWT-EventQueue-0 process.management.UnitManager - Initialisation with: 4 Power on a 12x12 Map. WaterAmount: 20%.
+
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - === Starting to load all image ===
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/infantry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Archer.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/BatteringRam.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Boat.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Cavalry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/spear.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Units/Trebuchet.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/barrack.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/capital.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/dock.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/door.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/mine.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/quarry.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/sawmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/temple.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/wall.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/windmill.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Buildings/workshop.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/artifact.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/food.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/gold.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/stone.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - Image GLI/src/images/Resources/wood.jpg successfully loaded
+INFO AWT-EventQueue-0 GUI.drawing.ImagesUtility - === DONE ===
+
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Barrack
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 gain 50 score 
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Mine
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 gain 50 score 
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 doesn't receive Gold production, building isn't on right Resources
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===
+INFO AWT-EventQueue-0 process.management.ActionValidator - Joueur 1 create an ActionConstruct
+INFO AWT-EventQueue-0 process.game.GameLoop - Starting the application of Action
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 create Wall
+INFO AWT-EventQueue-0 process.management.BuildingManager - Joueur 1 gain 50 score 
+INFO AWT-EventQueue-0 process.game.GameLoop - === END OF TURN ===

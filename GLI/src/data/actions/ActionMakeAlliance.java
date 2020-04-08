@@ -14,5 +14,8 @@ public class ActionMakeAlliance extends Action{
 		return potentialAllied;
 	}
 	
-	
+	@Override
+	public int getActionType() {
+		return ActionTypes.ACTION_MAKE_ALLIANCE;
+	}
 }
