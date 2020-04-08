@@ -354,6 +354,8 @@ public class ActionValidator {
 		//Adding the Starting Box
 		toVisit.put("0", from);
 		
+		//Boolean that will check if we are moving a Boat
+		boolean checkBoat = false;
 		//Boolean that will check if there is Unit blocking the path
 		boolean checkUnit = false;
 		//Boolean that will check if we can visit adjacent Boxes
@@ -381,16 +383,17 @@ public class ActionValidator {
 					
 					//if we haven't visited the Position
 					if (!visited.contains(visitPosition)) {
-						//reset canVisit and checkUnit, we will see if we can go further
+						//reset checkBoat, checkUnit and canVisit
+						checkBoat = false;
 						checkUnit = false;
 						canVisit = false;
 						
-						
+						//First Verification is about Boxes, making sure we can go through
 						if (visitBox instanceof WaterBox) {
 							//On the sea
 							if (units.getTypes() == UnitTypes.UNIT_BOAT) {
 								//A boat on the sea
-								checkUnit = true;
+								checkBoat = true;
 							}
 							else if (visitBox.hasUnit()) {
 								//check if there is a boat you can move on
@@ -398,158 +401,147 @@ public class ActionValidator {
 									//there is a Boat
 									if (visitBox.getUnit().getOwner() == powerConcerned) {
 										//You can go on your own boat
-										checkUnit = true;
+										checkBoat = true;
 									}
 									//Boat is controlled by another power
 								}
 							}
 							//Not a Boat and there isn't a Unit, can't go through Water
 						}
-						else if ((visitBox instanceof GroundBox) && (units.getTypes() != UnitTypes.UNIT_BOAT)) {
-							//A man on land
+						else {
+							//implicit GroundBox
 							GroundBox visitGBox = (GroundBox) visitBox;
-							//if there is a Building, it can be a Wall or Capital
+							//we check for Building
 							if (visitGBox.hasBuilding()) {
-								if (visitGBox.getBuilding().getType() != BuildingTypes.BUILDING_WALL) {
-									//if it isn't a Wall, is it a Capital
-									if (visitGBox.getBuilding().getType() != BuildingTypes.BUILDING_CAPITAL) {
-										//if it isn't a Wall, is it a Door that we can go through
-										if (visitGBox.getBuilding().getType() == BuildingTypes.BUILDING_DOOR) {
-											//Does the Door belong to us
-											if (visitGBox.getOwner() == powerConcerned) {
-												checkUnit = true;
-											}
-											//Do we have an Ally
-											else if (Allied) {
-												//And does the Door belong to Ally
-												if (visitGBox.getOwner() == powerConcerned.getAlly()) {
-													checkUnit = true;
-												}
-											}
-											//Cannot go trough enemy Door
-										}
-										else {
-											//canVisit is true because it isn't a Wall, Door or Capital
-											checkUnit = true;
+								if (visitGBox.getBuilding().getType() == BuildingTypes.BUILDING_WALL) {
+									//Cannot go through Wall
+								}
+								else if (visitGBox.getBuilding().getType() == BuildingTypes.BUILDING_DOOR) {
+									//Does the Door belong to us
+									if (visitGBox.getOwner() == powerConcerned) {
+										checkBoat = true;
+									}
+									//Do we have an Ally
+									else if (Allied) {
+										//And does the Door belong to Ally
+										if (visitGBox.getOwner() == powerConcerned.getAlly()) {
+											checkBoat = true;
 										}
 									}
-									else {
-										//does Capital belong to us
-										if (visitGBox.getOwner() == powerConcerned) {
-											checkUnit = true;
-										}
+									//else, cannot go through ennemy Door
+								}
+								else if (visitGBox.getBuilding().getType() == BuildingTypes.BUILDING_CAPITAL) {
+									//does Capital belong to us
+									if (visitGBox.getOwner() == powerConcerned) {
+										checkBoat = true;
 									}
 								}
-								//canVisit stay false because it is a Wall blocking the path
+								else if (visitGBox.getBuilding().getType() == BuildingTypes.BUILDING_TEMPLE) {
+									//does Temple belong to us
+									if (visitGBox.getOwner() == powerConcerned) {
+										checkBoat = true;
+									}
+								}
+								else {
+									//Not a Special Building
+									checkBoat = true;
+								}
 							}
-							//GroundBox without Building
 							else {
-								checkUnit = true;
+								//No Building
+								checkBoat = true;
 							}
+							
 						}
-						else if ((visitBox instanceof GroundBox) && (units.getTypes() == UnitTypes.UNIT_BOAT)) {
-							//Boat that go to a coast to deposit Unit
-							if (isNearWater(visitPosition)) {
-								//Coast near Water you can go on
+						
+						
+						//Special Verification about the Boat, pass trhough if units isn't a Boat
+						if (checkBoat) {
+							if (units.getTypes() == UnitTypes.UNIT_BOAT) {
+								Boat unitsBoat = (Boat)units;
+								//Make sure that the Boat is on or near Water
+								if (isNearWater(visitPosition)) {
+									//Now, 2 cases:   -WaterBox   -Coast (GroundBox near Water)
+									if (visitBox instanceof WaterBox) {
+										//Boat is on Water
+										if (!visitBox.hasUnit()) {
+											//WaterBox without unit
+											if (visitPosition.equals(target)) {
+												return path;
+											}
+										}
+										//there is unit where we want to go
+										checkUnit = true;
+									}
+									else {
+										//implicit Coast Box
+										if (unitsBoat.hasContainedUnits()) {
+											if (visitBox.hasUnit()) {
+												//there is unit where we want to go
+												if (visitBox.getUnit().getOwner() == powerConcerned) {
+													//our unit on coast
+													if (visitBox.getUnit().getTypes() == unitsBoat.getContainedUnitsTypes()) {
+														//Same type, so we can deposit
+														if (visitPosition.equals(target)) {
+															return path;
+														}
+													}
+													//different type, dont go there
+												}
+												//not our unit, cannot unload the boat
+											}
+											//Boat goes to GroundBox without unit to deposit stocked one
+											else if (visitPosition.equals(target)) {
+												return path;
+											}
+											//cannot visit nearby Box, you're a boat
+										}
+										//Boat doesn't have unit inside, only visit the Coast
+										checkUnit = true;
+									}
+								}
+								//else, dont go where there isn't water nearby
+							}
+							else {
+								//Not moving a Boat, pass through
 								checkUnit = true;
 							}
 						}
 						
+						
+						//checkUnit allow to check if we can go on the Box if there is a Unit
 						if (checkUnit) {
-							if (units.getTypes() == UnitTypes.UNIT_BOAT) {
-								Boat visitBoat = (Boat)units;
-								//Boat have special movement
-								if (visitBox instanceof WaterBox) {
-									//Boat on WaterBox
-									if (visitBox.hasUnit()) {
-										Units unitsOnBox = visitBox.getUnit();
-										//there is unit where we want to go
-										if (unitsOnBox.getOwner() != powerConcerned) {
-											//so if we dont own the unit, check if it's an allied one
-											if (Allied) {
-												if (visitBox.getUnit().getOwner() == Ally) {
-													//there is Ally unit, we can continue our visit, but can't stop here
-													canVisit = true;
-												}
-												//unit isn't a allied one
-											}
-											//not allied, not our unit
-										}
-										else {
-											//Maybe it's only a Phantom
-											if (unitsOnBox.getTypes() < 0) {
-												if (visitPosition.equals(target)) {
-													return path;
-												}
-											}
-											//our unit, on Water
-											canVisit = true;
-										}
-									}
-									else {
-										//WaterBox without unit
-										if (visitPosition.equals(target)) {
-											return path;
-										}
-										else {
-											canVisit = true;
-										}
-									}
-								}
-								else {
-									//GroundBox
-									if (visitBoat.hasContainedUnits()) {
-										if (visitBox.hasUnit()) {
-											//there is unit where we want to go
-											if (visitBox.getUnit().getOwner() == powerConcerned) {
-												//our unit on coast
-												if (visitBox.getUnit().getTypes() == visitBoat.getContainedUnitsTypes()) {
-													//Same type, so we can deposit
-													if (visitPosition.equals(target)) {
-														return path;
-													}
-												}
-												//different type, dont go there
-											}
-											//not our unit, cannot unload the boat
-										}
-										//Boat goes to GroundBox without unit to deposit stocked one
-										else if (visitPosition.equals(target)) {
-											return path;
-										}
-										//cannot visit nearby Box, you're a boat
-									}
-									//Boat doesn't have unit inside, dont go on ground
-								}
-							}
-							
-							//Not a Boat, so a normal unit
+							//Only verification, make sure you dont walk on other unit
 							if (visitBox.hasUnit()) {
 								Units visitUnit = visitBox.getUnit();
+								//checking if we own the unit in the path
 								if (visitBox.getUnit().getOwner() != powerConcerned) {
 									if (Allied) {
 										if (visitBox.getUnit().getOwner() == Ally) {
-											//there is Ally unit, we can continue our visit, but can't stop here
+											//there is an Ally unit, we can continue our visit, but can't stop here
 											canVisit = true;
 										}
 										//Not our Ally
 									}
-									//There is only ennemy on this map
+									//No Ally, there is only ennemy on this map
 								}
 								else {
-									//Our own Box, with our Unit
+									//Our own Unit
 									if (visitUnit.getTypes() == UnitTypes.UNIT_BOAT) {
 										//Our own Boat
+										Boat visitBoat = (Boat)visitUnit;
 										//check if there is Unit inside (Phantom) or if we can go with if same type
-										if (((Boat)visitUnit).hasContainedUnits()) {
-											if (((Boat)visitUnit).getContainedUnitsTypes() == units.getTypes()) {
+										if (visitBoat.hasContainedUnits()) {
+											if (visitBoat.getContainedUnitsTypes() < 0) {
+												//Phantom, dont go in
+												canVisit = true;
+											}
+											else if (visitBoat.getContainedUnitsTypes() == units.getTypes()) {
 												//Same type, we can go in
 												if (visitPosition.equals(target)) {
 													return path;
 												}
-												else {
-													canVisit = true;
-												}
+												canVisit = true;
 											}
 											else {
 												//Not the same Type, but we can go through
@@ -557,13 +549,12 @@ public class ActionValidator {
 											}
 										}
 										//No unit inside, we can go in
+										//other implicit cases: creation of Boat
 										else {
 											if (visitPosition.equals(target)) {
 												return path;
 											}
-											else {
-												canVisit = true;
-											}
+											canVisit = true;
 										}
 									}
 									else if (visitUnit.getTypes() == units.getTypes()) {
@@ -571,9 +562,7 @@ public class ActionValidator {
 										if (visitPosition.equals(target)) {
 											return path;
 										}
-										else {
-											canVisit = true;
-										}
+										canVisit = true;
 									}
 									else {
 										//Nor a Boat or Same UnitTypes, we can only visit
@@ -583,46 +572,45 @@ public class ActionValidator {
 							}
 							else {
 								//no Unit here
-								//verification about the Box made earlier
 								if (visitPosition.equals(target)) {
 									return path;
 								}
-								else {
-									canVisit = true;
-								}
+								canVisit = true;
 							}
-							
-							//check if the Box visited can be walk upon
-							if (canVisit) {
-								Position dataToAdd;
-								for (int d=1 ; d<=4 ; d++) {
-									switch(d) {
-									case 1:
-										dataToAdd = map.getUpPos(visitPosition);
-										break;
-									case 2:
-										dataToAdd = map.getLeftPos(visitPosition);
-										break;
-									case 3:
-										dataToAdd = map.getRightPos(visitPosition);
-										break;
-									case 4:
-										dataToAdd = map.getDownPos(visitPosition);
-										break;
-									default:
-										dataToAdd = null;
-										break;
-									}
-									if (dataToAdd != null) {
-										toVisit.put(path+Integer.toString(d),dataToAdd);
-									}
-								}
-								//Added all near Boxes
-							}
-							//end of the visit
 						}
-						//Added the Position to Visited and Remove it in toVisit 
+						
+						
+						//Verification completed, checking if we can visit nearby Box
+						if (canVisit) {
+							Position dataToAdd;
+							for (int d=1 ; d<=4 ; d++) {
+								switch(d) {
+								case 1:
+									dataToAdd = map.getUpPos(visitPosition);
+									break;
+								case 2:
+									dataToAdd = map.getLeftPos(visitPosition);
+									break;
+								case 3:
+									dataToAdd = map.getRightPos(visitPosition);
+									break;
+								case 4:
+									dataToAdd = map.getDownPos(visitPosition);
+									break;
+								default:
+									dataToAdd = null;
+									break;
+								}
+								if (dataToAdd != null) {
+									toVisit.put(path+Integer.toString(d),dataToAdd);
+								}
+							}
+						//Added all near Boxes
+						}
+						//Added the Position to Visited 
 						visited.add(visitPosition);
+						
+						//end of the visit
 					}
 					//visited has already seen visitPosition
 				}
