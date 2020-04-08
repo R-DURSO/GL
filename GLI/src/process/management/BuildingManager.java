@@ -180,7 +180,7 @@ public class BuildingManager {
 		if (power.getCapital().upgrade()) {
 			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_ACTIONS, 1);
 			((ActionPoints) power.getResource(ResourceTypes.RESOURCE_ACTIONS)).addMaxActions(2);
-			Logger.info("Capital has been upgraded, +2 maxActionPoints, +1/tour ActionPoints");
+			Logger.info("Capital has been upgraded, +2 maxActionPoints, +1/turn ActionPoints");
 			power.addScore(ScoreValue.SCORE_VALUE_UPGRADE_CAPITALE);
 			Logger.info(power.getClass()+" receive "+ScoreValue.SCORE_VALUE_UPGRADE_CAPITALE+" score");
 		}
