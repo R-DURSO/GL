@@ -66,6 +66,7 @@ public class MainWindow extends JFrame{
 		int numberPlayers = optionsPanel.getNumberPlayers();
 		int mapSize = optionsPanel.getMapSize();
 		int waterAmount = optionsPanel.getWaterAmount();
+		boolean artifact = optionsPanel.getArtifactSpawn();
 		int aiLevels[] = new int[numberPlayers];
 		String playerNames[] = new String[numberPlayers];
 
@@ -74,7 +75,7 @@ public class MainWindow extends JFrame{
 			playerNames[i] = optionsPanel.getPlayerName(i + 1);
 		}
 		
-		Start starter = new Start(numberPlayers, playerNames, mapSize, waterAmount, aiLevels);
+		Start starter = new Start(numberPlayers, playerNames, mapSize, waterAmount, artifact, aiLevels);
 		gamePanel.initGamePanel(starter.getMap(), starter.getPowers());
 		cardLayout.show(getContentPane(), GAME_WINDOW);
 	}

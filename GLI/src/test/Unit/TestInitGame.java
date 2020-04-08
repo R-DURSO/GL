@@ -30,9 +30,9 @@ public class TestInitGame {
 	
 	@Before
 	public void prepareMap() {
-		int aiLevels[] = {1, 2, 3};
-		String names[] = {"albert", "alphonse", "alfred"};
-		start = new Start(4, names, 10, 60, aiLevels);
+		int aiLevels[] = {-1, 1, 2, 3};
+		String names[] = {"albert", "bernard", "charlie", "damien"};
+		start = new Start(4, names, 10, 60, true, aiLevels);
 		map = start.getMap();
 		mapSize = map.getSize();
 		powers = start.getPowers();
@@ -71,7 +71,7 @@ public class TestInitGame {
 	@Test 
 	public void testArtifactPosition() {
 		GroundBox groundBox = (GroundBox) map.getBox(mapSize/2, mapSize/2);
-		assertEquals(groundBox.getResourceType(), ResourceTypes.RESOURCE_ARTIFACT);
+		assertEquals(ResourceTypes.RESOURCE_ARTIFACT, groundBox.getResourceType());
 	}
 		
 }

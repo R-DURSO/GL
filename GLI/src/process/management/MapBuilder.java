@@ -17,12 +17,14 @@ public class MapBuilder {
 	private final int SCALE = 5;
 	private int size;
 	private Random random = new Random();
+	private boolean artifact;
 	private boolean map[][];
 	private Power powers[];
 	
 	
-	public MapBuilder(int size, int waterAmount, Power powers[]) {
+	public MapBuilder(int size, int waterAmount, boolean artifact, Power powers[]) {
 		this.powers = powers;
+		this.artifact = artifact;
 		this.size = size;
 		map = new boolean[size][size];
 		int nbWaterPoints = size*size * waterAmount /7 / 100;
@@ -111,11 +113,14 @@ public class MapBuilder {
 			for(int j = 0; j < size; j++){
 				if (map[i][j]) {
 					box = new WaterBox();
-				}else {
-					if(i == size/2 && j == size/2)
+				}
+				else {
+					if ((i == size/2 && j == size/2) && artifact) {
 						box = new GroundBox(ResourceTypes.RESOURCE_ARTIFACT);
-					else
+					}
+					else {
 						box = new GroundBox(defineRessourceType());
+					}
 				}
 				boxes[i][j] = box;
 			}

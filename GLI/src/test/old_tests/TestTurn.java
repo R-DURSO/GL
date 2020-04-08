@@ -34,7 +34,7 @@ public TestTurn() {
 		GameMap map = null;
 		
 		//createMapBuilder
-		MapBuilder mapBuilder = new MapBuilder(15, 4, powers);
+		MapBuilder mapBuilder = new MapBuilder(15, 4, false, powers);
 		
 		map = mapBuilder.buildMap();
 		

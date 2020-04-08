@@ -30,7 +30,7 @@ public class TestBoat {
 	public static void prepareMap() {
 		powers[0] = PowerManager.createPower(""+(1), 0);
 		powers[1] = PowerManager.createPower("base", 0);
-		MapBuilder mapBuilder = new MapBuilder(12, 200, powers);
+		MapBuilder mapBuilder = new MapBuilder(12, 200, false, powers);
 		map = mapBuilder.buildMap();
 		//Search for instance of Water
 		for (int i = 1; i < map.getSize()-1; i++) {

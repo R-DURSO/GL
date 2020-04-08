@@ -20,7 +20,7 @@ public class TestAttack2 {
 		powers[0] = PowerManager.createPower(""+(1), 0);
 		powers[1] = PowerManager.createPower(""+(2), 0);
 		GameMap map;
-		MapBuilder mapBuilder = new MapBuilder(4, 0, powers);
+		MapBuilder mapBuilder = new MapBuilder(4, 0, false, powers);
 		map = mapBuilder.buildMap();
 		
 		ActionValidator validator = new ActionValidator(map);

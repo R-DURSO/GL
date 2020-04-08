@@ -23,7 +23,7 @@ public class ActionManagerTest {
 		int mapSize = 20;
 		int waterAmount = 20;
 		//createMapBuilder
-		MapBuilder mapBuilder = new MapBuilder(mapSize, waterAmount, powers);
+		MapBuilder mapBuilder = new MapBuilder(mapSize, waterAmount, false, powers);
 		//mapBuilder.displayMap();
 		//init Map
 		map = mapBuilder.buildMap();

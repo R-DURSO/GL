@@ -83,7 +83,7 @@ public class TestCreateBuilding {
 	}
 
 	private void generateSpecialMap() {
-		MapBuilder mapBuilder = new MapBuilder(15, 0, powers);
+		MapBuilder mapBuilder = new MapBuilder(15, 0, false, powers);
 		map = mapBuilder.buildSpecialMap();
 		mapSize = map.getSize();
 	}

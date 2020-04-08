@@ -294,7 +294,7 @@ public class TestActionValidator {
 	}
 
 	private void generateSpecialMap() {
-		MapBuilder mapBuilder = new MapBuilder(5, 0, powers);
+		MapBuilder mapBuilder = new MapBuilder(5, 0, false, powers);
 		map = mapBuilder.buildSpecialMap();
 		mapSize = map.getSize();
 	}

@@ -129,4 +129,9 @@ public class OptionsPanel extends JPanel {
 	public int getMapSize() {
 		return mapSizePanel.getValue();
 	}
+	
+	public boolean getArtifactSpawn() {
+		return artifactSelectionPanel.getArtifactSelection();
+	}
+	
 }

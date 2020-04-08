@@ -13,7 +13,7 @@ public class MapBuilderTest {
 		for(int i = 0; i < nbJoueur; i++) {
 			powers[i] = PowerManager.createPower("Joueur " + (i + 1), 0);
 		}
-		MapBuilder mb = new MapBuilder(20, 20, powers);
+		MapBuilder mb = new MapBuilder(20, 20, false, powers);
 		mb.displayMap();
 		GameMap map = mb.buildMap();
 		
