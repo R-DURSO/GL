@@ -291,7 +291,7 @@ public class ActionValidator {
 					throw new IllegalArgumentException("Des unites d'un type different sont sur le lieu cible");
 				}
 				//But, make sure you dont exceed the limit
-				else if (movingUnits.getNumber() + unitsOnTarget.getNumber() > movingUnits.getTypes()) {
+				else if (movingUnits.getNumber() + unitsOnTarget.getNumber() > movingUnits.getMaxNumber()) {
 					Logger.warn(powerConcerned.getName()+" try to overload an unit with more unit");
 					throw new IllegalArgumentException("Le deplacement fait depasser la limite d'unite");
 				}
@@ -308,6 +308,13 @@ public class ActionValidator {
 		//add phantom unit on the target box, to ensure that no other unit could go there
 		if (!targetBox.hasUnit()) {
 			targetBox.setUnit(new PhantomUnit(powerConcerned, movingUnits.getTypes()));
+		}
+		//If it's a Boat, add a PhantomUnit so that nobody else come aboard
+		else if (targetBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
+			Boat targetBoat = (Boat)targetBox.getUnit();
+			if (!targetBoat.hasContainedUnits()) {
+				targetBoat.setContainedUnits(new PhantomUnit(powerConcerned, movingUnits.getTypes()));
+			}
 		}
 		Box[] ListBox = convertPathToBoxArray(pathFinding, from);
 		Logger.info(powerConcerned.getName()+" create an ActionMove");
@@ -515,6 +522,7 @@ public class ActionValidator {
 									//Boat doesn't have unit inside, dont go on ground
 								}
 							}
+							
 							//Not a Boat, so a normal unit
 							if (visitBox.hasUnit()) {
 								Units visitUnit = visitBox.getUnit();
@@ -532,11 +540,30 @@ public class ActionValidator {
 									//Our own Box, with our Unit
 									if (visitUnit.getTypes() == UnitTypes.UNIT_BOAT) {
 										//Our own Boat
-										if (visitPosition.equals(target)) {
-											return path;
+										//check if there is Unit inside (Phantom) or if we can go with if same type
+										if (((Boat)visitUnit).hasContainedUnits()) {
+											if (((Boat)visitUnit).getContainedUnitsTypes() == units.getTypes()) {
+												//Same type, we can go in
+												if (visitPosition.equals(target)) {
+													return path;
+												}
+												else {
+													canVisit = true;
+												}
+											}
+											else {
+												//Not the same Type, but we can go through
+												canVisit = true;
+											}
 										}
+										//No unit inside, we can go in
 										else {
-											canVisit = true;
+											if (visitPosition.equals(target)) {
+												return path;
+											}
+											else {
+												canVisit = true;
+											}
 										}
 									}
 									else if (visitUnit.getTypes() == units.getTypes()) {

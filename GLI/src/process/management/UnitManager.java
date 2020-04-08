@@ -226,19 +226,37 @@ public class UnitManager {
 				//Verification du chargement
 				if (lastBox.hasUnit()) {
 					if (lastBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
-						((Boat)lastBox.getUnit()).setContainedUnits(movingUnits);
+						Boat lastBoat = (Boat)lastBox.getUnit();
+						if (lastBoat.hasContainedUnits()) {
+							if (lastBoat.getContainedUnitsTypes() < 0) {
+								//It's a Phantom, move in
+								lastBoat.setContainedUnits(movingUnits);
+							}
+							else if (lastBoat.getContainedUnitsTypes() == movingUnits.getTypes()) {
+								//Same unit Types
+								lastBoat.getContainedUnits().addNumber(movingUnits.getNumber());
+							}
+							else {
+								//Nor a Phantom or same UnitTypes, dont go in
+								Logger.error("Moving different units Types in the same Boat");
+							}
+						}
 					}
-					else {
-						lastBox.setUnit(movingUnits);
+					else if (lastBox.getUnit().getTypes() == movingUnits.getTypes()) {
+						//Fusion d'units
+						lastBox.getUnit().addNumber(movingUnits.getNumber());
 					}
 				}
 				else {
-					//CAS D'ERREUR, NE PAS REMPLACER
-					//lastBox.setUnit(movingUnits);
+					lastBox.setUnit(movingUnits);
 					/**
 					 * On peut arriver ici si:
 					 * 		-on est du même type
+					 * 		-un trebuchet change d'etat
 					 * 		-un bateau qui doit déposer?
+					 * Problème
+					 * 		-déposer des units au même endroit les fait se tuer
+					 * 		-monter 2 units dans un bateau fait mourir la première
 					 */
 				}
 				movingUnits.resetIsMoving();

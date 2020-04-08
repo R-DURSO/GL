@@ -12,6 +12,7 @@ package data.building;
  */
 public abstract class Building {
 	public static final int BUILDING_DEFENSE = 8;
+	public static final int CONSTRUCTION_DEFENSE = 4;
 	private int buildTime; //when buildTime == 0, this building can be used
 	private int health;
 	
@@ -29,7 +30,12 @@ public abstract class Building {
 	}
 	
 	public int getDefense() {
-		return BUILDING_DEFENSE;
+		if (isFinish()) {
+			return BUILDING_DEFENSE;
+		}
+		else {
+			return CONSTRUCTION_DEFENSE;
+		}
 	}
 	
 	public abstract int getType();
