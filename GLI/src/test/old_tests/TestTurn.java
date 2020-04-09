@@ -1,14 +1,16 @@
 package test.old_tests;
-import process.management.*;
-import data.resource.*;
-import data.unit.UnitTypes;
 import data.GameMap;
 import data.Position;
 import data.Power;
-import data.boxes.Box;
 import data.boxes.GroundBox;
 import data.building.BuildingTypes;
-import process.game.Start;
+import data.resource.ResourceTypes;
+import data.unit.UnitTypes;
+import process.management.ActionValidator;
+import process.management.BuildingManager;
+import process.management.MapBuilder;
+import process.management.PowerFactory;
+import process.management.UnitManager;
 
 public class TestTurn {
 private GameMap map;
@@ -119,7 +121,7 @@ public TestTurn() {
 	private static Power[] createPowers() {
 		Power powers[] = new Power[2];
 		for(int i = 0; i < 2; i++){
-			powers[i] = PowerManager.createPower(""+(1), 0);
+			powers[i] = PowerFactory.createPower(""+(1), 0);
 		}
 		return powers;
 	}

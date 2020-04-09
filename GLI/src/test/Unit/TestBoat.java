@@ -11,7 +11,7 @@ import data.Power;
 import data.unit.*;
 import data.boxes.*;
 import process.management.MapBuilder;
-import process.management.PowerManager;
+import process.management.PowerFactory;
 import process.management.UnitManager;
 
 /**
@@ -28,8 +28,8 @@ public class TestBoat {
 	
 	@BeforeClass
 	public static void prepareMap() {
-		powers[0] = PowerManager.createPower(""+(1), 0);
-		powers[1] = PowerManager.createPower("base", 0);
+		powers[0] = PowerFactory.createPower(""+(1), 0);
+		powers[1] = PowerFactory.createPower("base", 0);
 		MapBuilder mapBuilder = new MapBuilder(12, 200, false, powers);
 		map = mapBuilder.buildMap();
 		//Search for instance of Water

@@ -10,14 +10,14 @@ import data.unit.UnitTypes;
 import process.management.ActionValidator;
 import process.management.BuildingManager;
 import process.management.MapBuilder;
-import process.management.PowerManager;
+import process.management.PowerFactory;
 import process.management.UnitManager;
 
 public class TestAttack {
 	public static void main(String[] args) {
 		Power powers[] = new Power[2];
-		powers[0] = PowerManager.createPower(""+(1), 0);
-		powers[1] = PowerManager.createPower(""+(2), 0);
+		powers[0] = PowerFactory.createPower(""+(1), 0);
+		powers[1] = PowerFactory.createPower(""+(2), 0);
 		GameMap map;
 		MapBuilder mapBuilder = new MapBuilder(4, 0, false, powers);
 		map = mapBuilder.buildMap();

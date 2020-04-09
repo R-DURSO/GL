@@ -2,8 +2,6 @@ package test.Unit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
@@ -20,8 +18,9 @@ import data.resource.ResourceTypes;
 import data.unit.*;
 import process.management.BuildingManager;
 import process.management.MapBuilder;
-import process.management.UnitManager;
+import process.management.PowerFactory;
 import process.management.PowerManager;
+import process.management.UnitManager;
 
 /**
  * <p>JUnit of all {@link data.unit.Units Units}.</p>
@@ -38,9 +37,9 @@ public class TestUnits {
 	
 	@BeforeClass
 	public static void prepareMap() {
-		powers[0] = PowerManager.createPower(""+(1), 0);
-		powers[1] = PowerManager.createPower(""+(2), 0);
-		powers[2] = PowerManager.createPower(""+(3), 0);
+		powers[0] = PowerFactory.createPower("" + (1), 0);
+		powers[1] = PowerFactory.createPower("" + (2), 0);
+		powers[2] = PowerFactory.createPower("" + (3), 0);
 		MapBuilder mapBuilder = new MapBuilder(4, 0, false, powers);
 		map = mapBuilder.buildMap();
 //		mapBuilder.displayMap();
@@ -48,16 +47,16 @@ public class TestUnits {
 	
 	@Before
 	public void removeUnit() {
-		for (int i = 0 ; i < map.getSize() ; i++) {
-			for (int j = 0 ; j < map.getSize() ; j++) {
-				target = new Position(i,j);
+		for (int i = 0; i < map.getSize(); i++) {
+			for (int j = 0; j < map.getSize(); j++) {
+				target = new Position(i, j);
 				if (map.getBox(target).hasUnit()) {
 					Box BoxUnitToDelete = map.getBox(target);
 					UnitManager.getInstance().deleteUnits(BoxUnitToDelete.getUnit().getOwner(), BoxUnitToDelete);
 				}
 			}
 		}
-		for (int p=0; p < powers.length; p++) {
+		for (int p = 0; p < powers.length; p++) {
 			if (powers[p].getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD) != InitialValue.FOOD_BASE_PRODUCTION) {
 				fail("failed to reset production");
 			}
@@ -77,7 +76,7 @@ public class TestUnits {
 	@Test(expected = AssertionError.class)
 	public void createUnitTooMuch() {
 		power = powers[0];
-		target = new Position(0,1);
+		target = new Position(0, 1);
 		UnitManager.getInstance().addUnits(power, map.getBox(target), UnitTypes.UNIT_ARCHER, 500);
 		assertEquals(500, map.getBox(target).getUnit().getNumber());
 	}
@@ -85,7 +84,7 @@ public class TestUnits {
 	@Test
 	public void createNoneUnit() {
 		power = powers[0];
-		target = new Position(0,1);
+		target = new Position(0, 1);
 		UnitManager.getInstance().addUnits(power, map.getBox(target), UnitTypes.UNIT_ARCHER, 0);
 		assertEquals(false, map.getBox(target).hasUnit());
 	}
@@ -93,7 +92,7 @@ public class TestUnits {
 	@Test
 	public void createUnitUnknown() {
 		power = powers[0];
-		target = new Position(0,1);
+		target = new Position(0, 1);
 		UnitManager.getInstance().addUnits(power, map.getBox(target), 8008135, 5);
 		assertEquals(false, map.getBox(target).hasUnit());
 	}
@@ -101,17 +100,18 @@ public class TestUnits {
 	@Test
 	public void createUnitFoodCost() {
 		power = powers[0];
-		target = new Position(0,1);
+		target = new Position(0, 1);
 		UnitManager.getInstance().addUnits(power, map.getBox(target), UnitTypes.UNIT_INFANTRY, 5);
-		assertEquals(powers[2].getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD) - (Infantry.COST_PER_TURN * 5), power.getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD));
+		assertEquals(powers[2].getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD) - (Infantry.COST_PER_TURN * 5),
+				power.getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD));
 	}
 	
 	@Test
 	public void createUnitMovement() {
 		power = powers[0];
-		from = new Position(0,1);
+		from = new Position(0, 1);
 		map.getBox(from).setOwner(power);
-		target = new Position(0,2);
+		target = new Position(0, 2);
 		map.getBox(target).setOwner(null);
 		
 		UnitManager.getInstance().addUnits(power, map.getBox(from), UnitTypes.UNIT_INFANTRY, 5);
@@ -130,10 +130,10 @@ public class TestUnits {
 		power = powers[0];
 		Power powerAllied = powers[1];
 		PowerManager.getInstance().makeAlliance(power, powerAllied);
-		
-		from = new Position(0,1);
-		target = new Position(0,2);
-		
+
+		from = new Position(0, 1);
+		target = new Position(0, 2);
+
 		map.getBox(from).setOwner(power);
 		map.getBox(target).setOwner(powerAllied);
 		
@@ -150,12 +150,12 @@ public class TestUnits {
 	
 	@Test
 	public void createUnitAttack() {
-		
-		from = new Position(0,1);
+
+		from = new Position(0, 1);
 		map.getBox(from).setOwner(powers[0]);
 		powers[0].addBox(map.getBox(from));
-		
-		target = new Position(2,2);
+
+		target = new Position(2, 2);
 		map.getBox(target).setOwner(powers[1]);
 		powers[1].addBox(map.getBox(target));
 		
@@ -175,12 +175,12 @@ public class TestUnits {
 	
 	@Test
 	public void createUnitAttackRanged() {
-		
-		from = new Position(0,1);
+
+		from = new Position(0, 1);
 		map.getBox(from).setOwner(powers[0]);
 		powers[0].addBox(map.getBox(from));
-		
-		target = new Position(2,2);
+
+		target = new Position(2, 2);
 		map.getBox(target).setOwner(powers[1]);
 		powers[1].addBox(map.getBox(target));
 		
@@ -202,13 +202,13 @@ public class TestUnits {
 	
 	@Test
 	public void createUnitAttackBuilding() {
-		
-		from = new Position(0,1);
+
+		from = new Position(0, 1);
 		Box fromBox = map.getBox(from);
 		fromBox.setOwner(powers[0]);
 		powers[0].addBox(fromBox);
-		
-		target = new Position(1,1);
+
+		target = new Position(1, 1);
 		Box targetBox = map.getBox(target);
 		targetBox.setOwner(powers[1]);
 		powers[1].addBox(targetBox);
@@ -236,13 +236,13 @@ public class TestUnits {
 	
 	@Test
 	public void createUnitAttackBuildingBySiegeUnit() {
-		
-		from = new Position(0,1);
+
+		from = new Position(0, 1);
 		Box fromBox = map.getBox(from);
 		fromBox.setOwner(powers[0]);
 		powers[0].addBox(fromBox);
-		
-		target = new Position(1,1);
+
+		target = new Position(1, 1);
 		Box targetBox = map.getBox(target);
 		targetBox.setOwner(powers[1]);
 		powers[1].addBox(targetBox);

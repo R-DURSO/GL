@@ -8,7 +8,7 @@ import data.Power;
 import data.resource.Gold;
 import data.resource.Resource;
 import data.resource.ResourceTypes;
-import process.management.PowerManager;
+import process.management.PowerFactory;
 import process.management.ResourcesFactory;
 
 public class TestRessource {
@@ -129,7 +129,7 @@ public class TestRessource {
 private void generatePowers() {
 	powers = new Power[1];
 	for(int i = 0; i < 1; i++){
-		powers[i] = PowerManager.createPower("" + (i+1), 0);
+		powers[i] = PowerFactory.createPower("" + (i+1), 0);
 	}
 }
 private void initResource() {

@@ -24,11 +24,39 @@ public class Power implements Serializable {
 	
 	private int aiLevel;
 	
+	private int territorySize;
+	private int numberUnits;
+	private int numberBuildings;
+	
 	public Power(String name, int aiLevel, Capital capital) {
 		this.name = name;
 		this.capital = capital;
 		this.aiLevel = aiLevel;
 		createResources();
+	}
+	
+	public int getTerritorySize() {
+		return territorySize;
+	}
+
+	public int getNumberUnits() {
+		return numberUnits;
+	}
+
+	public int getNumberBuildings() {
+		return numberBuildings;
+	}
+
+	public void setTerritorySize(int territorySize) {
+		this.territorySize = territorySize;
+	}
+
+	public void setNumberUnits(int numberUnits) {
+		this.numberUnits = numberUnits;
+	}
+
+	public void setNumberBuildings(int numberBuildings) {
+		this.numberBuildings = numberBuildings;
 	}
 	
 	private void createResources() {

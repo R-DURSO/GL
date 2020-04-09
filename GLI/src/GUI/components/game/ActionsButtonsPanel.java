@@ -229,9 +229,9 @@ public class ActionsButtonsPanel extends JPanel {
 	}
 
 	class ActionListenerConstruct implements ActionListener {
-		String[] choices = { "Caserne ("+Barrack.COST+")", "Atelier ("+Workshop.COST+")", "Port ("+Dock.COST+")",
-				"Mine d'Or ("+Mine.COST+")", "Scierie ("+Sawmill.COST+")", "Moulin ("+Windmill.COST+")", "carière ("+Quarry.COST+")",
-				"Porte ("+Door.COST+")","Mur ("+Wall.COST+")", "Temple ("+Temple.COST+")" };
+		String[] choices = { "Caserne (" + Barrack.COST + " bois)", "Atelier ("+Workshop.COST+" pierre)", "Port ("+Dock.COST+" bois)",
+				"Mine d'Or ("+Mine.COST+" bois)", "Scierie ("+Sawmill.COST+" bois)", "Moulin ("+Windmill.COST+" bois)", "carière ("+Quarry.COST+" bois)",
+				"Porte ("+Door.COST+" pierre)","Mur ("+Wall.COST+" pierre)", "Temple ("+Temple.COST+" pierre)" };
 
 		public void actionPerformed(ActionEvent e) {
 			JComboBox<String> buildingComboBox = new JComboBox<>(choices);
@@ -275,10 +275,10 @@ public class ActionsButtonsPanel extends JPanel {
 	}
 
 	class ActionListenerCreateUnits implements ActionListener {
-		String[] choices = { "Infantrie ("+Infantry.COST+" Gold, "+Infantry.COST_PER_TURN+" Food/tour)", "Archer ("+Archer.COST+" Gold, "+Archer.COST_PER_TURN+" Food/tour)",
-							"Cavalier ("+Cavalry.COST+" Gold, "+Cavalry.COST_PER_TURN+" Food/tour)", "Piquier ("+Pikeman.COST+" Gold, "+Pikeman.COST_PER_TURN+" Food/tour)",
-							"Bélier ("+BatteringRam.COST+" Gold, "+BatteringRam.COST_PER_TURN+" Food/tour)",
-							"Trébuchet ("+Trebuchet.COST+" Gold, "+Trebuchet.COST_PER_TURN+" Food/tour)", "Bateau ("+Boat.COST+" Gold, "+Boat.COST_PER_TURN+" Food/tour)" };
+		String[] choices = { "Infantrie ("+Infantry.COST+" Or, "+Infantry.COST_PER_TURN+" Nourriture/tour)", "Archer ("+Archer.COST+" Or, "+Archer.COST_PER_TURN+" Nourriture/tour)",
+							"Cavalier ("+Cavalry.COST+" Or, "+Cavalry.COST_PER_TURN+" Nourriture/tour)", "Piquier ("+Pikeman.COST+" Or, "+Pikeman.COST_PER_TURN+" Nourriture/tour)",
+							"Bélier ("+BatteringRam.COST+" Or, "+BatteringRam.COST_PER_TURN+" Nourriture/tour)",
+							"Trébuchet ("+Trebuchet.COST+" Or, "+Trebuchet.COST_PER_TURN+" Nourriture/tour)", "Bateau ("+Boat.COST+" Or, "+Boat.COST_PER_TURN+" Nourriture/tour)" };
 		
 		public void actionPerformed(ActionEvent e) {
 			JComboBox<String> unitComboBox = new JComboBox<>(choices);
