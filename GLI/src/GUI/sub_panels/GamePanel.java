@@ -5,11 +5,15 @@ import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.concurrent.Semaphore;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import GUI.MainWindow;
@@ -30,6 +34,7 @@ import data.building.Building;
 import data.building.special.PhantomBuilding;
 import data.unit.*;
 import process.game.GameLoop;
+import process.game.SaveOption;
 import process.management.ActionValidator;
 
 /**
@@ -62,7 +67,8 @@ public class GamePanel extends JPanel {
 	private ActionValidator actionValidator;
 	private Power player;
 	private GameLoop gameLoop;
-
+	private SaveOption save;
+	
 	public GamePanel(MainWindow window) {
 		this.window = window;
 		init();
@@ -252,5 +258,20 @@ public class GamePanel extends JPanel {
 	public Position getTargetPosition() {
 		return targetPosition;
 	}
+	
+	public void sauvegarder()  {
+		File filesave = new File("game.ser");
+		save = new SaveOption();
+		
+		try {
+			save.sauvegarder(filesave,map, player);
+		} catch (IOException e) {
 
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		this.map=null;
+		this.player= null;
+		window.changeWindow();
+		
+	}
 }

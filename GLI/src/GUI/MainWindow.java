@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -11,6 +12,9 @@ import GUI.components.GuiPreferences;
 import GUI.components.menu.OptionsPanel;
 import GUI.sub_panels.GamePanel;
 import GUI.sub_panels.MenuPanel;
+import data.GameMap;
+import data.Power;
+import process.game.SaveOption;
 import process.game.Start;
 
 public class MainWindow extends JFrame{
@@ -25,6 +29,7 @@ public class MainWindow extends JFrame{
 	private MenuPanel menuPanel = new MenuPanel(this);
 	private MainWindow context = this;
 	private CardLayout cardLayout = new CardLayout();
+	private SaveOption game = new SaveOption();
 
 	public MainWindow() {
 		super("Conquête");
@@ -75,6 +80,15 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void loadGame() {
+		Power player = null ;
+		GameMap map = null ;
+		try {
+			map=game.loadMap();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(map.getSize());
 		
 	}
 	
