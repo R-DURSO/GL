@@ -2,6 +2,7 @@ package process.management;
 
 import data.building.special.Capital;
 import data.resource.ResourceTypes;
+import data.unit.Boat;
 import data.unit.Units;
 
 import java.util.ArrayList;
@@ -46,8 +47,15 @@ public class PowerManager {
 					// check who own those units
 					Units units = box.getUnit();
 					if (powerConcerned == units.getOwner()) {
-						numberUnits++;
-						break;
+						numberUnits += units.getNumber();
+						if(units instanceof Boat) { //boats can have units inside
+							Boat boat = (Boat)units;
+							if(boat.hasContainedUnits()) {
+								Units containedUnits = boat.getContainedUnits();
+								numberUnits += containedUnits.getNumber();
+							}
+							
+						}
 					}
 				}
 
@@ -58,7 +66,6 @@ public class PowerManager {
 						// we also check if this box has a building : if yes, it belongs to powerConcerned
 						if (box instanceof GroundBox && ((GroundBox) box).hasBuilding())
 							numberBuildings++;
-						break;
 					}
 				}
 			}
