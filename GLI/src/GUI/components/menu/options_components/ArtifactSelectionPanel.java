@@ -3,6 +3,7 @@ package GUI.components.menu.options_components;
 import java.awt.GridLayout;
 
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -10,16 +11,18 @@ public class ArtifactSelectionPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private JCheckBox checkArtifact = new JCheckBox("Apparition de l'Artéfact : ");
+	
+	private JLabel artifactLabel = new JLabel("Apparition de l'Artéfact : ");
+	private JCheckBox checkArtifact = new JCheckBox();
 
 	public ArtifactSelectionPanel() {
 		init();
 	}
 
 	private void init() {
-		setLayout(new GridLayout(1, 1));
 		
 		checkArtifact.setSelected(true);
+		add(artifactLabel);
 		add(checkArtifact);
 	}
 	
