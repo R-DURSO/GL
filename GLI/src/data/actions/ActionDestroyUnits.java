@@ -1,9 +1,11 @@
 package data.actions;
 
+import java.io.Serializable;
+
 import data.Position;
 import data.Power;
 
-public class ActionDestroyUnits extends Action {
+public class ActionDestroyUnits extends Action implements Serializable{
 	private Position target;
 	
 	public ActionDestroyUnits(Power powerConcerned, Position target) {

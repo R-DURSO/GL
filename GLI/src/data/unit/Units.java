@@ -1,5 +1,7 @@
 package data.unit;
 
+import java.io.Serializable;
+
 import data.Power;
 
 /**
@@ -15,7 +17,7 @@ import data.Power;
  * @author Maxence
  *
  */
-public abstract class Units {
+public abstract class Units implements Serializable{
 	private int number;
 	private boolean isMoving = false;
 	

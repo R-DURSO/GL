@@ -1,5 +1,7 @@
 package data.unit;
 
+import java.io.Serializable;
+
 import data.Power;
 
 /**
@@ -9,7 +11,7 @@ import data.Power;
  * @author Aldric Vitali Silvestre
  * @see process.management.ActionValidator
  */
-public class PhantomUnit extends Units{
+public class PhantomUnit extends Units implements Serializable{
 	private int unitTypes;
 
 	public PhantomUnit (Power owner, int unitTypes) {

@@ -1,5 +1,7 @@
 package data.building;
 
+import java.io.Serializable;
+
 /**
  * <p>A Building, set in the Map, own by a Power</p>
  * A Building can be:
@@ -10,7 +12,7 @@ package data.building;
  * </ul>
  * @author Maxence
  */
-public abstract class Building {
+public abstract class Building implements Serializable {
 	public static final int BUILDING_DEFENSE = 8;
 	public static final int CONSTRUCTION_DEFENSE = 4;
 	private int buildTime; //when buildTime == 0, this building can be used

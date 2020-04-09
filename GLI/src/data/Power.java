@@ -1,5 +1,6 @@
 package data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import data.boxes.*;
 import data.resource.*;
@@ -13,7 +14,7 @@ import process.management.ResourcesFactory;;
  * <p>Power are created by a {@link process.management.PowerFactory PowerFactory}.</p>
  * @author Maxence
  */
-public class Power {
+public class Power implements Serializable {
 	
 	private String name;
 	private ArrayList<Box> territory = new ArrayList<>();

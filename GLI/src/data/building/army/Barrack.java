@@ -1,8 +1,10 @@
 package data.building.army;
 
+import java.io.Serializable;
+
 import data.building.BuildingTypes;
 
-public class Barrack extends BuildingArmy {
+public class Barrack extends BuildingArmy implements Serializable {
 	private static final int BUILD_TIME = 0;
 	public static final int COST = 100;
 	private static final int BASE_HEALTH = 3;

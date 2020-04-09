@@ -1,11 +1,13 @@
 package data.unit;
 
+import java.io.Serializable;
+
 /**
  * Class of constants related to units
  * @author Aldric Vitali Silvestre [aldric.silvestre@outlook.fr]
  *
  */
-public class UnitTypes {
+public class UnitTypes implements Serializable{
 	public static final int UNIT_INFANTRY = 1;
 	public static final int UNIT_ARCHER = 2;
 	public static final int UNIT_CAVALRY = 3;

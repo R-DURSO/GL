@@ -1,5 +1,6 @@
 package data.resource;
 
+import java.io.Serializable;
 
 /**
  * <p>Gold represents the number of Gold a player hold or the Resource on a Box.</p>
@@ -7,7 +8,7 @@ package data.resource;
  * @author Maxence HENNEKEIN
  */
 
-public class Gold extends Resource {
+public class Gold extends Resource implements Serializable {
 	public Gold(int number) {
 		super(number);
 	}

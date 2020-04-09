@@ -1,9 +1,11 @@
 package data.actions;
 
+import java.io.Serializable;
+
 import data.Power;
 import data.boxes.Box;
 
-public class ActionMove extends Action {
+public class ActionMove extends Action implements Serializable {
 	private Box[] path;
 
 	public ActionMove(Power powerConcerned, Box[] path) {

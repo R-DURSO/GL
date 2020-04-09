@@ -1,11 +1,13 @@
 package data;
 
+import java.io.Serializable;
+
 /**
  * Storage class that get power stats
  * @author Aldric Vitali Silvestre
  *
  */
-public class PowerStats {
+public class PowerStats implements Serializable {
 	
 	private int numberUnits;
 	private int numberBuildings;

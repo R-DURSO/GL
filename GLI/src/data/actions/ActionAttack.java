@@ -1,5 +1,7 @@
 package data.actions;
 
+import java.io.Serializable;
+
 import data.Position;
 import data.Power;
 
@@ -7,7 +9,7 @@ import data.Power;
  * Sub-class of {@link Action}.
  * Defines data of an attack. Don't do anything
  */
-public class ActionAttack extends Action{
+public class ActionAttack extends Action implements Serializable{
 	private Position from;
 	private Position target;
 	

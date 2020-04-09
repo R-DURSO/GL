@@ -1,6 +1,8 @@
 package data.building;
 
-public class BuildingTypes {
+import java.io.Serializable;
+
+public class BuildingTypes implements Serializable{
 	public static final int NO_CONSTRUCT = 0;
 	public static final int BUILDING_BARRACK = 1;
 	public static final int BUILDING_WORKSHOP = 2;

@@ -1,5 +1,7 @@
 package data.boxes;
 
+import java.io.Serializable;
+
 import data.building.Building;
 import data.resource.ResourceTypes;
 import data.unit.Units;
@@ -10,7 +12,7 @@ import data.unit.Units;
  * <p>Even if there isn't a Resource, can have diverse {@link data.building.Building Buildings} to help develop your Power ingame.</p>
  * @author Maxence
  */
-public class GroundBox extends Box{
+public class GroundBox extends Box implements Serializable{
 	
 	private Building building;
 	private int resourceType;

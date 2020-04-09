@@ -1,8 +1,10 @@
 package data.unit;
 
+import java.io.Serializable;
+
 import data.Power;
 
-public class Trebuchet  extends Units {
+public class Trebuchet  extends Units implements Serializable{
 	
 	private static final int BASE_HEALTH = 5;
 	

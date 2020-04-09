@@ -1,5 +1,7 @@
 package data.boxes;
 
+import java.io.Serializable;
+
 import data.Power;
 import data.unit.Units;
 
@@ -8,7 +10,7 @@ import data.unit.Units;
  * <p>two types of Boxes, {@link data.boxes.GroundBox GroundBox} and {@link data.boxes.WaterBox WaterBox}</p>
  * @author Maxence
  */
-public abstract class Box {
+public abstract class Box implements Serializable {
 	private Units unit;
 	private Power owner;
 	

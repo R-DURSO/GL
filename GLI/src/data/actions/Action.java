@@ -1,5 +1,7 @@
 package data.actions;
 
+import java.io.Serializable;
+
 import data.Power;
 
 /**
@@ -7,7 +9,7 @@ import data.Power;
  * <p>Used in {@link process.game.GameLoop GameLoop}.</p>
  * <p>Created (if action is possible) in {@link process.management.ActionValidator ActionValidator}</p>
  */
-public abstract class Action {
+public abstract class Action implements Serializable {
 	private Power power;
 	
 	public Action(Power powerConcerned) {

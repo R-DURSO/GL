@@ -1,8 +1,10 @@
 package data.actions;
 
+import java.io.Serializable;
+
 import data.Power;
 
-public class ActionUpgradeCapital extends Action{
+public class ActionUpgradeCapital extends Action implements Serializable{
 	
 	public ActionUpgradeCapital(Power powerConcerned) {
 		super(powerConcerned);

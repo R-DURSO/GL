@@ -1,5 +1,7 @@
 package data.building.special;
 
+import java.io.Serializable;
+
 /**
  * This Building type is not a playable Building, it simply ensures that 2 Buildings are never constructed at the same position
  * during preparation time. 
@@ -7,7 +9,7 @@ package data.building.special;
  * @author Aldric Vitali Silvestre
  * @see process.management.ActionValidator
  */
-public class PhantomBuilding extends BuildingSpecial{
+public class PhantomBuilding extends BuildingSpecial implements Serializable{
 
 	public PhantomBuilding(){
 		super(0, 0);
