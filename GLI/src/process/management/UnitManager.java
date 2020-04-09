@@ -419,79 +419,92 @@ public class UnitManager {
 		 */
 		if (fromBox.hasUnit()) {
 			Units attacker = fromBox.getUnit();
-			if (targetBox.hasUnit()) {
-				//Fight between Units
-				Units defender = targetBox.getUnit();
-				Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to "+defender+" ");
-				//calculate damage done, with each defense reducing damage by 10%
-				double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
-				//defense take those damage
-				int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
-				Logger.info("attacker damage: "+AttackerDamageDealt+"\tdefender loses: "+casualityDef);
-				
-				double DefenderDamageDealt = 0;
-				int casualityAtt = 0;
-				//If attacker are range, they dont take damage
-				if (!isRanged(attacker)) {
-					//Round 2, counter-strike (attacker gain 10% damage reduction)
-					DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense() + 1) / 10.0));
-					//attacker take dammage
-					casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
-				}
-				Logger.info("defender damage: "+DefenderDamageDealt+"\tattacker loses:"+casualityAtt);
-				//Those 2 Unit loses Units
-				removeUnits(targetBox.getOwner(), targetBox, casualityDef);
-				removeUnits(fromBox.getOwner(), fromBox, casualityAtt);
-				//If there isn't defender, they are dead
-				if (!targetBox.hasUnit()) {
-					//Defender are dead !
-					Logger.info("defender are dead !");
-					//if there is attacker...
-					if (fromBox.hasUnit()) {
-						//the Box is our to take
+			if (powerConcerned == attacker.getOwner()) {
+				if (targetBox.hasUnit()) {
+					//Fight between Units
+					Units defender = targetBox.getUnit();
+					//we want to avoid fight between friendly units
+					if (powerConcerned == defender.getOwner()) {
+						Logger.warn(powerConcerned.getName()+" try to attack his own units");
+					}
+					else if ((powerConcerned.isAllied()) && (powerConcerned.getAlly() == defender.getOwner())) {
+						Logger.warn(powerConcerned.getName()+" try to attack his Ally: "+powerConcerned.getAlly().getName());
+					}
+					else {
+						Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to "+defender+" ");
+						//calculate damage done, with each defense reducing damage by 10%
+						double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
+						//defense take those damage
+						int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
+						Logger.info("attacker damage: "+AttackerDamageDealt+"\tdefender loses: "+casualityDef);
+						
+						double DefenderDamageDealt = 0;
+						int casualityAtt = 0;
+						//If attacker are range, they dont take damage
 						if (!isRanged(attacker)) {
-							//But if Unit is Ranged, it doesn't move
+							//Round 2, counter-strike (attacker gain 10% damage reduction)
+							DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense() + 1) / 10.0));
+							//attacker take dammage
+							casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
+						}
+						Logger.info("defender damage: "+DefenderDamageDealt+"\tattacker loses:"+casualityAtt);
+						//Those 2 Unit loses Units
+						removeUnits(targetBox.getOwner(), targetBox, casualityDef);
+						removeUnits(fromBox.getOwner(), fromBox, casualityAtt);
+						//If there isn't defender, they are dead
+						if (!targetBox.hasUnit()) {
+							//Defender are dead !
+							Logger.info("defender are dead !");
+							//if there is attacker...
+							if (fromBox.hasUnit()) {
+								//the Box is our to take
+								if (!isRanged(attacker)) {
+									//But if Unit is Ranged, it doesn't move
+									Box[] Path = {fromBox, targetBox};
+									moveUnits(powerConcerned, Path);
+									Logger.info("attacker are alive, and capture defender position");
+								}
+							}
+							else {
+								Logger.info("attacker are dead !");
+							}
+						}
+					}
+				}
+				else if (targetBox instanceof GroundBox) {
+					GroundBox targetGBox = (GroundBox)targetBox;
+					if (targetGBox.hasBuilding()) {
+						//attacking a building
+						Building buildDef = targetGBox.getBuilding();
+						Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to the building: "+buildDef.toString()+" ");
+						//calculate damage done, with each defense reducing damage by 10%
+						double AttackerDamageDealt = (attacker.getSiegeDamage() * attacker.getNumber()) * (((10.0 - buildDef.getDefense()) / 10.0));
+						//Building take damage
+						buildDef.applyDamage((int)AttackerDamageDealt);
+						Logger.info("Building takes "+AttackerDamageDealt+" damage, "+buildDef.getHealth()+"HP remaining");
+						if (buildDef.isDestroyed()) {
+							Logger.info("attacker have destroid the building: "+buildDef.toString());
+							BuildingManager.getInstance().destroyBuilding(targetGBox);
 							Box[] Path = {fromBox, targetBox};
 							moveUnits(powerConcerned, Path);
-							Logger.info("attacker are alive, and capture defender position");
 						}
 					}
 					else {
-						Logger.info("attacker are dead !");
-					}
-				}
-			}
-			else if (targetBox instanceof GroundBox) {
-				GroundBox targetGBox = (GroundBox)targetBox;
-				if (targetGBox.hasBuilding()) {
-					//attacking a building
-					Building buildDef = targetGBox.getBuilding();
-					Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to the building: "+buildDef.toString()+" ");
-					//calculate damage done, with each defense reducing damage by 10%
-					double AttackerDamageDealt = (attacker.getSiegeDamage() * attacker.getNumber()) * (((10.0 - buildDef.getDefense()) / 10.0));
-					//Building take damage
-					buildDef.applyDamage((int)AttackerDamageDealt);
-					Logger.info("Building takes "+AttackerDamageDealt+" damage, "+buildDef.getHealth()+"HP remaining");
-					if (buildDef.isDestroyed()) {
-						Logger.info("attacker have destroid the building: "+buildDef.toString());
-						BuildingManager.getInstance().destroyBuilding(targetGBox);
 						Box[] Path = {fromBox, targetBox};
 						moveUnits(powerConcerned, Path);
+						Logger.info("attacker attack a plain, moving unit");
 					}
 				}
 				else {
-					Box[] Path = {fromBox, targetBox};
-					moveUnits(powerConcerned, Path);
-					Logger.info("attacker launch an attack on plain, moving unit");
+					//Attacking just Water...
 				}
+				
+				//End of Attack
+				attacker.resetIsMoving();
 			}
-			else {
-				//On attaque de l'eau sans unité...
-			}
-			//Fin de l'attaque
-			attacker.resetIsMoving();
+			//Launching an attack with units that doesn't belong to us
 		}
-		//Pas d'attaquant, pas d'attaque a lancer
+		//no Attacker, no Attack
 	}
 	
 	private void addScore(Power power, int unitTypes, int number) {

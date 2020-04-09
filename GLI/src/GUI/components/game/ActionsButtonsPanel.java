@@ -1,12 +1,9 @@
 package GUI.components.game;
 
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,6 +22,7 @@ import data.actions.ActionTypes;
 import data.building.army.*;
 import data.building.product.*;
 import data.building.special.*;
+import data.unit.*;
 import process.management.UnitManager;
 
 /**
@@ -46,12 +44,10 @@ public class ActionsButtonsPanel extends JPanel {
 
 	/*
 	 * State system : decide what to do whan user click on map, either modify
-	 * fromPosition or targetPosition (in GamePanel) exs: --> if no action button
-	 * clicked, user click on map will change fromPosition (state
-	 * WAITING_FROM_POSITION) --> if action button clicked, and if needed (depending
-	 * on action type), state will be change, so the user click on map will change
-	 * targetPosition (state WAITING_TARGET_POSITION) -->when action button if
-	 * "finished", state must return to WAITING_FROM_POSITION
+	 * fromPosition or targetPosition (in GamePanel)
+	 * exs:	--> if no action button clicked, user click on map will change fromPosition (state WAITING_FROM_POSITION)
+	 * 		--> if action button clicked, and if needed (depending on action type), state will be change, so the user click on map will change targetPosition (state WAITING_TARGET_POSITION)
+	 * 		--> when action button is "finished", state must return to WAITING_FROM_POSITION
 	 */
 	private final int STATE_WAITING_FROM_POSTION = 0;
 	private final int STATE_WAITING_TARGET_POSTION = 1;
@@ -59,14 +55,12 @@ public class ActionsButtonsPanel extends JPanel {
 
 	private GamePanel context;
 	private GameButtonsPanel gameButtonsPanel;
-	private MapPanel game;
 	private ActionsButtonsPanel panel = this;
 	private Action action;
 
 	public ActionsButtonsPanel(GamePanel context, GameButtonsPanel gameButtonsPanel) {
 		this.context = context;
 		this.gameButtonsPanel = gameButtonsPanel;
-		this.game = context.getMapPanel();
 		setLayout(new GridLayout(0, 3));
 
 		//add Action listeners
@@ -78,7 +72,7 @@ public class ActionsButtonsPanel extends JPanel {
 		createActionDestroyBuildingtButton.addActionListener(new ActionListenerDestroyBuilding());
 		createActionCreateUnitButton.addActionListener(new ActionListenerCreateUnits());
 		createActionConstructButton.addActionListener(new ActionListenerConstruct());
-		createUpgradeCapitalButton.addActionListener(new ActionListenerUpdateCapital());
+		createUpgradeCapitalButton.addActionListener(new ActionListenerUpgradeCapital());
 
 
 		//change Button's color
@@ -217,7 +211,7 @@ public class ActionsButtonsPanel extends JPanel {
 
 	}
 
-	class ActionListenerUpdateCapital implements ActionListener {
+	class ActionListenerUpgradeCapital implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -281,21 +275,22 @@ public class ActionsButtonsPanel extends JPanel {
 	}
 
 	class ActionListenerCreateUnits implements ActionListener {
-		String[] choices = { "Infantrie", "Archer", "Cavalier", "Piquier", "Bélier", "Trébuchet", "Bateau" };
-		int maxUnit = 0;
-
-		@Override
+		String[] choices = { "Infantrie ("+Infantry.COST+" Gold, "+Infantry.COST_PER_TURN+" Food/tour)", "Archer ("+Archer.COST+" Gold, "+Archer.COST_PER_TURN+" Food/tour)",
+							"Cavalier ("+Cavalry.COST+" Gold, "+Cavalry.COST_PER_TURN+" Food/tour)", "Piquier ("+Pikeman.COST+" Gold, "+Pikeman.COST_PER_TURN+" Food/tour)",
+							"Bélier ("+BatteringRam.COST+" Gold, "+BatteringRam.COST_PER_TURN+" Food/tour)",
+							"Trébuchet ("+Trebuchet.COST+" Gold, "+Trebuchet.COST_PER_TURN+" Food/tour)", "Bateau ("+Boat.COST+" Gold, "+Boat.COST_PER_TURN+" Food/tour)" };
+		
 		public void actionPerformed(ActionEvent e) {
 			JComboBox<String> unitComboBox = new JComboBox<>(choices);
-			int answer = JOptionPane.showConfirmDialog(null, unitComboBox, "Quelle(s) unité(s) voulez-vous?",
-					JOptionPane.YES_NO_CANCEL_OPTION);
+			int answer = JOptionPane.showConfirmDialog(null, unitComboBox, "Quelles unités voulez-vous ?",
+					JOptionPane.YES_NO_OPTION);
 			// we check if user has canceled his choice
 			if (answer == JOptionPane.YES_OPTION) {
 				int unitType = unitComboBox.getSelectedIndex()+1;
-				maxUnit = UnitManager.getInstance().maxNumberUnit(unitType);
-				SliderPanel sliderNumber = new SliderPanel("Nombre d'unités", maxUnit, 1, 1);
-				answer = JOptionPane.showConfirmDialog(null, sliderNumber, "Combien d'unité(s) voulez-vous",
-						JOptionPane.YES_NO_CANCEL_OPTION);
+				int maxUnit = UnitManager.getInstance().maxNumberUnit(unitType);
+				SliderPanel sliderNumber = new SliderPanel("Choisissez combien d'unités souhaitez-vous entrainer ?", maxUnit, 1, 1);
+				answer = JOptionPane.showConfirmDialog(null, sliderNumber, "Nombre d'unité",
+						JOptionPane.YES_NO_OPTION);
 				if (answer == JOptionPane.YES_OPTION) {
 					try {
 						Power power = context.getPlayer();
@@ -336,7 +331,7 @@ public class ActionsButtonsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int result = 0;
-			result = JOptionPane.showConfirmDialog(null, "Voulez-vous détruire ce(s) unitée(s)?");
+			result = JOptionPane.showConfirmDialog(null, "Voulez-vous détruire cette unité?");
 			if (result == 0) {
 				try {
 					action = context.getActionValidator().createActionDestroyUnits(context.getPlayer(),
@@ -350,29 +345,5 @@ public class ActionsButtonsPanel extends JPanel {
 		}
 
 	}
-
-	class MouseTargetPosition implements MouseListener {
-
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			Position position = context.getMapPanel().getPositionFromCoordinates(arg0.getX(), arg0.getY());
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-		}
-	}
-
+	
 }

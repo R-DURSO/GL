@@ -25,7 +25,6 @@ public class Capital extends BuildingSpecial {
 	public static final int COST_LEVEL_3 = 1000;
 	public static final int COST_LEVEL_4 = 2000;
 	
-	private static final int PRODUCTION_PER_TURN = 40; 
 	
 	public Capital() {
 		super(BUILD_TIME, BASE_HEALTH);
@@ -37,10 +36,6 @@ public class Capital extends BuildingSpecial {
 
 	public int getLevel() {
 		return this.level;
-	}
-	
-	public int getProductionPerTurn() {
-		return PRODUCTION_PER_TURN * level;
 	}
 	
 	public int getUpgradeCost () {

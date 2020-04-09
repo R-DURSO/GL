@@ -98,6 +98,22 @@ public class PowerManager {
 		Logger.info(power.getName()+" gain "+boxToGain.size()+"Box from breaking the alliance");
 	}
 	
+	public void regainFood(Power powerConcerned) {
+		//get the actual production
+		int foodProd = powerConcerned.getResource(ResourceTypes.RESOURCE_FOOD).getProductionPerTurn();
+		//iterate through all his territory to find a unit to delete
+		Iterator<Box> i = powerConcerned.getTerritory().iterator();
+		while ((i.hasNext()) && (foodProd < 0)) {
+			Box visitBox = i.next();
+			if (visitBox.hasUnit()) {
+				UnitManager.getInstance().deleteUnits(powerConcerned, visitBox);
+				foodProd = powerConcerned.getResource(ResourceTypes.RESOURCE_FOOD).getProductionPerTurn();
+			}
+		}
+		//As the hunger ends, we regain some food
+		powerConcerned.getResource(ResourceTypes.RESOURCE_FOOD).productionOfTurn();
+	}
+	
 	/**
 	 * As the conquer grow, only the strongest remain
 	 * @param killer, the one who will prevail

@@ -561,6 +561,13 @@ public class ActionValidator {
 										}
 										canVisit = true;
 									}
+									else if (visitUnit.getTypes() == -units.getTypes()) {
+										//Phantom of Same UnitTypes, we can go there
+										//but we dont visit to avoid unvoluntary regroupment
+										if (visitPosition.equals(target)) {
+											return path;
+										}
+									}
 									else {
 										//Nor a Boat or Same UnitTypes, we can only visit
 										canVisit = true;
