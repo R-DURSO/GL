@@ -8,6 +8,7 @@ import data.GameMap;
 import data.Power;
 
 import process.management.MapBuilder;
+import process.management.PowerFactory;
 import process.management.PowerManager;
 import process.management.UnitManager;
 
@@ -27,7 +28,8 @@ public class Start {
 	public void initPowers(int numberplayer, String playerNames[], int aiLevels[]) {
 		this.powers = new Power[numberplayer];
 		for(int i = 0; i < numberplayer; i++) {
-			powers[i] = PowerManager.createPower(playerNames[i], aiLevels[i]);
+			powers[i] = PowerFactory.createPower(playerNames[i], aiLevels[i]);
+			
 		}
 	}
 	

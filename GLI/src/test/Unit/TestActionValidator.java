@@ -23,6 +23,7 @@ import data.resource.*;
 import data.unit.*;
 import process.management.ActionValidator;
 import process.management.MapBuilder;
+import process.management.PowerFactory;
 import process.management.PowerManager;
 import process.management.UnitManager;
 
@@ -285,7 +286,7 @@ public class TestActionValidator {
 	private void generatePowers() {
 		powers = new Power[4];
 		for(int i = 0; i < 4; i++){
-			powers[i] = PowerManager.createPower("" + (i+1), 0);
+			powers[i] = PowerFactory.createPower("" + (i+1), 0);
 		}
 		//remove power 2's wood resources (to check failure of building construct)
 		powers[1].getResource(ResourceTypes.RESOURCE_WOOD).subValue(InitialValue.WOOD_INITIAL_VALUE);

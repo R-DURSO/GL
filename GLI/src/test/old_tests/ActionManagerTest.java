@@ -12,6 +12,7 @@ import data.unit.Archer;
 import data.unit.UnitTypes;
 import process.management.ActionValidator;
 import process.management.MapBuilder;
+import process.management.PowerFactory;
 import process.management.PowerManager;
 
 public class ActionManagerTest {
@@ -99,7 +100,7 @@ public class ActionManagerTest {
 	private static Power[] createPowers() {
 		Power powers[] = new Power[4];
 		for(int i = 0; i < 4; i++){
-			powers[i] = PowerManager.createPower(""+(i+1), 0);
+			powers[i] = PowerFactory.createPower(""+(i+1), 0);
 		}
 		return powers;
 	}

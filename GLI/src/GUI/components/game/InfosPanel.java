@@ -88,67 +88,20 @@ public class InfosPanel extends JPanel {
 	 * Change stats display (this method has to be called during 
 	 */
 	public void refreshStatsPanel() {
-		//search power stats
-		PowerStats powerStats[] = searchPowerStats();
-		
 		//put data in 2 graphs
-		generalChartPanel.setChart(setGeneralChartPanel(powerStats));
+		generalChartPanel.setChart(setGeneralChartPanel());
 		generalChartPanel.repaint();
-		territoryChartPanel.setChart(setTerritoryChartPanel(powerStats));
+		territoryChartPanel.setChart(setTerritoryChartPanel());
 		territoryChartPanel.repaint();
 		repaint();
 	}
-
 	
-
-	private PowerStats[] searchPowerStats() {
-		//we create as many PowerStats that there are Powers
-		PowerStats powerStats[] = new PowerStats[powers.length];
-		for(int i = 0; i < powerStats.length; i++)
-			powerStats[i] = new PowerStats();
-		MapPanel mapPanel = gamePanel.getMapPanel();
-		
-		//we will iterate through all map and increase values depending on which box we are
-		for(int i = 0; i < mapPanel.getMapSize(); i++) {
-			for(int j = 0; j < mapPanel.getMapSize(); j++) {
-				Box box = mapPanel.getBox(i, j);
-				
-				//check if there is any unit on the box
-				if(box.hasUnit()) {
-					//check who own those units
-					Units units = box.getUnit();
-					for(int k = 0; k < powers.length; k++) {
-						if(powers[k] == units.getOwner()) {
-							powerStats[k].addNumberUnits(units.getNumber());
-							break;
-						}
-					}
-				}
-				
-				//check if someone owns this box
-				if(box.getOwner() != null) {
-					for(int k = 0; k < powers.length; k++) {
-						if(powers[k] == box.getOwner()) {
-							powerStats[k].territorySizePlus1();
-							//we also check if this box has a building : if yes, it belongs to powers[k]
-							if(box instanceof GroundBox && ((GroundBox)box).hasBuilding())
-								powerStats[k].numberBuildingsPlus1();
-							break;
-						}
-					}
-				}
-			}
-		}
-		
-		return powerStats;
-	}
-	
-	private JFreeChart setGeneralChartPanel(PowerStats powerStats[]) {
+	private JFreeChart setGeneralChartPanel() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		
 		for(int i = 0; i < powers.length; i++) {
-			int numberBuildings = powerStats[i].getNumberBuildings();
-			int numberUnits = powerStats[i].getNumberUnits();
+			int numberBuildings = powers[i].getNumberBuildings();
+			int numberUnits = powers[i].getNumberUnits();
 			
 			dataset.addValue(numberUnits, powers[i].getName(), "Unités");
 			dataset.addValue(numberBuildings, powers[i].getName(), "Batiments");
@@ -158,10 +111,10 @@ public class InfosPanel extends JPanel {
 		return ChartFactory.createBarChart("Statistiques générales", null, "Nombre", dataset, PlotOrientation.VERTICAL, true, true, false);
 	}
 
-	private JFreeChart setTerritoryChartPanel(PowerStats powerStats[]) {
+	private JFreeChart setTerritoryChartPanel() {
 		DefaultPieDataset dataset = new DefaultPieDataset();
 		for(int i = 0; i < powers.length; i++) {
-			int territorySize = powerStats[i].getTerritorySize();
+			int territorySize = powers[i].getTerritorySize();
 			dataset.setValue(powers[i].getName() + " : " + territorySize, territorySize);
 		}
 		

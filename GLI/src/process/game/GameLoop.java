@@ -84,9 +84,12 @@ public class GameLoop {
 		//add resource from building product
 		applyProduction();
 		//if no more food, kill some unit
+		
+		//refresh power stats (number units, buildings & territorySize)
+		refreshPowersStats();
 		Logger.info("=== END OF TURN ===");
 	}
-	
+
 	public void doActions() {
 		Logger.info("Starting the application of Action");
 		for(int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
@@ -250,6 +253,13 @@ public class GameLoop {
 			if (powers[i].getResource(ResourceTypes.RESOURCE_FOOD).getAmount() < 0) {
 				PowerManager.getInstance().regainFood(powers[i]);
 			}
+		}
+	}
+	
+	
+	private void refreshPowersStats() {
+		for(int i = 0; i < powers.length; i++){
+			PowerManager.getInstance().refreshPowerStats(powers[i], map);
 		}
 	}
 }
