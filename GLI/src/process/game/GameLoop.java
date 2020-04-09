@@ -57,7 +57,7 @@ public class GameLoop {
 				
 			}
 		
-			//for others non-human players 
+			//for others non-human players  
 			for( int i = 1 ; i < powers.length;  i++) {
 				
 				//they will do all actions they can 

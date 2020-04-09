@@ -137,9 +137,8 @@ public class GamePanel extends JPanel {
 		gameLoop.endTurn();
 		infosPanel.refreshStatsPanel();
 		refreshMap();
-		repaint();
 		playerResourcesPanel.refreshAll();
-		repaint();		
+		repaint();
 	}
 
 	public void cancelAction() {
@@ -269,9 +268,15 @@ public class GamePanel extends JPanel {
 
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
-		this.map=null;
-		this.player= null;
+		removePanels();
 		window.changeWindow();
 		
+	}
+
+	private void removePanels() {
+		remove(gameButtonsPanel);
+		remove(mapPanel);
+		remove(infosPanel);
+		remove(playerResourcesPanel);
 	}
 }
