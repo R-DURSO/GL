@@ -1,6 +1,6 @@
 package data.resource;
 
-
+import java.io.Serializable;
 
 /**
  * <p>Wood represents the number of Wood a player hold or the Resource on a Box.</p>
@@ -8,7 +8,7 @@ package data.resource;
  * @author Maxence HENNEKEIN
  */
 
-public class Wood extends Resource {
+public class Wood extends Resource implements Serializable {
 	public Wood(int number) {
 		super(number);
 	}

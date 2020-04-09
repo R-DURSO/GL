@@ -1,6 +1,8 @@
 package data;
 
-public class InitialValue {
+import java.io.Serializable;
+
+public class InitialValue implements Serializable {
 	public static final int NUMBER_INITIAL_VALUE =500 ;
 	public static final int ACTION_INITIAL_VALUE = 6;
 	public static final int WOOD_INITIAL_VALUE = 500;

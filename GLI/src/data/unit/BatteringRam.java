@@ -1,8 +1,10 @@
 package data.unit;
 
+import java.io.Serializable;
+
 import data.Power;
 
-public class BatteringRam extends Units {
+public class BatteringRam extends Units implements Serializable{
 	private static final int BASE_HEALTH = 10;
 	private static final int RANGE = 1;
 	private static final int MOVEMENT = 20;

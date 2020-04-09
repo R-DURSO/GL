@@ -1,5 +1,7 @@
 package data.building.special;
 
+import java.io.Serializable;
+
 import data.building.BuildingTypes;
 
 /**
@@ -8,7 +10,7 @@ import data.building.BuildingTypes;
  * @author Maxence HENNEKEIN
  */
 
-public class Capital extends BuildingSpecial {
+public class Capital extends BuildingSpecial implements Serializable {
 	private static final int BUILD_TIME = 0;
 	public static final int COST = 0;
 	private static final int BASE_HEALTH = 50;

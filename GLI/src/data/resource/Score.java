@@ -1,5 +1,7 @@
 package data.resource;
 
+import java.io.Serializable;
+
 /**
  * <p>Score represents the number of score a player have.</p>
  * <p>It can be gain by Combat and territory size.</p>
@@ -7,7 +9,7 @@ package data.resource;
  * @author Maxence HENNEKEIN
  */
 
-public class Score extends Resource {
+public class Score extends Resource implements Serializable {
 	public Score(){
 		super();
 	}

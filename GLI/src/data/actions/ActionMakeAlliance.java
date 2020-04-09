@@ -1,8 +1,10 @@
 package data.actions;
 
+import java.io.Serializable;
+
 import data.Power;
 
-public class ActionMakeAlliance extends Action{
+public class ActionMakeAlliance extends Action implements Serializable{
 	private Power potentialAllied;
 
 	public ActionMakeAlliance(Power powerConcerned, Power potentialAllied) {

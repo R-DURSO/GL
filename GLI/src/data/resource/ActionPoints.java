@@ -1,5 +1,6 @@
 package data.resource;
 
+import java.io.Serializable;
 
 /**
  * <p>ActionPoints represents the number of action a player can do each turn.</p>
@@ -7,7 +8,7 @@ package data.resource;
  * @author Maxence HENNEKEIN
  */
 
-public class ActionPoints extends Resource {
+public class ActionPoints extends Resource implements Serializable {
 	public static final int BASE_MAX_ACTIONS = 6 ;
 	private int MaxActions = BASE_MAX_ACTIONS;
 	

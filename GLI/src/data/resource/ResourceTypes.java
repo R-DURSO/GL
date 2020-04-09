@@ -1,11 +1,13 @@
 package data.resource;
 
+import java.io.Serializable;
+
 /**
  * <p>Various static final value are stocked here.</p>
  * @author Maxence HENNEKEIN
  */
 
-public class ResourceTypes {
+public class ResourceTypes implements Serializable {
 	
 	public static final int NUMBER_TYPE_RESOURCES = 5;
 	public static final int NUMBER_PLAYER_RESOURCES = 6;

@@ -1,6 +1,8 @@
 package data;
 
-public class GameConstants {
+import java.io.Serializable;
+
+public class GameConstants implements Serializable {
 	private GameConstants() {}
 	
 	public static final int WATER_AMOUNT_LITTLE = 20;

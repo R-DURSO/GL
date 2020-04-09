@@ -1,6 +1,8 @@
 package data.actions;
 
-public class ActionTypes {
+import java.io.Serializable;
+
+public class ActionTypes implements Serializable {
 	public static final int ACTION_MAKE_ALLIANCE = 0;
 	public static final int ACTION_BREAK_ALLIANCE = 1;
 	public static final int ACTION_ATTACK = 2;

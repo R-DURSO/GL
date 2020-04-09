@@ -1,8 +1,10 @@
 package data;
 
+import java.io.Serializable;
+
 import data.boxes.*;
 
-public class GameMap {
+public class GameMap implements Serializable {
 	/*you have to be careful: the first entry is that of the ordinate, 
 	and the second that of the abscissa*/
 	private Box boxes[][]; 

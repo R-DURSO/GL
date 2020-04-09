@@ -1,5 +1,7 @@
 package data.building.product;
 
+import java.io.Serializable;
+
 import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
 
@@ -8,7 +10,7 @@ import data.resource.ResourceTypes;
  * @author Maxence HENNEKEIN
  */
 
-public class Quarry extends BuildingProduct{
+public class Quarry extends BuildingProduct implements Serializable{
 	private static final int BUILD_TIME = 1;
 	public static final int COST = 100;
 	private static final int BASE_HEALTH = 3;

@@ -1,6 +1,6 @@
 package data.resource;
 
-
+import java.io.Serializable;
 
 /**
  * <p>Stone represents the number of Stone a player hold or the Resource on a Box.</p>
@@ -8,7 +8,7 @@ package data.resource;
  * @author Maxence HENNEKEIN
  */
 
-public class Stone extends Resource {
+public class Stone extends Resource implements Serializable {
 	public Stone(int number) {
 		super(number);
 	}

@@ -1,5 +1,7 @@
 package data.unit;
 
+import java.io.Serializable;
+
 import data.Power;
 
 /**
@@ -7,7 +9,7 @@ import data.Power;
  * <p>Can Contain a Unit, and transport it anywhere else</p>
  * @author Maxence
  */
-public class Boat extends Units {
+public class Boat extends Units implements Serializable{
 	private static final int BASE_HEALTH = 1;
 	private static final int RANGE = 0;
 	private static final int MOVEMENT = 5;

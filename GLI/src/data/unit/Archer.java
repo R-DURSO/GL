@@ -1,8 +1,10 @@
 package data.unit;
 
+import java.io.Serializable;
+
 import data.Power;
 
-public class Archer extends Units {
+public class Archer extends Units implements Serializable{
 	private static final int BASE_HEALTH = 2;
 	private static final int RANGE = 2;
 	private static final int MOVEMENT = 2;

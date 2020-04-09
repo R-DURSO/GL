@@ -1,5 +1,7 @@
 package data.resource;
 
+import java.io.Serializable;
+
 import data.resource.ActionPoints;
 
 /**
@@ -8,7 +10,7 @@ import data.resource.ActionPoints;
  * @author Maxence HENNEKEIN
  */
 
-public abstract class Resource {
+public abstract class Resource implements Serializable {
 	private int amount;
 	private int productionPerTurn = 0;
 	

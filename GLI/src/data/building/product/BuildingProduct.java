@@ -1,4 +1,6 @@
 package data.building.product;
+import java.io.Serializable;
+
 import data.building.Building;
 import data.resource.Resource;
 
@@ -14,7 +16,7 @@ import data.resource.Resource;
  * @author Maxence HENNEKEIN
  */
 
-public abstract class BuildingProduct extends Building{
+public abstract class BuildingProduct extends Building implements Serializable{
 	private boolean onRightResource;
 
 	public BuildingProduct(int buildTime, int health) {

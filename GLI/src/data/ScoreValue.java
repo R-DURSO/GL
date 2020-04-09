@@ -1,6 +1,8 @@
 package data;
 
-public class ScoreValue {
+import java.io.Serializable;
+
+public class ScoreValue implements Serializable {
 	// score for building 
 	public static final int SCORE_VALUE_BUILDING_PRODUCT = 50 ;
 	public static final int SCORE_VALUE_BUILDING_ARMY = 50 ;

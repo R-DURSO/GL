@@ -1,8 +1,10 @@
 package data.unit;
 
+import java.io.Serializable;
+
 import data.Power;
 
-public class Cavalry extends Units {
+public class Cavalry extends Units implements Serializable{
 	private static final int BASE_HEALTH = 5;
 	private static final int RANGE = 1;
 	private static final int MOVEMENT = 4;

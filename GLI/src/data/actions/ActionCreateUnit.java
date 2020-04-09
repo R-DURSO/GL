@@ -1,9 +1,11 @@
 package data.actions;
 
+import java.io.Serializable;
+
 import data.Position;
 import data.Power;
 
-public class ActionCreateUnit extends Action{
+public class ActionCreateUnit extends Action implements Serializable{
 	
 	private Position target;
 	private int unitType;

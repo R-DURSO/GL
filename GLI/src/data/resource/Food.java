@@ -1,5 +1,6 @@
 package data.resource;
 
+import java.io.Serializable;
 
 /**
  * <p>Food represents the number of Food a player hold or the Resource on a Box.</p>
@@ -7,7 +8,7 @@ package data.resource;
  * @author Maxence HENNEKEIN
  */
 
-public class Food extends Resource {
+public class Food extends Resource implements Serializable {
 	public Food(int number) {
 		super(number);
 	}
