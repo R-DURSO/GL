@@ -18,6 +18,7 @@ import data.building.army.BuildingArmy;
 import data.resource.Resource;
 import data.resource.ResourceTypes;
 import data.unit.BatteringRam;
+import data.unit.Boat;
 import data.unit.Infantry;
 import data.unit.UnitTypes;
 import data.unit.Units;
@@ -210,6 +211,9 @@ public class AIManager {
 		
 		
 		ArrayList<BuildingArmy> armyBuildingList = new ArrayList<>();
+		if(armyBuildingList.isEmpty())
+			throw new WrongActionException("No army building");
+		
 		
 		for(Building building : buildingList){
 			if(building instanceof BuildingArmy)
@@ -232,19 +236,25 @@ public class AIManager {
 				unitsType = UnitTypes.UNIT_INFANTRY;
 				numberUnits = Infantry.NUMBER_MAX_UNITS;
 			}else {
-				
+				unitsType = random.nextInt(UnitTypes.UNITS_IN_BARRACK);
 			}
 			break;
 
 		case BuildingTypes.BUILDING_DOCK:
 			if(aiLevel == GameConstants.AI_EASY)
 				throw new WrongActionException("easy AI don't create boats");
+			else {
+				unitsType = UnitTypes.UNIT_BOAT;
+				numberUnits = Boat.NUMBER_MAX_UNITS;
+			}
 			break;
 			
 		case BuildingTypes.BUILDING_WORKSHOP:
 			if(aiLevel == GameConstants.AI_EASY) {
 				unitsType = UnitTypes.UNIT_BATTERING_RAM;
 				numberUnits = BatteringRam.NUMBER_MAX_UNITS;
+			}else {
+				unitsType = random.nextInt(UnitTypes.UNITS_IN_DOCK - UnitTypes.UNITS_IN_DOCK + 1) + UnitTypes.UNITS_IN_DOCK;
 			}
 			break;
 		default:
