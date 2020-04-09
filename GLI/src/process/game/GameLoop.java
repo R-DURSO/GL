@@ -79,6 +79,7 @@ public class GameLoop {
 		//Apply all stored action
 		doActions();
 		//check if Power are dead
+		checkPower();
 		//check Victory conditions
 		//add resource from building product
 		applyProduction();
@@ -240,5 +241,15 @@ public class GameLoop {
 	public Boolean canContinueTurn(Resource actionPoints) {
 		return actionPoints.getAmount() > 0;
 	}
-
+	
+	public void checkPower() {
+		for (int i = 0; i < getPlayerNumber(); i++) {
+			if (powers[i].hasLost()) {
+				PowerManager.getInstance().killPower(powers[i], powers[i]);
+			}
+			if (powers[i].getResource(ResourceTypes.RESOURCE_FOOD).getAmount() < 0) {
+				PowerManager.getInstance().regainFood(powers[i]);
+			}
+		}
+	}
 }
