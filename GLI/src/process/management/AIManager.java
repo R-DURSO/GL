@@ -13,8 +13,13 @@ import data.actions.Action;
 import data.boxes.Box;
 import data.boxes.GroundBox;
 import data.building.Building;
+import data.building.BuildingTypes;
+import data.building.army.BuildingArmy;
 import data.resource.Resource;
 import data.resource.ResourceTypes;
+import data.unit.BatteringRam;
+import data.unit.Infantry;
+import data.unit.UnitTypes;
 import data.unit.Units;
 import exceptions.WrongActionException;
 import log.LoggerUtility;
@@ -201,7 +206,69 @@ public class AIManager {
 
 	private Action tryCreateActionCreateUnit(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
-		// TODO Auto-generated method stub
+		int aiLevel = power.getAILevel();
+		
+		
+		ArrayList<BuildingArmy> armyBuildingList = new ArrayList<>();
+		
+		for(Building building : buildingList){
+			if(building instanceof BuildingArmy)
+				armyBuildingList.add((BuildingArmy)building);
+		}
+		
+		int numberBuilding = armyBuildingList.size();
+		int buildingIndex = random.nextInt(numberBuilding);
+		BuildingArmy buildingSelected = armyBuildingList.get(buildingIndex);
+		Position buildingPosition = getBuildingPosition(buildingSelected);
+		if(buildingPosition == null)
+			throw new WrongActionException("building Position can't be retrieved");
+		
+		int unitsType = UnitTypes.UNIT_INFANTRY;
+		int numberUnits = 0;
+		
+		switch (buildingSelected.getType()) {
+		case BuildingTypes.BUILDING_BARRACK:
+			if(aiLevel == GameConstants.AI_EASY) {
+				unitsType = UnitTypes.UNIT_INFANTRY;
+				numberUnits = Infantry.NUMBER_MAX_UNITS;
+			}else {
+				
+			}
+			break;
+
+		case BuildingTypes.BUILDING_DOCK:
+			if(aiLevel == GameConstants.AI_EASY)
+				throw new WrongActionException("easy AI don't create boats");
+			break;
+			
+		case BuildingTypes.BUILDING_WORKSHOP:
+			if(aiLevel == GameConstants.AI_EASY) {
+				unitsType = UnitTypes.UNIT_BATTERING_RAM;
+				numberUnits = BatteringRam.NUMBER_MAX_UNITS;
+			}
+			break;
+		default:
+			throw new WrongActionException("invalid building type");
+		}
+
+		try {
+			return actionValidator.createActionCreateUnit(power, unitsType, numberUnits, buildingPosition);
+		}catch (IllegalArgumentException e) {
+			throw new WrongActionException("invalid unit creation");
+		}
+	}
+
+	private Position getBuildingPosition(BuildingArmy buildingSelected) {
+		for(int i = 0; i < map.getSize(); i++){
+			for(int j = 0; j < map.getSize(); j++){
+				Box tmpBox = map.getBox(i, j);
+				if(tmpBox instanceof GroundBox) {
+					GroundBox gBox = (GroundBox)tmpBox;
+					if(gBox.hasBuilding() && gBox.getBuilding() == buildingSelected)
+						return new Position(i, j);
+				}
+			}
+		}
 		return null;
 	}
 
