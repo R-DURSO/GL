@@ -23,13 +23,19 @@ public class Start {
 		initPowers(numberPlayers, playerNames, aiLevels);
 		this.map = null;
 		generateMap(mapSize, waterAmount, artifact, this.powers);
+		setPowersStats();
 	}
 	
 	public void initPowers(int numberplayer, String playerNames[], int aiLevels[]) {
 		this.powers = new Power[numberplayer];
 		for(int i = 0; i < numberplayer; i++) {
 			powers[i] = PowerFactory.createPower(playerNames[i], aiLevels[i]);
-			
+		}
+	}
+	
+	public void setPowersStats() {
+		for(int i = 0; i < powers.length; i++){
+			PowerManager.getInstance().refreshPowerStats(powers[i], map);
 		}
 	}
 	

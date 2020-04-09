@@ -7,6 +7,7 @@ import data.Position;
 import data.Power;
 import data.boxes.*;
 import data.resource.ResourceTypes;
+import data.unit.UnitTypes;
 
 /**
  * Map generator
@@ -195,6 +196,9 @@ public class MapBuilder {
 		//We are sure that this box is a grounded box (because specified it before)
 		box.setOwner(power);
 		((GroundBox) box).setBuilding(power.getCapital());
+		//add a Cavalry unit on this box
+		
+		UnitManager.getInstance().addUnits(power, box, UnitTypes.UNIT_CAVALRY, 1);
 	}
 
 
