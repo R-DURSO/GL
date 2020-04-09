@@ -2,6 +2,7 @@
 package process.management;
 import data.boxes.*;
 import data.building.Building;
+import data.building.BuildingTypes;
 import data.building.product.BuildingProduct;
 import data.resource.ResourceTypes;
 import data.unit.*;
@@ -484,6 +485,9 @@ public class UnitManager {
 						Logger.info("Building takes "+AttackerDamageDealt+" damage, "+buildDef.getHealth()+"HP remaining");
 						if (buildDef.isDestroyed()) {
 							Logger.info("attacker have destroid the building: "+buildDef.toString());
+							if (buildDef.getType() == BuildingTypes.BUILDING_CAPITAL) {
+								PowerManager.getInstance().killPower(powerConcerned, targetGBox.getOwner());
+							}
 							BuildingManager.getInstance().destroyBuilding(targetGBox);
 							Box[] Path = {fromBox, targetBox};
 							moveUnits(powerConcerned, Path);

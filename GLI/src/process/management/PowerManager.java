@@ -135,8 +135,10 @@ public class PowerManager {
 		//Receive score from the dead
 		killer.addScore(killed.getResource(ResourceTypes.RESOURCE_ACTIONS).getAmount() / 4);
 		killer.addScore(ScoreValue.SCORE_VALUE_POWER);
-		//so, the power who died is deleted from the game
-		killed = null;
+		/*
+			//so, the power who died is deleted from the game
+			killed = null;
+		*/
 	}
 	
 }
