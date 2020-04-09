@@ -676,7 +676,7 @@ public class ActionValidator {
 	 * @param target Box where you want to go
 	 * @return if target is at the range of from 
 	 */
-	private boolean isUnitsOnRange(Position from, int unitsMoveRange, Position target) {
+	public boolean isUnitsOnRange(Position from, int unitsMoveRange, Position target) {
 		int aX = from.getX();
 		int aY = from.getY();
 		int bX = target.getX();

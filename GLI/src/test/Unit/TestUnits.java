@@ -64,6 +64,16 @@ public class TestUnits {
 		}
 	}
 	
+	@Before
+	public void makeAlliance() {
+		if (!powers[0].isAllied()) {
+			if (powers[1].isAllied()) {
+				PowerManager.getInstance().breakAlliance(powers[1]);
+			}
+			PowerManager.getInstance().makeAlliance(powers[1], powers[2]);
+		}
+	}
+	
 	@Test(expected = AssertionError.class)
 	public void createUnitTooMuch() {
 		power = powers[0];
@@ -100,7 +110,9 @@ public class TestUnits {
 	public void createUnitMovement() {
 		power = powers[0];
 		from = new Position(0,1);
+		map.getBox(from).setOwner(power);
 		target = new Position(0,2);
+		map.getBox(target).setOwner(null);
 		
 		UnitManager.getInstance().addUnits(power, map.getBox(from), UnitTypes.UNIT_INFANTRY, 5);
 		Units unit = map.getBox(from).getUnit();
@@ -176,6 +188,9 @@ public class TestUnits {
 		int nbUnitDef = 5;
 		UnitManager.getInstance().addUnits(powers[0], map.getBox(from), UnitTypes.UNIT_ARCHER, nbUnitAtt);
 		UnitManager.getInstance().addUnits(powers[1], map.getBox(target), UnitTypes.UNIT_INFANTRY, nbUnitDef);
+		if (powers[0].isAllied()) {
+			PowerManager.getInstance().breakAlliance(powers[0]);
+		}
 		UnitManager.getInstance().attack(powers[0], map.getBox(from), map.getBox(target));
 		if (map.getBox(target).hasUnit()) {
 			assertNotEquals(nbUnitDef, map.getBox(target).getUnit().getNumber());

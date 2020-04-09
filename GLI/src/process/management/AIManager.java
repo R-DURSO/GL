@@ -199,22 +199,15 @@ public class AIManager {
 		
 	}
 
-	private Action tryCreateActionMove(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
-			ArrayList<Box> territory) throws WrongActionException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	private Action tryCreateActionCreateUnit(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
 		int aiLevel = power.getAILevel();
 		
 		
+		if(buildingList.isEmpty())
+			throw new WrongActionException(power.getName()+" doesn't have any building");
+		
 		ArrayList<BuildingArmy> armyBuildingList = new ArrayList<>();
-		if(armyBuildingList.isEmpty())
-			throw new WrongActionException("No army building");
-		
-		
 		for(Building building : buildingList){
 			if(building instanceof BuildingArmy)
 				armyBuildingList.add((BuildingArmy)building);
@@ -268,24 +261,51 @@ public class AIManager {
 		}
 	}
 
-	private Position getBuildingPosition(BuildingArmy buildingSelected) {
-		for(int i = 0; i < map.getSize(); i++){
-			for(int j = 0; j < map.getSize(); j++){
-				Box tmpBox = map.getBox(i, j);
-				if(tmpBox instanceof GroundBox) {
-					GroundBox gBox = (GroundBox)tmpBox;
-					if(gBox.hasBuilding() && gBox.getBuilding() == buildingSelected)
-						return new Position(i, j);
-				}
-			}
-		}
-		return null;
-	}
-
 	private Action tryCreateActionConstruct(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	private Action tryCreateActionMove(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
+			ArrayList<Box> territory) throws WrongActionException {
+		
+		int aiLevel = power.getAILevel();
+		//if AI have units
+		if(unitsList.isEmpty()) {
+			throw new WrongActionException(power.getName()+" doesn't have any units");
+		}
+		
+		//get a random units
+		int numberUnits = unitsList.size();
+		int unitsIndex = random.nextInt(numberUnits);
+		Units unitSelected = unitsList.get(unitsIndex);
+		
+		Position unitPosition = getUnitsPosition(unitSelected);
+		if (unitPosition == null) {
+			throw new WrongActionException("Couldn't retrieve unit Position");
+		}
+		
+		//We check all near Box that we can possibly go to
+		ArrayList<Box> nearbyBox = new ArrayList<Box>();
+		
+		for (int i = 0; i < map.getSize(); i++) {
+			for (int j = 0; j < map.getSize(); j++) {
+				Position boxPosition = new Position(i, j);
+				if (actionValidator.isUnitsOnRange(unitPosition, unitSelected.getMovement(), boxPosition)) {
+					nearbyBox.add(map.getBox(boxPosition));
+				}
+			}
+		}
+		
+
+		try {
+			return actionValidator.createActionMove(power, unitPosition, unitPosition);
+		}
+		catch (IllegalArgumentException e) {
+			throw new WrongActionException("invalid unit movement");
+		}
+		
 	}
 
 	private Action tryCreateActionAttack(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
@@ -314,7 +334,7 @@ public class AIManager {
 	}
 
 	/**
-	 * Recover all {@linkplain data.unit.Units} that Power have
+	 * Recover all {@linkplain data.unit.Units Units} that Power have
 	 * 
 	 * @param power
 	 * @return the Units list
@@ -334,12 +354,11 @@ public class AIManager {
 				}
 			}
 		}
-
 		return unitsList;
 	}
 
 	/**
-	 * Recover all {@linkplain data.building.Building} that Power have
+	 * Recover all {@linkplain data.building.Building Buildings} that Power have
 	 * 
 	 * @param power
 	 * @return the Building list
@@ -362,8 +381,33 @@ public class AIManager {
 				}
 			}
 		}
-
 		return buildingList;
 	}
-
+	
+	private Position getBuildingPosition(Building buildingSelected) {
+		for(int i = 0; i < map.getSize(); i++){
+			for(int j = 0; j < map.getSize(); j++){
+				Box tmpBox = map.getBox(i, j);
+				if(tmpBox instanceof GroundBox) {
+					GroundBox gBox = (GroundBox)tmpBox;
+					if(gBox.hasBuilding() && gBox.getBuilding() == buildingSelected)
+						return new Position(i, j);
+				}
+			}
+		}
+		return null;
+	}
+	
+	private Position getUnitsPosition(Units unitsSelected) {
+		for(int i = 0; i < map.getSize(); i++){
+			for(int j = 0; j < map.getSize(); j++){
+				Box tmpBox = map.getBox(i, j);
+				if(tmpBox.hasUnit() && tmpBox.getUnit() == unitsSelected) {
+					return new Position(i, j);
+				}
+			}
+		}
+		return null;
+	}
+	
 }
