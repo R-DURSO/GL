@@ -54,12 +54,6 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void newGame() {
-//		PreferencesPanel preferences = menuPanel.getPreferencesPanel();
-//		
-//		int numberPlayers = preferences.getNumberPlayers();
-//		int mapSize = preferences.getMapSize();
-//		int waterAmount = preferences.getWaterAmount();
-//		int aiLevels[] = {preferences.getAi1Level(), preferences.getAi2Level(), preferences.getAi3Level()}; 
 		
 		OptionsPanel optionsPanel = menuPanel.getOptionsPanel();
 

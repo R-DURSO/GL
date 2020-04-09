@@ -27,12 +27,7 @@ public class ArtifactSelectionPanel extends JPanel {
 	 * @return if the spawning of the Artifact is enable
 	 */
 	public boolean getArtifactSelection() {
-		if (checkArtifact.isSelected()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return checkArtifact.isSelected();
 	}
 	
 }
