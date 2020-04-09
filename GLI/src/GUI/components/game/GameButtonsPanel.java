@@ -93,6 +93,14 @@ public class GameButtonsPanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			//c'est deja la commande pour quitter?
+			int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous voulez vous sauvegarder la partie",
+					"Fin du jeux ", JOptionPane.YES_NO_OPTION);
+			if(answer==JOptionPane.YES_OPTION) {
+				context.sauvegarder();
+				
+			}else if(answer==JOptionPane.NO_OPTION) {
+				
+			}
 		}
 	}
 }
