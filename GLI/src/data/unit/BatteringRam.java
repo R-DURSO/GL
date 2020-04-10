@@ -5,12 +5,12 @@ import java.io.Serializable;
 import data.Power;
 
 public class BatteringRam extends Units implements Serializable{
-	private static final int BASE_HEALTH = 10;
+	private static final int BASE_HEALTH = 100;
 	private static final int RANGE = 1;
 	private static final int MOVEMENT = 20;
 	private static final int DAMAGE = 5;
-	private static final int DAMAGE_SIEGE = 50;
-	private static final int DEFENSE = 2;
+	private static final int DAMAGE_SIEGE = 500;
+	private static final int DEFENSE = 20;
 	
 	public static final int COST = 10;
 	public static final int COST_PER_TURN = 3;

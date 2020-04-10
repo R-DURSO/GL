@@ -160,7 +160,7 @@ public class BuildingManager {
 		}
 		//now we simply remove building from map
 		targetBox.setBuilding(null);
-		Logger.info(powerConcerned.getName()+" have destroid "+building.toString());
+		Logger.info(powerConcerned.getName()+" has removed "+building.toString());
 	}
 	
 	public void decreaseBuildTime(Power power, Building building) {

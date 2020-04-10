@@ -4,6 +4,7 @@ import data.boxes.*;
 import data.building.Building;
 import data.building.BuildingTypes;
 import data.building.product.BuildingProduct;
+import data.building.special.BuildingSpecial;
 import data.resource.ResourceTypes;
 import data.unit.*;
 import log.LoggerUtility;
@@ -278,7 +279,11 @@ public class UnitManager {
 	 * @return true if the {@link data.unit.Units Unit} can go to this {@link data.boxes.Box Box}
 	 */
 	private boolean moveUnitsBox(Units movingUnits, Box visitBox) {
+		//Initialize checker boolean
 		boolean canMove = false;
+		boolean conquerBox = false;
+		boolean checkBuilding = false;
+		
 		//Verification du cas du bateau (pour charger/decharger les Units)
 		if (visitBox instanceof WaterBox) {
 			if (visitBox.hasUnit()) {
@@ -342,12 +347,12 @@ public class UnitManager {
 			}
 		}
 		
-		boolean conquerBox = false;
 		Power powerConcerned = movingUnits.getOwner();
 		//if targetBox is in ennemy's territory
 		Power BoxPower = visitBox.getOwner();
 		if (BoxPower == null) {
 			//targetBox is free, take it !
+			//as there isnt a Power, dont check for building
 			conquerBox = true;
 		}
 		else {
@@ -357,30 +362,54 @@ public class UnitManager {
 					if (powerConcerned.isAllied()) {
 						if (powerConcerned.getAlly() != BoxPower) {
 							//Not a Ally
-							conquerBox = true;
+							checkBuilding = true;
 						}
 					}
 					else {
 						//Not Allied
-						conquerBox = true;
+						checkBuilding = true;
 					}
 				}
 			}
 			else if (visitBox.getUnit().getTypes() < 0) {
-				conquerBox = true;
+				//just a PhantomUnit here, go as there is nobody here (for now)
+				checkBuilding = true;
 			}
 			//if there are Unit, we cannot conquer
 		}
+		
+		if (checkBuilding) {
+			if (visitBox instanceof GroundBox) {
+				GroundBox visitGBox = (GroundBox)visitBox; 
+				if (visitGBox.hasBuilding()) {
+					if (visitGBox.getBuilding() instanceof BuildingSpecial) {
+						//dont conquer if its a special Building
+						canMove = false;
+						conquerBox = false;
+					}
+					else {
+						conquerBox = true;
+					}
+				}
+				else {
+					conquerBox = true;
+				}
+			}
+			else {
+				conquerBox = true;
+			}
+		}
+		
 		
 		if (conquerBox) {
 			//powerConcerned will take this territory, and ressource gain per turn if any (inderictly, will gain the building on it too)  
 			powerConcerned.addBox(visitBox);
 			visitBox.setOwner(powerConcerned);
-			//Are on Ground or on Water (checking for Building)
+			//checking for Building
 			if (visitBox instanceof GroundBox) {
 				GroundBox targetGBox = (GroundBox)visitBox;
-				/*Special case for buildingProducts, if takes up territory/box with a production building, 
-			 	powerConcerned will 'steal' targetBoxPower's production*/
+				/* Special case for buildingProducts, if takes up territory/box with a production building, 
+			 	powerConcerned will 'steal' targetBoxPower's production */
 				if (targetGBox.hasBuilding()) {
 					if (targetGBox.getBuilding() instanceof BuildingProduct) {
 						BuildingProduct buildingProduct = (BuildingProduct)targetGBox.getBuilding();
@@ -402,6 +431,7 @@ public class UnitManager {
 				BoxPower.removeBox(visitBox);
 			}
 		}
+		
 		return canMove;
 	}
 	

@@ -164,6 +164,11 @@ public class PowerManager {
 	public void killPower(Power killer, Power killed) {
 		// get all territory of the defeated
 		killer.getTerritory().addAll(killed.getTerritory());
+		for (Iterator<Box> i = killed.getTerritory().iterator(); i.hasNext();) {
+			Box visitBox = i.next();
+			visitBox.setOwner(killer);
+		}
+		killed.getTerritory().clear();
 		// receive all production
 		killer.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD,
 				killed.getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD));
@@ -185,9 +190,34 @@ public class PowerManager {
 		// Receive score from the dead
 		killer.addScore(killed.getResource(ResourceTypes.RESOURCE_ACTIONS).getAmount() / 4);
 		killer.addScore(ScoreValue.SCORE_VALUE_POWER);
+		Logger.info(killer.getName()+" has kill "+killed.getName());
+		Logger.info("== "+killed.getName()+" is DEAD ==");
 		/*
 		 * //so, the power who died is deleted from the game killed = null;
 		 */
+	}
+	
+	public Power[] recreatePowerList(Power[] powerList) {
+		int numberPower = 0;
+		int i;
+		for (i = 0; i < powerList.length; i++) {
+			if (!powerList[i].hasLost()) {
+				numberPower++;
+			}
+		}
+		i = 0;
+		String namePowerLeft = "";
+		Power[] newPowerList = new Power[numberPower];
+		while ((numberPower > 0) && (i < powerList.length)) {
+			if (!powerList[i].hasLost()) {
+				newPowerList[numberPower-1] = powerList[i];
+				namePowerLeft += powerList[i].getName()+" ";
+				numberPower--;
+			}
+			i++;
+		}
+		Logger.info(namePowerLeft);
+		return newPowerList;
 	}
 
 }
