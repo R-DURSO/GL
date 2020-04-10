@@ -71,7 +71,14 @@ public class GameLoop {
 	}
 	
 	/**
-	 * End the current turn
+	 * End the current turn and start different actions
+	 * <ul>
+	 * 		<li>Decrease of BuildTime</li>
+	 * 		<li>Application of all Actions</li>
+	 * 		<li>Increase in all Resources from Production</li>
+	 * 		<li>Checking the status of all Powers</li>
+	 * 		<li>Refresh the stats of all Powers</li>
+	 * </ul>
 	 */
 	public void endTurn() {
 		//decrease build time
@@ -89,7 +96,10 @@ public class GameLoop {
 		refreshPowersStats();
 		Logger.info("=== END OF TURN ===");
 	}
-
+	
+	/**
+	 * Launch the application of {@link data.actions.Action Action} from the {@link process.management.ActionValidator ActionValidator}
+	 */
 	public void doActions() {
 		Logger.info("Starting the application of Action");
 		for(int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {

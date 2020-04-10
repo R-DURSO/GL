@@ -131,7 +131,10 @@ public class GamePanel extends JPanel {
 		mapPanel.refreshSelection(fromPosition, targetPosition);
 		mapPanel.repaint();
 	}
-
+	
+	/**
+	 * End the current turn (from the player perspective)
+	 */
 	public void endPlayerTurn() {
 		resetPositions();
 		gameButtonsPanel.getActionsBoutonsPanel().setMajorButtonsVisibility(false);
@@ -225,7 +228,10 @@ public class GamePanel extends JPanel {
 		}
 
 	}
-
+	
+	/**
+	 * Reset selected Box position
+	 */
 	public void resetPositions() {
 		fromPosition = null;
 		targetPosition = null;
