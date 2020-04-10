@@ -92,8 +92,8 @@ public class AIManager {
 		Action triedActions[] = tryActions(power, numberActionsToTry, unitsList, buildingList, territory);
 
 		// finally, get actions that power will really do
-		Action turnActions[] = getDesiredActions(power, triedActions, numberActions, unitsList,
-				buildingList, territory);
+		Action turnActions[] = getDesiredActions(power, triedActions, numberActions, unitsList, buildingList,
+				territory);
 	}
 
 	/**
@@ -137,126 +137,128 @@ public class AIManager {
 				actionsTried[numberActionsTried] = action;
 				numberActionsTried++;
 			} catch (WrongActionException e) {
-				logger.warn("Action denied : " + e.getMessage());
+				logger.debug("Action denied : " + e.getMessage());
 			}
 		}
 		return actionsTried;
 	}
 
-	private Action tryCreateActionMakeAlliance(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
-			ArrayList<Box> territory) throws WrongActionException {
-		
-		//if has already an allied, no need to continue
-		if(power.getAlly() != null)
+	private Action tryCreateActionMakeAlliance(Power power, ArrayList<Units> unitsList,
+			ArrayList<Building> buildingList, ArrayList<Box> territory) throws WrongActionException {
+
+		// if has already an allied, no need to continue
+		if (power.getAlly() != null)
 			throw new WrongActionException("this powre is already in alliance");
-		
-		//if it is a 2 players game, no alliance is allowed
+
+		// if it is a 2 players game, no alliance is allowed
 		int numberPlayers = powers.length;
-		if(numberPlayers <= 2)
+		if (numberPlayers <= 2)
 			throw new WrongActionException("only 2 powers are fighting");
-		
-		//depending on the AI level, choice will be different
+
+		// depending on the AI level, choice will be different
 		int aiLevel = power.getAILevel();
 		switch (aiLevel) {
 		case GameConstants.AI_EASY:
-			//easy ai won't do any alliance
+			// easy ai won't do any alliance
 			throw new WrongActionException("easy AI don't make alliance");
 
 		case GameConstants.AI_NORMAL:
-			//normal ai can do alliance with anyone
-			//so we have to chose randomly one of others 
+			// normal ai can do alliance with anyone
+			// so we have to chose randomly one of others
 			int potentialPowerIndex = random.nextInt(numberPlayers);
 			Power potentialAlly = powers[potentialPowerIndex];
 			try {
 				return actionValidator.createActionMakeAlliance(power, potentialAlly);
-			}catch(IllegalArgumentException e){
+			} catch (IllegalArgumentException e) {
 				throw new WrongActionException("invalid alliance");
 			}
-			
+
 		case GameConstants.AI_HARD:
-			//hard ai want to ally only with the best player (with the biggest score)
-			//so we have to find it
+			// hard ai want to ally only with the best player (with the biggest score)
+			// so we have to find it
 			Power bestPower = powers[0];
 			int bestScore = bestPower.getResourceAmount(ResourceTypes.RESOURCE_SCORE);
 			int tmpScore;
-			for(int i = 1; i < numberPlayers; i++) {
+			for (int i = 1; i < numberPlayers; i++) {
 				tmpScore = powers[i].getResourceAmount(ResourceTypes.RESOURCE_SCORE);
-				if(tmpScore > bestScore) {// if equals, we let player before be "the best" (in order to favor the real player AKA powers[0])
+				if (tmpScore > bestScore) {// if equals, we let player before be "the best" (in order to favor the real
+											// player AKA powers[0])
 					bestScore = tmpScore;
 					bestPower = powers[i];
 				}
 			}
-			
+
 			try {
 				return actionValidator.createActionMakeAlliance(power, bestPower);
-			}catch(IllegalArgumentException e){
+			} catch (IllegalArgumentException e) {
 				throw new WrongActionException("invalid alliance");
-			}	
-			
+			}
+
 		default:
 			throw new WrongActionException("invlaid ai level");
 		}
-		
+
 	}
 
 	private Action tryCreateActionCreateUnit(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
 		int aiLevel = power.getAILevel();
-		
-		//we have to count each buildingArmy that power owns
-		if(buildingList.isEmpty())
-			throw new WrongActionException(power.getName()+" doesn't have any building");
-		
+
+		// we have to count each buildingArmy that power owns
+		if (buildingList.isEmpty())
+			throw new WrongActionException(power.getName() + " doesn't have any building");
+
 		ArrayList<BuildingArmy> armyBuildingList = new ArrayList<>();
-		for(Building building : buildingList){
-			if(building instanceof BuildingArmy)
-				armyBuildingList.add((BuildingArmy)building);
+		for (Building building : buildingList) {
+			if (building instanceof BuildingArmy)
+				armyBuildingList.add((BuildingArmy) building);
 		}
-		
-		//if empty, power can't create units
-		if(armyBuildingList.isEmpty())
+
+		// if empty, power can't create units
+		if (armyBuildingList.isEmpty())
 			throw new WrongActionException("No army building");
-		
+
 		int numberBuilding = armyBuildingList.size();
 		int buildingIndex = random.nextInt(numberBuilding);
 		BuildingArmy buildingSelected = armyBuildingList.get(buildingIndex);
 		Position buildingPosition = getBuildingPosition(buildingSelected);
-		if(buildingPosition == null)
+		if (buildingPosition == null)
 			throw new WrongActionException("building Position can't be retrieved");
-		
+
 		int unitsType = UnitTypes.UNIT_INFANTRY;
 		int numberUnits = 0;
-		
-		//depending on building type, actions will change
+
+		// depending on building type, actions will change
 		switch (buildingSelected.getType()) {
-		//easy ai levels have very limited options
+		// easy ai levels have very limited options
 		case BuildingTypes.BUILDING_BARRACK:
-			if(aiLevel == GameConstants.AI_EASY) {
+			if (aiLevel == GameConstants.AI_EASY) {
 				unitsType = UnitTypes.UNIT_INFANTRY;
 				numberUnits = Infantry.NUMBER_MAX_UNITS;
-			}else {
+			} else {
 				unitsType = random.nextInt(UnitTypes.UNITS_IN_BARRACK);
-				//will find number of units to be created depending on ai level and Units
+				// will find number of units to be created depending on ai level and Units
 				numberUnits = findNumberUnits(power, unitsType, aiLevel);
 			}
 			break;
 
 		case BuildingTypes.BUILDING_DOCK:
-			if(aiLevel == GameConstants.AI_EASY)
+			if (aiLevel == GameConstants.AI_EASY)// easy ai won't create docks, so this check is just here to be safe
 				throw new WrongActionException("easy AI don't create boats");
 			else {
 				unitsType = UnitTypes.UNIT_BOAT;
-				//we always have 1 boat, and boat is important enough to skip cost constrains
+				// we always have 1 boat, and boat is important enough to skip cost constrains
 				numberUnits = Boat.NUMBER_MAX_UNITS;
 			}
 			break;
-			
+
 		case BuildingTypes.BUILDING_WORKSHOP:
-			if(aiLevel == GameConstants.AI_EASY) {
+			if (aiLevel == GameConstants.AI_EASY) {
 				unitsType = UnitTypes.UNIT_BATTERING_RAM;
 				numberUnits = BatteringRam.NUMBER_MAX_UNITS;
-			}else {
-				unitsType = random.nextInt(UnitTypes.UNITS_IN_DOCK - UnitTypes.UNITS_IN_DOCK + 1) + UnitTypes.UNITS_IN_DOCK;
+			} else {
+				unitsType = random.nextInt(UnitTypes.UNITS_IN_DOCK - UnitTypes.UNITS_IN_DOCK + 1)
+						+ UnitTypes.UNITS_IN_DOCK;
 				numberUnits = findNumberUnits(power, unitsType, aiLevel);
 			}
 			break;
@@ -266,7 +268,7 @@ public class AIManager {
 
 		try {
 			return actionValidator.createActionCreateUnit(power, unitsType, numberUnits, buildingPosition);
-		}catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new WrongActionException("unitCreationFailed");
 		}
 	}
@@ -274,53 +276,58 @@ public class AIManager {
 	/**
 	 * Returns number of units that power wants to create, depending on ai level.
 	 * Returns -1 if problem occurs
-	 * @param power the power concerned
+	 * 
+	 * @param power     the power concerned
 	 * @param unitsType the type of units
-	 * @param aiLevel the power ai level 
+	 * @param aiLevel   the power ai level
 	 * @return a number of units
 	 * @see data.unit.UnitTypes
 	 */
 	private int findNumberUnits(Power power, int unitsType, int aiLevel) {
-		//first, we have to find which unit it is and what are his costs
+		// first, we have to find which unit it is and what are his costs
 		int numberMaxUnits = Units.getNumberMaxUnits(unitsType);
 		int unitsCost = Units.getUnitCost(unitsType);
 		int unitsCostPerTurn = Units.getUnitCostPerTurn(unitsType);
-		
-		//we can already calculate cost of units 
+
+		// we can already calculate cost of units
 		int numberUnitsCreated = numberMaxUnits;
 		int unitsCostMax = numberMaxUnits * unitsCost;
 		int unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
-		
-		//food production and amount will be important to decide number units
+
+		// food production and amount will be important to decide number units
 		int foodAmount = power.getResourceAmount(ResourceTypes.RESOURCE_FOOD);
 		int foodProdPerTurn = power.getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD);
-		
-		//now we have 2 differents behaviors : if ai is normal or hard (easy is not counted here)
-		if(aiLevel == GameConstants.AI_NORMAL) {
-			/*Normal AI always want to create the maximum number of units allowed,
-			 it will count also the production per turn (he don't want to be in negative)*/
-			
-			while((unitsCostMax <= foodAmount && unitsCostPerTurnMax <= foodProdPerTurn) && numberUnitsCreated > 1) {
+
+		// now we have 2 differents behaviors : if ai is normal or hard (easy is not
+		// counted here)
+		if (aiLevel == GameConstants.AI_NORMAL) {
+			/*
+			 * Normal AI always want to create the maximum number of units allowed, it will
+			 * count also the production per turn (he don't want to be in negative)
+			 */
+
+			while ((unitsCostMax <= foodAmount && unitsCostPerTurnMax <= foodProdPerTurn) && numberUnitsCreated > 1) {
 				numberUnitsCreated--;
 				unitsCostMax = numberMaxUnits * unitsCost;
 				unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
 			}
-			
+
 			return numberUnitsCreated;
-		}else if (aiLevel == GameConstants.AI_HARD) {
-			/*Hard ai will want to create either all units, or half, or 1.
-			 * production per turn can be negative (he will seek for producing food after), 
-			 * food production per turn after buying units should just be over 
-			 * 							-Windmill.PROD_PER_TURN
-			 * and obvoiusly, he don't want to buy more units than he can*/
-			
+		} else if (aiLevel == GameConstants.AI_HARD) {
+			/*
+			 * Hard ai will want to create either all units, or half, or 1. production per
+			 * turn can be negative (he will seek for producing food after), food production
+			 * per turn after buying units should just be over -Windmill.PROD_PER_TURN and
+			 * obvoiusly, he don't want to buy more units than he can
+			 */
+
 			int choiceNumberUnits = random.nextInt(3);
-			
+
 			switch (choiceNumberUnits) {
-			case 0: //wants to create all units
-				//numberUnitsCreated is already set to numberMaxUnits
+			case 0: // wants to create all units
+				// numberUnitsCreated is already set to numberMaxUnits
 				break;
-			case 1: //wants to create half of units
+			case 1: // wants to create half of units
 				numberUnitsCreated = numberMaxUnits <= 2 ? 1 : numberMaxUnits / 2;
 				unitsCostMax = numberMaxUnits * unitsCost;
 				unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
@@ -331,60 +338,168 @@ public class AIManager {
 				unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
 				break;
 			}
-			
-			//almost the same verification rule as normal ai, except for the foodPerTurn
-			
+
+			// almost the same verification rule as normal ai, except for the foodPerTurn
+
 			int targetedProductionPerTurn = foodProdPerTurn + Windmill.PRODUCTION_PER_TURN;
-			while((unitsCostMax <= foodAmount && unitsCostPerTurnMax <= targetedProductionPerTurn) && numberUnitsCreated > 2) {
+			while ((unitsCostMax <= foodAmount && unitsCostPerTurnMax <= targetedProductionPerTurn)
+					&& numberUnitsCreated > 2) {
 				numberUnitsCreated--;
 				unitsCostMax = numberMaxUnits * unitsCost;
 				unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
 			}
-			
+
 			return numberUnitsCreated;
 		}
-		
+
 		return 0;
 	}
 
 	private Action tryCreateActionConstruct(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
 		int aiLevel = power.getAILevel();
-		if(aiLevel == GameConstants.AI_HARD) {
-			//will try to create a windmill if food prod per turn < 0
+
+		// if ai is in hard level, try to create a windmill if food prod per turn < 0
+		if (aiLevel == GameConstants.AI_HARD) {
+			int foodProductionPerTurn = power.getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD);
+			if (foodProductionPerTurn < 0) {
+				// we have to find if power have a box with no building and food resource
+				Box foodBox = getBoxWithResource(territory, ResourceTypes.RESOURCE_FOOD);
+				if (foodBox != null) {
+					Position buildingPosition = getBoxPosition(foodBox);
+					try {
+						return actionValidator.createActionConstruct(power, BuildingTypes.BUILDING_WINDMILL,
+								buildingPosition);
+					} catch (IllegalArgumentException e) {
+						throw new WrongActionException("can't create windmill");
+					}
+				}
+			}
 		}
+
+		// else, choose a box where to construct (we need a ground Box)
+		Box box;
+		do {
+			int boxIndex = random.nextInt(territory.size());
+			box = territory.get(boxIndex);
+		} while (box instanceof WaterBox);
 		
-		//choose a box where to construct
-		int boxIndex = random.nextInt(territory.size());
-		Box box = territory.get(boxIndex);
+		GroundBox groundBox = (GroundBox)box;
 		
-		
+		Position boxPosition = getBoxPosition(groundBox);
+
+		// and create a building randmomly (for easy ai),
+		int buildingType = BuildingTypes.BUILDING_BARRACK; // barrack by default
+		if (aiLevel == GameConstants.AI_EASY) {
+
+			do {
+				buildingType = random.nextInt(BuildingTypes.NUMBER_BUILDINGS);
+			} while (buildingType == BuildingTypes.BUILDING_DOCK); // easy ai don't do boat
+
+		} else { // or depending on his infos on it (for normal and hard ai)
+			// add random choice : will choose to construct a BuildingArmy/BuildingSpecial,
+			// or a BuildingProduct
+			int choice = random.nextInt(2);
+			
+			//before, check if has resource on this box ==> else, set choice to 0
+			if(groundBox.getResourceType() == ResourceTypes.NO_RESOURCE)
+				choice = 0;
+			
+			switch (choice) {
+			case 0: // buildingArmy or Special
+				boolean alreadyChose = false;
+				// if hard ai, will try in priority to create a dock if boxPosition is near
+				// water and have no other docks
+				if (aiLevel == GameConstants.AI_HARD) {
+					if (!haveThisBuildingType(buildingList, BuildingTypes.BUILDING_DOCK)) {
+						if (map.isNearWater(boxPosition)) {
+							buildingType = BuildingTypes.BUILDING_DOCK;
+							alreadyChose = true;
+						}
+					}
+
+					if (!alreadyChose) {
+						//choose a random building (not a BuildingProduct)
+						do {
+							buildingType = random.nextInt(BuildingTypes.NUMBER_BUILDINGS);
+						} while (buildingType > BuildingTypes.BUILDING_ARMY && buildingType < BuildingTypes.BUILDING_SPECIAL);
+					}
+				}
+				break;
+			case 1: // buildingProduct
+				// check which product is on the box, and choose the correct BuildingProduct
+				int resourceType = groundBox.getResourceType();
+				buildingType = getBuildingFromResource(resourceType);
+				break;
+			}
+		}
+
+		try {
+			return actionValidator.createActionConstruct(power, buildingType, boxPosition);
+		} catch (IllegalArgumentException e) {
+			throw new WrongActionException("Building construct failed");
+		}
+	}
+
+	private int getBuildingFromResource(int resourceType) {
+		switch (resourceType) {
+		case ResourceTypes.RESOURCE_FOOD:
+			return BuildingTypes.BUILDING_WINDMILL;
+		case ResourceTypes.RESOURCE_GOLD:
+			return BuildingTypes.BUILDING_MINE;
+		case ResourceTypes.RESOURCE_STONE:
+			return BuildingTypes.BUILDING_QUARRY;
+		case ResourceTypes.RESOURCE_WOOD:
+			return BuildingTypes.BUILDING_SAWMILL;
+		default:
+			return -1;
+		}
+	}
+
+	/**
+	 * Will try to get a box with specified resource.
+	 * <ul>
+	 * <li>If no box found, will returns null</li>
+	 * <li>Will try to return a Box with no building, or null if no one found</li>
+	 * </ul>
+	 * 
+	 * @param territory
+	 * @param resourceType
+	 * @return a box where food can be produced, else null
+	 */
+	private Box getBoxWithResource(ArrayList<Box> territory, int resourceType) {
+		for (Box box : territory) {
+			if (box instanceof GroundBox) {
+
+			} else {// no need to check further
+				continue;
+			}
+		}
 		return null;
 	}
 
-
 	private Action tryCreateActionMove(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
-		
+
 		int aiLevel = power.getAILevel();
-		//if AI have units
-		if(unitsList.isEmpty()) {
-			throw new WrongActionException(power.getName()+" doesn't have any units");
+		// if AI have units
+		if (unitsList.isEmpty()) {
+			throw new WrongActionException(power.getName() + " doesn't have any units");
 		}
-		
-		//get a random units
+
+		// get a random units
 		int numberUnits = unitsList.size();
 		int unitsIndex = random.nextInt(numberUnits);
 		Units unitSelected = unitsList.get(unitsIndex);
-		
+
 		Position unitPosition = getUnitsPosition(unitSelected);
 		if (unitPosition == null) {
 			throw new WrongActionException("Couldn't retrieve unit Position");
 		}
-		
-		//We check all near Box that we can possibly go to
+
+		// We check all near Box that we can possibly go to
 		ArrayList<Position> nearbyPosition = new ArrayList<Position>();
-		
+
 		for (int i = 0; i < map.getSize(); i++) {
 			for (int j = 0; j < map.getSize(); j++) {
 				Position boxPosition = new Position(i, j);
@@ -393,39 +508,36 @@ public class AIManager {
 				}
 			}
 		}
-		
-		//We only take Box that we can go to
+
+		// We only take Box that we can go to
 		ArrayList<Position> validPosition = new ArrayList<Position>();
-		
+
 		if (unitSelected.getTypes() == UnitTypes.UNIT_BOAT) {
-			//Cast as a Boat
-			Boat boatSelected = (Boat)unitSelected;
-			//select only WaterBox, or GroundBox if hasContainedUnit
-			for (Iterator<Position> i = nearbyPosition.iterator(); i.hasNext(); ) {
+			// Cast as a Boat
+			Boat boatSelected = (Boat) unitSelected;
+			// select only WaterBox, or GroundBox if hasContainedUnit
+			for (Iterator<Position> i = nearbyPosition.iterator(); i.hasNext();) {
 				Position visitPosition = i.next();
 				Box visitBox = map.getBox(visitPosition);
 				if (visitBox instanceof WaterBox) {
 					validPosition.add(visitPosition);
-				}
-				else {
-					//implicit GroundBox
+				} else {
+					// implicit GroundBox
 					if (boatSelected.hasContainedUnits()) {
-						//we do not check if its near Water, PathFinding will do it
+						// we do not check if its near Water, PathFinding will do it
 						validPosition.add(visitPosition);
 					}
 				}
 			}
-		}
-		else {
-			//select only GroundBox, or WaterBox only with Boat
-			for (Iterator<Position> i = nearbyPosition.iterator(); i.hasNext(); ) {
+		} else {
+			// select only GroundBox, or WaterBox only with Boat
+			for (Iterator<Position> i = nearbyPosition.iterator(); i.hasNext();) {
 				Position visitPosition = i.next();
 				Box visitBox = map.getBox(visitPosition);
 				if (visitBox instanceof GroundBox) {
 					validPosition.add(visitPosition);
-				}
-				else {
-					//implicit WaterBox
+				} else {
+					// implicit WaterBox
 					if (visitBox.hasUnit()) {
 						if (visitBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
 							validPosition.add(visitPosition);
@@ -434,41 +546,39 @@ public class AIManager {
 				}
 			}
 		}
-		
-		//for now, add a random Box
+
+		// for now, add a random Box
 		int numberValidBox = unitsList.size();
 		int BoxIndex = random.nextInt(numberValidBox);
 		Position positionSelected = validPosition.get(BoxIndex);
-		
 
 		try {
 			return actionValidator.createActionMove(power, unitPosition, positionSelected);
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new WrongActionException("invalid unit movement");
 		}
-		
+
 	}
 
 	private Action tryCreateActionAttack(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
-		if(unitsList.isEmpty()) {
-			throw new WrongActionException(power.getName()+" doesn't have any units");
+		if (unitsList.isEmpty()) {
+			throw new WrongActionException(power.getName() + " doesn't have any units");
 		}
-		
-		//get a random units
+
+		// get a random units
 		int numberUnits = unitsList.size();
 		int unitsIndex = random.nextInt(numberUnits);
 		Units unitSelected = unitsList.get(unitsIndex);
-		
+
 		Position unitPosition = getUnitsPosition(unitSelected);
 		if (unitPosition == null) {
 			throw new WrongActionException("Couldn't retrieve unit Position");
 		}
-		
-		//We check all near Box that we can possibly go to
+
+		// We check all near Box that we can possibly go to
 		ArrayList<Position> nearbyPosition = new ArrayList<Position>();
-		
+
 		for (int i = 0; i < map.getSize(); i++) {
 			for (int j = 0; j < map.getSize(); j++) {
 				Position boxPosition = new Position(i, j);
@@ -477,47 +587,43 @@ public class AIManager {
 				}
 			}
 		}
-		
-		//We only take Box that we can go to
+
+		// We only take Box that we can go to
 		ArrayList<Position> validPosition = new ArrayList<Position>();
-		
-		for (Iterator<Position> i = nearbyPosition.iterator(); i.hasNext(); ) {
+
+		for (Iterator<Position> i = nearbyPosition.iterator(); i.hasNext();) {
 			Position visitPosition = i.next();
 			Box visitBox = map.getBox(visitPosition);
 			if (visitBox instanceof GroundBox) {
-				GroundBox visitGBox = (GroundBox)visitBox;
+				GroundBox visitGBox = (GroundBox) visitBox;
 				if (visitGBox.hasUnit()) {
 					validPosition.add(visitPosition);
-				}
-				else if (visitGBox.hasBuilding()) {
-					//A bit of Intelligence here, only attack SpecialBuilding
+				} else if (visitGBox.hasBuilding()) {
+					// A bit of Intelligence here, only attack SpecialBuilding
 					if (visitGBox.getBuilding() instanceof BuildingSpecial) {
 						validPosition.add(visitPosition);
 					}
 				}
-			}
-			else {
-				//implicit WaterBox
+			} else {
+				// implicit WaterBox
 				if (visitBox.hasUnit()) {
-					//Nearby Boat
+					// Nearby Boat
 					validPosition.add(visitPosition);
 				}
 			}
 		}
-		
-		//for now, add a random Box
+
+		// for now, add a random Box
 		int numberValidBox = unitsList.size();
 		int BoxIndex = random.nextInt(numberValidBox);
 		Position positionSelected = validPosition.get(BoxIndex);
-		
 
 		try {
 			return actionValidator.createActionAttack(power, unitPosition, positionSelected);
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new WrongActionException("invalid unit movement");
 		}
-		
+
 	}
 
 	/**
@@ -533,7 +639,8 @@ public class AIManager {
 	 * @param unitsList     power's units
 	 * @return an array of actions
 	 */
-	private Action[] getDesiredActions(Power power, Action[] triedActions, int numberActions, ArrayList<Units> unitsList, ArrayList<Building> buildingList, ArrayList<Box> territory) {
+	private Action[] getDesiredActions(Power power, Action[] triedActions, int numberActions,
+			ArrayList<Units> unitsList, ArrayList<Building> buildingList, ArrayList<Box> territory) {
 		// we have some actions to prioritize in order to have a legit intelligence, so,
 		// we check here if some things are done before
 		return null;
@@ -589,31 +696,73 @@ public class AIManager {
 		}
 		return buildingList;
 	}
-	
+
 	private Position getBuildingPosition(Building buildingSelected) {
-		for(int i = 0; i < map.getSize(); i++){
-			for(int j = 0; j < map.getSize(); j++){
+		for (int i = 0; i < map.getSize(); i++) {
+			for (int j = 0; j < map.getSize(); j++) {
 				Box tmpBox = map.getBox(i, j);
-				if(tmpBox instanceof GroundBox) {
-					GroundBox gBox = (GroundBox)tmpBox;
-					if(gBox.hasBuilding() && gBox.getBuilding() == buildingSelected)
+				if (tmpBox instanceof GroundBox) {
+					GroundBox gBox = (GroundBox) tmpBox;
+					if (gBox.hasBuilding() && gBox.getBuilding() == buildingSelected)
 						return new Position(i, j);
 				}
 			}
 		}
 		return null;
 	}
-	
+
 	private Position getUnitsPosition(Units unitsSelected) {
-		for(int i = 0; i < map.getSize(); i++){
-			for(int j = 0; j < map.getSize(); j++){
+		for (int i = 0; i < map.getSize(); i++) {
+			for (int j = 0; j < map.getSize(); j++) {
 				Box tmpBox = map.getBox(i, j);
-				if(tmpBox.hasUnit() && tmpBox.getUnit() == unitsSelected) {
+				if (tmpBox.hasUnit() && tmpBox.getUnit() == unitsSelected) {
 					return new Position(i, j);
 				}
 			}
 		}
 		return null;
 	}
-	
+
+	private Position getBoxPosition(Box boxSelected) {
+		for (int i = 0; i < map.getSize(); i++) {
+			for (int j = 0; j < map.getSize(); j++) {
+				Box tmpBox = map.getBox(i, j);
+				if (tmpBox == boxSelected) {
+					return new Position(i, j);
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Checks if a unitsList contains at least one unit of a specific unitType
+	 * 
+	 * @param unitsList
+	 * @param unitType
+	 * @return true if have one or more units of that type, else false
+	 */
+	private boolean haveThisUnitType(ArrayList<Units> unitsList, int unitType) {
+		for (Units units : unitsList) {
+			if (units.getTypes() == unitType)
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if a buildingList contains at least one buildings of a specific
+	 * buildingType
+	 * 
+	 * @param buildingList
+	 * @param buildingType
+	 * @return true if have one or more units of that type, else false
+	 */
+	private boolean haveThisBuildingType(ArrayList<Building> buildingList, int buildingType) {
+		for (Building building : buildingList) {
+			if (building.getType() == buildingType)
+				return true;
+		}
+		return false;
+	}
 }
