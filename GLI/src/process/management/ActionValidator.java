@@ -457,7 +457,7 @@ public class ActionValidator {
 							if (units.getTypes() == UnitTypes.UNIT_BOAT) {
 								Boat unitsBoat = (Boat)units;
 								//Make sure that the Boat is on or near Water
-								if (isNearWater(visitPosition)) {
+								if (map.isNearWater(visitPosition)) {
 									//Now, 2 cases:   -WaterBox   -Coast (GroundBox near Water)
 									if (visitBox instanceof WaterBox) {
 										//Boat is on Water
@@ -750,7 +750,7 @@ public class ActionValidator {
 		}
 		
 		if (buildingType == BuildingTypes.BUILDING_DOCK) {
-			if (!isNearWater(target)) {
+			if (!map.isNearWater(target)) {
 				Logger.warn(powerConcerned.getName()+" think dock doesn't belong near Water");
 				throw new IllegalArgumentException("Le port n'est pas a poximite de case d'eau"); 
 			}
@@ -770,43 +770,6 @@ public class ActionValidator {
 		groundBox.setBuilding(new PhantomBuilding());
 		Logger.info(powerConcerned.getName()+" create an ActionConstruct");
 		return new ActionConstruct(powerConcerned, buildingType, target);
-	}
-	
-	/**
-	 * check if nearby Boxes are made of Water
-	 * @param target
-	 * @return true if target is near Water
-	 */
-	private boolean isNearWater(Position target) {
-		Box wBox = null;
-		for (int d=0 ; d<=4 ; d++) {
-			switch(d) {
-			case 0:
-				wBox = map.getBox(target);
-				break;
-			case 1:
-				wBox = map.getBox(map.getUpPos(target));
-				break;
-			case 2:
-				wBox = map.getBox(map.getLeftPos(target));
-				break;
-			case 3:
-				wBox = map.getBox(map.getRightPos(target));
-				break;
-			case 4:
-				wBox = map.getBox(map.getDownPos(target));
-				break;
-			default:
-				wBox = null;
-				break;
-			}
-			if (wBox != null) {
-				if (wBox instanceof WaterBox) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 	
 	/**

@@ -69,6 +69,44 @@ public class GameMap implements Serializable {
 		}
 	}
 	
+	/**
+	 * check if nearby Boxes are made of Water
+	 * @param target
+	 * @return true if target is near Water
+	 */
+	public boolean isNearWater(Position target) {
+		Box wBox = null;
+		for (int d=0 ; d<=4 ; d++) {
+			switch(d) {
+			case 0:
+				wBox = getBox(target);
+				break;
+			case 1:
+				wBox = getBox(getUpPos(target));
+				break;
+			case 2:
+				wBox = getBox(getLeftPos(target));
+				break;
+			case 3:
+				wBox = getBox(getRightPos(target));
+				break;
+			case 4:
+				wBox = getBox(getDownPos(target));
+				break;
+			default:
+				wBox = null;
+				break;
+			}
+			if (wBox != null) {
+				if (wBox instanceof WaterBox) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	
 	public String toString() {
 		String result = "\nMap Boxes:\n\n";
 		for(int i = 0; i < boxes.length; i++){
