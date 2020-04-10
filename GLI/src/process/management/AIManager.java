@@ -15,11 +15,16 @@ import data.boxes.GroundBox;
 import data.building.Building;
 import data.building.BuildingTypes;
 import data.building.army.BuildingArmy;
+import data.building.product.Windmill;
 import data.resource.Resource;
 import data.resource.ResourceTypes;
+import data.unit.Archer;
 import data.unit.BatteringRam;
 import data.unit.Boat;
+import data.unit.Cavalry;
 import data.unit.Infantry;
+import data.unit.Pikeman;
+import data.unit.Trebuchet;
 import data.unit.UnitTypes;
 import data.unit.Units;
 import exceptions.WrongActionException;
@@ -136,6 +141,8 @@ public class AIManager {
 					action = tryCreateActionMakeAlliance(power, unitsList, buildingList, territory);
 				}
 				logger.info("Action " + action.getClass().getSimpleName() + " created");
+				actionsTried[numberActionsTried] = action;
+				numberActionsTried++;
 			} catch (WrongActionException e) {
 				logger.warn("Action denied : " + e.getMessage());
 			}
@@ -209,16 +216,16 @@ public class AIManager {
 			ArrayList<Box> territory) throws WrongActionException {
 		int aiLevel = power.getAILevel();
 		
-		
+		//we have to count each buildingArmy that power owns
 		ArrayList<BuildingArmy> armyBuildingList = new ArrayList<>();
-		if(armyBuildingList.isEmpty())
-			throw new WrongActionException("No army building");
-		
-		
 		for(Building building : buildingList){
 			if(building instanceof BuildingArmy)
 				armyBuildingList.add((BuildingArmy)building);
 		}
+		
+		//if empty, power can't create units
+		if(armyBuildingList.isEmpty())
+			throw new WrongActionException("No army building");
 		
 		int numberBuilding = armyBuildingList.size();
 		int buildingIndex = random.nextInt(numberBuilding);
@@ -231,12 +238,15 @@ public class AIManager {
 		int numberUnits = 0;
 		
 		switch (buildingSelected.getType()) {
+		//easy ai levels have very limited options
 		case BuildingTypes.BUILDING_BARRACK:
 			if(aiLevel == GameConstants.AI_EASY) {
 				unitsType = UnitTypes.UNIT_INFANTRY;
 				numberUnits = Infantry.NUMBER_MAX_UNITS;
 			}else {
 				unitsType = random.nextInt(UnitTypes.UNITS_IN_BARRACK);
+				//will find number of units to be created depending on ai level and Units
+				numberUnits = findNumberUnits(power, unitsType, aiLevel);
 			}
 			break;
 
@@ -245,6 +255,7 @@ public class AIManager {
 				throw new WrongActionException("easy AI don't create boats");
 			else {
 				unitsType = UnitTypes.UNIT_BOAT;
+				//we always have 1 boat, and boat is important enough to skip cost constrains
 				numberUnits = Boat.NUMBER_MAX_UNITS;
 			}
 			break;
@@ -255,6 +266,7 @@ public class AIManager {
 				numberUnits = BatteringRam.NUMBER_MAX_UNITS;
 			}else {
 				unitsType = random.nextInt(UnitTypes.UNITS_IN_DOCK - UnitTypes.UNITS_IN_DOCK + 1) + UnitTypes.UNITS_IN_DOCK;
+				numberUnits = findNumberUnits(power, unitsType, aiLevel);
 			}
 			break;
 		default:
@@ -264,8 +276,87 @@ public class AIManager {
 		try {
 			return actionValidator.createActionCreateUnit(power, unitsType, numberUnits, buildingPosition);
 		}catch (IllegalArgumentException e) {
-			throw new WrongActionException("invalid unit creation");
+			throw new WrongActionException("unitCreationFailed");
 		}
+	}
+
+	/**
+	 * Returns number of units that power wants to create, depending on ai level.
+	 * Returns -1 if problem occurs
+	 * @param power the power concerned
+	 * @param unitsType the type of units
+	 * @param aiLevel the power ai level 
+	 * @return a number of units
+	 * @see data.unit.UnitTypes
+	 */
+	private int findNumberUnits(Power power, int unitsType, int aiLevel) {
+		//first, we have to find which unit it is and what are his costs
+		int numberMaxUnits = Units.getNumberMaxUnits(unitsType);
+		int unitsCost = Units.getUnitCost(unitsType);
+		int unitsCostPerTurn = Units.getUnitCostPerTurn(unitsType);
+		
+		//we can already calculate cost of units 
+		int numberUnitsCreated = numberMaxUnits;
+		int unitsCostMax = numberMaxUnits * unitsCost;
+		int unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
+		
+		//food production and amount will be important to decide number units
+		int foodAmount = power.getResourceAmount(ResourceTypes.RESOURCE_FOOD);
+		int foodProdPerTurn = power.getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD);
+		
+		//now we have 2 differents behaviors : if ai is normal or hard (easy is not counted here)
+		if(aiLevel == GameConstants.AI_NORMAL) {
+			/*Normal AI always want to create the maximum number of units allowed,
+			 it will count also the production per turn (he don't want to be in negative)
+			 It will eventually want to create one single unit of this type, if he really can't do anything else*/
+			
+			while((unitsCostMax <= foodAmount && unitsCostPerTurnMax <= foodProdPerTurn) && numberUnitsCreated > 2) {
+				numberUnitsCreated--;
+				unitsCostMax = numberMaxUnits * unitsCost;
+				unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
+			}
+			
+			return numberUnitsCreated;
+		}else if (aiLevel == GameConstants.AI_HARD) {
+			/*Hard ai will want to create either all units, or half, or 1.
+			 * production per turn can be negative (he will seek for producing food after), 
+			 * food production per turn after buying units should just be over 
+			 * 							-Windmill.PROD_PER_TURN
+			 * and obvoiusly, he don't want to buy more units than he can*/
+			
+			int choiceNumberUnits = random.nextInt(3);
+			
+			switch (choiceNumberUnits) {
+			case 0: //wants to create all units
+				//numberUnitsCreated is already set to numberMaxUnits
+				break;
+			case 1: //wants to create half of units
+				numberUnitsCreated = numberMaxUnits <= 2 ? 1 : numberMaxUnits / 2;
+				unitsCostMax = numberMaxUnits * unitsCost;
+				unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
+				break;
+			case 2: // wants to create a single unit
+				numberUnitsCreated = 1;
+				unitsCostMax = numberMaxUnits * unitsCost;
+				unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
+				break;
+			}
+			
+			//almost the same verification rule as normal ai, except for the foodPerTurn
+			
+			int targetedProductionPerTurn = foodProdPerTurn + Windmill.PRODUCTION_PER_TURN;
+			while((unitsCostMax <= foodAmount && unitsCostPerTurnMax <= targetedProductionPerTurn) && numberUnitsCreated > 2) {
+				numberUnitsCreated--;
+				unitsCostMax = numberMaxUnits * unitsCost;
+				unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
+			}
+			
+			return numberUnitsCreated;
+		}
+		
+		
+		
+		return 0;
 	}
 
 	private Position getBuildingPosition(BuildingArmy buildingSelected) {
