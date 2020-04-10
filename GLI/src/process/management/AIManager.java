@@ -308,10 +308,9 @@ public class AIManager {
 		//now we have 2 differents behaviors : if ai is normal or hard (easy is not counted here)
 		if(aiLevel == GameConstants.AI_NORMAL) {
 			/*Normal AI always want to create the maximum number of units allowed,
-			 it will count also the production per turn (he don't want to be in negative)
-			 It will eventually want to create one single unit of this type, if he really can't do anything else*/
+			 it will count also the production per turn (he don't want to be in negative)*/
 			
-			while((unitsCostMax <= foodAmount && unitsCostPerTurnMax <= foodProdPerTurn) && numberUnitsCreated > 2) {
+			while((unitsCostMax <= foodAmount && unitsCostPerTurnMax <= foodProdPerTurn) && numberUnitsCreated > 1) {
 				numberUnitsCreated--;
 				unitsCostMax = numberMaxUnits * unitsCost;
 				unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
@@ -376,7 +375,16 @@ public class AIManager {
 
 	private Action tryCreateActionConstruct(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
-		// TODO Auto-generated method stub
+		int aiLevel = power.getAILevel();
+		if(aiLevel == GameConstants.AI_HARD) {
+			//will try to create a windmill if food prod per turn < 0
+		}
+		
+		//choose a box where to construct
+		int boxIndex = random.nextInt(territory.size());
+		Box box = territory.get(boxIndex);
+		
+		
 		return null;
 	}
 
