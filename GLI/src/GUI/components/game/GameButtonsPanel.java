@@ -99,7 +99,7 @@ public class GameButtonsPanel extends JPanel{
 				context.sauvegarder();
 				
 			}else if(answer==JOptionPane.NO_OPTION) {
-				
+				context.removePanels();
 			}
 		}
 	}

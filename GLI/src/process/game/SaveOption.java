@@ -25,13 +25,23 @@ public class SaveOption {
 		 map= (GameMap) stream.readObject();
 		return map;
 	}
+	public Power[] LoadPower() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream stream = new ObjectInputStream(new FileInputStream("game.ser"));
+		Power player[] = null;
+		 GameMap map = null;
+		 map= (GameMap) stream.readObject();
+		 player= (Power[]) stream.readObject();
 
-public 	void sauvegarder(File file, GameMap map, Power player) throws FileNotFoundException, IOException {
+		 return player;
+	}
+
+public 	void sauvegarder(File file, GameMap map, Power player[]) throws FileNotFoundException, IOException {
 	Logger.info("=== FIN DE PARTIE  ===");
 	ObjectOutputStream gamesave= new ObjectOutputStream(new FileOutputStream(file));
 	gamesave.writeObject(map);
 	Logger.info(" map is serialized  ");
 	gamesave.writeObject(player);
+
 	Logger.info("player is serialized");
 	gamesave.close();
 	

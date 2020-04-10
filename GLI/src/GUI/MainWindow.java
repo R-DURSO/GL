@@ -80,16 +80,17 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void loadGame() {
-		Power player = null ;
+		 Power player[] = null ;
 		GameMap map = null ;
 		try {
 			map=game.loadMap();
+			player=game.LoadPower();
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(map.getSize());
-		
+		gamePanel.initGamePanel(map, player);
+		cardLayout.show(getContentPane(), GAME_WINDOW);
 	}
 	
 	

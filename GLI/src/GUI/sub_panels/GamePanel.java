@@ -67,8 +67,9 @@ public class GamePanel extends JPanel {
 	private ActionValidator actionValidator;
 	private Power player;
 	private GameLoop gameLoop;
+	// use for save of game  
 	private SaveOption save;
-	
+	private Power allpowers[];
 	public GamePanel(MainWindow window) {
 		this.window = window;
 		init();
@@ -84,7 +85,7 @@ public class GamePanel extends JPanel {
 	public void initGamePanel(GameMap map, Power powers[]) {
 		this.map = map;
 		this.player = powers[0];
-
+		allpowers=powers;
 		gameLoop = new GameLoop(map, powers);
 
 		actionValidator = new ActionValidator(map);
@@ -263,20 +264,21 @@ public class GamePanel extends JPanel {
 		save = new SaveOption();
 		
 		try {
-			save.sauvegarder(filesave,map, player);
+			save.sauvegarder(filesave,map, allpowers);
 		} catch (IOException e) {
 
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		removePanels();
-		window.changeWindow();
+		
 		
 	}
 
-	private void removePanels() {
+	public void removePanels() {
 		remove(gameButtonsPanel);
 		remove(mapPanel);
 		remove(infosPanel);
 		remove(playerResourcesPanel);
+		window.changeWindow();
 	}
 }
