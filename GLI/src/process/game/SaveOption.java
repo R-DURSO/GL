@@ -21,16 +21,14 @@ public class SaveOption {
 	}
 	public GameMap loadMap() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream stream = new ObjectInputStream(new FileInputStream("game.ser"));
-		 GameMap map = null;
-		 map= (GameMap) stream.readObject();
+		 GameMap map = (GameMap) stream.readObject();
+		stream.close();
 		return map;
 	}
 	public Power[] LoadPower() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream stream = new ObjectInputStream(new FileInputStream("game.ser"));
-		 Power player[] = null;
-		 GameMap map = null;
-		 map = (GameMap) stream.readObject();
-		 player = (Power[]) stream.readObject();
+		 Power player[] = (Power[]) stream.readObject();
+		stream.close();
 		return player;
 	}
 
