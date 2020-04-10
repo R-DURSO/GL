@@ -19,7 +19,7 @@ public class SaveOption {
 	public SaveOption() {
 
 	}
-	public GameMap  loadMap() throws FileNotFoundException, IOException, ClassNotFoundException {
+	public GameMap loadMap() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream stream = new ObjectInputStream(new FileInputStream("game.ser"));
 		 GameMap map = null;
 		 map= (GameMap) stream.readObject();
@@ -27,23 +27,21 @@ public class SaveOption {
 	}
 	public Power[] LoadPower() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream stream = new ObjectInputStream(new FileInputStream("game.ser"));
-		Power player[] = null;
+		 Power player[] = null;
 		 GameMap map = null;
-		 map= (GameMap) stream.readObject();
-		 player= (Power[]) stream.readObject();
-
-		 return player;
+		 map = (GameMap) stream.readObject();
+		 player = (Power[]) stream.readObject();
+		return player;
 	}
 
-public 	void sauvegarder(File file, GameMap map, Power player[]) throws FileNotFoundException, IOException {
-	Logger.info("=== FIN DE PARTIE  ===");
-	ObjectOutputStream gamesave= new ObjectOutputStream(new FileOutputStream(file));
-	gamesave.writeObject(map);
-	Logger.info(" map is serialized  ");
-	gamesave.writeObject(player);
-
-	Logger.info("player is serialized");
-	gamesave.close();
+	public 	void sauvegarder(File file, GameMap map, Power player[]) throws FileNotFoundException, IOException {
+		Logger.info("=== FIN DE LA PARTIE  ===");
+		ObjectOutputStream gamesave= new ObjectOutputStream(new FileOutputStream(file));
+		gamesave.writeObject(map);
+		Logger.info("Map is saved");
+		gamesave.writeObject(player);
+		Logger.info("Player is saved");
+		gamesave.close();
+	}
 	
-}
 }

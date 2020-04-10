@@ -29,7 +29,7 @@ public class GameButtonsPanel extends JPanel{
 	
 	private JPanel contextPanel = new JPanel();
 	private JButton endTurnButton = new JButton("Fin du tour");
-	private JButton quitButton = new JButton("Quitter");
+	private JButton quitButton = new JButton("Retour au Menu");
 	
 	private final Dimension LEFT_DIMENSION = new Dimension(4 * GuiPreferences.WIDTH / 5, GuiPreferences.HEIGHT / 10);
 	private final Dimension RIGHT_DIMENSION = new Dimension(GuiPreferences.WIDTH / 5, GuiPreferences.HEIGHT / 10);
@@ -83,7 +83,7 @@ public class GameButtonsPanel extends JPanel{
 	class ActionEndTurn implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			int answer = JOptionPane.showConfirmDialog(context, "Voulez-vous vraiment terminer votre tour?", "Fin de tour", JOptionPane.YES_NO_OPTION);
+			int answer = JOptionPane.showConfirmDialog(context, "Voulez-vous terminer votre tour ?", "Fin de tour", JOptionPane.YES_NO_OPTION);
 			if(answer == JOptionPane.YES_OPTION)
 				context.endPlayerTurn();
 		}
@@ -93,14 +93,14 @@ public class GameButtonsPanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			//c'est deja la commande pour quitter?
-			int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous voulez vous sauvegarder la partie",
-					"Fin du jeux ", JOptionPane.YES_NO_OPTION);
-			if(answer==JOptionPane.YES_OPTION) {
+			int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous sauvegarder la partie ?",
+					"Fin du jeu", JOptionPane.YES_NO_OPTION);
+			if (answer == JOptionPane.YES_OPTION) {
 				context.sauvegarder();
-				
-			}else if(answer==JOptionPane.NO_OPTION) {
+			} else if (answer == JOptionPane.NO_OPTION) {
 				context.removePanels();
 			}
 		}
 	}
+	
 }

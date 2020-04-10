@@ -259,19 +259,19 @@ public class GamePanel extends JPanel {
 		return targetPosition;
 	}
 	
+	/**
+	 * Crée un fichier de sauvegarde de la partie
+	 */
 	public void sauvegarder()  {
 		File filesave = new File("game.ser");
 		save = new SaveOption();
 		
 		try {
-			save.sauvegarder(filesave,map, allpowers);
+			save.sauvegarder(filesave, map, allpowers);
 		} catch (IOException e) {
-
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		removePanels();
-		
-		
 	}
 
 	public void removePanels() {
