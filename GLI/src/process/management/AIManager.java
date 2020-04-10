@@ -237,6 +237,7 @@ public class AIManager {
 		int unitsType = UnitTypes.UNIT_INFANTRY;
 		int numberUnits = 0;
 		
+		//depending on building type, actions will change
 		switch (buildingSelected.getType()) {
 		//easy ai levels have very limited options
 		case BuildingTypes.BUILDING_BARRACK:
