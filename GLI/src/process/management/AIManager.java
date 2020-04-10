@@ -1,6 +1,7 @@
 package process.management;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
@@ -9,19 +10,16 @@ import data.GameConstants;
 import data.GameMap;
 import data.Position;
 import data.Power;
-import data.actions.Action;
-import data.boxes.Box;
-import data.boxes.GroundBox;
+import data.boxes.*;
+import data.actions.*;
 import data.building.Building;
 import data.building.BuildingTypes;
-import data.building.army.BuildingArmy;
-import data.resource.Resource;
-import data.resource.ResourceTypes;
-import data.unit.BatteringRam;
-import data.unit.Boat;
-import data.unit.Infantry;
-import data.unit.UnitTypes;
-import data.unit.Units;
+import data.building.army.*;
+import data.building.product.*;
+import data.building.special.*;
+import data.resource.*;
+import data.unit.*;
+
 import exceptions.WrongActionException;
 import log.LoggerUtility;
 
@@ -287,20 +285,66 @@ public class AIManager {
 		}
 		
 		//We check all near Box that we can possibly go to
-		ArrayList<Box> nearbyBox = new ArrayList<Box>();
+		ArrayList<Position> nearbyPosition = new ArrayList<Position>();
 		
 		for (int i = 0; i < map.getSize(); i++) {
 			for (int j = 0; j < map.getSize(); j++) {
 				Position boxPosition = new Position(i, j);
 				if (actionValidator.isUnitsOnRange(unitPosition, unitSelected.getMovement(), boxPosition)) {
-					nearbyBox.add(map.getBox(boxPosition));
+					nearbyPosition.add(boxPosition);
 				}
 			}
 		}
 		
+		//We only take Box that we can go to
+		ArrayList<Position> validPosition = new ArrayList<Position>();
+		
+		if (unitSelected.getTypes() == UnitTypes.UNIT_BOAT) {
+			//Cast as a Boat
+			Boat boatSelected = (Boat)unitSelected;
+			//select only WaterBox, or GroundBox if hasContainedUnit
+			for (Iterator<Position> i = nearbyPosition.iterator(); i.hasNext(); ) {
+				Position visitPosition = i.next();
+				Box visitBox = map.getBox(visitPosition);
+				if (visitBox instanceof WaterBox) {
+					validPosition.add(visitPosition);
+				}
+				else {
+					//implicit GroundBox
+					if (boatSelected.hasContainedUnits()) {
+						//we do not check if its near Water, PathFinding will do it
+						validPosition.add(visitPosition);
+					}
+				}
+			}
+		}
+		else {
+			//select only GroundBox, or WaterBox only with Boat
+			for (Iterator<Position> i = nearbyPosition.iterator(); i.hasNext(); ) {
+				Position visitPosition = i.next();
+				Box visitBox = map.getBox(visitPosition);
+				if (visitBox instanceof GroundBox) {
+					validPosition.add(visitPosition);
+				}
+				else {
+					//implicit WaterBox
+					if (visitBox.hasUnit()) {
+						if (visitBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
+							validPosition.add(visitPosition);
+						}
+					}
+				}
+			}
+		}
+		
+		//for now, add a random Box
+		int numberValidBox = unitsList.size();
+		int BoxIndex = random.nextInt(numberValidBox);
+		Position positionSelected = validPosition.get(BoxIndex);
+		
 
 		try {
-			return actionValidator.createActionMove(power, unitPosition, unitPosition);
+			return actionValidator.createActionMove(power, unitPosition, positionSelected);
 		}
 		catch (IllegalArgumentException e) {
 			throw new WrongActionException("invalid unit movement");
@@ -310,8 +354,72 @@ public class AIManager {
 
 	private Action tryCreateActionAttack(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
-		// TODO Auto-generated method stub
-		return null;
+		if(unitsList.isEmpty()) {
+			throw new WrongActionException(power.getName()+" doesn't have any units");
+		}
+		
+		//get a random units
+		int numberUnits = unitsList.size();
+		int unitsIndex = random.nextInt(numberUnits);
+		Units unitSelected = unitsList.get(unitsIndex);
+		
+		Position unitPosition = getUnitsPosition(unitSelected);
+		if (unitPosition == null) {
+			throw new WrongActionException("Couldn't retrieve unit Position");
+		}
+		
+		//We check all near Box that we can possibly go to
+		ArrayList<Position> nearbyPosition = new ArrayList<Position>();
+		
+		for (int i = 0; i < map.getSize(); i++) {
+			for (int j = 0; j < map.getSize(); j++) {
+				Position boxPosition = new Position(i, j);
+				if (actionValidator.isUnitsOnRange(unitPosition, unitSelected.getRange(), boxPosition)) {
+					nearbyPosition.add(boxPosition);
+				}
+			}
+		}
+		
+		//We only take Box that we can go to
+		ArrayList<Position> validPosition = new ArrayList<Position>();
+		
+		for (Iterator<Position> i = nearbyPosition.iterator(); i.hasNext(); ) {
+			Position visitPosition = i.next();
+			Box visitBox = map.getBox(visitPosition);
+			if (visitBox instanceof GroundBox) {
+				GroundBox visitGBox = (GroundBox)visitBox;
+				if (visitGBox.hasUnit()) {
+					validPosition.add(visitPosition);
+				}
+				else if (visitGBox.hasBuilding()) {
+					//A bit of Intelligence here, only attack SpecialBuilding
+					if (visitGBox.getBuilding() instanceof BuildingSpecial) {
+						validPosition.add(visitPosition);
+					}
+				}
+			}
+			else {
+				//implicit WaterBox
+				if (visitBox.hasUnit()) {
+					//Nearby Boat
+					validPosition.add(visitPosition);
+				}
+			}
+		}
+		
+		//for now, add a random Box
+		int numberValidBox = unitsList.size();
+		int BoxIndex = random.nextInt(numberValidBox);
+		Position positionSelected = validPosition.get(BoxIndex);
+		
+
+		try {
+			return actionValidator.createActionAttack(power, unitPosition, positionSelected);
+		}
+		catch (IllegalArgumentException e) {
+			throw new WrongActionException("invalid unit movement");
+		}
+		
 	}
 
 	/**
