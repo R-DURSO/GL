@@ -14,7 +14,7 @@ public class Windmill extends BuildingProduct implements Serializable {
 	private static final int BUILD_TIME = 1;
 	public static final int COST = 100;
 	private static final int BASE_HEALTH = 3;
-	private static final int PRODUCTION_PER_TURN = 20;
+	public static final int PRODUCTION_PER_TURN = 20;
 	
 	public Windmill() {
 		super(BUILD_TIME, BASE_HEALTH);

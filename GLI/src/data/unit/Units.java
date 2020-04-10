@@ -29,6 +29,84 @@ public abstract class Units implements Serializable{
 	}
 	
 	/**
+	 * Returns the number max of units of a defined type, or -1 if the type is not recognized
+	 * @param unitsType
+	 * @return numberMax of unit types
+	 */
+	public static int getNumberMaxUnits(int unitsType) {
+		switch (unitsType) {
+		case UnitTypes.UNIT_ARCHER:
+			return Archer.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_BATTERING_RAM:
+			return BatteringRam.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_BOAT:
+			return Boat.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_CAVALRY:
+			return Cavalry.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_INFANTRY:
+			return Infantry.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_PIKEMAN:
+			return Pikeman.NUMBER_MAX_UNITS;
+		case UnitTypes.UNIT_TREBUCHET:
+			return Trebuchet.NUMBER_MAX_UNITS;
+		default:
+			return -1;
+		}
+	}
+	
+	/**
+	 * Returns the cost of a unit of a defined type, or -1 if the type is not recognized
+	 * @param unitsType
+	 * @return numberMax of unit types
+	 */
+	public static int getUnitCost(int unitsType) {
+		switch (unitsType) {
+		case UnitTypes.UNIT_ARCHER:
+			return Archer.COST;
+		case UnitTypes.UNIT_BATTERING_RAM:
+			return BatteringRam.COST;
+		case UnitTypes.UNIT_BOAT:
+			return Boat.COST;
+		case UnitTypes.UNIT_CAVALRY:
+			return Cavalry.COST;
+		case UnitTypes.UNIT_INFANTRY:
+			return Infantry.COST;
+		case UnitTypes.UNIT_PIKEMAN:
+			return Pikeman.COST;
+		case UnitTypes.UNIT_TREBUCHET:
+			return Trebuchet.COST;
+		default:
+			return -1;
+		}
+	}
+	
+	/**
+	 * Returns the cost of a unit of a defined type, or -1 if the type is not recognized
+	 * @param unitsType
+	 * @return numberMax of unit types
+	 */
+	public static int getUnitCostPerTurn(int unitsType) {
+		switch (unitsType) {
+		case UnitTypes.UNIT_ARCHER:
+			return Archer.COST_PER_TURN;
+		case UnitTypes.UNIT_BATTERING_RAM:
+			return BatteringRam.COST_PER_TURN;
+		case UnitTypes.UNIT_BOAT:
+			return Boat.COST_PER_TURN;
+		case UnitTypes.UNIT_CAVALRY:
+			return Cavalry.COST_PER_TURN;
+		case UnitTypes.UNIT_INFANTRY:
+			return Infantry.COST_PER_TURN;
+		case UnitTypes.UNIT_PIKEMAN:
+			return Pikeman.COST_PER_TURN;
+		case UnitTypes.UNIT_TREBUCHET:
+			return Trebuchet.COST_PER_TURN;
+		default:
+			return -1;
+		}
+	}
+	
+	/**
 	 * @return Which Types the Unit is
 	 * @see {@link data.unit.UnitTypes UnitTypes}
 	 */
