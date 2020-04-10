@@ -10,36 +10,30 @@ import java.io.ObjectOutputStream;
 
 import org.apache.log4j.Logger;
 
+import data.GameConstants;
 import data.GameMap;
-import data.Power;
 import log.LoggerUtility;
 
 public class SaveOption {
 	private static Logger Logger = LoggerUtility.getLogger(SaveOption.class, "text");
+
 	public SaveOption() {
 
 	}
-	public GameMap loadMap() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream stream = new ObjectInputStream(new FileInputStream("game.ser"));
-		 GameMap map = (GameMap) stream.readObject();
+
+	public GameMap loadGame() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream stream = new ObjectInputStream(new FileInputStream(GameConstants.SAVE_LOCATION));
+		GameMap map = (GameMap) stream.readObject();
 		stream.close();
 		return map;
 	}
-	public Power[] LoadPower() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream stream = new ObjectInputStream(new FileInputStream("game.ser"));
-		 Power player[] = (Power[]) stream.readObject();
-		stream.close();
-		return player;
-	}
 
-	public 	void sauvegarder(File file, GameMap map, Power player[]) throws FileNotFoundException, IOException {
-		Logger.info("=== FIN DE LA PARTIE  ===");
-		ObjectOutputStream gamesave= new ObjectOutputStream(new FileOutputStream(file));
-		gamesave.writeObject(map);
+	public void save(File file, GameMap map) throws FileNotFoundException, IOException {
+		Logger.info("=== SAVE GAME  ===");
+		ObjectOutputStream saveStream = new ObjectOutputStream(new FileOutputStream(file));
+		//all data in the game is in the GameMap, so, we just have to save that map in order to save the game
+		saveStream.writeObject(map);
 		Logger.info("Map is saved");
-		gamesave.writeObject(player);
-		Logger.info("Player is saved");
-		gamesave.close();
+		saveStream.close();
 	}
-	
 }

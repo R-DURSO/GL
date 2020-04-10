@@ -139,7 +139,7 @@ public class MapBuilder {
 		}
 		// 'install' powers
 		installPowers(boxes);
-		return new GameMap(boxes);
+		return new GameMap(boxes, powers);
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class MapBuilder {
 		}
 		// 'install' powers
 		installPowers(boxes);
-		return new GameMap(boxes);
+		return new GameMap(boxes, powers);
 	}
 
 	private void installPowers(Box boxes[][]) {
