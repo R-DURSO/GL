@@ -3,7 +3,7 @@ package data.building;
 import java.io.Serializable;
 
 /**
- * <p>A Building, set in the Map, own by a Power</p>
+ * <p>A Building, set in the {@link data.GameMap Map}, own by a {@link data.Power Power}</p>
  * A Building can be:
  * <ul>
  * 	<li>A {@link data.building.product.BuildingProduct BuildingProduct}</li>
@@ -43,7 +43,7 @@ public abstract class Building implements Serializable {
 	public abstract int getType();
 	
 	/**
-	 * Reduce the BuildTime in the Building
+	 * Reduce the BuildTime in the Building (can't go lower than 0)
 	 */
 	public void decreaseBuildTime() {
 		this.buildTime--;

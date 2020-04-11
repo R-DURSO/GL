@@ -8,10 +8,10 @@ import data.building.special.Capital;
 import process.management.ResourcesFactory;;
 
 /**
- * <p>Represents a player in the Game.</p>
- * <p>A Power hold resource, that can be spend on construction of {@link data.building.Building Building} or the creation of {@link data.unit.Units Units}.</p>
+ * <p>Represents a player in the {@link process.game.GameLoop Game}.</p>
+ * <p>A Power hold {@link data.resource.Resource Resource}, that can be spend on construction of {@link data.building.Building Building} or the creation of {@link data.unit.Units Units}.</p>
  * <p>A Power also hold a {@link data.building.special.Capital Capital}, and letting it be destroyed mean losing the game.</p>
- * <p>Power are created by a {@link process.management.PowerFactory PowerFactory}.</p>
+ * <p>Power are created by a {@link process.management.PowerFactory PowerFactory}, and made verification in {@link process.management.PowerManager PowerManager}</p>
  * @author Maxence
  */
 public class Power implements Serializable {
@@ -126,7 +126,9 @@ public class Power implements Serializable {
 		resources[ResourceTypes.RESOURCE_SCORE-1].subValue(amount);
 	}
 	
-	
+	/**
+	 * Make {@link data.Power Power} gain the {@link data.building.product.BuildingProduct Production} from all his {@link data.resource.Resource Resources}
+	 */
 	public void applyProductionOfTurn() {
 		resources[ResourceTypes.RESOURCE_ACTIONS - 1].productionOfTurn();
 		if (resources[ResourceTypes.RESOURCE_ACTIONS - 1].getAmount() > ((ActionPoints) resources[ResourceTypes.RESOURCE_ACTIONS - 1]).getMaxActions()) {

@@ -17,6 +17,10 @@ import data.boxes.GroundBox;
 import log.LoggerUtility;
 import org.apache.log4j.Logger;
 
+/**
+ * Manager of 
+ * @author Maxence
+ */
 public class PowerManager {
 	private static PowerManager instance = new PowerManager();
 

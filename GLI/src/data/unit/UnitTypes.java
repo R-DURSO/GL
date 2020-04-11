@@ -3,9 +3,8 @@ package data.unit;
 import java.io.Serializable;
 
 /**
- * Class of constants related to units
+ * Class of constants related to {@link data.unit.Units Units}
  * @author Aldric Vitali Silvestre [aldric.silvestre@outlook.fr]
- *
  */
 public class UnitTypes implements Serializable{
 	public static final int UNIT_INFANTRY = 1;

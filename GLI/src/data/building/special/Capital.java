@@ -5,8 +5,8 @@ import java.io.Serializable;
 import data.building.BuildingTypes;
 
 /**
- * <p>This class contains the information that a Capital will hold.</p>
- * <p>If a Capital is destroyed, the player that hold the Capital lose</p>
+ * <p>Capital is a {@link data.building.BuildingSpecial BuildingSpecial},
+ * <br>If a Capital is destroyed, the {@link data.Power Power} that hold the Capital lose</p>
  * @author Maxence HENNEKEIN
  */
 
