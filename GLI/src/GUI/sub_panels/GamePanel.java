@@ -278,6 +278,6 @@ public class GamePanel extends JPanel {
 		remove(mapPanel);
 		remove(infosPanel);
 		remove(playerResourcesPanel);
-		window.changeWindow();
+		window.changeWindow(MainWindow.MENU_WINDOW);
 	}
 }
