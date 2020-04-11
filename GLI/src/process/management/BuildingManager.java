@@ -174,7 +174,7 @@ public class BuildingManager {
 	 */
 	public void decreaseBuildTime(Power power, Building building) {
 		building.decreaseBuildTime();
-		if (building.isFinish()) {
+		if (building.isFinished()) {
 			if (building instanceof BuildingProduct) {
 				BuildingProduct buildingP = (BuildingProduct)building;
 				if (buildingP.getOnRightResource()) {

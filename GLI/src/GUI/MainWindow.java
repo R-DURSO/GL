@@ -53,8 +53,7 @@ public class MainWindow extends JFrame{
 		getContentPane().add(gamePanel, GAME_WINDOW);
 		getContentPane().add(menuPanel, MENU_WINDOW);
 		getContentPane().add(victoryPanel, VICTORY_WINDOW);
-		victoryPanel.initVictoryPanel("Albert", 1, 333);
-		cardLayout.show(getContentPane(), VICTORY_WINDOW);
+		cardLayout.show(getContentPane(), MENU_WINDOW);
 	}
 
 	private void init() {
@@ -68,6 +67,11 @@ public class MainWindow extends JFrame{
 	
 	public void changeWindow(String windowName) {
 		cardLayout.show(getContentPane(), windowName);
+	}
+	
+	public void initVictoryPanel(String winnerName, int victoryType, int score) {
+		victoryPanel.initVictoryPanel(winnerName, victoryType, score);
+		changeWindow(VICTORY_WINDOW);
 	}
 	
 	public void newGame() {

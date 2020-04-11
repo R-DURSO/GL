@@ -54,6 +54,11 @@ public class VictoryPanel extends JPanel {
 	private final int PANEL_BUTTONS_HEIGHT = (int)MenuPanel.CHOICE_DIMENSION.getHeight();
 	private final Dimension DIM_BUTTON = new Dimension(PANEL_BUTTONS_WIDTH / 4, PANEL_BUTTONS_HEIGHT / 2);
 	
+	JPanel topPanel = new JPanel(new GridLayout(0,1));
+	JPanel imagePanel = new JPanel();
+	JPanel scorePanel = new JPanel(new BorderLayout());
+	JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, (int)DIM_BUTTON.getHeight() / 2, (int)DIM_BUTTON.getHeight()));
+	
 	public VictoryPanel(MainWindow window) {
 		this.window = window;
 		try {
@@ -66,17 +71,12 @@ public class VictoryPanel extends JPanel {
 	}
 	
 	/**
-	 * 
-	 * @param winnerName
-	 * @param victoryType
-	 * @param score
+	 * Initilizes all thae data that VictoryPanel needs to be constructed
+	 * @param winnerName the name of the power who win
+	 * @param victoryType the type of victory (values are in [{@linkplain data.GameConstants})
+	 * @param score the dwore of the player who win
 	 */
 	public void initVictoryPanel(String winnerName, int victoryType, int score) {
-		JPanel topPanel = new JPanel(new GridLayout(0,1));
-		JPanel imagePanel = new JPanel();
-		JPanel scorePanel = new JPanel(new BorderLayout());
-		JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, (int)DIM_BUTTON.getHeight() / 2, (int)DIM_BUTTON.getHeight()));
-		
 		//top panel
 		winnerLabel = new JLabel("Victoire du joueur " + winnerName +"!", SwingConstants.CENTER);
 		
@@ -131,10 +131,18 @@ public class VictoryPanel extends JPanel {
 			}
 		}
 	}
+	
+	private void removeAllPanels() {
+		remove(buttonsPanel);
+		remove(topPanel);
+		remove(imagePanel);
+		remove(scorePanel);
+	}
 
 	class ActionReturn implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			removeAllPanels();
 			window.changeWindow(MainWindow.MENU_WINDOW);
 		}
 	}

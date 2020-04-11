@@ -76,8 +76,8 @@ public class BoxSelectedPanel extends JPanel {
 			GroundBox GBox = (GroundBox)box;
 			if (GBox.hasBuilding()) {
 				Building building = GBox.getBuilding();
-				if (!building.isFinish())
-					buildingLabel.setText(building.toString() + " (" + building.getBuildTime() + " tour(s) avant activation)");
+				if (!building.isFinished())
+					buildingLabel.setText("<html>"+building.toString() + " (" + building.getBuildTime() + " tour(s) avant activation)</html>");
 				else
 					buildingLabel.setText(building.toString());
 			}
