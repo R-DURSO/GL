@@ -9,6 +9,11 @@ import java.io.Serializable;
  */
 
 public class Artifact extends Resource implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6338465849189355452L;
+
 	public Artifact() {
 		super();
 	}

@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 import GUI.components.GuiPreferences;
 import GUI.components.SliderPanel;
@@ -31,7 +30,8 @@ import process.management.UnitManager;
  *
  */
 public class ActionsButtonsPanel extends JPanel {
-
+	private static final long serialVersionUID = 9219368693956571620L;
+	
 	private JButton actionBreakAllianceButton = new JButton("Briser une alliance");
 	private JButton actionMakeAllianceButton = new JButton("Créer une alliance");
 	private JButton createActionAttackButton = new JButton("Lancer une attaque");
@@ -55,7 +55,6 @@ public class ActionsButtonsPanel extends JPanel {
 
 	private GamePanel context;
 	private GameButtonsPanel gameButtonsPanel;
-	private ActionsButtonsPanel panel = this;
 	private Action action;
 
 	public ActionsButtonsPanel(GamePanel context, GameButtonsPanel gameButtonsPanel) {

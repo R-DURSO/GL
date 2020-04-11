@@ -2,7 +2,6 @@ package data.resource;
 
 import java.io.Serializable;
 
-import data.resource.ActionPoints;
 
 /**
  * <p>Resource have all methods applicable to infant classes.</p>
@@ -11,6 +10,8 @@ import data.resource.ActionPoints;
  */
 
 public abstract class Resource implements Serializable {
+	private static final long serialVersionUID = 6899676502045106715L;
+	
 	private int amount;
 	private int productionPerTurn = 0;
 	

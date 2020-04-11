@@ -3,6 +3,10 @@ package data;
 import java.io.Serializable;
 
 public class Position implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3466887827241560017L;
 	private int x;
 	private int y;
 	

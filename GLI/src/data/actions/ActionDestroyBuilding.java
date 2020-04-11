@@ -6,6 +6,10 @@ import data.Position;
 import data.Power;
 
 public class ActionDestroyBuilding extends Action implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4899618628428511884L;
 	private Position target;
 	
 	public ActionDestroyBuilding(Power powerConcerned, Position target) {

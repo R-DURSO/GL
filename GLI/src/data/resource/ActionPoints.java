@@ -9,6 +9,10 @@ import java.io.Serializable;
  */
 
 public class ActionPoints extends Resource implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6279039584293741802L;
 	public static final int BASE_MAX_ACTIONS = 6 ;
 	private int MaxActions = BASE_MAX_ACTIONS;
 	

@@ -11,6 +11,10 @@ import data.resource.ResourceTypes;
  */
 
 public class Quarry extends BuildingProduct implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1706032175279617295L;
 	private static final int BUILD_TIME = 1;
 	public static final int COST = 100;
 	private static final int BASE_HEALTH = 3;

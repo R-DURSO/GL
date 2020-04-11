@@ -5,6 +5,10 @@ import java.io.Serializable;
 import data.building.BuildingTypes;
 
 public class Workshop extends BuildingArmy implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9206305479797436466L;
 	private static final int BUILD_TIME = 0;
 	public static final int COST = 100;
 	private static final int BASE_HEALTH = 3;

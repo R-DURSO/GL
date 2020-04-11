@@ -9,6 +9,10 @@ import data.boxes.*;
  * <br>Use an Array of {@link data.boxes.Box Boxes}.
  */
 public class GameMap implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8595640514592763189L;
 	/*you have to be careful: the first entry is that of the ordinate, 
 	and the second that of the abscissa*/
 	private Box boxes[][]; 

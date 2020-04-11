@@ -17,6 +17,10 @@ import data.resource.Resource;
  */
 
 public abstract class BuildingProduct extends Building implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5822960656666498271L;
 	private boolean onRightResource;
 
 	public BuildingProduct(int buildTime, int health) {

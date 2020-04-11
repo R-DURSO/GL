@@ -1,7 +1,6 @@
 package process.management;
 
-import data.boxes.Box;
-import data.boxes.GroundBox;
+import data.boxes.*;
 
 import data.building.Building;
 import data.building.BuildingTypes;

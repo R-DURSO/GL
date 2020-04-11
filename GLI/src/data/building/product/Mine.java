@@ -11,6 +11,10 @@ import data.resource.ResourceTypes;
  */
 
 public class Mine  extends BuildingProduct implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6583447706938005248L;
 	private static final int BUILD_TIME = 1;
 	public static final int COST = 100;
 	private static final int BASE_HEALTH = 3;

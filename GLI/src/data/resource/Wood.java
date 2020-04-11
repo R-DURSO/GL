@@ -9,6 +9,11 @@ import java.io.Serializable;
  */
 
 public class Wood extends Resource implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8813267241438835640L;
+
 	public Wood(int number) {
 		super(number);
 	}

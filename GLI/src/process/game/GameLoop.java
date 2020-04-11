@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import GUI.components.menu.PreferencesPanel;
 import data.actions.*;
 import data.boxes.*;
 import data.GameMap;
@@ -11,9 +10,7 @@ import data.Position;
 import data.Power;
 import data.resource.*;
 import log.LoggerUtility;
-import process.management.ActionValidator;
 import process.management.BuildingManager;
-import process.management.MapBuilder;
 import process.management.PowerManager;
 import process.management.UnitManager;
 

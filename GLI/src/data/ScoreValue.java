@@ -3,6 +3,10 @@ package data;
 import java.io.Serializable;
 
 public class ScoreValue implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 606771431858962754L;
 	// score for building 
 	public static final int SCORE_VALUE_BUILDING_PRODUCT = 50 ;
 	public static final int SCORE_VALUE_BUILDING_ARMY = 50 ;

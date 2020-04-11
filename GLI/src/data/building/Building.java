@@ -13,6 +13,10 @@ import java.io.Serializable;
  * @author Maxence
  */
 public abstract class Building implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7993547681005871558L;
 	public static final int BUILDING_DEFENSE = 8;
 	public static final int CONSTRUCTION_DEFENSE = 4;
 	private int buildTime; //when buildTime == 0, this building can be used

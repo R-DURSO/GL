@@ -7,6 +7,10 @@ import data.Power;
 
 public class ActionCreateUnit extends Action implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9117837971653268702L;
 	private Position target;
 	private int unitType;
 	private int numberUnits;

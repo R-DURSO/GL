@@ -14,6 +14,10 @@ import data.unit.Units;
  */
 public class GroundBox extends Box implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8199300745240553540L;
 	private Building building;
 	private int resourceType;
 	

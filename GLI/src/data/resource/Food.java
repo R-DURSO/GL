@@ -9,6 +9,11 @@ import java.io.Serializable;
  */
 
 public class Food extends Resource implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6758046804824256377L;
+
 	public Food(int number) {
 		super(number);
 	}

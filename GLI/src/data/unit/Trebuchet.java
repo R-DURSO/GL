@@ -6,6 +6,11 @@ import data.Power;
 
 public class Trebuchet  extends Units implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5609110852041930135L;
+
 	private static final int BASE_HEALTH = 5;
 	
 	private static final int RANGE_MOVING = 0;

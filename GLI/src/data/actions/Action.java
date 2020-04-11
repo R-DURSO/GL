@@ -10,6 +10,8 @@ import data.Power;
  * <p>Created (if action is possible) in {@link process.management.ActionValidator ActionValidator}</p>
  */
 public abstract class Action implements Serializable {
+	private static final long serialVersionUID = 2245489718165548954L;
+	
 	private Power power;
 	
 	public Action(Power powerConcerned) {

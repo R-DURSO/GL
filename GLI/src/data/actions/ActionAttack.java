@@ -10,6 +10,8 @@ import data.Power;
  * Defines data of an attack. Don't do anything
  */
 public class ActionAttack extends Action implements Serializable{
+	private static final long serialVersionUID = -4553413313240011282L;
+	
 	private Position from;
 	private Position target;
 	

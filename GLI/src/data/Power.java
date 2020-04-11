@@ -16,6 +16,10 @@ import process.management.ResourcesFactory;;
  */
 public class Power implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7505603478691300957L;
 	private String name;
 	private ArrayList<Box> territory = new ArrayList<>();
 	private Resource[] resources = new Resource[ResourceTypes.NUMBER_PLAYER_RESOURCES];

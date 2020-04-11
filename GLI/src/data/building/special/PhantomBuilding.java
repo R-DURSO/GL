@@ -11,6 +11,11 @@ import java.io.Serializable;
  */
 public class PhantomBuilding extends BuildingSpecial implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5845272184630551374L;
+
 	public PhantomBuilding(){
 		super(0, 0);
 	}

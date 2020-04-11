@@ -9,6 +9,11 @@ import java.io.Serializable;
  */
 
 public class Stone extends Resource implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2466313571166110422L;
+
 	public Stone(int number) {
 		super(number);
 	}

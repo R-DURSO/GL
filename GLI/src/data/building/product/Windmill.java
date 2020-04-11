@@ -11,6 +11,10 @@ import data.resource.ResourceTypes;
  */
 
 public class Windmill extends BuildingProduct implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5023794296306406777L;
 	private static final int BUILD_TIME = 1;
 	public static final int COST = 100;
 	private static final int BASE_HEALTH = 3;

@@ -5,6 +5,10 @@ import java.io.Serializable;
 import data.Power;
 
 public class Pikeman extends Units implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7584778662983243460L;
 	private static final int BASE_HEALTH = 5;
 	private static final int RANGE = 1;
 	private static final int MOVEMENT = 2;

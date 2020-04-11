@@ -11,6 +11,10 @@ import data.building.BuildingTypes;
  */
 
 public class Capital extends BuildingSpecial implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3053525595383996132L;
 	private static final int BUILD_TIME = 0;
 	public static final int COST = 0;
 	private static final int BASE_HEALTH = 50;

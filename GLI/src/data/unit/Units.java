@@ -3,7 +3,6 @@ package data.unit;
 import java.io.Serializable;
 
 import data.Power;
-import data.boxes.Box;
 
 /**
  * <p>Represents a Units in the {@link process.game.GameLoop Game}.</p>

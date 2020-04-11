@@ -18,6 +18,7 @@ import GUI.components.menu.OptionsPanel;
  *
  */
 public class NumberPlayerPanel extends JPanel{
+	private static final long serialVersionUID = 6745932739570392477L;
 
 	private JLabel nbPlayersLabel = new JLabel("Nombre de joueurs : ", SwingConstants.CENTER);
 	

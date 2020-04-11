@@ -10,6 +10,10 @@ import data.Power;
  * @author Maxence
  */
 public class Boat extends Units implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8368385142346761807L;
 	private static final int BASE_HEALTH = 1;
 	private static final int RANGE = 0;
 	private static final int MOVEMENT = 5;

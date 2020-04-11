@@ -12,6 +12,10 @@ import data.Power;
  * @see process.management.ActionValidator
  */
 public class PhantomUnit extends Units implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7102778421752042099L;
 	private int unitTypes;
 
 	public PhantomUnit (Power owner, int unitTypes) {

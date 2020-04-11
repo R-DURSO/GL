@@ -5,6 +5,10 @@ import java.io.Serializable;
 import data.Power;
 
 public class BatteringRam extends Units implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4591883826597615759L;
 	private static final int BASE_HEALTH = 100;
 	private static final int RANGE = 1;
 	private static final int MOVEMENT = 20;

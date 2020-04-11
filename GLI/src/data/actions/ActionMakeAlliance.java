@@ -5,6 +5,10 @@ import java.io.Serializable;
 import data.Power;
 
 public class ActionMakeAlliance extends Action implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6199217287443536842L;
 	private Power potentialAllied;
 
 	public ActionMakeAlliance(Power powerConcerned, Power potentialAllied) {

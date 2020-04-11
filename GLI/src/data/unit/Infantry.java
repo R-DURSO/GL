@@ -5,6 +5,10 @@ import java.io.Serializable;
 import data.Power;
 
 public class Infantry extends Units implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8578285992053241445L;
 	private static final int BASE_HEALTH = 4;
 	private static final int RANGE = 1;
 	private static final int MOVEMENT = 1;

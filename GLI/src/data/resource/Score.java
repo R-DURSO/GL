@@ -10,6 +10,12 @@ import java.io.Serializable;
  */
 
 public class Score extends Resource implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1528397274770017315L;
+
+
 	public Score(){
 		super();
 	}

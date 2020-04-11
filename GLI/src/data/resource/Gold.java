@@ -9,6 +9,12 @@ import java.io.Serializable;
  */
 
 public class Gold extends Resource implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5364934948044929199L;
+
+
 	public Gold(int number) {
 		super(number);
 	}

@@ -5,6 +5,8 @@ import java.io.Serializable;
 import data.Power;
 
 public class Archer extends Units implements Serializable{
+	private static final long serialVersionUID = 9034922748864820071L;
+	
 	private static final int BASE_HEALTH = 2;
 	private static final int RANGE = 2;
 	private static final int MOVEMENT = 2;

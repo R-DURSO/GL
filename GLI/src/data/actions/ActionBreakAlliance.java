@@ -6,6 +6,11 @@ import data.Power;
 
 public class ActionBreakAlliance extends Action implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2286487626119242674L;
+
 	public ActionBreakAlliance(Power powerConcerned) {
 		super(powerConcerned);
 	}

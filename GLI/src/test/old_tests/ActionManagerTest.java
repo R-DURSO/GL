@@ -13,7 +13,6 @@ import data.unit.UnitTypes;
 import process.management.ActionValidator;
 import process.management.MapBuilder;
 import process.management.PowerFactory;
-import process.management.PowerManager;
 
 public class ActionManagerTest {
 

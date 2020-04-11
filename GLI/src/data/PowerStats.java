@@ -9,6 +9,10 @@ import java.io.Serializable;
  */
 public class PowerStats implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 565145985181053593L;
 	private int numberUnits;
 	private int numberBuildings;
 	private int territorySize;

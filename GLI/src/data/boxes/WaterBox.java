@@ -9,6 +9,11 @@ import java.io.Serializable;
  */
 public class WaterBox extends Box implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2376796099180065426L;
+
 	public WaterBox() {
 		super();
 	}
