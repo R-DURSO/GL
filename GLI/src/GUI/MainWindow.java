@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -14,6 +15,7 @@ import GUI.components.GuiPreferences;
 import GUI.components.menu.OptionsPanel;
 import GUI.sub_panels.GamePanel;
 import GUI.sub_panels.MenuPanel;
+import GUI.sub_panels.VictoryPanel;
 import data.GameConstants;
 import data.GameMap;
 import log.LoggerUtility;
@@ -26,10 +28,12 @@ public class MainWindow extends JFrame{
 	 */
 	private static Logger logger = LoggerUtility.getLogger(MainWindow.class, GameConstants.LOG_TYPE);
 	
-	private final String GAME_WINDOW = "game";
-	private final String MENU_WINDOW = "menu";
+	public static final String GAME_WINDOW = "game";
+	public static final String MENU_WINDOW = "menu";
+	public static final String VICTORY_WINDOW = "victory";
 	private GamePanel gamePanel = new GamePanel(this);
 	private MenuPanel menuPanel = new MenuPanel(this);
+	private VictoryPanel victoryPanel = new VictoryPanel(this);
 	private MainWindow context = this;
 	private CardLayout cardLayout = new CardLayout();
 	private SaveOption saver = new SaveOption();
@@ -45,6 +49,7 @@ public class MainWindow extends JFrame{
 		init();
 		getContentPane().add(gamePanel, GAME_WINDOW);
 		getContentPane().add(menuPanel, MENU_WINDOW);
+		getContentPane().add(victoryPanel, VICTORY_WINDOW);
 		cardLayout.show(getContentPane(), MENU_WINDOW);
 	}
 
@@ -57,8 +62,8 @@ public class MainWindow extends JFrame{
 		setResizable(false);
 	}
 	
-	public void changeWindow() {
-		cardLayout.next(getContentPane());
+	public void changeWindow(String windowName) {
+		cardLayout.show(getContentPane(), windowName);
 	}
 	
 	public void newGame() {
@@ -86,10 +91,11 @@ public class MainWindow extends JFrame{
 		GameMap map = null;
 		try {
 			map = saver.loadGame();
+			gamePanel.initGamePanel(map, map.getPowers());
+			changeWindow(GAME_WINDOW);
 		} catch (ClassNotFoundException | IOException e) {
+			JOptionPane.showMessageDialog(context, "Une erreur lors du chargement de la partie est apparue : " + e.getMessage(), "erreur", JOptionPane.ERROR_MESSAGE);
 			logger.error("Problem with loading : " + e.getMessage());
 		}
-		gamePanel.initGamePanel(map, map.getPowers());
-		cardLayout.show(getContentPane(), GAME_WINDOW);
 	}
 }

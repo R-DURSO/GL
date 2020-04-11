@@ -17,7 +17,7 @@ public class ChoicePanel extends JPanel{
 	private MainWindow context;
 	
 	private JButton newGameButton = new JButton("Nouvelle partie");
-	private JButton loadGameButton = new JButton("Charger une partie existante");
+	private JButton loadGameButton = new JButton("Charger la dernière partie");
 	
 	private final int PANEL_WIDTH = (int)MenuPanel.CHOICE_DIMENSION.getWidth();
 	private final int PANEL_HEIGHT = (int)MenuPanel.CHOICE_DIMENSION.getHeight();
@@ -44,7 +44,7 @@ public class ChoicePanel extends JPanel{
 	class ActionNewGame implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(choiceBox("Voulez-vous vraiment lancer une nouvelle partie?\nLa partie précédente sera écrasée."))
+			if(choiceBox("Voulez-vous vraiment lancer une nouvelle partie?"))
 				context.newGame();
 		}
 	}
