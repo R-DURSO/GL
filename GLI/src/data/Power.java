@@ -155,8 +155,26 @@ public class Power implements Serializable {
 		resources[ResourceTypes.RESOURCE_ACTIONS - 1].addValue(-1);
 	}
 	
+	/**
+	 * <p>Unique to the {@link data.Power Player}, make sure he has enough {@link data.resource.ActionPoints ActionPoints}.
+	 * <br>AI are limited in different ways, so they can always play.</p>
+	 * @return true if Player can play or if it's an AI
+	 * @see {@link data.Power#isAI() isAI()}
+	 */
 	public boolean canPlay() {
-		return resources[ResourceTypes.RESOURCE_ACTIONS - 1].getAmount() > 0;
+		if (!isAI()) {
+			return resources[ResourceTypes.RESOURCE_ACTIONS - 1].getAmount() > 0;
+		}
+		else {
+			return true;
+		}
+	}
+	
+	/**
+	 * @return true if {@link data.power Power} is an AI
+	 */
+	public boolean isAI() {
+		return this.aiLevel >= 0;
 	}
 	
 	public void addBox(Box box) {
