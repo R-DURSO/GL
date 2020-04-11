@@ -6,13 +6,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.concurrent.Semaphore;
 
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -21,18 +16,19 @@ import GUI.components.GuiPreferences;
 import GUI.components.game.ActionsButtonsPanel;
 import GUI.components.game.GameButtonsPanel;
 import GUI.components.game.InfosPanel;
-import GUI.components.game.PlayerResourcesPanel;
 import GUI.components.game.MapPanel;
+import GUI.components.game.PlayerResourcesPanel;
+import data.GameConstants;
 import data.GameMap;
 import data.Position;
 import data.Power;
 import data.actions.Action;
-import data.resource.Resource;
-import data.resource.ResourceTypes;
-import data.boxes.*;
+import data.boxes.Box;
+import data.boxes.GroundBox;
 import data.building.Building;
 import data.building.special.PhantomBuilding;
-import data.unit.*;
+import data.unit.PhantomUnit;
+import data.unit.Units;
 import process.game.GameLoop;
 import process.game.SaveOption;
 import process.management.ActionValidator;
@@ -69,7 +65,6 @@ public class GamePanel extends JPanel {
 	private GameLoop gameLoop;
 	// use for save of game  
 	private SaveOption save;
-	private Power allpowers[];
 	public GamePanel(MainWindow window) {
 		this.window = window;
 		init();
@@ -85,7 +80,6 @@ public class GamePanel extends JPanel {
 	public void initGamePanel(GameMap map, Power powers[]) {
 		this.map = map;
 		this.player = powers[0];
-		allpowers=powers;
 		gameLoop = new GameLoop(map, powers);
 
 		actionValidator = new ActionValidator(map);
@@ -268,12 +262,11 @@ public class GamePanel extends JPanel {
 	/**
 	 * Crée un fichier de sauvegarde de la partie
 	 */
-	public void sauvegarder()  {
-		File filesave = new File("game.ser");
+	public void save()  {
+		File filesave = new File(GameConstants.SAVE_LOCATION);
 		save = new SaveOption();
-		
 		try {
-			save.sauvegarder(filesave, map, allpowers);
+			save.save(filesave, map);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}

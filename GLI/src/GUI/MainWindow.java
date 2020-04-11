@@ -8,12 +8,15 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.apache.log4j.Logger;
+
 import GUI.components.GuiPreferences;
 import GUI.components.menu.OptionsPanel;
 import GUI.sub_panels.GamePanel;
 import GUI.sub_panels.MenuPanel;
+import data.GameConstants;
 import data.GameMap;
-import data.Power;
+import log.LoggerUtility;
 import process.game.SaveOption;
 import process.game.Start;
 
@@ -21,7 +24,7 @@ public class MainWindow extends JFrame{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6569351248766478602L;
+	private static Logger logger = LoggerUtility.getLogger(MainWindow.class, GameConstants.LOG_TYPE);
 	
 	private final String GAME_WINDOW = "game";
 	private final String MENU_WINDOW = "menu";
@@ -29,7 +32,7 @@ public class MainWindow extends JFrame{
 	private MenuPanel menuPanel = new MenuPanel(this);
 	private MainWindow context = this;
 	private CardLayout cardLayout = new CardLayout();
-	private SaveOption game = new SaveOption();
+	private SaveOption saver = new SaveOption();
 
 	public MainWindow() {
 		super("Conquête");
@@ -80,19 +83,13 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void loadGame() {
-		 Power player[] = null ;
-		GameMap map = null ;
+		GameMap map = null;
 		try {
-			map=game.loadMap();
-			player=game.LoadPower();
+			map = saver.loadGame();
 		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Problem with loading : " + e.getMessage());
 		}
-		gamePanel.initGamePanel(map, player);
+		gamePanel.initGamePanel(map, map.getPowers());
 		cardLayout.show(getContentPane(), GAME_WINDOW);
 	}
-	
-	
-
 }

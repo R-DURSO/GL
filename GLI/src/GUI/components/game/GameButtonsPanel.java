@@ -96,7 +96,7 @@ public class GameButtonsPanel extends JPanel{
 			int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous sauvegarder la partie ?",
 					"Fin du jeu", JOptionPane.YES_NO_OPTION);
 			if (answer == JOptionPane.YES_OPTION) {
-				context.sauvegarder();
+				context.save();
 			} else if (answer == JOptionPane.NO_OPTION) {
 				context.removePanels();
 			}

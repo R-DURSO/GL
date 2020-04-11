@@ -12,9 +12,11 @@ public class GameMap implements Serializable {
 	/*you have to be careful: the first entry is that of the ordinate, 
 	and the second that of the abscissa*/
 	private Box boxes[][]; 
+	private Power powers[];
 	
-	public GameMap(Box boxes[][]) {
+	public GameMap(Box boxes[][], Power powers[]) {
 		this.boxes = boxes;
+		this.powers = powers;
 	}
 	
 	public int getSize() {
@@ -35,6 +37,10 @@ public class GameMap implements Serializable {
 	
 	public Box[][] getBoxes(){
 		return boxes;
+	}
+	
+	public Power[] getPowers(){
+		return powers;
 	}
 
 	public Position getLeftPos(Position position) {

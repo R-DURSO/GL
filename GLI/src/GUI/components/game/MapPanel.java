@@ -5,10 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import GUI.drawing.ColorData;
@@ -21,13 +18,9 @@ import data.boxes.Box;
 import data.boxes.GroundBox;
 import data.boxes.WaterBox;
 import data.building.Building;
-import data.building.BuildingTypes;
 import data.resource.ResourceTypes;
 import data.unit.PhantomUnit;
-import data.unit.UnitTypes;
 import data.unit.Units;
-import process.management.BuildingManager;
-import process.management.UnitManager;
 
 public class MapPanel extends JPanel{
 	private static final long serialVersionUID = -4989371043690170741L;
