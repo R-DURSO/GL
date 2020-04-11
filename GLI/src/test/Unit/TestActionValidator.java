@@ -2,10 +2,8 @@ package test.Unit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +22,6 @@ import data.unit.*;
 import process.management.ActionValidator;
 import process.management.MapBuilder;
 import process.management.PowerFactory;
-import process.management.PowerManager;
 import process.management.UnitManager;
 
 /**

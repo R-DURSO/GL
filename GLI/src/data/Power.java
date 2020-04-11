@@ -21,6 +21,7 @@ public class Power implements Serializable {
 	private Resource[] resources = new Resource[ResourceTypes.NUMBER_PLAYER_RESOURCES];
 	private Power ally;
 	private Capital capital;
+	private boolean isAlive;
 	
 	private int aiLevel;
 	
@@ -32,9 +33,18 @@ public class Power implements Serializable {
 		this.name = name;
 		this.capital = capital;
 		this.aiLevel = aiLevel;
+		this.isAlive = true;
 		createResources();
 	}
 	
+	public boolean isAlive() {
+		return isAlive;
+	}
+	
+	public void die() {
+		isAlive = false;
+	}
+
 	public int getTerritorySize() {
 		return territorySize;
 	}
@@ -60,7 +70,6 @@ public class Power implements Serializable {
 	}
 	
 	private void createResources() {
-		// TODO Auto-generated method stub
 		resources[ResourceTypes.RESOURCE_ACTIONS - 1] = ResourcesFactory.createAction();
 		resources[ResourceTypes.RESOURCE_FOOD - 1] = ResourcesFactory.createFood();
 		resources[ResourceTypes.RESOURCE_GOLD - 1] = ResourcesFactory.createGold();
@@ -207,4 +216,5 @@ public class Power implements Serializable {
 	public String toString() {
 		return "Puissance : "+name+" ";
 	}
+
 }

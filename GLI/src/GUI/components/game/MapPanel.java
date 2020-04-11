@@ -107,7 +107,7 @@ public class MapPanel extends JPanel{
                 		//we check if building is enabled or not, in order to change opacity in this case
                 		if(building.getBuildTime() > 0) { //never null (checked in 'determineBuildingColor()')
                 			//in this case, we simply draw a crossed white line to show his "state"
-                			g2.setColor(Color.WHITE); //capital can't be disabled
+                			g2.setColor(Color.RED); //capital can't be disabled
                             g2.setStroke(new BasicStroke(2));
                 			g2.drawLine(drawX, drawY, drawX + miniBoxWidth, drawY + miniBoxHeight * 5 / 2);
                 			g2.setStroke(new BasicStroke(1));

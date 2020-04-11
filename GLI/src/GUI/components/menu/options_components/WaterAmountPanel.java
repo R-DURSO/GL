@@ -3,7 +3,6 @@ package GUI.components.menu.options_components;
 import java.awt.GridLayout;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;

@@ -27,6 +27,7 @@ import data.boxes.Box;
 import data.boxes.GroundBox;
 import data.building.Building;
 import data.building.special.PhantomBuilding;
+import data.resource.ResourceTypes;
 import data.unit.PhantomUnit;
 import data.unit.Units;
 import process.game.GameLoop;
@@ -44,7 +45,6 @@ import process.management.ActionValidator;
  * </ul>
  */
 public class GamePanel extends JPanel {
-	private static final long serialVersionUID = 7722109867943150729L;
 	private MainWindow window;
 
 	//public static to be reusable in aother classes
@@ -139,6 +139,30 @@ public class GamePanel extends JPanel {
 		refreshMap();
 		playerResourcesPanel.refreshAll();
 		repaint();
+		
+		//check if someone won
+		int victoryType = gameLoop.checkVictoryConditions();
+		if(victoryType != GameConstants.NO_VICTORY) {
+			setVictoryScreen(victoryType);
+		}
+	}
+
+	private void setVictoryScreen(int victoryType) {
+		//get power for retireving stats
+		Power winner = null;
+		if(victoryType == GameConstants.VICTORY_TYPE_MILITARY)
+			winner = gameLoop.getMilitaryWinner();
+		else if(victoryType == GameConstants.VICTORY_TYPE_TEMPLE)
+			winner = gameLoop.getTempleWinner();
+			
+		//if one of those victory really have been triggered
+		if(winner != null) {
+			//we can finally put those informations in a new window
+			String winnerName = winner.getName();
+			int winnerScore = winner.getResourceAmount(ResourceTypes.RESOURCE_SCORE);
+			removePanels();
+			window.initVictoryPanel(winnerName, victoryType, winnerScore);
+		}
 	}
 
 	public void cancelAction() {
@@ -282,4 +306,6 @@ public class GamePanel extends JPanel {
 		remove(playerResourcesPanel);
 		window.changeWindow(MainWindow.MENU_WINDOW);
 	}
+	
+	
 }

@@ -3,7 +3,6 @@ package data.unit;
 import java.io.Serializable;
 
 import data.Power;
-import data.boxes.Box;
 
 /**
  * <p>Represents a Units in the {@link process.game.GameLoop Game}.</p>
@@ -20,8 +19,6 @@ import data.boxes.Box;
  *
  */
 public abstract class Units implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
 	private int number;
 	private boolean isMoving = false;
 	

@@ -3,11 +3,8 @@ package test.Unit;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.InitialValue;
 import data.Power;
-import data.resource.Gold;
-import data.resource.Resource;
-import data.resource.ResourceTypes;
+import data.resource.*;
 import process.management.PowerFactory;
 import process.management.ResourcesFactory;
 

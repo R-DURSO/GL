@@ -1,12 +1,9 @@
 package GUI.components.game;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -15,19 +12,13 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.statistics.DefaultMultiValueCategoryDataset;
-import org.jfree.data.statistics.DefaultStatisticalCategoryDataset;
-import org.jfree.data.statistics.HistogramDataset;
 
 import GUI.components.GuiPreferences;
 import GUI.sub_panels.GamePanel;
-import data.GameMap;
 import data.Position;
 import data.Power;
 import data.PowerStats;
 import data.boxes.Box;
-import data.boxes.GroundBox;
-import data.unit.Units;
 
 public class InfosPanel extends JPanel {
 	private BoxSelectedPanel boxSelectedPanel;

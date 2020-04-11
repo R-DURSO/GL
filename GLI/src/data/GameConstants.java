@@ -17,6 +17,7 @@ public class GameConstants implements Serializable {
 	
 	public static final int VICTORY_TYPE_MILITARY = 0;
 	public static final int VICTORY_TYPE_TEMPLE = 1;
+	public static final int NO_VICTORY = -1;
 	
 	
 	public static final String LOG_TYPE = "text";

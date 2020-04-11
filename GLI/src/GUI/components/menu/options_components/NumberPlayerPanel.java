@@ -15,7 +15,6 @@ import GUI.components.GuiPreferences;
 import GUI.components.menu.OptionsPanel;
 import data.GameConstants;
 import log.LoggerUtility;
-import process.management.ActionValidator;
 
 /**
  * Panel wich contains number palyer display and behavior

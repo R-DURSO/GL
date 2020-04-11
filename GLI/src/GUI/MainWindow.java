@@ -27,8 +27,7 @@ import process.game.Start;
  * <p>Can be switched between the {@link GUI.sub_panels.MenuPanel MenuPanel} and the {@link GUI.sub_panels.GamePanel GamePanel}.</p>
  * @author Aldric
  */
-public class MainWindow extends JFrame{
-	private static final long serialVersionUID = 1L;
+public class MainWindow extends JFrame {
 	private static Logger logger = LoggerUtility.getLogger(MainWindow.class, GameConstants.LOG_TYPE);
 	
 	public static final String GAME_WINDOW = "game";
@@ -53,8 +52,7 @@ public class MainWindow extends JFrame{
 		getContentPane().add(gamePanel, GAME_WINDOW);
 		getContentPane().add(menuPanel, MENU_WINDOW);
 		getContentPane().add(victoryPanel, VICTORY_WINDOW);
-		victoryPanel.initVictoryPanel("Albert", 1, 333);
-		cardLayout.show(getContentPane(), VICTORY_WINDOW);
+		cardLayout.show(getContentPane(), MENU_WINDOW);
 	}
 
 	private void init() {
@@ -68,6 +66,11 @@ public class MainWindow extends JFrame{
 	
 	public void changeWindow(String windowName) {
 		cardLayout.show(getContentPane(), windowName);
+	}
+	
+	public void initVictoryPanel(String winnerName, int victoryType, int score) {
+		victoryPanel.initVictoryPanel(winnerName, victoryType, score);
+		changeWindow(VICTORY_WINDOW);
 	}
 	
 	public void newGame() {

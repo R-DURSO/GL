@@ -2,8 +2,6 @@ package data.resource;
 
 import java.io.Serializable;
 
-import data.resource.ActionPoints;
-
 /**
  * <p>Resource have all methods applicable to infant classes.</p>
  * <p>You can change the amount or productionPerTurn of a Resource here.</p>

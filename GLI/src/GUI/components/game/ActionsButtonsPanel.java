@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 import GUI.components.GuiPreferences;
 import GUI.components.SliderPanel;
@@ -55,7 +54,6 @@ public class ActionsButtonsPanel extends JPanel {
 
 	private GamePanel context;
 	private GameButtonsPanel gameButtonsPanel;
-	private ActionsButtonsPanel panel = this;
 	private Action action;
 
 	public ActionsButtonsPanel(GamePanel context, GameButtonsPanel gameButtonsPanel) {
