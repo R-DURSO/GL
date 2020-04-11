@@ -94,7 +94,7 @@ public class GameButtonsPanel extends JPanel{
 		public void actionPerformed(ActionEvent arg0) {
 			//c'est deja la commande pour quitter?
 			int answer = JOptionPane.showConfirmDialog(null, "Voulez-vous sauvegarder la partie ?",
-					"Fin du jeu", JOptionPane.YES_NO_OPTION);
+					"Fin du jeu", JOptionPane.YES_NO_CANCEL_OPTION);
 			if (answer == JOptionPane.YES_OPTION) {
 				context.save();
 			} else if (answer == JOptionPane.NO_OPTION) {
