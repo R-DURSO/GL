@@ -32,7 +32,7 @@ public abstract class Building implements Serializable {
 	}
 	
 	public int getDefense() {
-		if (isFinish()) {
+		if (isFinished()) {
 			return BUILDING_DEFENSE;
 		}
 		else {
@@ -55,7 +55,7 @@ public abstract class Building implements Serializable {
 	/**
 	 * @return true when the Building is Constucted
 	 */
-	public boolean isFinish() {
+	public boolean isFinished() {
 		return this.buildTime == 0;
 	}
 	

@@ -108,7 +108,7 @@ public class GameLoop {
 			Building building = groundBox.getBuilding();
 			if(building instanceof Temple) {
 				Temple temple = (Temple)building;
-				if(temple.isFinish())
+				if(temple.isFinished())
 					return GameConstants.VICTORY_TYPE_TEMPLE;
 			}
 		}
@@ -295,7 +295,7 @@ public class GameLoop {
 				if (visitBox instanceof GroundBox) {
 					GroundBox visitGBox = (GroundBox)visitBox;
 					if (visitGBox.hasBuilding()) {
-						if (!visitGBox.getBuilding().isFinish()) {
+						if (!visitGBox.getBuilding().isFinished()) {
 							BuildingManager.getInstance().decreaseBuildTime(visitGBox.getOwner(), visitGBox.getBuilding());
 						}
 					}
