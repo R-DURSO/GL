@@ -68,6 +68,7 @@ public class MainWindow extends JFrame{
 	
 	public void initVictoryPanel(String winnerName, int victoryType, int score) {
 		victoryPanel.initVictoryPanel(winnerName, victoryType, score);
+		changeWindow(VICTORY_WINDOW);
 	}
 	
 	public void newGame() {
