@@ -22,7 +22,7 @@ import log.LoggerUtility;
 import org.apache.log4j.*;
 /**
  * <p>This class ensures that every action the player does is possible
- * and allows to create Actions to be performed at the end of the turn in the game.</p>
+ * <br>and allows to create Actions to be performed at the end of the turn in the game.</p>
  * <p>No data class is modified here (except for resource values, including actions points)</p>
  * @author Aldric Vitali Silvestre <aldric.vitali@outlook.fr>
  * @see {@link data.actions.Action Action}
