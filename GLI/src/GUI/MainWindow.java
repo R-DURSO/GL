@@ -50,7 +50,8 @@ public class MainWindow extends JFrame{
 		getContentPane().add(gamePanel, GAME_WINDOW);
 		getContentPane().add(menuPanel, MENU_WINDOW);
 		getContentPane().add(victoryPanel, VICTORY_WINDOW);
-		cardLayout.show(getContentPane(), MENU_WINDOW);
+		victoryPanel.initVictoryPanel("Albert", 1, 333);
+		cardLayout.show(getContentPane(), VICTORY_WINDOW);
 	}
 
 	private void init() {
@@ -58,7 +59,7 @@ public class MainWindow extends JFrame{
 		setVisible(true);
 		pack();
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setResizable(false);
 	}
 	
