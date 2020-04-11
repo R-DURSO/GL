@@ -98,6 +98,13 @@ public class UnitManager {
 		}
 	}
 	
+	/**
+	 * Create a {@link data.unit.Units Unit}
+	 * @param type {@link data.unit.UnitTypes UnitTypes}
+	 * @param nb number of Unit created
+	 * @param power {@link data.Power Power} controlling it
+	 * @return created Unit
+	 */
 	private Units createUnit(int type, int nb, Power power) {
 		switch(type) {
 		case UnitTypes.UNIT_INFANTRY:
@@ -141,9 +148,9 @@ public class UnitManager {
 	}
 	
 	/**
-	 * check if Unit can attack from a distance
-	 * @param unit, the Unit
-	 * @return true if Unit is ranged
+	 * check if {@link data.unit.Units Unit} can attack from a distance
+	 * @param unit {@link data.unit.Units Units}
+	 * @return true if Unit is {@link data.unit.Units#getRange() ranged}
 	 */
 	private boolean isRanged (Units unit) {
 		return unit.getRange() > 1;
@@ -151,7 +158,7 @@ public class UnitManager {
 	
 	/**
 	 * Remove a defined amount of units in a {@link Box}.<p> 
-	 * If there is no more units on box, will call {@link UnitManager#deleteUnits}  
+	 * If there is no more units on box, will call {@link process.management.UnitManager#deleteUnits(Power, Box) deleteUnits}
 	 * @param power the power who have those units
 	 * @param box where are units to be destroyed
 	 * @param numberUnitsRemoved the number of units to be destroyed
@@ -174,18 +181,20 @@ public class UnitManager {
 	
 	/**
 	 * Remove all {@link Units} on a defined {@link Box}
-	 * @param power who have those units (gain production based on deleted unit)
+	 * @param power {@link data.Power Power} who owned those units (and will regain production)
 	 * @param box where are units to be destroyed
 	 */
 	public void deleteUnits(Power power, Box box) {
 		if (power != null) {
 			if (box.hasUnit()) {
-				Units UnitsToDelete = box.getUnit();
-				int foodProdToAdd = UnitsToDelete.getFoodCost() * UnitsToDelete.getNumber();
-				power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
-				Logger.info(power.getName()+" get "+ foodProdToAdd+" food production back");
-				subScore(power, UnitsToDelete.getTypes(), UnitsToDelete.getNumber());
-				box.setUnit(null);
+				if (power == box.getUnit().getOwner()) {
+					Units UnitsToDelete = box.getUnit();
+					int foodProdToAdd = UnitsToDelete.getFoodCost() * UnitsToDelete.getNumber();
+					power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_FOOD, foodProdToAdd);
+					Logger.info(power.getName()+" get "+ foodProdToAdd+" food production back");
+					subScore(power, UnitsToDelete.getTypes(), UnitsToDelete.getNumber());
+					box.setUnit(null);
+				}
 			}
 		}
 	}

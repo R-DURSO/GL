@@ -40,6 +40,9 @@ public class PlayerResourcesPanel extends JPanel{
 		add(foodPanel);
 	}
 	
+	/**
+	 * Refresh all diplayed Resources
+	 */
 	public void refreshAll() {
 		actionPointsPanel.refresh();
 		goldPanel.refresh();

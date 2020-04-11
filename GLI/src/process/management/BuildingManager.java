@@ -18,8 +18,8 @@ import data.Power;
 import data.ScoreValue;
 
 /**
- * Singleton which permits to create and add buildings on map
- *
+ * Singleton which permits to create and 
+ * <br>add {@link data.building.Building Building} on map
  */
 public class BuildingManager {
 	private static Logger Logger = LoggerUtility.getLogger(BuildingManager.class, "text");
@@ -84,6 +84,11 @@ public class BuildingManager {
 		}
 	}
 	
+	/**
+	 * Return the associated {@link data.building.Building Building} from his {@link data.building.BuildingTypes Types}
+	 * @param buildingType {@link data.building.BuildingTypes BuildingTypes}
+	 * @return the associated {@link data.building.Building Building}
+	 */
 	private Building createBuildingWithType(int buildingType) {
 			switch(buildingType) {
 			case BuildingTypes.BUILDING_BARRACK:
@@ -163,6 +168,11 @@ public class BuildingManager {
 		Logger.info(powerConcerned.getName()+" has removed "+building.toString());
 	}
 	
+	/**
+	 * Method called to reduce a Building buildTime
+	 * @param power {@link data.Power Power} that hold the {@link data.building.Building Building}
+	 * @param building {@link data.building.Building Building} that reduce his buildTime
+	 */
 	public void decreaseBuildTime(Power power, Building building) {
 		building.decreaseBuildTime();
 		if (building.isFinish()) {
@@ -176,6 +186,10 @@ public class BuildingManager {
 		}
 	}
 	
+	/**
+	 * Upgrade the {@link data.building.special.Capital Capital} of a given {@link data.Power Power}
+	 * @param power {@link data.Power Power} that upgrade his Capital
+	 */
 	public void upgradeCapitale (Power power) {
 		if (power.getCapital().upgrade()) {
 			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_ACTIONS, 1);

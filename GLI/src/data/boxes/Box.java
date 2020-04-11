@@ -8,27 +8,42 @@ import data.unit.Units;
 /**
  * <p>A Box represent a country.</p>
  * <p>two types of Boxes, {@link data.boxes.GroundBox GroundBox} and {@link data.boxes.WaterBox WaterBox}</p>
+ * <p>Boxes can have a {@link data.Power Power} representing them,
+ * <br>and contain a {@link data.unit.Units Unit}.</p>
  * @author Maxence
  */
 public abstract class Box implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Units unit;
 	private Power owner;
 	
 	public Box() {
 	}
-
+	
+	/**
+	 * @return {@link data.unit.Units Unit} contains in this {@link data.boxes.Box Box}.
+	 */
 	public Units getUnit() {
 		return unit;
 	}
-
+	
+	/**
+	 * @return {@link data.Power Power} that represent this {@link data.boxes.Box Box}.
+	 */
 	public Power getOwner() {
 		return owner;
 	}
-
+	
+	/**
+	 * @return true if a {@link data.Power Power} represents this {@link data.boxes.Box Box}.
+	 */
 	public boolean hasOwner() {
 		return owner != null;
 	}
 	
+	/**
+	 * @return true if a {@link data.unit.Units Unit} is contained in this {@link data.boxes.Box Box}.
+	 */
 	public boolean hasUnit() {
 		return unit != null;
 	}

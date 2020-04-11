@@ -17,6 +17,15 @@ import process.management.MapBuilder;
 import process.management.PowerManager;
 import process.management.UnitManager;
 
+/**
+ * <p>Implementation of the Game.</p>
+ * <p>Created by a {@link process.game.Start Start} class</p>
+ * <ul>Containts:
+ * 		<li>the Array of {@link data.actions.Action Actions} used in {@link process.management.ActionValidator ActionValidator}</li>
+ * 		<li>the {@link data.GameMap Map} used in the Game</li>
+ * 		<li>Several method to be called between each Turn</li>
+ * </ul>
+ */
 public class GameLoop {
 	private static Logger Logger = LoggerUtility.getLogger(GameLoop.class, "text");
 	@SuppressWarnings("unchecked")
@@ -33,14 +42,25 @@ public class GameLoop {
 		this.powers = powers;
 	}
 	
+	/**
+	 * @return the number of player still in Game 
+	 */
 	public int getPlayerNumber() {
 		return powers.length;
 	}
 	
+	/**
+	 * @return the List of {@link data.Power Power}
+	 */
 	public Power[] getPowers() {
 		return powers;
 	}
 	
+	/**
+	 * Add an {@link data.actions.Action Action} to be done this {@link #endTurn() Turn}
+	 * @param actionType
+	 * @param action
+	 */
 	public void addAction(int actionType, Action action) {
 		actions[actionType].add(action);
 	}
@@ -71,7 +91,14 @@ public class GameLoop {
 	}
 	
 	/**
-	 * End the current turn
+	 * End the current turn and start different actions
+	 * <ul>
+	 * 		<li>Decrease of BuildTime</li>
+	 * 		<li>Application of all {@link data.actions.Action Actions}</li>
+	 * 		<li>Checking the status of all {@link data.Power Power}</li>
+	 * 		<li>Increase in all {@link data.resource.Resource Resources} from {@link data.building.product.BuildingProduct Production}</li>
+	 * 		<li>Refresh the stats of all Powers</li>
+	 * </ul>
 	 */
 	public void endTurn() {
 		//decrease build time
@@ -89,7 +116,10 @@ public class GameLoop {
 		refreshPowersStats();
 		Logger.info("=== END OF TURN ===");
 	}
-
+	
+	/**
+	 * Launch the application of {@link data.actions.Action Action} from the {@link process.management.ActionValidator ActionValidator}
+	 */
 	public void doActions() {
 		Logger.info("Starting the application of Action");
 		for(int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
@@ -197,7 +227,6 @@ public class GameLoop {
 			Power powerConcerned = action.getPowerConcerned();
 			Box targetBox = map.getBox(action.getTarget());
 			int buildingType = action.getBuildingType();
-
 			BuildingManager.getInstance().addNewBuilding(powerConcerned, buildingType, (GroundBox)targetBox);
 		}
 	}
@@ -212,19 +241,28 @@ public class GameLoop {
 		}
 	}
 	
+	/**
+	 * Initialisation of the ArrayList of {@link data.actions.Action Actions} retieve from {@link process.management.ActionValidator ActionValidator}
+	 */
 	private void initActionArray() {
 		for (int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
 			actions[i]= new ArrayList<Action>();
 		}
-
 	}
 	
+	/**
+	 * call the {@link data.Power#applyProductionOfTurn applyProduction} method from {@link data.Power Power}
+	 */
 	private void applyProduction() {
 		for (int i = 0; i < getPlayerNumber(); i++) {
 			powers[i].applyProductionOfTurn();
 		}
 	}
 	
+	/**
+	 * Check all {@link data.building.Building Buildings} on the map
+	 * <br>and reduce their construction time.
+	 */
 	private void decreaseBuildTime() {
 		for (int i=0; i < map.getSize(); i++) {
 			for (int j=0; j < map.getSize(); j++) {
@@ -241,6 +279,10 @@ public class GameLoop {
 		}
 	}
 	
+	/**
+	 * @param {@link data.resource.ActionPoints actionPoints}
+	 * @return true if > 0
+	 */
 	public Boolean canContinueTurn(Resource actionPoints) {
 		return actionPoints.getAmount() > 0;
 	}
@@ -260,7 +302,9 @@ public class GameLoop {
 		}
 	}
 	
-	
+	/**
+	 * Call the method {@link process.management.PowerManager#refreshPowerStats() refreshPowerStats} for all {@link data.Power Power}
+	 */
 	private void refreshPowersStats() {
 		for(int i = 0; i < powers.length; i++){
 			PowerManager.getInstance().refreshPowerStats(powers[i], map);

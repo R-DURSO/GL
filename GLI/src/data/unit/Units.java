@@ -3,21 +3,25 @@ package data.unit;
 import java.io.Serializable;
 
 import data.Power;
+import data.boxes.Box;
 
 /**
- * <p>Represents a Units in the Game.</p>
- * <p>A Units move across the Map, capturing new territory for the {@link data.Power Power} that control it.</p>
- * <p>A Units have HP, range and damage capabilities, as well as defence and number.</p>
- * Some Units can't have number, so be numerous on the same Boxes,
- * <ul>
+ * <p>Represents a Units in the {@link process.game.GameLoop Game}.</p>
+ * <p>A Units move across the {@link data.GameMap Map}, capturing new territory for the {@link data.Power Power} that control it.</p>
+ * <p>A Units have HP, {@link data.unit.Units#getRange() range} and {@link data.unit.Units#getDamage() damage},
+ * as well as {@link data.unit.Units#getDefense() defense} and {@link data.unit.Units#getNumber() number}.</p>
+ * <ul>Some Units can't have number, so they is only one on the same {@link data.boxes.Box box}:
  * 	<li>{@link data.unit.Boat Boat}</li>
+ * 	<li>{@link data.unit.BatteringRam BatteringRam}</li>
  * 	<li>{@link data.unit.Trebuchet Trebuchet}</li>
  * </ul>
  * <p>Unis are created by a {@link process.management.UnitManager UnitManager}.</p>
  * @author Maxence
  *
  */
-public abstract class Units implements Serializable{
+public abstract class Units implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private int number;
 	private boolean isMoving = false;
 	
@@ -29,9 +33,9 @@ public abstract class Units implements Serializable{
 	}
 	
 	/**
-	 * Returns the number max of units of a defined type, or -1 if the type is not recognized
-	 * @param unitsType
-	 * @return numberMax of unit types
+	 * Returns the number max of {@link data.unit.Units Unit}, or -1 if the {@link data.unit.UnitTypes Types} is not recognized
+	 * @param unitsType {@link data.unit.UnitTypes UnitTypes}
+	 * @return numberMax of given unitTypes
 	 */
 	public static int getNumberMaxUnits(int unitsType) {
 		switch (unitsType) {
@@ -55,9 +59,10 @@ public abstract class Units implements Serializable{
 	}
 	
 	/**
-	 * Returns the cost of a unit of a defined type, or -1 if the type is not recognized
-	 * @param unitsType
-	 * @return numberMax of unit types
+	 * Returns the cost in {@link data.resource.Gold Gold} of a {@link data.unit.Units Unit}, or -1 if the given {@link data.unit.UnitTypes Types} is not recognized
+	 * @param unitsType {@link data.unit.UnitTypes UnitTypes}
+	 * @return Cost of a single Unit
+	 * @see {@link data.unit.Units#getCost() getCost()}
 	 */
 	public static int getUnitCost(int unitsType) {
 		switch (unitsType) {
@@ -81,9 +86,10 @@ public abstract class Units implements Serializable{
 	}
 	
 	/**
-	 * Returns the cost of a unit of a defined type, or -1 if the type is not recognized
-	 * @param unitsType
-	 * @return numberMax of unit types
+	 * Returns the Production Cost in {@link data.resource.Food Food} of a {@link data.unit.Units Unit}, or -1 if the given {@link data.unit.UnitTypes Types} is not recognized
+	 * @param unitsType {@link data.unit.UnitTypes UnitTypes}
+	 * @return Cost per Turn of a single Unit
+	 * @see {@link data.unit.Units#getFoodCost() getFoodCost()}
 	 */
 	public static int getUnitCostPerTurn(int unitsType) {
 		switch (unitsType) {
@@ -111,7 +117,17 @@ public abstract class Units implements Serializable{
 	 * @see {@link data.unit.UnitTypes UnitTypes}
 	 */
 	public abstract int getTypes();
+	
+	/**
+	 * Returns the cost in {@link data.resource.Gold Gold} of a {@link data.unit.Units Unit}
+	 * @return Cost of the implemented Unit
+	 */
 	public abstract int getCost();
+	
+	/**
+	 * Returns the cost in {@link data.resource.Food Food} of a {@link data.unit.Units Unit}
+	 * @return Cost of the implemented Unit
+	 */
 	public abstract int getFoodCost();
 	/**
 	 * <p>get the Range of the {@link data.unit.Units Unit}</p>
@@ -135,6 +151,10 @@ public abstract class Units implements Serializable{
 	 * @return the Max you can have on a stack of {@link data.unit.Units Unit}
 	 */
 	public abstract int getMaxNumber();
+	/**
+	 * @return true if the {@link data.unit.Units Unit} is from a {@link data.building.army.Workshop WorkShop},
+	 * <br>giving it special damage to {@link data.building.Building Buildings}
+	 */
 	public abstract boolean isSiegeUnit();
 	public abstract int getSiegeDamage();
 	public abstract int getHealth();

@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import data.boxes.*;
 
+/**
+ * Implementation of the Map used for the {@link process.game.GameLoop Game}.
+ * <br>Use an Array of {@link data.boxes.Box Boxes}.
+ */
 public class GameMap implements Serializable {
 	/*you have to be careful: the first entry is that of the ordinate, 
 	and the second that of the abscissa*/

@@ -12,6 +12,10 @@ import process.management.PowerFactory;
 import process.management.PowerManager;
 import process.management.UnitManager;
 
+/**
+ * Initialize the {@link process.game.GameLoop GameLoop}.
+ * <br>Use a {@link data.GameMap GameMap} and a List of {@link data.Power Power}
+ */
 public class Start {
 	private GameMap map;
 	private Power powers[];
