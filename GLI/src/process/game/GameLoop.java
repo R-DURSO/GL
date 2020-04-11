@@ -120,7 +120,7 @@ public class GameLoop {
 		int numberPowersAlive = powers.length;
 		for(int i = 0; i < powers.length; i++){
 			if(!powers[i].isAlive()) {
-				numberPowersAlive--;
+				numberPowersAlive--; 
 			}
 		}
 		return numberPowersAlive;

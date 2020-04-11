@@ -151,7 +151,7 @@ public class GamePanel extends JPanel {
 		Power winner = null;
 		if(victoryType == GameConstants.VICTORY_TYPE_MILITARY)
 			winner = gameLoop.getMilitaryWinner();
-		else if(victoryType == GameConstants.VICTORY_TYPE_TEMPLE);
+		else if(victoryType == GameConstants.VICTORY_TYPE_TEMPLE)
 			winner = gameLoop.getTempleWinner();
 			
 		//if one of those victory really have been triggered
