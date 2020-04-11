@@ -187,10 +187,10 @@ public class BuildingManager {
 	}
 	
 	/**
-	 * Upgrade the {@link data.building.special.Capital Capital} of a given {@link data.Power Power}
+	 * {@link data.building.special.Capital#upgrade() Upgrade} the {@link data.building.special.Capital Capital} of a given {@link data.Power Power}
 	 * @param power {@link data.Power Power} that upgrade his Capital
 	 */
-	public void upgradeCapitale (Power power) {
+	public void upgradeCapital (Power power) {
 		if (power.getCapital().upgrade()) {
 			power.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_ACTIONS, 1);
 			((ActionPoints) power.getResource(ResourceTypes.RESOURCE_ACTIONS)).addMaxActions(2);

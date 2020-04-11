@@ -55,7 +55,7 @@ public class Capital extends BuildingSpecial implements Serializable {
 	}
 	
 	/**
-	 * Upgrade the Capitale the Power hold
+	 * Upgrade the {@link data.building.special.Capital Capital} the {@link data.Power Power} hold
 	 * @return true if upgrade was successful
 	 */
 	public boolean upgrade() {

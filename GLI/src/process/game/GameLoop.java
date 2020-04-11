@@ -202,7 +202,7 @@ public class GameLoop {
 		for(Action a : arrayList) {
 			ActionUpgradeCapital action = (ActionUpgradeCapital)a;
 			Power powerConcerned = action.getPowerConcerned();
-			BuildingManager.getInstance().upgradeCapitale(powerConcerned);
+			BuildingManager.getInstance().upgradeCapital(powerConcerned);
 		}
 	}
 
