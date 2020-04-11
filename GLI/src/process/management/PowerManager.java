@@ -196,9 +196,9 @@ public class PowerManager {
 		killer.addScore(ScoreValue.SCORE_VALUE_POWER);
 		Logger.info(killer.getName()+" has kill "+killed.getName());
 		Logger.info("== "+killed.getName()+" is DEAD ==");
-		/*
-		 * //so, the power who died is deleted from the game killed = null;
-		 */
+
+
+		killed.die();
 	}
 	
 	public Power[] recreatePowerList(Power[] powerList) {

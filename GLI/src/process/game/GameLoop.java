@@ -6,6 +6,9 @@ import org.apache.log4j.Logger;
 import GUI.components.menu.PreferencesPanel;
 import data.actions.*;
 import data.boxes.*;
+import data.building.Building;
+import data.building.special.Temple;
+import data.GameConstants;
 import data.GameMap;
 import data.Position;
 import data.Power;
@@ -31,8 +34,6 @@ public class GameLoop {
 	@SuppressWarnings("unchecked")
 	private ArrayList<Action> actions[] = (ArrayList<Action>[]) new ArrayList[ActionTypes.NUMBER_ACTIONS];
 	
-	// constante temporaire 
-	private boolean isPlaying = true;
 	private Power powers[];
 	private GameMap map;
 	
@@ -65,31 +66,6 @@ public class GameLoop {
 		actions[actionType].add(action);
 	}
 	
-
-	public void play() {
-
-		//the main game loop, which won't end unitl game is finished, or player wants to quit
-		while(isPlaying) {
-			
-			//for player 1, who is the unique human
-			while(canContinueTurn(powers[0].getResource(ResourceTypes.RESOURCE_ACTIONS))) {
-				//window.doSomething()
-				
-			}
-		
-			//for others non-human players  
-			for( int i = 1 ; i < powers.length;  i++) {
-				
-				//they will do all actions they can 
-				while(canContinueTurn(powers[i].getResource(ResourceTypes.RESOURCE_ACTIONS))) {
-					// test action possible 
-
-
-				}
-			}
-		}
-	}
-	
 	/**
 	 * End the current turn and start different actions
 	 * <ul>
@@ -106,7 +82,7 @@ public class GameLoop {
 		//Apply all stored action
 		doActions();
 		//check if Power are dead
-		checkPower();
+//		checkPower();
 		//check Victory conditions
 		//add resource from building product
 		applyProduction();
@@ -117,6 +93,55 @@ public class GameLoop {
 		Logger.info("=== END OF TURN ===");
 	}
 	
+	public int checkVictoryConditions() {
+		//check if only one power is "alive"
+		int numberPowersAlive = countPowersAlive();
+		if (numberPowersAlive <= 1) {
+			return GameConstants.VICTORY_TYPE_MILITARY;
+		}
+		
+		//check if temple is finished
+		int mapSize = map.getSize()/2;
+		Box box = map.getBox(mapSize, mapSize);
+		GroundBox groundBox = (GroundBox)box;
+		if(groundBox.hasBuilding()) {
+			Building building = groundBox.getBuilding();
+			if(building instanceof Temple) {
+				Temple temple = (Temple)building;
+				if(temple.isFinish())
+					return GameConstants.VICTORY_TYPE_TEMPLE;
+			}
+		}
+		
+		return GameConstants.NO_VICTORY;
+	}
+
+	private int countPowersAlive() {
+		int numberPowersAlive = powers.length;
+		for(int i = 0; i < powers.length; i++){
+			if(!powers[i].isAlive()) {
+				numberPowersAlive--;
+			}
+		}
+		return numberPowersAlive;
+	}
+	
+	public Power getMilitaryWinner() {
+		for(int i = 0; i < powers.length; i++){
+			if (powers[i].isAlive()) {
+				return powers[i];
+			}
+		}
+		return null;
+	}
+	
+
+	public Power getTempleWinner() {
+		int mapSize = map.getSize()/2;
+		Box box = map.getBox(mapSize, mapSize);
+		return box.getOwner();
+	}
+
 	/**
 	 * Launch the application of {@link data.actions.Action Action} from the {@link process.management.ActionValidator ActionValidator}
 	 */
@@ -287,20 +312,20 @@ public class GameLoop {
 		return actionPoints.getAmount() > 0;
 	}
 	
-	public void checkPower() {
-		for (int i = 0; i < getPlayerNumber(); i++) {
-			if (powers[i].hasLost()) {
-				this.powers = PowerManager.getInstance().recreatePowerList(powers);
-				if (powers.length <= 1) {
-					Logger.info("=== "+powers[0].getName()+" is the last Power alive ===");
-					this.isPlaying = false;
-				}
-			}
-			else if (powers[i].getResource(ResourceTypes.RESOURCE_FOOD).getAmount() < 0) {
-				PowerManager.getInstance().regainFood(powers[i]);
-			}
-		}
-	}
+//	public void checkPower() {
+//		for (int i = 0; i < getPlayerNumber(); i++) {
+//			if (powers[i].hasLost()) {
+//				this.powers = PowerManager.getInstance().recreatePowerList(powers);
+//				if (powers.length <= 1) {
+//					Logger.info("=== "+powers[0].getName()+" is the last Power alive ===");
+//					this.isPlaying = false;
+//				}
+//			}
+//			else if (powers[i].getResource(ResourceTypes.RESOURCE_FOOD).getAmount() < 0) {
+//				PowerManager.getInstance().regainFood(powers[i]);
+//			}
+//		}
+//	}
 	
 	/**
 	 * Call the method {@link process.management.PowerManager#refreshPowerStats() refreshPowerStats} for all {@link data.Power Power}
@@ -310,4 +335,5 @@ public class GameLoop {
 			PowerManager.getInstance().refreshPowerStats(powers[i], map);
 		}
 	}
+
 }

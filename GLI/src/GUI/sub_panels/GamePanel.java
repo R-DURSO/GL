@@ -137,6 +137,20 @@ public class GamePanel extends JPanel {
 		refreshMap();
 		playerResourcesPanel.refreshAll();
 		repaint();
+		
+		//check if someone won
+		int victoryType = gameLoop.checkVictoryConditions();
+		if(victoryType != GameConstants.NO_VICTORY) {
+			setVictoryScreen(victoryType);
+		}
+	}
+
+	private void setVictoryScreen(int victoryType) {
+		Power winner = null;
+		if(victoryType == GameConstants.VICTORY_TYPE_MILITARY)
+			winner = gameLoop.getMilitaryWinner();
+		else if(victoryType == GameConstants.VICTORY_TYPE_TEMPLE);
+			winner = gameLoop.getTempleWinner();
 	}
 
 	public void cancelAction() {
@@ -280,4 +294,6 @@ public class GamePanel extends JPanel {
 		remove(playerResourcesPanel);
 		window.changeWindow(MainWindow.MENU_WINDOW);
 	}
+	
+	
 }

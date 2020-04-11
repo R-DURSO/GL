@@ -66,10 +66,10 @@ public class VictoryPanel extends JPanel {
 	}
 	
 	/**
-	 * 
-	 * @param winnerName
-	 * @param victoryType
-	 * @param score
+	 * Initilizes all thae data that VictoryPanel needs to be constructed
+	 * @param winnerName the name of the power who win
+	 * @param victoryType the type of victory (values are in [{@linkplain data.GameConstants})
+	 * @param score the dwore of the player who win
 	 */
 	public void initVictoryPanel(String winnerName, int victoryType, int score) {
 		JPanel topPanel = new JPanel(new GridLayout(0,1));
