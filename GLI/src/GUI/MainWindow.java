@@ -22,10 +22,13 @@ import log.LoggerUtility;
 import process.game.SaveOption;
 import process.game.Start;
 
+/**
+ * <p>The Window of the Game</p>
+ * <p>Can be switched between the {@link GUI.sub_panels.MenuPanel MenuPanel} and the {@link GUI.sub_panels.GamePanel GamePanel}.</p>
+ * @author Aldric
+ */
 public class MainWindow extends JFrame{
-	/**
-	 * 
-	 */
+	private static final long serialVersionUID = 1L;
 	private static Logger logger = LoggerUtility.getLogger(MainWindow.class, GameConstants.LOG_TYPE);
 	
 	public static final String GAME_WINDOW = "game";

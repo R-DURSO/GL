@@ -12,7 +12,7 @@ import GUI.components.GuiPreferences;
 import data.resource.Resource;
 
 /**
- * <p>The list of Resource the power hold (and it's production)</p>
+ * <p>The list of {@link data.resource.Resource Resources} the {@link data.Power Player} hold (and it's production)</p>
  * <p>Used in {@link PlayerResourcesPanel}
  */
 public class ResourcePanel extends JPanel{
@@ -44,7 +44,12 @@ public class ResourcePanel extends JPanel{
 		resourceLabel.setText(resourceName + " : " + resourceAmountAndProd);
 		repaint();
 	}
-
+	
+	/**
+	 * Add a plus if the production is positive
+	 * @param productionPerTurn the Production of a given {@link data.resource.Resource Resource}
+	 * @return Production with a leading symbol
+	 */
 	private String withSign(int productionPerTurn) {
 		return productionPerTurn < 0 ? "" + productionPerTurn : "+" + productionPerTurn;
 	}

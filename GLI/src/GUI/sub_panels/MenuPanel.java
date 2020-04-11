@@ -13,7 +13,14 @@ import GUI.components.menu.ChoicePanel;
 import GUI.components.menu.OptionsPanel;
 import GUI.components.menu.TitlePanel;
 
+/**
+ * <p>Represent the Main Menu of the Game
+ * <br>where the Player can choose different options to customize the {@link GUI.sub_panels.GamePanel Game}</p>
+ * @author Aldric
+ */
 public class MenuPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
+
 	private MainWindow context;
 
 	private JPanel titlePanel = new TitlePanel();

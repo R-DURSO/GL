@@ -34,12 +34,14 @@ import process.game.SaveOption;
 import process.management.ActionValidator;
 
 /**
- * <p>
- * The class that control the game window
- * </p>
- * <p>
- * Use GameInfoPanel & MainGamePanel
- * </p>
+ * <p>The class that control the Game {@link GUI.MainWindow Window}</p>
+ * <p>Check from {@link process.game.GameLoop GameLoop} all action done in the Game</p>
+ * <ul> Also contains various SubComponents
+ * 		<li>{@link GUI.components.game.PlayerResourcesPanel PlayerResourcesPanel}</li>
+ * 		<li>{@link GUI.components.game.InfosPanel infosPanel}</li>
+ * 		<li>{@link GUI.components.game.MapPanel MapPanel}</li>
+ * 		<li>{@link GUI.components.game.GameButtonsPanel GameButtonsPanel}</li>
+ * </ul>
  */
 public class GamePanel extends JPanel {
 	private static final long serialVersionUID = 7722109867943150729L;

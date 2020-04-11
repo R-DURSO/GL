@@ -10,8 +10,8 @@ import data.resource.Resource;
 import data.resource.ResourceTypes;
 
 /**
- * <p>The container for information from the Game.</p>
- * <p>Use several {@link ResourcePanel}</p>
+ * <p>Container of Resources information for the {@link GUI.sub_panels.GamePanel GamePanel}.</p>
+ * <p>Use various {@link GUI.components.game.ResourcePanel ResourcePanel}</p>
  */
 public class PlayerResourcesPanel extends JPanel{
 	private static final long serialVersionUID = 1700840665124988595L;
