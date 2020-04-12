@@ -59,4 +59,26 @@ public abstract class Resource implements Serializable {
 	}
 
 	public abstract int getResourceType();
+
+	public static String getResourceType(int ResourceType) {
+		switch(ResourceType) {
+		case ResourceTypes.RESOURCE_ACTIONS:
+			return "Actions";
+		case ResourceTypes.RESOURCE_FOOD:
+			return "Food";
+		case ResourceTypes.RESOURCE_WOOD:
+			return "Wood";
+		case ResourceTypes.RESOURCE_STONE:
+			return "Stone";
+		case ResourceTypes.RESOURCE_GOLD:
+			return "Gold";
+		case ResourceTypes.RESOURCE_SCORE:
+			return "Score";
+		case ResourceTypes.RESOURCE_ARTIFACT:
+			return "Artifact";
+		default:
+			return "Unknown";
+		}
+	}
+	
 }
