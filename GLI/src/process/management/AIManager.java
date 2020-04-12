@@ -86,11 +86,11 @@ public class AIManager {
 		// actions that power will do will be there
 		Resource actionResource = power.getResource(ResourceTypes.RESOURCE_ACTIONS);
 //		int numberActions = actionResource.getAmount();
-
+		
 		// we will try a lot more actions than really do them
-		int numberActionsToTry = 3;
-
-		Action triedActions[] = tryActions(power, numberActionsToTry, unitsList, buildingList, territory);
+		int numberActionsToTry = 40;
+		Action triedActions[] = null;
+		triedActions = tryActions(power, numberActionsToTry, unitsList, buildingList, territory);
 		/*
 		// finally, get actions that power will really do
 		Action turnActions[] = getDesiredActions(power, triedActions, numberActions, unitsList, buildingList,
@@ -139,10 +139,10 @@ public class AIManager {
 				}
 				logger.info("Action " + action.getClass().getSimpleName() + " created");
 				actionsTried[numberActionsTried] = action;
-				numberActionsTried++;
 			} catch (WrongActionException e) {
 				logger.debug("Action denied : " + e.getMessage());
 			}
+			numberActionsTried++;
 		}
 		return actionsTried;
 	}

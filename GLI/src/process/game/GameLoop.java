@@ -83,7 +83,7 @@ public class GameLoop {
 		//Apply all stored action
 		doActions();
 		//check if Power are dead
-//		checkPower();
+		checkPower();
 		//check Victory conditions
 		//add resource from building product
 		applyProduction();
@@ -96,8 +96,8 @@ public class GameLoop {
 	
 	
 	
-//	public void checkPower() {
-//		for (int i = 0; i < getPlayerNumber(); i++) {
+	public void checkPower() {
+		for (int i = 0; i < getPlayerNumber(); i++) {
 //			if (powers[i].hasLost()) {
 //				this.powers = PowerManager.getInstance().recreatePowerList(powers);
 //				if (powers.length <= 1) {
@@ -105,18 +105,21 @@ public class GameLoop {
 //					this.isPlaying = false;
 //				}
 //			}
-//			else if (powers[i].getResource(ResourceTypes.RESOURCE_FOOD).getAmount() < 0) {
-//				PowerManager.getInstance().regainFood(powers[i]);
-//			}
-//		}
-//	}
+//			else
+			if (powers[i].getResource(ResourceTypes.RESOURCE_FOOD).getAmount() < 0) {
+				PowerManager.getInstance().regainFood(powers[i]);
+			}
+		}
+	}
 	
 	public void addActionsIA() {
 		for(int i = 0; i < powers.length; i++){
 			if(powers[i].isAI()) {
 				Action listAction[] = AIManager.doActions(powers[i]); 
-				for(int j = 0; j < listAction.length; j++){
-					addAction(listAction[j].getActionType(), listAction[j]);
+				for (int j = 0; j < listAction.length; j++) {
+					if (listAction[j] != null) {
+						addAction(listAction[j].getActionType(), listAction[j]);
+					}
 				}
 			}
 		}
@@ -175,7 +178,7 @@ public class GameLoop {
 	 * Launch the application of {@link data.actions.Action Action} from the {@link process.management.ActionValidator ActionValidator}
 	 */
 	public void doActions() {
-		Logger.info("Starting the application of Action");
+		Logger.info("== Starting the application of Action ==");
 		for(int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
 			switch(i) {
 			case ActionTypes.ACTION_MAKE_ALLIANCE:

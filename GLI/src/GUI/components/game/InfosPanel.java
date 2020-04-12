@@ -76,7 +76,8 @@ public class InfosPanel extends JPanel {
 	}
 
 	/**
-	 * Change stats display (this method has to be called during 
+	 * Change stats displayed
+	 * (this method has to be called after each turn)
 	 */
 	public void refreshStatsPanel() {
 		//put data in 2 graphs

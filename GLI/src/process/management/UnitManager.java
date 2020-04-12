@@ -291,8 +291,10 @@ public class UnitManager {
 	private boolean moveUnitsBox(Units movingUnits, Box visitBox) {
 		//Initialize checker boolean
 		boolean canMove = false;
-		boolean conquerBox = false;
 		boolean checkBuilding = false;
+		boolean checkAlly = false;
+		boolean checkUnit = false;
+		boolean conquerBox = false;
 		
 		//Verification du cas du bateau (pour charger/decharger les Units)
 		if (visitBox instanceof WaterBox) {
@@ -302,12 +304,14 @@ public class UnitManager {
 					//peut-on monter dans le bateau ?
 					if (movingUnits.getTypes() != UnitTypes.UNIT_BOAT) {
 						canMove = true;
+						checkAlly = true;
 					}
 				}
 				//si on est un bateau
 				else if (movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
 					//un bateau dans l'eau
 					canMove = true;
+					checkAlly = true;
 				}
 				else {
 					Logger.error("Moving a unit that isn't a Boat on WaterBox");
@@ -318,6 +322,7 @@ public class UnitManager {
 				//dans l'eau sans unite a destination, on bouge surement un bateau
 				if (movingUnits.getTypes() == UnitTypes.UNIT_BOAT) {
 					canMove = true;
+					checkAlly = true;
 				}
 				else {
 					Logger.error("Moving a unit that isn't a Boat on WaterBox");
@@ -339,11 +344,13 @@ public class UnitManager {
 				}
 				//Boat should move to water
 				canMove = false;
+				checkBuilding = true;
 			}
 			else if (movingUnits.getTypes() == UnitTypes.UNIT_TREBUCHET) {
 				Trebuchet TrebUnit = (Trebuchet)movingUnits;
 				if (TrebUnit.getState() == Trebuchet.STATE_MOVING) {
 					canMove = true;
+					checkBuilding = true;
 				}
 				else {
 					//On devrait pas arriver ici, mais au-cas où...
@@ -354,39 +361,10 @@ public class UnitManager {
 			else {
 				//Unite sur Terre
 				canMove = true;
+				checkBuilding = true;
 			}
 		}
 		
-		Power powerConcerned = movingUnits.getOwner();
-		//if targetBox is in ennemy's territory
-		Power BoxPower = visitBox.getOwner();
-		if (BoxPower == null) {
-			//targetBox is free, take it !
-			//as there isnt a Power, dont check for building
-			conquerBox = true;
-		}
-		else {
-			if (!visitBox.hasUnit()) {
-				if (BoxPower != powerConcerned) {
-					//Box doesn't belong to us
-					if (powerConcerned.isAllied()) {
-						if (powerConcerned.getAlly() != BoxPower) {
-							//Not a Ally
-							checkBuilding = true;
-						}
-					}
-					else {
-						//Not Allied
-						checkBuilding = true;
-					}
-				}
-			}
-			else if (visitBox.getUnit().getTypes() < 0) {
-				//just a PhantomUnit here, go as there is nobody here (for now)
-				checkBuilding = true;
-			}
-			//if there are Unit, we cannot conquer
-		}
 		
 		if (checkBuilding) {
 			if (visitBox instanceof GroundBox) {
@@ -395,21 +373,62 @@ public class UnitManager {
 					if (visitGBox.getBuilding() instanceof BuildingSpecial) {
 						//dont conquer if its a special Building
 						canMove = false;
-						conquerBox = false;
+						checkAlly = false;
 					}
 					else {
-						conquerBox = true;
+						checkAlly = true;
 					}
 				}
 				else {
-					conquerBox = true;
+					checkAlly = true;
 				}
 			}
 			else {
-				conquerBox = true;
+				checkAlly = true;
 			}
 		}
 		
+		Power powerConcerned = movingUnits.getOwner();
+		//if targetBox is in ennemy's territory
+		Power BoxPower = visitBox.getOwner();
+		if (checkAlly) {
+			if (BoxPower == null) {
+				//targetBox is free, take it !
+				//as there isnt a Power, dont check for Unit
+				conquerBox = true;
+			}
+			else {
+				if (powerConcerned != BoxPower) {
+					//Box doesn't belong to us
+					if (powerConcerned.isAllied()) {
+						if (powerConcerned.getAlly() != BoxPower) {
+							//Not a Ally
+							checkUnit = true;
+						}
+					}
+					else {
+						//Not Allied
+						checkUnit = true;
+					}
+				}
+			/*
+				else if (visitBox.getUnit().getTypes() < 0) {
+					//just a PhantomUnit here, go as there is nobody here
+					conquerBox = true;
+				}
+			*/
+				//if there are Unit, we cannot conquer
+			}
+		}
+		
+		if (checkUnit) {
+			if (!visitBox.hasUnit()) {
+				//No Unit and not Ally, including for Phantom
+				conquerBox = true;
+				canMove = true;
+			}
+			//dont conquer if there is a Unit
+		}
 		
 		if (conquerBox) {
 			//powerConcerned will take this territory, and ressource gain per turn if any (inderictly, will gain the building on it too)  
