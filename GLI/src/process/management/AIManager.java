@@ -69,8 +69,9 @@ public class AIManager {
 	 * Create actions that Power can do, depending of his AI level
 	 * 
 	 * @param power the power who will do those actions
+	 * @return 
 	 */
-	public void doActions(Power power) {
+	public Action[] doActions(Power power) {
 		logger.info("AI " + power.getName() + " starts creating actions");
 
 		// get all units
@@ -84,16 +85,19 @@ public class AIManager {
 
 		// actions that power will do will be there
 		Resource actionResource = power.getResource(ResourceTypes.RESOURCE_ACTIONS);
-		int numberActions = actionResource.getAmount();
+//		int numberActions = actionResource.getAmount();
 
 		// we will try a lot more actions than really do them
-		int numberActionsToTry = numberActions * 5;
+		int numberActionsToTry = 3;
 
 		Action triedActions[] = tryActions(power, numberActionsToTry, unitsList, buildingList, territory);
-
+		/*
 		// finally, get actions that power will really do
 		Action turnActions[] = getDesiredActions(power, triedActions, numberActions, unitsList, buildingList,
 				territory);
+		*/
+		
+		return triedActions;
 	}
 
 	/**
@@ -236,7 +240,7 @@ public class AIManager {
 				unitsType = UnitTypes.UNIT_INFANTRY;
 				numberUnits = Infantry.NUMBER_MAX_UNITS;
 			} else {
-				unitsType = random.nextInt(UnitTypes.UNITS_IN_BARRACK);
+				unitsType = random.nextInt(UnitTypes.UNITS_IN_BARRACK - 1) + 1;
 				// will find number of units to be created depending on ai level and Units
 				numberUnits = findNumberUnits(power, unitsType, aiLevel);
 			}
@@ -546,12 +550,18 @@ public class AIManager {
 				}
 			}
 		}
-
+		
 		// for now, add a random Box
-		int numberValidBox = unitsList.size();
-		int BoxIndex = random.nextInt(numberValidBox);
-		Position positionSelected = validPosition.get(BoxIndex);
-
+		int numberValidBox = validPosition.size();
+		Position positionSelected;
+		if (numberValidBox < 1) {
+			throw new WrongActionException("Designed Unit doesn't have any Box to move to");
+		}
+		else {
+			int BoxIndex = random.nextInt(numberValidBox);
+			positionSelected = validPosition.get(BoxIndex);
+		}
+		
 		try {
 			return actionValidator.createActionMove(power, unitPosition, positionSelected);
 		} catch (IllegalArgumentException e) {
@@ -612,11 +622,17 @@ public class AIManager {
 				}
 			}
 		}
-
+		
 		// for now, add a random Box
-		int numberValidBox = unitsList.size();
-		int BoxIndex = random.nextInt(numberValidBox);
-		Position positionSelected = validPosition.get(BoxIndex);
+		int numberValidBox = validPosition.size();
+		Position positionSelected;
+		if (numberValidBox < 1) {
+			throw new WrongActionException("Designed Unit doesn't have any Box to attack");
+		}
+		else {
+			int BoxIndex = random.nextInt(numberValidBox);
+			positionSelected = validPosition.get(BoxIndex);
+		}
 
 		try {
 			return actionValidator.createActionAttack(power, unitPosition, positionSelected);

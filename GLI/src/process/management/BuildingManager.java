@@ -8,6 +8,7 @@ import data.building.army.*;
 import data.building.product.*;
 import data.building.special.*;
 import data.resource.ActionPoints;
+import data.resource.Resource;
 import data.resource.ResourceTypes;
 
 import log.LoggerUtility;
@@ -43,42 +44,47 @@ public class BuildingManager {
 		Building building;
 		//create building depending on his type
 		building = createBuildingWithType(buildingType);
-		Logger.info(power.getName()+" create "+building.getClass().getSimpleName());
-		//add building to the box
-		box.setBuilding(building);
-		//we add score from creating a Building
-		if(building.getType() < BuildingTypes.BUILDING_ARMY) {
-			power.subScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
-			Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_ARMY+" score ");
-		}else if(building.getType() < BuildingTypes.BUILDING_PRODUCT) {
-			power.subScore(ScoreValue.SCORE_VALUE_BUILDING_PRODUCT);
-			Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_PRODUCT+" score ");
+		if (building == null) {
+			Logger.error(power.getName()+" tried to create an invalid Building");
 		}
-		else if(building.getType() < BuildingTypes.BUILDING_SPECIAL) {
-			if (building.getType() == BuildingTypes.BUILDING_TEMPLE) {
-				power.subScore(ScoreValue.SCORE_VALUE_BUILDING_TEMPLE);
-				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_TEMPLE+" score ");
+		else {
+			Logger.info(power.getName()+" create "+building.getClass().getSimpleName());
+			//add building to the box
+			box.setBuilding(building);
+			//we add score from creating a Building
+			if(building.getType() < BuildingTypes.BUILDING_ARMY) {
+				power.subScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
+				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_ARMY+" score ");
+			}else if(building.getType() < BuildingTypes.BUILDING_PRODUCT) {
+				power.subScore(ScoreValue.SCORE_VALUE_BUILDING_PRODUCT);
+				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_PRODUCT+" score ");
 			}
-			else {
-				power.subScore(ScoreValue.SCORE_VALUE_BUILDING_SPECIAL);
-				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_SPECIAL+" score ");
+			else if(building.getType() < BuildingTypes.BUILDING_SPECIAL) {
+				if (building.getType() == BuildingTypes.BUILDING_TEMPLE) {
+					power.subScore(ScoreValue.SCORE_VALUE_BUILDING_TEMPLE);
+					Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_TEMPLE+" score ");
+				}
+				else {
+					power.subScore(ScoreValue.SCORE_VALUE_BUILDING_SPECIAL);
+					Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_SPECIAL+" score ");
+				}
+			}else {
+				power.subScore(ScoreValue.SCORE_VALUE_DEFAULT);
+				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_DEFAULT+" score ");
 			}
-		}else {
-			power.subScore(ScoreValue.SCORE_VALUE_DEFAULT);
-			Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_DEFAULT+" score ");
-		}
-		
-		//now, we check if building is a production building and if he is on the right resource
-		if (building instanceof BuildingProduct) {
-			BuildingProduct buildingProduct = (BuildingProduct) building;
-			if (buildingProduct.isOnRightResource(box.getResourceType())) {
-				buildingProduct.setOnRightResource(true);
-				// j'ai pas la ressource j'ai que le batiment
-				Logger.info(power.getName()+" receive "+buildingProduct.getProductionPerTurn()+" "+ResourcesFactory.getResourceType(buildingProduct.getProductionType())+" per turn");
-			}
-			else {
-				buildingProduct.setOnRightResource(false);
-				Logger.info(power.getName()+" doesn't receive "+ResourcesFactory.getResourceType(buildingProduct.getProductionType())+" production, building isn't on right Resources");
+			
+			//now, we check if building is a production building and if he is on the right resource
+			if (building instanceof BuildingProduct) {
+				BuildingProduct buildingProduct = (BuildingProduct) building;
+				if (buildingProduct.isOnRightResource(box.getResourceType())) {
+					buildingProduct.setOnRightResource(true);
+					// j'ai pas la ressource j'ai que le batiment
+					Logger.info(power.getName()+" receive "+buildingProduct.getProductionPerTurn()+" "+Resource.getResourceType(buildingProduct.getProductionType())+" per turn");
+				}
+				else {
+					buildingProduct.setOnRightResource(false);
+					Logger.info(power.getName()+" doesn't receive "+Resource.getResourceType(buildingProduct.getProductionType())+" production, building isn't on right Resources");
+				}
 			}
 		}
 	}
@@ -179,7 +185,7 @@ public class BuildingManager {
 				BuildingProduct buildingP = (BuildingProduct)building;
 				if (buildingP.getOnRightResource()) {
 					power.addResourcesProductionPerTurn(buildingP.getProductionType(), buildingP.getProductionPerTurn());
-					Logger.info(power.getName()+" gain "+buildingP.getProductionPerTurn()+ResourcesFactory.getResourceType(buildingP.getProductionType())+" production each turn");
+					Logger.info(power.getName()+" gain "+buildingP.getProductionPerTurn()+Resource.getResourceType(buildingP.getProductionType())+" production each turn");
 				}
 			}
 		}

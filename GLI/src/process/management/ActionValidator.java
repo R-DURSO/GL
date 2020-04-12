@@ -121,7 +121,7 @@ public class ActionValidator {
 			logger.warn(powerConcerned.getName()+" dont have any ActionPoints left");
 			throw new IllegalArgumentException("On ne possede plus aucun point d'action");
 		}
-		if(from.equals(target)) {			
+		if (from.equals(target)) {
 			logger.warn(powerConcerned.getName()+" try to attack himself");
 			throw new IllegalArgumentException("On ne peut pas attaquer sur sa propre case");
 		}
@@ -136,7 +136,47 @@ public class ActionValidator {
 		
 		Units unitsAtt = fromBox.getUnit();
 		
-		if (!targetBox.hasUnit()) {
+		//check if from Box is powerConcerned's
+		if (unitsAtt.getOwner() != powerConcerned) {
+			logger.warn(powerConcerned.getName()+" try to laucnh an attack with unit that doesn't belong to him");
+			throw new IllegalArgumentException("Ces unites n'appartiennent pas a " + powerConcerned.getName());
+		}
+		
+		//check if units can be used
+		if (unitsAtt.getIsMoving()) {
+			logger.warn(powerConcerned.getName()+" try to move already moving unit");
+			throw new IllegalArgumentException("Vous bougez des unites qui sont en train de se deplacer");
+		}
+		
+		//check if units are on range
+		if (!isUnitsOnRange(from, unitsAtt.getRange(), target)) {
+			logger.warn(powerConcerned.getName()+" try to launch an attack with faraway units");
+			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
+		}
+		
+		
+		//Verification to be done if there is a Unit
+		if (targetBox.hasUnit()) {
+			//check if it's a PhantomUnit
+			if (targetBox.getUnit().getTypes() < 0) {
+				logger.warn(powerConcerned.getName()+" try to attack a ghost");
+				throw new IllegalArgumentException(powerConcerned.getName()+" attaque un Phantom");
+			}
+
+			//check if there is units on target, in this case, check the owner of those units
+			//if player himself or his ally, no attack
+			if (targetBox.getUnit().getOwner() == powerConcerned) {
+				logger.warn(powerConcerned.getName()+" try to attack his own units");
+				throw new IllegalArgumentException("Vous attaquez vos propres unites");
+			}
+			else if (powerConcerned.isAllied()) {
+				if (targetBox.getUnit().getOwner() == powerConcerned.getAlly()) {
+					logger.warn(powerConcerned.getName()+" try attack allied units");
+					throw new IllegalArgumentException("Vous attaquez les unites de votre allie");
+				}
+			}
+		}
+		else {
 			//Pas d'unite a attaquer, mais peut-etre un batiment
 			if (targetBox instanceof WaterBox) {
 				logger.warn(powerConcerned.getName()+" try to attack water ");
@@ -150,35 +190,7 @@ public class ActionValidator {
 			}
 		}
 		
-		//check if from Box is powerConcerned's
-		if (unitsAtt.getOwner() != powerConcerned) {
-			logger.warn(powerConcerned.getName()+" try to laucnh an attack with unit that doesn't belong to him");
-			throw new IllegalArgumentException("Ces unites n'appartiennent pas a " + powerConcerned.getName());
-		}
-		//check if units can be used
-		if (unitsAtt.getIsMoving()) {
-			logger.warn(powerConcerned.getName()+" try to move already moving unit");
-			throw new IllegalArgumentException("Vous bougez des unites qui sont en train de se deplacer");
-		}
-		//check if units are on range
-		if (!isUnitsOnRange(from, unitsAtt.getRange(), target)) {
-			logger.warn(powerConcerned.getName()+" try to launch an attack with faraway units");
-			throw new IllegalArgumentException("Les unites sont trop loin de la cible");
-		}
-		//check if there is units on target, in this case, check the owner of those units
-		//if player himself or his ally, no attack
-		if (targetBox.hasUnit()) {
-			if (targetBox.getUnit().getOwner() == powerConcerned) {
-				logger.warn(powerConcerned.getName()+" try to attack his own units");
-				throw new IllegalArgumentException("Vous attaquez vos propres unites");
-			}
-			else if (powerConcerned.isAllied()) {
-				if (targetBox.getUnit().getOwner() == powerConcerned.getAlly()) {
-					logger.warn(powerConcerned.getName()+" try attack allied units");
-					throw new IllegalArgumentException("Vous attaquez les unites de votre allie");
-				}
-			}
-		}
+		
 		//check now if player try to attack the territory of himself or his ally
 		if (targetBox.getOwner() == powerConcerned) {
 			logger.warn(powerConcerned.getName()+" try to attack his own territory");

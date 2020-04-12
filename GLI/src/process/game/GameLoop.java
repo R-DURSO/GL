@@ -13,6 +13,7 @@ import data.Position;
 import data.Power;
 import data.resource.*;
 import log.LoggerUtility;
+import process.management.AIManager;
 import process.management.BuildingManager;
 import process.management.PowerManager;
 import process.management.UnitManager;
@@ -30,7 +31,7 @@ public class GameLoop {
 	private static Logger Logger = LoggerUtility.getLogger(GameLoop.class, "text");
 	@SuppressWarnings("unchecked")
 	private ArrayList<Action> actions[] = (ArrayList<Action>[]) new ArrayList[ActionTypes.NUMBER_ACTIONS];
-	
+	private AIManager AIManager;
 	private Power powers[];
 	private GameMap map;
 	
@@ -38,6 +39,7 @@ public class GameLoop {
 		initActionArray();
 		this.map = map;
 		this.powers = powers;
+		this.AIManager = new AIManager(map, powers);
 	}
 	
 	/**
@@ -76,6 +78,8 @@ public class GameLoop {
 	public void endTurn() {
 		//decrease build time
 		decreaseBuildTime();
+		//Add IA Actions
+		addActionsIA();
 		//Apply all stored action
 		doActions();
 		//check if Power are dead
@@ -87,7 +91,35 @@ public class GameLoop {
 		
 		//refresh power stats (number units, buildings & territorySize)
 		refreshPowersStats();
-		Logger.info("=== END OF TURN ===");
+		Logger.info("=== END OF TURN ===\n");
+	}
+	
+	
+	
+//	public void checkPower() {
+//		for (int i = 0; i < getPlayerNumber(); i++) {
+//			if (powers[i].hasLost()) {
+//				this.powers = PowerManager.getInstance().recreatePowerList(powers);
+//				if (powers.length <= 1) {
+//					Logger.info("=== "+powers[0].getName()+" is the last Power alive ===");
+//					this.isPlaying = false;
+//				}
+//			}
+//			else if (powers[i].getResource(ResourceTypes.RESOURCE_FOOD).getAmount() < 0) {
+//				PowerManager.getInstance().regainFood(powers[i]);
+//			}
+//		}
+//	}
+	
+	public void addActionsIA() {
+		for(int i = 0; i < powers.length; i++){
+			if(powers[i].isAI()) {
+				Action listAction[] = AIManager.doActions(powers[i]); 
+				for(int j = 0; j < listAction.length; j++){
+					addAction(listAction[j].getActionType(), listAction[j]);
+				}
+			}
+		}
 	}
 	
 	public int checkVictoryConditions() {
@@ -112,7 +144,7 @@ public class GameLoop {
 		
 		return GameConstants.NO_VICTORY;
 	}
-
+	
 	private int countPowersAlive() {
 		int numberPowersAlive = powers.length;
 		for(int i = 0; i < powers.length; i++){
@@ -308,21 +340,6 @@ public class GameLoop {
 	public Boolean canContinueTurn(Resource actionPoints) {
 		return actionPoints.getAmount() > 0;
 	}
-	
-//	public void checkPower() {
-//		for (int i = 0; i < getPlayerNumber(); i++) {
-//			if (powers[i].hasLost()) {
-//				this.powers = PowerManager.getInstance().recreatePowerList(powers);
-//				if (powers.length <= 1) {
-//					Logger.info("=== "+powers[0].getName()+" is the last Power alive ===");
-//					this.isPlaying = false;
-//				}
-//			}
-//			else if (powers[i].getResource(ResourceTypes.RESOURCE_FOOD).getAmount() < 0) {
-//				PowerManager.getInstance().regainFood(powers[i]);
-//			}
-//		}
-//	}
 	
 	/**
 	 * Call the method {@link process.management.PowerManager#refreshPowerStats() refreshPowerStats} for all {@link data.Power Power}

@@ -5,6 +5,7 @@ import data.building.Building;
 import data.building.BuildingTypes;
 import data.building.product.BuildingProduct;
 import data.building.special.BuildingSpecial;
+import data.resource.Resource;
 import data.resource.ResourceTypes;
 import data.unit.*;
 import log.LoggerUtility;
@@ -428,9 +429,9 @@ public class UnitManager {
 							int productionType = buildingProduct.getProductionType();
 							int productionPerTurn = buildingProduct.getProductionPerTurn();
 							powerConcerned.addResourcesProductionPerTurn(productionType, productionPerTurn);
-							Logger.info(powerConcerned.getName()+" gain "+productionPerTurn+" of ResourceType:"+productionType+" as production");
+							Logger.info(powerConcerned.getName()+" gain "+productionPerTurn+" of "+Resource.getResourceType(productionType)+" as production");
 							BoxPower.subResourcesProductionPerTurn(productionType, productionPerTurn);
-							Logger.info(powerConcerned.getName()+" lose "+productionPerTurn+" of ResourceType:"+productionType+" as production");
+							Logger.info(BoxPower.getName()+" lose "+productionPerTurn+" of "+Resource.getResourceType(productionType)+" as production");
 						}
 					}
 				}
@@ -469,6 +470,9 @@ public class UnitManager {
 					}
 					else if ((powerConcerned.isAllied()) && (powerConcerned.getAlly() == defender.getOwner())) {
 						Logger.warn(powerConcerned.getName()+" try to attack his Ally: "+powerConcerned.getAlly().getName());
+					}
+					else if (defender.getTypes() < 0) {
+						Logger.warn(powerConcerned.getName()+" try to attack the ghost of "+defender.getOwner().getName());
 					}
 					else {
 						Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to "+defender+" ");
