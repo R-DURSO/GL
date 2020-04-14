@@ -692,6 +692,8 @@ public class AIManager {
 
 	private Action tryCreateActionAttack(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
+		
+		int aiLevel = power.getAILevel();
 		if (unitsList.isEmpty()) {
 			throw new WrongActionException(power.getName() + " doesn't have any units");
 		}
@@ -728,16 +730,18 @@ public class AIManager {
 				GroundBox visitGBox = (GroundBox) visitBox;
 				if (visitGBox.hasUnit()) {
 					validPosition.add(visitPosition);
-				} else if (visitGBox.hasBuilding()) {
+				}
+				else if (visitGBox.hasBuilding()) {
 					// A bit of Intelligence here, only attack SpecialBuilding
 					if (visitGBox.getBuilding() instanceof BuildingSpecial) {
 						validPosition.add(visitPosition);
 					}
-					/**
-					 * If Easy, try to destroy all Building
-					 */
+					else if (aiLevel == GameConstants.AI_EASY) {
+						validPosition.add(visitPosition);
+					}
 				}
-			} else {
+			}
+			else {
 				// implicit WaterBox
 				if (visitBox.hasUnit()) {
 					// Nearby Boat
@@ -752,12 +756,16 @@ public class AIManager {
 			default: //make the default case the easy
 			case GameConstants.AI_EASY:
 				check all Position
-				take the best
-				return it
+				take the best one
+				try it
 			case GameConstants.AI_NORMAL:
+				optimal, make his unit move in group
+					if unit is under attack, search nearby to regourp
+					calcul visotory => number vs allied nearby
 				
 			case GameConstants.AI_HARD:
-				
+				only ai to know how to use trebuchet
+				make sure to have ranged unit behind other allied unit or wall
 		}
 		*/
 		

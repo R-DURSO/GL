@@ -150,6 +150,8 @@ public class Power implements Serializable {
 		resources[ResourceTypes.RESOURCE_GOLD - 1].productionOfTurn();
 		resources[ResourceTypes.RESOURCE_WOOD - 1].productionOfTurn();
 		resources[ResourceTypes.RESOURCE_STONE - 1].productionOfTurn();
+		//special production for score, we add as value the size of territory
+		resources[ResourceTypes.RESOURCE_SCORE - 1].addValue(getTerritorySize());
 	}
 
 	public void setAlly(Power ally) {
