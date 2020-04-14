@@ -116,6 +116,28 @@ public class GameMap implements Serializable {
 		return false;
 	}
 	
+	/**
+	 * Return the distance between 2 Boxes on the Map
+	 * @param a first Position
+	 * @param b second Position
+	 * @return the distance between those two
+	 */
+	public int getDistance (Position a, Position b) {
+		 int aX = a.getX();
+		 int aY = a.getY();
+		 int bX = b.getX();
+		 int bY = b.getY();
+		return (getDifference(aX,bX) + getDifference(aY,bY));
+	}
+	
+	/**
+	 * @param a Entier
+	 * @param b Entier
+	 * @return La difference entre ces 2 entiers
+	 */
+	private int getDifference (int a, int b) {
+		return Math.abs(a - b);
+	}
 	
 	public String toString() {
 		String result = "\nMap Boxes:\n\n";

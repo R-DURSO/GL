@@ -79,6 +79,7 @@ public class GameLoop {
 		//decrease build time
 		decreaseBuildTime();
 		//Add IA Actions
+		//IA have a turn later for decrease construction time
 		addActionsIA();
 		//Apply all stored action
 		doActions();

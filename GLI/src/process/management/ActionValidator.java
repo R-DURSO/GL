@@ -695,20 +695,7 @@ public class ActionValidator {
 	 * @return if target is at the range of from 
 	 */
 	public boolean isUnitsOnRange(Position from, int unitsMoveRange, Position target) {
-		int aX = from.getX();
-		int aY = from.getY();
-		int bX = target.getX();
-		int bY = target.getY();
-		return ((getDifference(aX,bX) + getDifference(aY,bY)) <= unitsMoveRange);
-	}
-	
-	/**
-	 * @param a Entier
-	 * @param b Entier
-	 * @return La difference entre ces 2 entiers
-	 */
-	private int getDifference (int a, int b) {
-		return Math.abs(a - b);
+		return (map.getDistance(target, from) <= unitsMoveRange);
 	}
 	
 	/**
