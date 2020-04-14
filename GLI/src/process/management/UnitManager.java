@@ -492,8 +492,21 @@ public class UnitManager {
 					}
 					else {
 						Logger.info(powerConcerned.getName()+" launch an attack with "+attacker+" to "+defender+" ");
+						
+						//some unit deal more damage to other type
+						boolean counterUnit = false;
+						if ((attacker.getTypes() == UnitTypes.UNIT_PIKEMAN) && (defender.getTypes() == UnitTypes.UNIT_CAVALRY)) {
+							counterUnit = true;
+						}
+						
 						//calculate damage done, with each defense reducing damage by 10%
 						double AttackerDamageDealt = (attacker.getDamage() * attacker.getNumber()) * (((10.0 - defender.getDefense()) / 10.0));
+						
+						if (counterUnit) {
+							//up those damage
+							AttackerDamageDealt = AttackerDamageDealt * 1.5;
+						}
+						
 						//defense take those damage
 						int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
 						Logger.info("attacker damage: "+AttackerDamageDealt+"\tdefender loses: "+casualityDef);
@@ -503,7 +516,13 @@ public class UnitManager {
 						//If attacker are range, they dont take damage
 						if (!isRanged(attacker)) {
 							//Round 2, counter-strike (attacker gain 10% damage reduction)
-							DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - attacker.getDefense() + 1) / 10.0));
+							if (counterUnit) {
+								//exception, counter unit gain 20% reduction
+								DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - (attacker.getDefense() + 2)) / 10.0));
+							}
+							else {
+								DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - (attacker.getDefense() + 1)) / 10.0));
+							}
 							//attacker take dammage
 							casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
 						}

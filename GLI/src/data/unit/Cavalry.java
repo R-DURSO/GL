@@ -15,7 +15,6 @@ public class Cavalry extends Units implements Serializable{
 	public static final int COST_PER_TURN = 5;
 	public static final int NUMBER_MAX_UNITS = 10;
 	
-
 	public Cavalry (int numberUnits, Power owner) {
 		super(owner, numberUnits);
 	}
