@@ -621,7 +621,7 @@ public class AIManager {
 				
 				for (Iterator<Position> it = validPosition.iterator(); it.hasNext(); ) {
 					visitPosition = it.next();
-					scoreGivenToPosition = ((50 + (15+map.getSize() ) * map.getSize()) - (map.getDistance(visitPosition, toGoCapital) * 2));
+					scoreGivenToPosition = ((50 + ((15 + map.getSize()) * map.getSize())) - (map.getDistance(visitPosition, toGoCapital) * 15));
 					if (scoreGivenToPosition > highestScore) {
 						//More interesting Position is here
 						highestScore = scoreGivenToPosition;

@@ -66,7 +66,7 @@ public class UnitManager {
 					int amountRefund = unitsOnBox.getCost() * numberExcessUnits;
 					Logger.info(power.getName()+" is refund "+amountRefund+" Gold");
 					power.getResource(ResourceTypes.RESOURCE_GOLD).addValue(amountRefund); 
-					addScore(power, unitType, numberExcessUnits);
+					addScore(power, unitType, numberToAdd);
 				}
 			}
 			else {

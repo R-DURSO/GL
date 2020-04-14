@@ -156,12 +156,13 @@ public class PowerManager {
 	public void regainFood(Power powerConcerned) {
 		// get the actual production
 		int foodProd = powerConcerned.getResource(ResourceTypes.RESOURCE_FOOD).getProductionPerTurn();
+		Logger.warn(powerConcerned.getName()+" is in famine, removing random units...");
 		// iterate through all his territory to find a unit to delete
 		Iterator<Box> i = powerConcerned.getTerritory().iterator();
 		while ((i.hasNext()) && (foodProd < 0)) {
 			Box visitBox = i.next();
 			if (visitBox.hasUnit()) {
-				int unitToRemove = - ((foodProd / visitBox.getUnit().getFoodCost()) + 5);
+				int unitToRemove = (foodProd / visitBox.getUnit().getFoodCost()) + 5;
 				UnitManager.getInstance().removeUnits(powerConcerned, visitBox, unitToRemove);
 				foodProd = powerConcerned.getResource(ResourceTypes.RESOURCE_FOOD).getProductionPerTurn();
 			}

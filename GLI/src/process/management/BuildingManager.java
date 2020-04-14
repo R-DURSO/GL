@@ -53,23 +53,23 @@ public class BuildingManager {
 			box.setBuilding(building);
 			//we add score from creating a Building
 			if(building.getType() < BuildingTypes.BUILDING_ARMY) {
-				power.subScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
+				power.addScore(ScoreValue.SCORE_VALUE_BUILDING_ARMY);
 				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_ARMY+" score ");
 			}else if(building.getType() < BuildingTypes.BUILDING_PRODUCT) {
-				power.subScore(ScoreValue.SCORE_VALUE_BUILDING_PRODUCT);
+				power.addScore(ScoreValue.SCORE_VALUE_BUILDING_PRODUCT);
 				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_PRODUCT+" score ");
 			}
 			else if(building.getType() < BuildingTypes.BUILDING_SPECIAL) {
 				if (building.getType() == BuildingTypes.BUILDING_TEMPLE) {
-					power.subScore(ScoreValue.SCORE_VALUE_BUILDING_TEMPLE);
+					power.addScore(ScoreValue.SCORE_VALUE_BUILDING_TEMPLE);
 					Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_TEMPLE+" score ");
 				}
 				else {
-					power.subScore(ScoreValue.SCORE_VALUE_BUILDING_SPECIAL);
+					power.addScore(ScoreValue.SCORE_VALUE_BUILDING_SPECIAL);
 					Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_BUILDING_SPECIAL+" score ");
 				}
 			}else {
-				power.subScore(ScoreValue.SCORE_VALUE_DEFAULT);
+				power.addScore(ScoreValue.SCORE_VALUE_DEFAULT);
 				Logger.info(power.getName()+" gain "+ScoreValue.SCORE_VALUE_DEFAULT+" score ");
 			}
 			
