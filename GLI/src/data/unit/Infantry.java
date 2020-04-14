@@ -5,13 +5,13 @@ import java.io.Serializable;
 import data.Power;
 
 public class Infantry extends Units implements Serializable{
-	private static final int BASE_HEALTH = 4;
+	private static final int BASE_HEALTH = 3;
 	private static final int RANGE = 1;
 	private static final int MOVEMENT = 1;
 	private static final int DAMAGE = 2;
 	private static final int DEFENSE = 2;
 	
-	public static final int COST = 10;
+	public static final int COST = 8;
 	public static final int COST_PER_TURN = 2;
 	public static final int NUMBER_MAX_UNITS = 40;
 	
