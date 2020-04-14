@@ -214,7 +214,7 @@ public class ActionsButtonsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int result = 0;
-			result = JOptionPane.showConfirmDialog(null, "Voulez-vous améliorer votre capitale?");
+			result = JOptionPane.showConfirmDialog(null, "Voulez-vous améliorer votre capitale ? (Prix: "+context.getPlayer().getCapital().getUpgradeCost()+" Or)");
 			if (result == 0) {
 				try {
 					action = context.getActionValidator().createActionUpgradeCapital(context.getPlayer());
