@@ -74,9 +74,9 @@ public class VictoryPanel extends JPanel {
 	 * Initilizes all thae data that VictoryPanel needs to be constructed
 	 * @param winnerName the name of the power who win
 	 * @param victoryType the type of victory (values are in [{@linkplain data.GameConstants})
-	 * @param score the dwore of the player who win
+	 * @param territorySize the territory size of the player who win
 	 */
-	public void initVictoryPanel(String winnerName, int victoryType, int score) {
+	public void initVictoryPanel(String winnerName, int victoryType, int territorySize) {
 		//top panel
 		winnerLabel = new JLabel("Victoire du joueur " + winnerName +"!", SwingConstants.CENTER);
 		
@@ -85,7 +85,7 @@ public class VictoryPanel extends JPanel {
 		}else {
 			victoryTypeLabel = new JLabel("Temple entièrement construit", SwingConstants.CENTER);
 		}
-		scoreLabel = new JLabel("Score du vainqueur : " + score, SwingConstants.CENTER);
+		scoreLabel = new JLabel("Taille du territoire du vainqueur : " + territorySize + " cases", SwingConstants.CENTER);
 		
 		topPanel.setPreferredSize(DIM_TOP);
 		topPanel.add(winnerLabel);

@@ -159,9 +159,9 @@ public class GamePanel extends JPanel {
 		if(winner != null) {
 			//we can finally put those informations in a new window
 			String winnerName = winner.getName();
-			int winnerScore = winner.getResourceAmount(ResourceTypes.RESOURCE_SCORE);
+			int winnerTerritorySize = winner.getTerritorySize();
 			removePanels();
-			window.initVictoryPanel(winnerName, victoryType, winnerScore);
+			window.initVictoryPanel(winnerName, victoryType, winnerTerritorySize);
 		}
 	}
 
