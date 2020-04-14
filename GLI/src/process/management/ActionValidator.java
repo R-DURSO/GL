@@ -888,8 +888,18 @@ public class ActionValidator {
 		
 		//check if thoses units can be created here
 		if(! (building instanceof BuildingArmy)) {
-			logger.warn(powerConcerned.getName()+" try to create unit in the wrong building");
-			throw new IllegalArgumentException("Impossible de creer des unites dans ce batiment");
+			//exception, Capitale can create Infantry to avoid getting stuck
+			if (powerConcerned.getCapital() == building) {
+				//only accept Infantry
+				if (unitType != UnitTypes.UNIT_INFANTRY) {
+					logger.warn(powerConcerned.getName()+" try to create invalid unit in his Capital");
+					throw new IllegalArgumentException("Seul les Infantries sont autorisés dans la Capitale");
+				}
+			}
+			else {
+				logger.warn(powerConcerned.getName()+" try to create unit in the wrong building");
+				throw new IllegalArgumentException("Impossible de creer des unites dans ce batiment");
+			}
 		}
 		else {
 			//we need to know if this building is enabled (or if Building#buildTime == 0)

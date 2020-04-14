@@ -117,7 +117,7 @@ public class UnitManager {
 		case UnitTypes.UNIT_PIKEMAN:
 			return new Pikeman(nb, power);
 		case UnitTypes.UNIT_BATTERING_RAM:
-			return new BatteringRam(nb, power);
+			return new BatteringRam(power);
 		case UnitTypes.UNIT_TREBUCHET:
 			return new Trebuchet(power);
 		case UnitTypes.UNIT_BOAT:
@@ -367,6 +367,7 @@ public class UnitManager {
 		
 		
 		if (checkBuilding) {
+			checkAlly = true;
 			if (visitBox instanceof GroundBox) {
 				GroundBox visitGBox = (GroundBox)visitBox; 
 				if (visitGBox.hasBuilding()) {
@@ -375,16 +376,7 @@ public class UnitManager {
 						canMove = false;
 						checkAlly = false;
 					}
-					else {
-						checkAlly = true;
-					}
 				}
-				else {
-					checkAlly = true;
-				}
-			}
-			else {
-				checkAlly = true;
 			}
 		}
 		
