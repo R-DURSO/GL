@@ -8,7 +8,7 @@ public class BatteringRam extends Units implements Serializable{
 	private static final int BASE_HEALTH = 100;
 	private static final int RANGE = 1;
 	private static final int MOVEMENT = 20;
-	private static final int DAMAGE = 5;
+	private static final int DAMAGE = 20;
 	private static final int DAMAGE_SIEGE = 500;
 	private static final int DEFENSE = 20;
 	

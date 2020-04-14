@@ -160,8 +160,21 @@ public class Power implements Serializable {
 		this.ally = null;
 	}
 	
+	/**
+	 * Make the {@link data.Power Power} lose an {@link data.resource.ActionPoints ActionPoints},
+	 * <br>this method should be called once an {@link data.action.Action Action} has been added to {@link process.game.GameLoop GameLoop}
+	 */
 	public void removeActionPoint() {
-		resources[ResourceTypes.RESOURCE_ACTIONS - 1].addValue(-1);
+		resources[ResourceTypes.RESOURCE_ACTIONS - 1].subValue(1);
+	}
+	
+	/**
+	 * Make the {@link data.Power Power} lose several {@link data.resource.ActionPoints ActionPoints}
+	 * @param number of ActionPoints to lose
+	 * @see {@link data.Power#removeActionPoint() removeActionPoint}
+	 */
+	public void removeActionPoints (int number) {
+		resources[ResourceTypes.RESOURCE_ACTIONS - 1].subValue(number);
 	}
 	
 	/**

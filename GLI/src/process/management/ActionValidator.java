@@ -65,7 +65,9 @@ public class ActionValidator {
 			throw new IllegalArgumentException("On ne peut pas s'allier avec soi-même");
 		}
 		
-		powerConcerned.removeActionPoint();
+		if (!powerConcerned.isAI()) {
+			powerConcerned.removeActionPoint();
+		}
 		logger.info(powerConcerned.getName()+" do ActionMakeAlliance with "+potentialAlly.getName());
 		return new ActionMakeAlliance(powerConcerned, potentialAlly);
 	}
@@ -93,8 +95,10 @@ public class ActionValidator {
 			logger.warn(powerConcerned.getName()+" not in alliance with "+formerAlly.getName());
 			throw new IllegalArgumentException(powerConcerned.getName() + " n'est pas en alliance avec " + formerAlly.getName());
 		}
-		
-		powerConcerned.removeActionPoint();
+
+		if (!powerConcerned.isAI()) {
+			powerConcerned.removeActionPoint();
+		}
 		logger.info(powerConcerned.getName()+" do ActionBreakAlliance with "+formerAlly.getName());
 		return new ActionBreakAlliance(powerConcerned);
 	}
@@ -202,8 +206,10 @@ public class ActionValidator {
 				throw new IllegalArgumentException("Vous attaquez le territoire de votre allie");
 			}
 		}
-		
-		powerConcerned.removeActionPoint();
+
+		if (!powerConcerned.isAI()) {
+			powerConcerned.removeActionPoint();
+		}
 		//the unit has done an action this turn
 		unitsAtt.setIsMoving();
 		logger.info(powerConcerned.getName()+" create an ActionAttack");
@@ -320,7 +326,9 @@ public class ActionValidator {
 			}
 		}
 		
-		powerConcerned.removeActionPoint();
+		if (!powerConcerned.isAI()) {
+			powerConcerned.removeActionPoint();
+		}
 		//set the unit in movement
 		movingUnits.setIsMoving();
 		//add phantom unit on the target box, to ensure that no other unit could go there
@@ -768,7 +776,9 @@ public class ActionValidator {
 			}
 		}
 		
-		powerConcerned.removeActionPoint();
+		if (!powerConcerned.isAI()) {
+			powerConcerned.removeActionPoint();
+		}
 		//remove building cost
 		powerConcerned.getResource(neededResource.getType()).subValue(neededResource.getCost());
 		//add phantom building on the target box, to ensure that no other building could be constructed on targetBox
@@ -910,8 +920,10 @@ public class ActionValidator {
 				throw new IllegalArgumentException("Il n'y a pas d'unite de ce type");	
 			}
 		}
-		
-		powerConcerned.removeActionPoint();
+
+		if (!powerConcerned.isAI()) {
+			powerConcerned.removeActionPoint();
+		}
 		if (createPhantom) {
 			targetBox.setUnit(new PhantomUnit(powerConcerned, unitType));
 		}
@@ -989,7 +1001,11 @@ public class ActionValidator {
 				throw new IllegalArgumentException("Vous ne pouvez pas detruire votre capitale");
 			}
 		}
-//		powerConcerned.removeActionPoint();
+		/*
+		if (!powerConcerned.isAI()) {
+			powerConcerned.removeActionPoint();
+		}
+		*/
 		logger.info(powerConcerned.getName()+" create an ActionDestroyBuilding");
 		return new ActionDestroyBuilding(powerConcerned, target);
 	}
@@ -1028,7 +1044,11 @@ public class ActionValidator {
 			logger.warn(powerConcerned.getName()+" try to destroy nothing");
 			throw new IllegalArgumentException("Il n'y a pas d'unites a supprimer ici");
 		}
-//		powerConcerned.removeActionPoint();
+		/*
+		if (!powerConcerned.isAI()) {
+			powerConcerned.removeActionPoint();
+		}
+		*/
 		logger.info(powerConcerned.getName()+" create an ActionDestroyUnit");
 		return new ActionDestroyUnits(powerConcerned, target);
 	}
@@ -1075,8 +1095,10 @@ public class ActionValidator {
 		
 		//conditions are met, so we can remove action cost and create the ActionUpgradeCapital
 		powerConcerned.getResource(ResourceTypes.RESOURCE_GOLD).subValue(goldCost);
-		
-		powerConcerned.removeActionPoint();
+
+		if (!powerConcerned.isAI()) {
+			powerConcerned.removeActionPoint();
+		}
 		logger.info(powerConcerned.getName()+" create an ActionUpgradeCapitale");
 		//Logger.info(powerConcerned.getName()+" level capital"); pareil, dans sa fonction approprie
 		return new ActionUpgradeCapital(powerConcerned);
