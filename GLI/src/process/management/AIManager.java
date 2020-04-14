@@ -41,10 +41,10 @@ public class AIManager {
 
 	// change those percentage if necessary
 	// ALL ACTIONS CHANCES MUST BE == 100
-	private final int ACTION_ATTACK_CHANCE = 20;
-	private final int ACTION_CONSTRUCT_CHANCE = 25;
+	private final int ACTION_ATTACK_CHANCE = 25;
+	private final int ACTION_CONSTRUCT_CHANCE = 15;
 	private final int ACTION_CREATE_UNIT_CHANCE = 20;
-	private final int ACTION_MOVE_CHANCE = 33;
+	private final int ACTION_MOVE_CHANCE = 38;
 	private final int ACTION_MAKE_ALLIANCE_CHANCE = 2;
 
 	// never touch that
@@ -127,6 +127,15 @@ public class AIManager {
 
 		int numberActionsTried = 0;
 		Action action;
+		
+		//we first want to know if power can upgrade his capital
+		action = tryCreateActionUpgradeCapital(power);
+		//if action == null, power can't upgrade
+		//else, it means that already 1 action is set
+		if(action != null) {
+			actionsTried[numberActionsTried] = action;
+			numberActionsTried++;
+		}
 
 		while (numberActionsTried < numberActionsToTry) { // until actionsTried not completed
 			// first, we want to know which action can he try
@@ -144,7 +153,7 @@ public class AIManager {
 				} else {
 					action = tryCreateActionMakeAlliance(power, unitsList, buildingList, territory);
 				}
-				logger.info("Action " + action.getClass().getSimpleName() + " created");
+				logger.debug("Action " + action.getClass().getSimpleName() + " created");
 				actionsTried[numberActionsTried] = action;
 			} catch (WrongActionException e) {
 				logger.debug("Action denied : " + e.getMessage());
@@ -152,6 +161,15 @@ public class AIManager {
 			numberActionsTried++;
 		}
 		return actionsTried;
+	}
+
+	private Action tryCreateActionUpgradeCapital(Power power) {
+		try {
+			return actionValidator.createActionUpgradeCapital(power);
+		} catch (IllegalArgumentException e) {
+			logger.debug("can't upgrade capital : " + e.getMessage());
+			return null;
+		}
 	}
 
 	private Action tryCreateActionMakeAlliance(Power power, ArrayList<Units> unitsList,
@@ -268,8 +286,8 @@ public class AIManager {
 				unitsType = UnitTypes.UNIT_BATTERING_RAM;
 				numberUnits = BatteringRam.NUMBER_MAX_UNITS;
 			} else {
-				unitsType = random.nextInt(UnitTypes.UNITS_IN_DOCK - UnitTypes.UNITS_IN_DOCK + 1)
-						+ UnitTypes.UNITS_IN_DOCK;
+				unitsType = random.nextInt(UnitTypes.UNITS_IN_WORKSHOP - UnitTypes.UNITS_IN_BARRACK)
+						+ UnitTypes.UNITS_IN_BARRACK;
 				numberUnits = findNumberUnits(power, unitsType, aiLevel);
 			}
 			break;
@@ -369,6 +387,23 @@ public class AIManager {
 	private Action tryCreateActionConstruct(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
 		int aiLevel = power.getAILevel();
+		
+		//for all AIs (except easy), if can construct temple, will do it
+		if(aiLevel != GameConstants.AI_EASY) {
+			int centerCoord = map.getSize() / 2;
+			Position centerPos = new Position(centerCoord, centerCoord);
+			Box templeBox = map.getBox(centerPos);
+			if (templeBox.getOwner() == power) {
+				int stoneAmount = power.getResourceAmount(ResourceTypes.RESOURCE_STONE);
+				if (stoneAmount >= Temple.COST) {
+					try {
+						return actionValidator.createActionConstruct(power, BuildingTypes.BUILDING_TEMPLE, centerPos);
+					} catch (IllegalArgumentException e) {
+						throw new WrongActionException("can't create temple");
+					}
+				}
+			}
+		}
 
 		// if ai is in hard level, try to create a windmill if food prod per turn < 0
 		if (aiLevel == GameConstants.AI_HARD) {
@@ -402,15 +437,14 @@ public class AIManager {
 		// and create a building randmomly (for easy ai),
 		int buildingType = BuildingTypes.BUILDING_BARRACK; // barrack by default
 		if (aiLevel == GameConstants.AI_EASY) {
-
 			do {
 				buildingType = random.nextInt(BuildingTypes.NUMBER_BUILDINGS);
-			} while (buildingType == BuildingTypes.BUILDING_DOCK); // easy ai don't do boat
+			} while (buildingType == BuildingTypes.BUILDING_DOCK || buildingType == BuildingTypes.BUILDING_WALL || buildingType == BuildingTypes.BUILDING_DOOR); // easy ai don't do boat
 
 		} else { // or depending on his infos on it (for normal and hard ai)
 			// add random choice : will choose to construct a BuildingArmy/BuildingSpecial,
 			// or a BuildingProduct
-			int choice = random.nextInt(2);
+			int choice = random.nextInt(3);
 			
 			//before, check if has resource on this box ==> else, set choice to 0
 			if(groundBox.getResourceType() == ResourceTypes.NO_RESOURCE)
@@ -437,7 +471,8 @@ public class AIManager {
 					}
 				}
 				break;
-			case 1: // buildingProduct
+			case 1: //66% chance of creating building product
+			case 2: // buildingProduct
 				// check which product is on the box, and choose the correct BuildingProduct
 				int resourceType = groundBox.getResourceType();
 				buildingType = getBuildingFromResource(resourceType);
@@ -450,6 +485,11 @@ public class AIManager {
 		} catch (IllegalArgumentException e) {
 			throw new WrongActionException("Building construct failed");
 		}
+	}
+
+	private Action tryConstructTemple() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private int getBuildingFromResource(int resourceType) {
@@ -693,8 +733,8 @@ public class AIManager {
 					if (visitGBox.getBuilding() instanceof BuildingSpecial) {
 						validPosition.add(visitPosition);
 					}
-					/*
-					 * else if EASY, add all Building
+					/**
+					 * If Easy, try to destroy all Building
 					 */
 				}
 			} else {

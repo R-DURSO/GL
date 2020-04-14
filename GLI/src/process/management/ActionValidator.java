@@ -436,11 +436,12 @@ public class ActionValidator {
 							GroundBox visitGBox = (GroundBox) visitBox;
 							//we check for Building
 							if (visitGBox.hasBuilding()) {
-								if (visitGBox.getBuilding().getType() == BuildingTypes.BUILDING_WALL) {
+								int buildingType = visitGBox.getBuilding().getType();
+								if (buildingType == BuildingTypes.BUILDING_WALL) {
 									//Cannot go through Wall
 								}
-								else if (visitGBox.getBuilding().getType() == BuildingTypes.BUILDING_DOOR) {
-									//Does the Door belong to us
+								else if (buildingType == BuildingTypes.BUILDING_DOOR || buildingType == BuildingTypes.BUILDING_TEMPLE) {
+									//Does the Door / temple belong to us
 									if (visitGBox.getOwner() == powerConcerned) {
 										checkBoat = true;
 									}
@@ -453,13 +454,13 @@ public class ActionValidator {
 									}
 									//else, cannot go through ennemy Door
 								}
-								else if (visitGBox.getBuilding().getType() == BuildingTypes.BUILDING_CAPITAL) {
+								else if (buildingType == BuildingTypes.BUILDING_CAPITAL) {
 									//does Capital belong to us
 									if (visitGBox.getOwner() == powerConcerned) {
 										checkBoat = true;
 									}
 								}
-								else if (visitGBox.getBuilding().getType() == BuildingTypes.BUILDING_TEMPLE) {
+								else if (buildingType == BuildingTypes.BUILDING_TEMPLE) {
 									//does Temple belong to us
 									if (visitGBox.getOwner() == powerConcerned) {
 										checkBoat = true;

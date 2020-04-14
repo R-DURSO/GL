@@ -19,11 +19,11 @@ import process.management.UnitManager;
 public class Start {
 	private GameMap map;
 	private Power powers[];
-	private static Logger Logger = LoggerUtility.getLogger(UnitManager.class, GameConstants.LOG_TYPE);
+	private static Logger logger = LoggerUtility.getLogger(UnitManager.class, GameConstants.LOG_TYPE);
 	
 	public Start(int numberPlayers, String playerNames[], int mapSize, int waterAmount, boolean artifact, int aiLevels[]) {
-		Logger.info("=== START OF THE GAME ===");
-		Logger.info("Initialisation with: "+numberPlayers+" Power on a "+mapSize+"x"+mapSize+" Map. WaterAmount: " + waterAmount +"%.\n");
+		logger.info("=== START OF THE GAME ===");
+		logger.info("Initialisation with: "+numberPlayers+" Power on a "+mapSize+"x"+mapSize+" Map. WaterAmount: " + waterAmount +"%.\n");
 		initPowers(numberPlayers, playerNames, aiLevels);
 		this.map = null;
 		generateMap(mapSize, waterAmount, artifact, this.powers);
@@ -34,6 +34,7 @@ public class Start {
 		this.powers = new Power[numberplayer];
 		for(int i = 0; i < numberplayer; i++) {
 			powers[i] = PowerFactory.createPower(playerNames[i], aiLevels[i]);
+			logger.info("Power with name " + playerNames[i] + " and with aiLevel " + aiLevels[i] + " created");
 		}
 	}
 	

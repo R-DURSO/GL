@@ -1,19 +1,23 @@
 package process.management;
 
 import data.resource.*;
-import data.InitialValue;
+import data.InitialValues;
+
+/**
+ * Factory class used to create different {@linkplain data.resource.Resource} types.
+ */
 public class ResourcesFactory {
 
 	public static ActionPoints createAction() {
-		return new ActionPoints(InitialValue.ACTION_INITIAL_VALUE, InitialValue.ACTION_BASE_PRODUCTION);
+		return new ActionPoints(InitialValues.ACTION_INITIAL_VALUE, InitialValues.ACTION_BASE_PRODUCTION);
 	}
 	
 	public static Food createFood() {
-		return new Food(InitialValue.FOOD_INITIAL_VALUE, InitialValue.FOOD_BASE_PRODUCTION);
+		return new Food(InitialValues.FOOD_INITIAL_VALUE, InitialValues.FOOD_BASE_PRODUCTION);
 	}
 	
 	public static Gold createGold() {
-		return new Gold(InitialValue.GOLD_INITIAL_VALUE, InitialValue.GOLD_BASE_PRODUCTION);
+		return new Gold(InitialValues.GOLD_INITIAL_VALUE, InitialValues.GOLD_BASE_PRODUCTION);
 	}
 	
 	public static Score createScore() {
@@ -21,11 +25,11 @@ public class ResourcesFactory {
 	}
 	
 	public static Stone createStone() {
-		return new Stone(InitialValue.STONE_INITIAL_VALUE, InitialValue.STONE_BASE_PRODUCTION);
+		return new Stone(InitialValues.STONE_INITIAL_VALUE, InitialValues.STONE_BASE_PRODUCTION);
 	}
 	
 	public static Wood createWood() {
-		return new Wood(InitialValue.WOOD_INITIAL_VALUE, InitialValue.WOOD_BASE_PRODUCTION);
+		return new Wood(InitialValues.WOOD_INITIAL_VALUE, InitialValues.WOOD_BASE_PRODUCTION);
 	}
 	
 	public static Artifact createArtifact() {

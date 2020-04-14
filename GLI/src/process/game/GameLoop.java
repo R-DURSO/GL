@@ -99,14 +99,6 @@ public class GameLoop {
 	
 	public void checkPower() {
 		for (int i = 0; i < getPlayerNumber(); i++) {
-//			if (powers[i].hasLost()) {
-//				this.powers = PowerManager.getInstance().recreatePowerList(powers);
-//				if (powers.length <= 1) {
-//					Logger.info("=== "+powers[0].getName()+" is the last Power alive ===");
-//					this.isPlaying = false;
-//				}
-//			}
-//			else
 			if (powers[i].getResource(ResourceTypes.RESOURCE_FOOD).getAmount() < 0) {
 				PowerManager.getInstance().regainFood(powers[i]);
 			}
