@@ -9,7 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import data.GameMap;
-import data.InitialValue;
+import data.InitialValues;
 import data.Position;
 import data.Power;
 import data.boxes.*;
@@ -57,7 +57,7 @@ public class TestUnits {
 			}
 		}
 		for (int p = 0; p < powers.length; p++) {
-			if (powers[p].getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD) != InitialValue.FOOD_BASE_PRODUCTION) {
+			if (powers[p].getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD) != InitialValues.FOOD_BASE_PRODUCTION) {
 				fail("failed to reset production");
 			}
 		}

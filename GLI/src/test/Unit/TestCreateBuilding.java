@@ -3,7 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.GameMap;
-import data.InitialValue;
+import data.InitialValues;
 import data.Power;
 import data.boxes.*;
 import data.building.BuildingTypes;
@@ -77,9 +77,9 @@ public class TestCreateBuilding {
 			powers[i] = PowerFactory.createPower("" + (i+1), 0);
 		}
 		//remove power 2's wood resources (to check failure of building construct)
-		powers[1].getResource(ResourceTypes.RESOURCE_WOOD).subValue(InitialValue.WOOD_INITIAL_VALUE);
+		powers[1].getResource(ResourceTypes.RESOURCE_WOOD).subValue(InitialValues.WOOD_INITIAL_VALUE);
 		//and power 3' gold resources (to check capital ugrade failure)
-		powers[2].getResource(ResourceTypes.RESOURCE_GOLD).subValue(InitialValue.GOLD_INITIAL_VALUE);
+		powers[2].getResource(ResourceTypes.RESOURCE_GOLD).subValue(InitialValues.GOLD_INITIAL_VALUE);
 	}
 
 	private void generateSpecialMap() {
