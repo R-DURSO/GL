@@ -37,7 +37,7 @@ public class UnitManager {
 		//cant add negative or none Unit
 		if (numberUnits > 0) {
 			//we have alreay check if there was units of the same type on the box
-			if (box.hasUnit() && !(box.getUnit() instanceof PhantomUnit)) {
+			if (box.hasUnit() && !(box.getUnit().isPhantom())) {
 				Units unitsOnBox = box.getUnit();
 				int numberUnitsOnBox = unitsOnBox.getNumber();
 				int numberUnitsNeeded = numberUnits + numberUnitsOnBox;
@@ -230,7 +230,7 @@ public class UnitManager {
 				
 				//Suppression du Phantom
 				if (pathToTake[pathToTake.length-1].hasUnit()) {
-					if (pathToTake[pathToTake.length-1].getUnit().getTypes() < 0) {
+					if (pathToTake[pathToTake.length-1].getUnit().isPhantom()) {
 						pathToTake[pathToTake.length-1].setUnit(null);
 					}
 				}
@@ -240,7 +240,7 @@ public class UnitManager {
 					if (lastBox.getUnit().getTypes() == UnitTypes.UNIT_BOAT) {
 						Boat lastBoat = (Boat)lastBox.getUnit();
 						if (lastBoat.hasContainedUnits()) {
-							if (lastBoat.getContainedUnitsTypes() < 0) {
+							if (lastBoat.getContainedUnits().isPhantom()) {
 								//It's a Phantom, move in
 								lastBoat.setContainedUnits(movingUnits);
 							}
@@ -424,6 +424,11 @@ public class UnitManager {
 		if (checkUnit) {
 			if (!visitBox.hasUnit()) {
 				//No Unit and not Ally, including for Phantom
+				conquerBox = true;
+				canMove = true;
+			}
+			else if (visitBox.getUnit().isPhantom()) {
+				//only a Phantom here
 				conquerBox = true;
 				canMove = true;
 			}

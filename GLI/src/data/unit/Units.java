@@ -204,4 +204,11 @@ public abstract class Units implements Serializable {
 	public String toString() {
 		return "("+number+") attaque:"+getDamage()+" defense:"+getDefense();
 	}
+
+	public boolean isPhantom() {
+		if (getTypes() < 0) {
+			return true;
+		}
+		return false;
+	}
 }
