@@ -41,10 +41,10 @@ public class AIManager {
 
 	// change those percentage if necessary
 	// ALL ACTIONS CHANCES MUST BE == 100
-	private final int ACTION_ATTACK_CHANCE = 23;
+	private final int ACTION_ATTACK_CHANCE = 20;
 	private final int ACTION_CONSTRUCT_CHANCE = 25;
 	private final int ACTION_CREATE_UNIT_CHANCE = 20;
-	private final int ACTION_MOVE_CHANCE = 30;
+	private final int ACTION_MOVE_CHANCE = 33;
 	private final int ACTION_MAKE_ALLIANCE_CHANCE = 2;
 
 	// never touch that
@@ -82,22 +82,29 @@ public class AIManager {
 
 		// get all territory
 		ArrayList<Box> territory = power.getTerritory();
-
-		// actions that power will do will be there
-		Resource actionResource = power.getResource(ResourceTypes.RESOURCE_ACTIONS);
-//		int numberActions = actionResource.getAmount();
 		
 		// we will try a lot more actions than really do them
-		int numberActionsToTry = 40;
+		int numberActionsPossible = power.getResourceAmount(ResourceTypes.RESOURCE_ACTIONS);
+		int numberActionsToTry = numberActionsPossible * (2 + power.getCapital().getLevel());
 		Action triedActions[] = null;
 		triedActions = tryActions(power, numberActionsToTry, unitsList, buildingList, territory);
-		/*
-		// finally, get actions that power will really do
-		Action turnActions[] = getDesiredActions(power, triedActions, numberActions, unitsList, buildingList,
-				territory);
-		*/
 		
-		return triedActions;
+		// finally, get actions that are valid
+		Action turnActions[] = new Action[numberActionsPossible];
+		int numberValidAction = 0;
+		
+		for (int i = 0; ((i < triedActions.length)
+						&& (numberValidAction < numberActionsPossible)); i++) {
+			if (triedActions[i] != null) {
+				//ad the Action to be done
+				turnActions[numberValidAction] = triedActions[i];
+				numberValidAction++;
+			}
+		}
+		//lose those Action Points
+		power.removeActionPoints(numberValidAction);
+		logger.info(power.getName()+" use "+numberValidAction+" ActionPoints this turn\n");
+		return turnActions;
 	}
 
 	/**
@@ -551,6 +558,79 @@ public class AIManager {
 			}
 		}
 		
+		switch (aiLevel) {
+			default: //make the default case the easy
+			case GameConstants.AI_EASY:
+				
+				//we go straight to his Capital
+				Position ourCapitalPosition = getBuildingPosition(power.getCapital());
+				Position toGoCapital = ourCapitalPosition;
+				//search for the most scored player
+				for (int i = 0; i < powers.length; i++) {
+					if (powers[i].getResourceAmount(ResourceTypes.RESOURCE_ACTIONS) >
+							map.getBox(toGoCapital).getOwner().getResourceAmount(ResourceTypes.RESOURCE_ACTIONS)) {
+						 toGoCapital = getBuildingPosition(powers[i].getCapital());
+					}
+				}
+				
+				//We will score each Position, only to keep the most important
+				ArrayList<Position> toTryPosition = new ArrayList<Position>();
+				Position visitPosition;
+				int scoreGivenToPosition = 0;
+				int highestScore = scoreGivenToPosition;
+				
+				for (Iterator<Position> it = validPosition.iterator(); it.hasNext(); ) {
+					visitPosition = it.next();
+					scoreGivenToPosition = ((50 + (15+map.getSize() ) * map.getSize()) - (map.getDistance(visitPosition, toGoCapital) * 2));
+					if (scoreGivenToPosition > highestScore) {
+						//More interesting Position is here
+						highestScore = scoreGivenToPosition;
+						toTryPosition.clear();
+						toTryPosition.add(visitPosition);
+					}
+					else if (scoreGivenToPosition == highestScore) {
+						toTryPosition.add(visitPosition);
+					}
+					//Lower, idc
+				}
+				
+				Iterator<Position> it = toTryPosition.iterator();
+				boolean canMove = false;
+				while (it.hasNext() && !canMove) {
+					visitPosition = it.next();
+					canMove = true;
+					try {
+						return actionValidator.createActionMove(power, unitPosition, visitPosition);
+					}
+					catch (IllegalArgumentException e) {
+						canMove = false;
+					}
+				}
+				//if we end here, movement has Failed
+				throw new WrongActionException("invalid movement unit");
+		case GameConstants.AI_NORMAL:
+				/*
+				 * will try to move to units in a (4 * (mapSize / 10)) radius (roundish)
+				 * for each validPosition
+				 * 		try getDistance <= Constante
+				 * 		if unit || BuildingSpecial
+				 * 			on veut aller à proximité de ces cases (getUpDownLeftRightBox & voir s'ils sont dans validPosition)
+				 * 			arrêt
+				 * 		
+				 */
+			case GameConstants.AI_HARD:
+				/*
+				 * will be able to use pathFinding ahead of movement to dertemine best movement
+				 * 
+				 * do pathfinding & getdistance to objective
+				 * 
+				 * 
+				 */
+		}
+		
+		
+		
+		
 		// for now, add a random Box
 		int numberValidBox = validPosition.size();
 		Position positionSelected;
@@ -613,6 +693,9 @@ public class AIManager {
 					if (visitGBox.getBuilding() instanceof BuildingSpecial) {
 						validPosition.add(visitPosition);
 					}
+					/*
+					 * else if EASY, add all Building
+					 */
 				}
 			} else {
 				// implicit WaterBox
@@ -622,6 +705,21 @@ public class AIManager {
 				}
 			}
 		}
+		
+		
+		/*
+			switch (aiLevel) {
+			default: //make the default case the easy
+			case GameConstants.AI_EASY:
+				check all Position
+				take the best
+				return it
+			case GameConstants.AI_NORMAL:
+				
+			case GameConstants.AI_HARD:
+				
+		}
+		*/
 		
 		// for now, add a random Box
 		int numberValidBox = validPosition.size();
