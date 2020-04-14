@@ -37,10 +37,16 @@ public class Power implements Serializable {
 		createResources();
 	}
 	
+	/**
+	 * @return true if {@link data.Power Power} can still make Action
+	 */
 	public boolean isAlive() {
 		return isAlive;
 	}
 	
+	/**
+	 * Set false the {@link data.Power#isAlive() isAlive} boolean, making the {@link data.Power Power} unable to act.
+	 */
 	public void die() {
 		isAlive = false;
 	}

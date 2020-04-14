@@ -1,6 +1,5 @@
 package process.management;
 
-import data.building.special.Capital;
 import data.resource.ResourceTypes;
 import data.unit.Boat;
 import data.unit.Units;
@@ -18,7 +17,7 @@ import log.LoggerUtility;
 import org.apache.log4j.Logger;
 
 /**
- * Manager of 
+ * Manager of anything {@link data.Power Power} related
  * @author Maxence
  */
 public class PowerManager {
@@ -182,7 +181,20 @@ public class PowerManager {
 		killer.getTerritory().addAll(killed.getTerritory());
 		for (Iterator<Box> i = killed.getTerritory().iterator(); i.hasNext();) {
 			Box visitBox = i.next();
+			if (visitBox instanceof GroundBox) {
+				GroundBox visitGBox = (GroundBox)visitBox;
+				if (visitGBox.getResourceType() == ResourceTypes.RESOURCE_ARTIFACT) {
+					//Artefact is too Strong, it break anything on it
+					visitGBox.setBuilding(null);
+				}
+			}
 			visitBox.setOwner(killer);
+			//kill unused unit
+			if (visitBox.hasUnit()) {
+				if (visitBox.getUnit().getOwner() == killed) {
+					visitBox.setUnit(null);
+				}
+			}
 		}
 		killed.getTerritory().clear();
 		// receive all production
