@@ -6,7 +6,7 @@ import data.Power;
 
 public class Trebuchet  extends Units implements Serializable{
 	
-	private static final int BASE_HEALTH = 5;
+	private static final int BASE_HEALTH = 10;
 	
 	private static final int RANGE_MOVING = 0;
 	private static final int MOVEMENT_MOVING = 1;

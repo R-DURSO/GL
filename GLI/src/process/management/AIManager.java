@@ -853,6 +853,68 @@ public class AIManager {
 			}
 		}
 		
+		//declaration of our Iterator
+		Iterator<Position> it;
+		//declaration for checking all Position
+		Position visitPosition;
+		//declaration of the Box
+		Box visitBox;
+		//declaration for score to give
+		int scoreGivenToPosition = 0;
+		int highestScore = scoreGivenToPosition;
+		
+		switch (aiLevel) {
+			default: //make the default case the easy
+			case GameConstants.AI_EASY:
+				//We will score each Position, only to keep the most important
+				ArrayList<Position> toTryPosition = new ArrayList<Position>();
+				
+				for (it = validPosition.iterator(); it.hasNext(); ) {
+					visitPosition = it.next();
+					visitBox = map.getBox(visitPosition);
+					scoreGivenToPosition = (unitSelected.getNumber());
+					if (visitBox.hasUnit()) {
+						scoreGivenToPosition += visitBox.getUnit().getHealth() * 2;
+					}
+					if (visitBox instanceof GroundBox) {
+						if (((GroundBox) visitBox).hasBuilding()) {
+							scoreGivenToPosition += 10;
+						}
+					}
+					if (scoreGivenToPosition > highestScore) {
+						//More interesting Position is here
+						highestScore = scoreGivenToPosition;
+						//keep some of previous seen Box
+						int maxToKeep = toTryPosition.size() / 2;
+						ArrayList<Position> keepingPosition = new ArrayList<Position>();
+						for (int i = 0; i < maxToKeep; i++) {
+							keepingPosition.add(toTryPosition.get(i));
+						}
+						toTryPosition.clear();
+						toTryPosition.add(visitPosition);
+						toTryPosition.addAll(keepingPosition);
+					}
+					else if (scoreGivenToPosition == highestScore) {
+						toTryPosition.add(visitPosition);
+					}
+					//if lower, idc
+				}
+				
+				it = toTryPosition.iterator();
+				while (it.hasNext()) {
+					visitPosition = it.next();
+					try {
+						return actionValidator.createActionMove(power, unitPosition, visitPosition);
+					}
+					catch (IllegalArgumentException e) {
+						logger.warn("IA tried to attack an invalid position");
+					}
+				}
+				//if we end here, attack has Failed
+				throw new WrongActionException("invalid attack");
+			case GameConstants.AI_NORMAL:
+			case GameConstants.AI_HARD:
+		}
 		
 		/*
 			switch (aiLevel) {
