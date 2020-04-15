@@ -669,21 +669,30 @@ public class AIManager {
 				HashMap<Integer, ArrayList<Position>> listToTryPosition = new HashMap<Integer, ArrayList<Position>>();
 				for (it = validPosition.iterator(); it.hasNext(); ) {
 					visitPosition = it.next();
-					scoreGivenToPosition = (((15 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 15));
+					scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 5) );
 					Box visitBox = map.getBox(visitPosition);
 					//less malus if there is a Unit nearby
 					if (visitBox.hasUnit()) {
 						scoreGivenToPosition -= (map.getBox(visitPosition).getUnit().getNumber() * 5);
 					}
 					else {
-						scoreGivenToPosition -= 80;
+						scoreGivenToPosition -= 100;
+					}
+					//will search for conquer
+					if (visitBox.hasOwner()) {
+						if (visitBox.getOwner() != power) {
+							scoreGivenToPosition += 40;
+						}
+					}
+					else {
+						scoreGivenToPosition += 150;
 					}
 					//Added Bonus if there is a Building
 					if (visitBox instanceof GroundBox) {
 						if (((GroundBox)visitBox).hasBuilding()) {
-							scoreGivenToPosition += 15;
+							scoreGivenToPosition += 20;
 							if (((GroundBox)visitBox).getBuilding() instanceof BuildingSpecial) {
-								scoreGivenToPosition += 30;
+								scoreGivenToPosition += 40;
 							}
 						}
 					}
@@ -706,6 +715,9 @@ public class AIManager {
 						}
 					}
 					//we have the highest score stored
+					if (highestScore <= 0) {
+						listToTryPosition.clear();
+					}
 					if (listToTryPosition.containsKey(highestScore)) {
 						for (it = listToTryPosition.get(highestScore).iterator(); it.hasNext(); ) {
 							visitPosition = it.next();
