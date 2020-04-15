@@ -663,87 +663,92 @@ public class AIManager {
 				}
 				//if we end here, movement has Failed
 				throw new WrongActionException("invalid movement unit");
-		case GameConstants.AI_NORMAL:
-			//feel the need to conquer
-			HashMap<Integer, ArrayList<Position>> listToTryPosition = new HashMap<Integer, ArrayList<Position>>();
-			for (it = validPosition.iterator(); it.hasNext(); ) {
-				visitPosition = it.next();
-				scoreGivenToPosition = ((4 * (map.getSize() / 10)) + (map.getDistance(visitPosition, ourCapitalPosition) * 15));
-				Box visitBox = map.getBox(visitPosition);
-				//less malus if there is a Unit nearby
-				if (visitBox.hasUnit()) {
-					scoreGivenToPosition -= (map.getBox(visitPosition).getUnit().getNumber() * 10);
-				}
-				else {
-					scoreGivenToPosition -= 60;
-				}
-				//Added Bonus if there is a Building
-				if (visitBox instanceof GroundBox) {
-					if (((GroundBox)visitBox).hasBuilding()) {
-						scoreGivenToPosition += 10;
-						if (((GroundBox)visitBox).getBuilding() instanceof BuildingSpecial) {
-							scoreGivenToPosition += 20;
-						}
-					}
-				}
-				//now that the scoring is done, add it to the HashMap
-				if (!listToTryPosition.containsKey(scoreGivenToPosition)) {
-					listToTryPosition.put(scoreGivenToPosition, new ArrayList<Position>());
-				}
-				listToTryPosition.get(scoreGivenToPosition).add(visitPosition);
-			}
-			
-			//try to move to all position by order of score
-			Position checkPosition;
-			while (!listToTryPosition.isEmpty()) {
-				//get the highest score stored
-				for (Iterator<Integer> ite = listToTryPosition.keySet().iterator(); ite.hasNext(); ) {
-					int checkingScore = ite.next();
-					if (checkingScore > highestScore) {
-						highestScore = checkingScore;
-					}
-				}
-				//we have the highest score stored
-				for (it = listToTryPosition.get(highestScore).iterator(); it.hasNext(); ) {
+			case GameConstants.AI_NORMAL:
+				//feel the need to conquer
+				//HashMap that score a List of Position
+				HashMap<Integer, ArrayList<Position>> listToTryPosition = new HashMap<Integer, ArrayList<Position>>();
+				for (it = validPosition.iterator(); it.hasNext(); ) {
 					visitPosition = it.next();
-					//we try to move to this position
-					for (int d=0; d<=4; d++) {
-						switch(d) {
-						case 0:
-							checkPosition = visitPosition;
-							break;
-						case 1:
-							checkPosition = map.getUpPos(visitPosition);
-							break;
-						case 2:
-							checkPosition = map.getLeftPos(visitPosition);
-							break;
-						case 3:
-							checkPosition = map.getRightPos(visitPosition);
-							break;
-						case 4:
-							checkPosition = map.getDownPos(visitPosition);
-							break;
-						default:
-							checkPosition = null;
-							break;
-						}
-						if (checkPosition != null) {
-							if (validPosition.contains(checkPosition)) {
-								try {
-									return actionValidator.createActionMove(power, unitPosition, checkPosition);
-								} catch (IllegalArgumentException e) {
-									validPosition.remove(checkPosition);
-								}
+					scoreGivenToPosition = ((4 * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 15));
+					Box visitBox = map.getBox(visitPosition);
+					//less malus if there is a Unit nearby
+					if (visitBox.hasUnit()) {
+						scoreGivenToPosition -= (map.getBox(visitPosition).getUnit().getNumber() * 5);
+					}
+					else {
+						scoreGivenToPosition -= 80;
+					}
+					//Added Bonus if there is a Building
+					if (visitBox instanceof GroundBox) {
+						if (((GroundBox)visitBox).hasBuilding()) {
+							scoreGivenToPosition += 10;
+							if (((GroundBox)visitBox).getBuilding() instanceof BuildingSpecial) {
+								scoreGivenToPosition += 20;
 							}
 						}
 					}
+					//now that the scoring is done, add it to the HashMap
+					if (!listToTryPosition.containsKey(scoreGivenToPosition)) {
+						listToTryPosition.put(scoreGivenToPosition, new ArrayList<Position>());
+					}
+					listToTryPosition.get(scoreGivenToPosition).add(visitPosition);
 				}
-				//remove highest score
-				listToTryPosition.remove(highestScore);
-			}
-			//at this Point, stop
-			throw new WrongActionException("invalid unit movement");
+				
+				//try to move to all position by order of score
+				Position checkPosition;
+				while (!listToTryPosition.isEmpty()) {
+					//get the highest score stored
+					highestScore = 0;
+					for (Iterator<Integer> ite = listToTryPosition.keySet().iterator(); ite.hasNext(); ) {
+						int checkingScore = ite.next();
+						if (checkingScore > highestScore) {
+							highestScore = checkingScore;
+						}
+					}
+					//we have the highest score stored
+					if (listToTryPosition.containsKey(highestScore)) {
+						for (it = listToTryPosition.get(highestScore).iterator(); it.hasNext(); ) {
+							visitPosition = it.next();
+							//we try to move to this position
+							for (int d=0; d<=4; d++) {
+								switch(d) {
+								case 0:
+									checkPosition = visitPosition;
+									break;
+								case 1:
+									checkPosition = map.getUpPos(visitPosition);
+									break;
+								case 2:
+									checkPosition = map.getLeftPos(visitPosition);
+									break;
+								case 3:
+									checkPosition = map.getRightPos(visitPosition);
+									break;
+								case 4:
+									checkPosition = map.getDownPos(visitPosition);
+									break;
+								default:
+									checkPosition = null;
+									break;
+								}
+								if (checkPosition != null) {
+									if (validPosition.contains(checkPosition)) {
+										try {
+											return actionValidator.createActionMove(power, unitPosition, checkPosition);
+										} catch (IllegalArgumentException e) {
+											logger.warn("IA tried to move to an invalid position");
+											validPosition.remove(checkPosition);
+										}
+									}
+								}
+							}
+						}
+						//remove highest score
+						listToTryPosition.remove(highestScore);
+					}
+				}
+				//at this Point, stop
+				throw new WrongActionException("invalid unit movement");
 			case GameConstants.AI_HARD:
 				/*
 				 * keep Infantry near Capital, intercept nearby ennemy

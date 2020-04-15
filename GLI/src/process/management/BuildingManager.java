@@ -201,7 +201,7 @@ public class BuildingManager {
 			((ActionPoints) power.getResource(ResourceTypes.RESOURCE_ACTIONS)).addMaxActions(2);
 			Logger.info("Capital has been upgraded, +2 maxActionPoints, +1/turn ActionPoints");
 			power.addScore(ScoreValue.SCORE_VALUE_UPGRADE_CAPITALE);
-			Logger.info(power.getClass()+" receive "+ScoreValue.SCORE_VALUE_UPGRADE_CAPITALE+" score");
+			Logger.info(power.getName()+" receive "+ScoreValue.SCORE_VALUE_UPGRADE_CAPITALE+" score");
 		}
 	}
 	
