@@ -1,6 +1,7 @@
 package process.management;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -542,8 +543,8 @@ public class AIManager {
 		int numberUnits = unitsList.size();
 		int unitsIndex = random.nextInt(numberUnits);
 		Units unitSelected = unitsList.get(unitsIndex);
-
 		Position unitPosition = getUnitsPosition(unitSelected);
+		
 		if (unitPosition == null) {
 			throw new WrongActionException("Couldn't retrieve unit Position");
 		}
@@ -598,12 +599,21 @@ public class AIManager {
 			}
 		}
 		
+		//we will move according to our most precious Building, the capital
+		Position ourCapitalPosition = getBuildingPosition(power.getCapital());
+		//declaration of our Iterator
+		Iterator<Position> it;
+		//declaration for checking all Position
+		Position visitPosition;
+		//declaration for score to give
+		int scoreGivenToPosition = 0;
+		int highestScore = scoreGivenToPosition;
+		
 		switch (aiLevel) {
 			default: //make the default case the easy
 			case GameConstants.AI_EASY:
 				
 				//we go straight to his Capital
-				Position ourCapitalPosition = getBuildingPosition(power.getCapital());
 				Position toGoCapital = ourCapitalPosition;
 				//search for the most scored player
 				for (int i = 0; i < powers.length; i++) {
@@ -615,26 +625,31 @@ public class AIManager {
 				
 				//We will score each Position, only to keep the most important
 				ArrayList<Position> toTryPosition = new ArrayList<Position>();
-				Position visitPosition;
-				int scoreGivenToPosition = 0;
-				int highestScore = scoreGivenToPosition;
+				highestScore = scoreGivenToPosition;
 				
-				for (Iterator<Position> it = validPosition.iterator(); it.hasNext(); ) {
+				for (it = validPosition.iterator(); it.hasNext(); ) {
 					visitPosition = it.next();
 					scoreGivenToPosition = ((50 + ((15 + map.getSize()) * map.getSize())) - (map.getDistance(visitPosition, toGoCapital) * 15));
 					if (scoreGivenToPosition > highestScore) {
 						//More interesting Position is here
 						highestScore = scoreGivenToPosition;
+						//keep some of previous seen Box
+						int maxToKeep = toTryPosition.size() / 2;
+						ArrayList<Position> keepingPosition = new ArrayList<Position>();
+						for (int i = 0; i < maxToKeep; i++) {
+							keepingPosition.add(toTryPosition.get(i));
+						}
 						toTryPosition.clear();
 						toTryPosition.add(visitPosition);
+						toTryPosition.addAll(keepingPosition);
 					}
 					else if (scoreGivenToPosition == highestScore) {
 						toTryPosition.add(visitPosition);
 					}
-					//Lower, idc
+					//if lower, idc
 				}
 				
-				Iterator<Position> it = toTryPosition.iterator();
+				it = toTryPosition.iterator();
 				boolean canMove = false;
 				while (it.hasNext() && !canMove) {
 					visitPosition = it.next();
@@ -649,20 +664,91 @@ public class AIManager {
 				//if we end here, movement has Failed
 				throw new WrongActionException("invalid movement unit");
 		case GameConstants.AI_NORMAL:
-				/*
-				 * will try to move to units in a (4 * (mapSize / 10)) radius (roundish)
-				 * for each validPosition
-				 * 		try getDistance <= Constante
-				 * 		if unit || BuildingSpecial
-				 * 			on veut aller à proximité de ces cases (getUpDownLeftRightBox & voir s'ils sont dans validPosition)
-				 * 			arrêt
-				 * 		
-				 */
+			//feel the need to conquer
+			HashMap<Integer, ArrayList<Position>> listToTryPosition = new HashMap<Integer, ArrayList<Position>>();
+			for (it = validPosition.iterator(); it.hasNext(); ) {
+				visitPosition = it.next();
+				scoreGivenToPosition = ((4 * (map.getSize() / 10)) + (map.getDistance(visitPosition, ourCapitalPosition) * 15));
+				Box visitBox = map.getBox(visitPosition);
+				//less malus if there is a Unit nearby
+				if (visitBox.hasUnit()) {
+					scoreGivenToPosition -= (map.getBox(visitPosition).getUnit().getNumber() * 10);
+				}
+				else {
+					scoreGivenToPosition -= 60;
+				}
+				//Added Bonus if there is a Building
+				if (visitBox instanceof GroundBox) {
+					if (((GroundBox)visitBox).hasBuilding()) {
+						scoreGivenToPosition += 10;
+						if (((GroundBox)visitBox).getBuilding() instanceof BuildingSpecial) {
+							scoreGivenToPosition += 20;
+						}
+					}
+				}
+				//now that the scoring is done, add it to the HashMap
+				if (!listToTryPosition.containsKey(scoreGivenToPosition)) {
+					listToTryPosition.put(scoreGivenToPosition, new ArrayList<Position>());
+				}
+				listToTryPosition.get(scoreGivenToPosition).add(visitPosition);
+			}
+			
+			//try to move to all position by order of score
+			Position checkPosition;
+			while (!listToTryPosition.isEmpty()) {
+				//get the highest score stored
+				for (Iterator<Integer> ite = listToTryPosition.keySet().iterator(); ite.hasNext(); ) {
+					int checkingScore = ite.next();
+					if (checkingScore > highestScore) {
+						highestScore = checkingScore;
+					}
+				}
+				//we have the highest score stored
+				for (it = listToTryPosition.get(highestScore).iterator(); it.hasNext(); ) {
+					visitPosition = it.next();
+					//we try to move to this position
+					for (int d=0; d<=4; d++) {
+						switch(d) {
+						case 0:
+							checkPosition = visitPosition;
+							break;
+						case 1:
+							checkPosition = map.getUpPos(visitPosition);
+							break;
+						case 2:
+							checkPosition = map.getLeftPos(visitPosition);
+							break;
+						case 3:
+							checkPosition = map.getRightPos(visitPosition);
+							break;
+						case 4:
+							checkPosition = map.getDownPos(visitPosition);
+							break;
+						default:
+							checkPosition = null;
+							break;
+						}
+						if (checkPosition != null) {
+							if (validPosition.contains(checkPosition)) {
+								try {
+									return actionValidator.createActionMove(power, unitPosition, checkPosition);
+								} catch (IllegalArgumentException e) {
+									validPosition.remove(checkPosition);
+								}
+							}
+						}
+					}
+				}
+				//remove highest score
+				listToTryPosition.remove(highestScore);
+			}
+			//at this Point, stop
+			throw new WrongActionException("invalid unit movement");
 			case GameConstants.AI_HARD:
 				/*
-				 * will be able to use pathFinding ahead of movement to dertemine best movement
-				 * 
-				 * do pathfinding & getdistance to objective
+				 * keep Infantry near Capital, intercept nearby ennemy
+				 * send cavalry & pikeman conquer territory
+				 * if there is Artefact, try to control it and defend it
 				 * 
 				 * 
 				 */
@@ -670,7 +756,7 @@ public class AIManager {
 		
 		
 		
-		
+		//unless error, unreachable code
 		// for now, add a random Box
 		int numberValidBox = validPosition.size();
 		Position positionSelected;
@@ -762,10 +848,13 @@ public class AIManager {
 				optimal, make his unit move in group
 					if unit is under attack, search nearby to regourp
 					calcul visotory => number vs allied nearby
+				regroup his unit for attack (making his action attack possible with only 3+ actionpoints
 				
 			case GameConstants.AI_HARD:
 				only ai to know how to use trebuchet
+				infantry for defense, pikeman & cavalry in attack
 				make sure to have ranged unit behind other allied unit or wall
+				take advantage of water?
 		}
 		*/
 		
