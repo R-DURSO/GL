@@ -633,7 +633,7 @@ public class AIManager {
 					if (scoreGivenToPosition > highestScore) {
 						//More interesting Position is here
 						highestScore = scoreGivenToPosition;
-						//keep some of previous seen Box
+						//keep some of previous seen Box, for various movement
 						int maxToKeep = toTryPosition.size() / 2;
 						ArrayList<Position> keepingPosition = new ArrayList<Position>();
 						for (int i = 0; i < maxToKeep; i++) {
@@ -669,8 +669,9 @@ public class AIManager {
 				HashMap<Integer, ArrayList<Position>> listToTryPosition = new HashMap<Integer, ArrayList<Position>>();
 				for (it = validPosition.iterator(); it.hasNext(); ) {
 					visitPosition = it.next();
-					scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 5) );
 					Box visitBox = map.getBox(visitPosition);
+					//initial score
+					scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 5) );
 					//less malus if there is a Unit nearby
 					if (visitBox.hasUnit()) {
 						scoreGivenToPosition -= (map.getBox(visitPosition).getUnit().getNumber() * 5);
@@ -685,7 +686,11 @@ public class AIManager {
 						}
 					}
 					else {
-						scoreGivenToPosition += 150;
+						scoreGivenToPosition += 120;
+					}
+					//avoid being near water
+					if (map.isNearWater(visitPosition)) {
+						scoreGivenToPosition -= 20;
 					}
 					//Added Bonus if there is a Building
 					if (visitBox instanceof GroundBox) {
@@ -917,12 +922,6 @@ public class AIManager {
 		}
 		
 		/*
-			switch (aiLevel) {
-			default: //make the default case the easy
-			case GameConstants.AI_EASY:
-				check all Position
-				take the best one
-				try it
 			case GameConstants.AI_NORMAL:
 				optimal, make his unit move in group
 					if unit is under attack, search nearby to regourp
@@ -936,7 +935,7 @@ public class AIManager {
 				take advantage of water?
 		}
 		*/
-		
+		//unless error, unreachable code
 		// for now, add a random Box
 		int numberValidBox = validPosition.size();
 		Position positionSelected;
