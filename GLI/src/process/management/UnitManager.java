@@ -521,12 +521,15 @@ public class UnitManager {
 						//If attacker are range, they dont take damage
 						if (!isRanged(attacker)) {
 							//Round 2, counter-strike (attacker gain 10% damage reduction)
+							int effectiveAttackerDefense = attacker.getDefense() + 1;
 							if (counterUnit) {
-								//exception, counter unit gain 30% reduction
-								DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - (attacker.getDefense() + 3)) / 10.0));
+								//exception, counter unit gain another 20% reduction
+								effectiveAttackerDefense += 2;
 							}
-							else {
-								DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - (attacker.getDefense() + 1)) / 10.0));
+							DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - effectiveAttackerDefense) / 10.0));
+							//Trebuchet is a unit that dont know how to fight back
+							if (defender.getTypes() == UnitTypes.UNIT_TREBUCHET) {
+								DefenderDamageDealt = 0;
 							}
 							//attacker take dammage
 							casualityAtt = attacker.getNumber() - (((attacker.getHealth() * attacker.getNumber()) - (int)DefenderDamageDealt) / attacker.getHealth());
