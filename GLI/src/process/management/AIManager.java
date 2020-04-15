@@ -669,7 +669,7 @@ public class AIManager {
 				HashMap<Integer, ArrayList<Position>> listToTryPosition = new HashMap<Integer, ArrayList<Position>>();
 				for (it = validPosition.iterator(); it.hasNext(); ) {
 					visitPosition = it.next();
-					scoreGivenToPosition = ((8 * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 15));
+					scoreGivenToPosition = (((15 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 15));
 					Box visitBox = map.getBox(visitPosition);
 					//less malus if there is a Unit nearby
 					if (visitBox.hasUnit()) {
@@ -681,9 +681,9 @@ public class AIManager {
 					//Added Bonus if there is a Building
 					if (visitBox instanceof GroundBox) {
 						if (((GroundBox)visitBox).hasBuilding()) {
-							scoreGivenToPosition += 10;
+							scoreGivenToPosition += 15;
 							if (((GroundBox)visitBox).getBuilding() instanceof BuildingSpecial) {
-								scoreGivenToPosition += 20;
+								scoreGivenToPosition += 30;
 							}
 						}
 					}
