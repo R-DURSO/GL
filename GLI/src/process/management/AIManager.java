@@ -669,7 +669,7 @@ public class AIManager {
 				HashMap<Integer, ArrayList<Position>> listToTryPosition = new HashMap<Integer, ArrayList<Position>>();
 				for (it = validPosition.iterator(); it.hasNext(); ) {
 					visitPosition = it.next();
-					scoreGivenToPosition = ((4 * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 15));
+					scoreGivenToPosition = ((8 * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 15));
 					Box visitBox = map.getBox(visitPosition);
 					//less malus if there is a Unit nearby
 					if (visitBox.hasUnit()) {
