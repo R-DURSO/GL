@@ -506,7 +506,12 @@ public class UnitManager {
 							//up those damage
 							AttackerDamageDealt = AttackerDamageDealt * 1.5;
 						}
-						
+						/*
+						if (attacker.getTypes() == UnitTypes.UNIT_CAVALRY) {
+							//an idea, Cavalry are stronger in attacking other distant country
+							AttackerDamageDealt = AttackerDamageDealt * (0,8 + (map.getDistance(ourCapital, unitposition) * 0.02));
+						}
+						*/
 						//defense take those damage
 						int casualityDef = defender.getNumber() - (((defender.getHealth() * defender.getNumber()) - (int)AttackerDamageDealt) / defender.getHealth());
 						Logger.info("attacker damage: "+AttackerDamageDealt+"\tdefender loses: "+casualityDef);
@@ -517,8 +522,8 @@ public class UnitManager {
 						if (!isRanged(attacker)) {
 							//Round 2, counter-strike (attacker gain 10% damage reduction)
 							if (counterUnit) {
-								//exception, counter unit gain 20% reduction
-								DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - (attacker.getDefense() + 2)) / 10.0));
+								//exception, counter unit gain 30% reduction
+								DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - (attacker.getDefense() + 3)) / 10.0));
 							}
 							else {
 								DefenderDamageDealt = (defender.getDamage() * defender.getNumber()) * (((10.0 - (attacker.getDefense() + 1)) / 10.0));
