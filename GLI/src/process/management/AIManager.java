@@ -532,7 +532,7 @@ public class AIManager {
 
 	private Action tryCreateActionMove(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
 			ArrayList<Box> territory) throws WrongActionException {
-
+		
 		int aiLevel = power.getAILevel();
 		// if AI have units
 		if (unitsList.isEmpty()) {
@@ -543,6 +543,11 @@ public class AIManager {
 		int numberUnits = unitsList.size();
 		int unitsIndex = random.nextInt(numberUnits);
 		Units unitSelected = unitsList.get(unitsIndex);
+		
+		if (!unitSelected.getIsMoving()) {
+			throw new WrongActionException("This Unit is Already moving");
+		}
+		
 		Position unitPosition = getUnitsPosition(unitSelected);
 		
 		if (unitPosition == null) {
@@ -605,6 +610,11 @@ public class AIManager {
 		Iterator<Position> it;
 		//declaration for checking all Position
 		Position visitPosition;
+		//Position for quick change/verification
+		Position checkPosition;
+		//associated Box
+		Box visitBox;
+		Box checkBox;
 		//declaration for score to give
 		int scoreGivenToPosition = 0;
 		int highestScore = scoreGivenToPosition;
@@ -664,12 +674,11 @@ public class AIManager {
 				//if we end here, movement has Failed
 				throw new WrongActionException("invalid movement unit");
 			case GameConstants.AI_NORMAL:
-				//feel the need to conquer
 				//HashMap that score a List of Position
 				HashMap<Integer, ArrayList<Position>> listToTryPosition = new HashMap<Integer, ArrayList<Position>>();
 				for (it = validPosition.iterator(); it.hasNext(); ) {
 					visitPosition = it.next();
-					Box visitBox = map.getBox(visitPosition);
+					visitBox = map.getBox(visitPosition);
 					//initial score
 					scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 5) );
 					//less malus if there is a Unit nearby
@@ -709,7 +718,6 @@ public class AIManager {
 				}
 				
 				//try to move to all position by order of score
-				Position checkPosition;
 				while (!listToTryPosition.isEmpty()) {
 					//get the highest score stored
 					highestScore = 0;
@@ -767,6 +775,174 @@ public class AIManager {
 				//at this Point, stop
 				throw new WrongActionException("invalid unit movement");
 			case GameConstants.AI_HARD:
+				//HashMap that score a List of Position
+				HashMap<Integer, ArrayList<Position>> listToGoPosition = new HashMap<Integer, ArrayList<Position>>();
+				for (it = validPosition.iterator(); it.hasNext(); ) {
+					visitPosition = it.next();
+					visitBox = map.getBox(visitPosition);
+					//score change depending on Units we try to move
+					switch (unitSelected.getTypes()) {
+						case UnitTypes.UNIT_INFANTRY: //stay at the Capitale
+							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) - (map.getDistance(visitPosition, ourCapitalPosition) * 8) );
+							break;
+						case UnitTypes.UNIT_ARCHER: //stay far from other, only to attack if it's profitable
+							scoreGivenToPosition = ( (((15 + map.getSize()) * map.getSize()) * (20 + map.getSize())) / (map.getDistance(visitPosition, ourCapitalPosition)) );
+							for (int d=0; d<=4; d++) {
+								switch(d) {
+								case 0:
+									checkPosition = visitPosition;
+									break;
+								case 1:
+									checkPosition = map.getUpPos(visitPosition);
+									break;
+								case 2:
+									checkPosition = map.getLeftPos(visitPosition);
+									break;
+								case 3:
+									checkPosition = map.getRightPos(visitPosition);
+									break;
+								case 4:
+									checkPosition = map.getDownPos(visitPosition);
+									break;
+								default:
+									checkPosition = null;
+									break;
+								}
+								if (checkPosition != null) {
+									checkBox = map.getBox(checkPosition);
+									if (checkBox.hasUnit()) {
+										scoreGivenToPosition -= visitBox.getUnit().getDefense() * visitBox.getUnit().getNumber() * 2;
+									}
+								}
+							}
+							if (scoreGivenToPosition > 0) {
+								//positive scoring, if there is a Unit, try to see if we can attack it
+								if (visitBox.hasUnit()) {
+									try {
+										//force to take only this Unit
+										ArrayList<Units> forceArrayUnit = new ArrayList<Units>();
+										forceArrayUnit.add(unitSelected);
+										tryCreateActionAttack(power, forceArrayUnit, buildingList, territory);
+									}
+									catch (WrongActionException e) {
+										//If it didn't work, forget it
+									}
+								}
+							}
+							break;
+						case UnitTypes.UNIT_PIKEMAN: //act the same as Cavalry
+						case UnitTypes.UNIT_CAVALRY: //they will go and conquer
+							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 8) );
+							for (int d=1; d<=4; d++) {
+								switch(d) {
+								case 1:
+									checkPosition = map.getUpPos(visitPosition);
+									break;
+								case 2:
+									checkPosition = map.getLeftPos(visitPosition);
+									break;
+								case 3:
+									checkPosition = map.getRightPos(visitPosition);
+									break;
+								case 4:
+									checkPosition = map.getDownPos(visitPosition);
+									break;
+								default:
+									checkPosition = null;
+									break;
+								}
+								if (checkPosition != null) {
+									if (map.getBox(checkPosition).hasUnit()) {
+										scoreGivenToPosition -= visitBox.getUnit().getDefense() * visitBox.getUnit().getNumber() * 2;
+									}
+								}
+							}
+							break;
+						case UnitTypes.UNIT_TREBUCHET: //stay at bay, and far from war to provide maximum efficiency
+							
+							break;
+						case UnitTypes.UNIT_BATTERING_RAM: //go attack, trebuchet will do the same if a power is frail
+							
+							break;
+					}
+					//a note, Hard AI can try other action and return it if succesful, making the most effecient choice
+					
+					
+					scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 5) );
+					//less malus if there is a Unit nearby
+					if (visitBox.hasUnit()) {
+						scoreGivenToPosition -= (map.getBox(visitPosition).getUnit().getNumber() * 5);
+					}
+					else {
+						scoreGivenToPosition -= 100;
+					}
+					//will search for conquer
+					if (visitBox.hasOwner()) {
+						if (visitBox.getOwner() != power) {
+							scoreGivenToPosition += 40;
+						}
+					}
+					else {
+						scoreGivenToPosition += 120;
+					}
+					//avoid being near water
+					if (map.isNearWater(visitPosition)) {
+						scoreGivenToPosition -= 20;
+					}
+					//Added Bonus if there is a Building
+					if (visitBox instanceof GroundBox) {
+						if (((GroundBox)visitBox).hasBuilding()) {
+							scoreGivenToPosition += 20;
+							if (((GroundBox)visitBox).getBuilding() instanceof BuildingSpecial) {
+								scoreGivenToPosition += 40;
+							}
+						}
+					}
+					//now that the scoring is done, add it to the HashMap
+					if (!listToGoPosition.containsKey(scoreGivenToPosition)) {
+						listToGoPosition.put(scoreGivenToPosition, new ArrayList<Position>());
+					}
+					listToGoPosition.get(scoreGivenToPosition).add(visitPosition);
+				}
+				
+				
+				
+				
+				while (!listToGoPosition.isEmpty()) {
+					//get the highest score stored
+					highestScore = 0;
+					for (Iterator<Integer> ite = listToGoPosition.keySet().iterator(); ite.hasNext(); ) {
+						int checkingScore = ite.next();
+						if (checkingScore > highestScore) {
+							highestScore = checkingScore;
+						}
+					}
+					//we have the highest score stored
+					if (highestScore <= 0) {
+						listToGoPosition.clear();
+					}
+					if (listToGoPosition.containsKey(highestScore)) {
+						for (it = listToGoPosition.get(highestScore).iterator(); it.hasNext(); ) {
+							visitPosition = it.next();
+							//we try to move to this position
+							if (validPosition.contains(visitPosition)) {
+								try {
+									return actionValidator.createActionMove(power, unitPosition, visitPosition);
+								} catch (IllegalArgumentException e) {
+									logger.warn("IA tried to move to an invalid position");
+									validPosition.remove(visitPosition);
+								}
+							}
+						}
+						//remove highest score
+						listToGoPosition.remove(highestScore);
+					}
+				}
+				//at this Point, stop
+				throw new WrongActionException("invalid unit movement");
+				
+				
+				
 				/*
 				 * keep Infantry near Capital, intercept nearby ennemy
 				 * send cavalry & pikeman conquer territory
@@ -776,26 +952,6 @@ public class AIManager {
 				 */
 		}
 		
-		
-		
-		//unless error, unreachable code
-		// for now, add a random Box
-		int numberValidBox = validPosition.size();
-		Position positionSelected;
-		if (numberValidBox < 1) {
-			throw new WrongActionException("Designed Unit doesn't have any Box to move to");
-		}
-		else {
-			int BoxIndex = random.nextInt(numberValidBox);
-			positionSelected = validPosition.get(BoxIndex);
-		}
-		
-		try {
-			return actionValidator.createActionMove(power, unitPosition, positionSelected);
-		} catch (IllegalArgumentException e) {
-			throw new WrongActionException("invalid unit movement");
-		}
-
 	}
 
 	private Action tryCreateActionAttack(Power power, ArrayList<Units> unitsList, ArrayList<Building> buildingList,
@@ -810,7 +966,11 @@ public class AIManager {
 		int numberUnits = unitsList.size();
 		int unitsIndex = random.nextInt(numberUnits);
 		Units unitSelected = unitsList.get(unitsIndex);
-
+		
+		if (!unitSelected.getIsMoving()) {
+			throw new WrongActionException("This Unit is Already moving");
+		}
+		
 		Position unitPosition = getUnitsPosition(unitSelected);
 		if (unitPosition == null) {
 			throw new WrongActionException("Couldn't retrieve unit Position");
