@@ -1212,9 +1212,7 @@ public class AIManager {
 				}
 			}
 		}
-
-		//we will move according to our most precious Building, the capital
-		Position ourCapitalPosition = getBuildingPosition(power.getCapital());
+		
 		//declaration of our Iterator
 		Iterator<Position> it;
 		//declaration for checking all Position
@@ -1287,18 +1285,105 @@ public class AIManager {
 					//score change depending on Units we try to move
 					switch (unitSelected.getTypes()) {
 						case UnitTypes.UNIT_INFANTRY:
-							//check all nearby Box if there is someone, else move
-							
+							//check all attaquable Box, if there is someone attack, else move
+							if (visitBox.hasUnit()) {
+								scoreGivenToPosition = 50;
+							}
 							break;
 						case UnitTypes.UNIT_ARCHER:
 							//re-check if attack is profitable, else move out of here
-							
+							scoreGivenToPosition = ((15 + map.getSize()) * map.getSize());
+							for (int d=0; d<=4; d++) {
+								switch(d) {
+								case 0:
+									checkPosition = visitPosition;
+									break;
+								case 1:
+									checkPosition = map.getUpPos(visitPosition);
+									break;
+								case 2:
+									checkPosition = map.getLeftPos(visitPosition);
+									break;
+								case 3:
+									checkPosition = map.getRightPos(visitPosition);
+									break;
+								case 4:
+									checkPosition = map.getDownPos(visitPosition);
+									break;
+								default:
+									checkPosition = null;
+									break;
+								}
+								if (checkPosition != null) {
+									checkBox = map.getBox(checkPosition);
+									if (checkBox.hasUnit()) {
+										//total health divide by distance
+										scoreGivenToPosition -= ( (checkBox.getUnit().getHealth() * checkBox.getUnit().getNumber() * 5)
+												/ ( (map.getDistance(checkPosition, visitPosition) * 2) + 1) );
+									}
+								}
+							}
+							if (scoreGivenToPosition > 0) {
+								//positive scoring, we are safe, let's attack
+								if (visitBox.hasUnit()) {
+									try {
+										return actionValidator.createActionAttack(power, unitPosition, visitPosition);
+									} catch (IllegalArgumentException e) {
+										logger.warn("IA tried to attack from a good position, only to fail");
+									}
+								}
+							}
 							break;
 						case UnitTypes.UNIT_PIKEMAN:
 							//act the same as Cavalry
 						case UnitTypes.UNIT_CAVALRY:
 							//attack for conquer
-							
+							/*
+							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 8) );
+							for (int d=1; d<=4; d++) {
+								switch(d) {
+								case 1:
+									checkPosition = map.getUpPos(visitPosition);
+									break;
+								case 2:
+									checkPosition = map.getLeftPos(visitPosition);
+									break;
+								case 3:
+									checkPosition = map.getRightPos(visitPosition);
+									break;
+								case 4:
+									checkPosition = map.getDownPos(visitPosition);
+									break;
+								default:
+									checkPosition = null;
+									break;
+								}
+								if (checkPosition != null) {
+									checkBox = map.getBox(checkPosition);
+									if (checkBox.hasOwner()) {
+										if (checkBox.hasUnit()) {
+											//minus score if there are strong unit, but for those more frail
+											scoreGivenToPosition -= checkBox.getUnit().getNumber() * (2 + (checkBox.getUnit().getDefense() - 2));
+										}
+									}
+									else {
+										//there is nearby Box that aren't controlled
+										scoreGivenToPosition += 50;
+									}
+									if (checkBox instanceof GroundBox) {
+										GroundBox checkGBox = (GroundBox)checkBox;
+										if (checkGBox.getResourceType() != ResourceTypes.NO_RESOURCE) {
+											//Resource are on this Box
+											scoreGivenToPosition += 50;
+											if (checkGBox.getResourceType() == ResourceTypes.RESOURCE_ARTIFACT) {
+												//The most important objective is nearby
+												scoreGivenToPosition += 500 - (50 * map.getDistance(checkPosition, visitPosition));
+											}
+										}
+									}
+								}
+							}
+							*/
 							break;
 						case UnitTypes.UNIT_TREBUCHET:
 							//try to snipe other
@@ -1306,7 +1391,12 @@ public class AIManager {
 							break;
 						case UnitTypes.UNIT_BATTERING_RAM:
 							//go toward others Capital, to blow them out (that pun is intended)
-							
+							if (visitBox instanceof GroundBox) {
+								GroundBox visitGBox = (GroundBox)visitBox;
+								if (visitGBox.hasBuilding()) {
+									
+								}
+							}
 							break;
 						case UnitTypes.UNIT_BOAT:
 							//why would you try to make a Boat attack ??
@@ -1356,8 +1446,11 @@ public class AIManager {
 					}
 				}
 
-				//at this Point, stop
-				throw new WrongActionException("invalid unit movement");
+				//at this Point, stop & try to move instead
+				//force to take only this Unit
+				ArrayList<Units> forceArrayUnit = new ArrayList<Units>();
+				forceArrayUnit.add(unitSelected);
+				return this.tryCreateActionMove(power, forceArrayUnit, buildingList, territory);
 		}
 		
 		/*
