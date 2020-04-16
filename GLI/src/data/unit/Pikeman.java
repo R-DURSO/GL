@@ -11,8 +11,8 @@ public class Pikeman extends Units implements Serializable{
 	private static final int DAMAGE = 4;
 	private static final int DEFENSE = 1;
 	
-	public static final int COST = 10;
-	public static final int COST_PER_TURN = 3;
+	public static final int COST = 12;
+	public static final int COST_PER_TURN = 4;
 	public static final int NUMBER_MAX_UNITS = 20;
 
 	public Pikeman (int numberUnits, Power owner) {

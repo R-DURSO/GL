@@ -161,7 +161,7 @@ public class PowerManager {
 		while ((i.hasNext()) && (foodProd < 0)) {
 			Box visitBox = i.next();
 			if (visitBox.hasUnit()) {
-				int unitToRemove = (foodProd / visitBox.getUnit().getFoodCost()) + 5;
+				int unitToRemove = - ((foodProd / visitBox.getUnit().getFoodCost()) - 5);
 				UnitManager.getInstance().removeUnits(powerConcerned, visitBox, unitToRemove);
 				foodProd = powerConcerned.getResource(ResourceTypes.RESOURCE_FOOD).getProductionPerTurn();
 			}
