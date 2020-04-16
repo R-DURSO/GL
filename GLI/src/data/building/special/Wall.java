@@ -5,9 +5,9 @@ import java.io.Serializable;
 import data.building.BuildingTypes;
 
 public class Wall extends BuildingSpecial implements Serializable{
-	private static final int BUILD_TIME = 0;
-	public static final int COST = 100;
-	private static final int BASE_HEALTH = 20;
+	private static final int BUILD_TIME = 2;
+	public static final int COST = 160;
+	private static final int BASE_HEALTH = 30;
 	
 	public Wall() {
 		super(BUILD_TIME, BASE_HEALTH);

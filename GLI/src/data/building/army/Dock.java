@@ -5,8 +5,8 @@ import java.io.Serializable;
 import data.building.BuildingTypes;
 
 public class Dock extends BuildingArmy implements Serializable {
-	private static final int BUILD_TIME = 0;
-	public static final int COST = 100;
+	private static final int BUILD_TIME = 1;
+	public static final int COST = 60;
 	private static final int BASE_HEALTH = 3;
 	
 	public Dock() {

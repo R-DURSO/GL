@@ -5,9 +5,9 @@ import java.io.Serializable;
 import data.building.BuildingTypes;
 
 public class Barrack extends BuildingArmy implements Serializable {
-	private static final int BUILD_TIME = 0;
-	public static final int COST = 100;
-	private static final int BASE_HEALTH = 3;
+	private static final int BUILD_TIME = 1;
+	public static final int COST = 80;
+	private static final int BASE_HEALTH = 5;
 	
 	public Barrack() {
 		super(BUILD_TIME, BASE_HEALTH);
