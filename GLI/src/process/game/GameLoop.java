@@ -56,6 +56,15 @@ public class GameLoop {
 		return powers;
 	}
 	
+	public ArrayList<ActionMakeAlliance> getFutureAlliances(){
+		ArrayList<ActionMakeAlliance> list = new ArrayList<>();
+		for(Action action : actions[ActionTypes.ACTION_MAKE_ALLIANCE]){
+			ActionMakeAlliance actionMakeAlliance = (ActionMakeAlliance)action;
+			list.add(actionMakeAlliance);
+		}
+		return list;
+	}
+	
 	/**
 	 * Add an {@link data.actions.Action Action} to be done this {@link #endTurn() Turn}
 	 * @param actionType
@@ -66,21 +75,31 @@ public class GameLoop {
 	}
 	
 	/**
-	 * End the current turn and start different actions
+	 * First part of the ending turn
 	 * <ul>
 	 * 		<li>Decrease of BuildTime</li>
-	 * 		<li>Application of all {@link data.actions.Action Actions}</li>
-	 * 		<li>Checking the status of all {@link data.Power Power}</li>
-	 * 		<li>Increase in all {@link data.resource.Resource Resources} from {@link data.building.product.BuildingProduct Production}</li>
-	 * 		<li>Refresh the stats of all Powers</li>
+	 * 		<li>Let AI decide of their actions</li>
 	 * </ul>
 	 */
-	public void endTurn() {
+	public void preEndTurn() {
 		//decrease build time
 		decreaseBuildTime();
 		//Add IA Actions
 		//IA have a turn later for decrease construction time
 		addActionsIA();
+		
+	}
+	
+	/**
+	 * Second part of ending turn
+	 * <ul>
+	 * 		<li>Application of all {@link data.actions.Action Actions}</li>
+	 * 		<li>Checking the status of all {@link data.Power Power}</li>
+	 * 		<li>Increase in all {@link data.resource.Resource Resources} from {@link data.building.product.BuildingProduct Production}</li>
+	 * 		<li>Refresh the stats of all Powers</li>
+	 *</ul>
+	 */
+	public void endTurn() {
 		//Apply all stored action
 		doActions();
 		//check if Power are dead
@@ -175,10 +194,7 @@ public class GameLoop {
 	public void doActions() {
 		Logger.info("== Starting the application of Action ==");
 		for(int i = 0; i < ActionTypes.NUMBER_ACTIONS; i++) {
-			switch(i) {
-			case ActionTypes.ACTION_MAKE_ALLIANCE:
-				executeActionsMakeAlliance(actions[i]);
-				break;
+			switch(i) { //alliances are done in GamePanel, in order to display informations
 			case ActionTypes.ACTION_BREAK_ALLIANCE:
 				executeActionsBreakAlliance(actions[i]);
 				break;
@@ -208,14 +224,24 @@ public class GameLoop {
 		initActionArray();
 	}
 	
-	private void executeActionsMakeAlliance(ArrayList<Action> arrayList) {
-		for(Action a : arrayList) {
-			ActionMakeAlliance action = (ActionMakeAlliance)a;
-			Power powerConcerned = action.getPowerConcerned();
-			Power powerAllied = action.getPotentialAllied();
-			PowerManager.getInstance().makeAlliance(powerConcerned, powerAllied);
-		}
+	public void doActionMakeAlliance(Power powerAsking, Power powerAsked) {
+		PowerManager.getInstance().makeAlliance(powerAsking, powerAsked);
 	}
+	
+
+	public boolean checkAllianceWithAI(Power powerAsking, Power powerAsked) {
+		return AIManager.checkAlliance(powerAsking, powerAsked);
+	}
+	
+//	private void executeActionsMakeAlliance(ArrayList<Action> arrayList) {
+//		for(Action a : arrayList) {
+//			ActionMakeAlliance action = (ActionMakeAlliance)a;
+//			//decide if need to make alliance
+//			Power powerConcerned = action.getPowerConcerned();
+//			Power powerAllied = action.getPotentialAllied();
+//			PowerManager.getInstance().makeAlliance(powerConcerned, powerAllied);
+//		}
+//	}
 	
 	private void executeActionsBreakAlliance(ArrayList<Action> arrayList) {
 		for(Action a : arrayList) {
@@ -357,5 +383,6 @@ public class GameLoop {
 			PowerManager.getInstance().refreshPowerStats(powers[i], map);
 		}
 	}
+
 
 }

@@ -1117,26 +1117,6 @@ public class AIManager {
 	}
 
 	/**
-	 * actions passed will be rated, and only part of them will be returned,
-	 * depending on power ai level.
-	 * 
-	 * @param power         the power who will do actions
-	 * 
-	 * @param triedActions  Actions that are valid
-	 * @param numberActions the number of actions returned
-	 * @param territory     power territory
-	 * @param buildingList  power's buildings
-	 * @param unitsList     power's units
-	 * @return an array of actions
-	 */
-	private Action[] getDesiredActions(Power power, Action[] triedActions, int numberActions,
-			ArrayList<Units> unitsList, ArrayList<Building> buildingList, ArrayList<Box> territory) {
-		// we have some actions to prioritize in order to have a legit intelligence, so,
-		// we check here if some things are done before
-		return null;
-	}
-
-	/**
 	 * Recover all {@linkplain data.unit.Units Units} that Power have
 	 * 
 	 * @param power
@@ -1254,5 +1234,31 @@ public class AIManager {
 				return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Checks if powerAsked would want to do an alliance with powerAsking
+	 * @param powerAsking
+	 * @param powerAsked
+	 * @return true if alliance accepted, false else
+	 */
+	public boolean checkAlliance(Power powerAsking, Power powerAsked) {
+		int aiLevel = powerAsked.getAILevel();
+		
+		switch (aiLevel) {
+		default:
+		case GameConstants.AI_EASY:
+			//refuses all alliances
+			return false;
+		case GameConstants.AI_NORMAL:
+			//accepts an alliance 4 times out of 5
+			int choice = random.nextInt(5);
+			return choice < 4;
+		case GameConstants.AI_HARD:
+			//accepts only if powerAsking have more score
+			int powerAskingScore = powerAsking.getResourceAmount(ResourceTypes.RESOURCE_SCORE);
+			int powerAskedScore = powerAsked.getResourceAmount(ResourceTypes.RESOURCE_SCORE);
+			return powerAskedScore <= powerAskingScore;
+		}
 	}
 }
