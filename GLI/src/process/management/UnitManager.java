@@ -280,6 +280,12 @@ public class UnitManager {
 		}
 		else {
 			Logger.error("No Unit was found, canceling movement");
+			//Suppression de Phantom potentiel
+			if (pathToTake[pathToTake.length-1].hasUnit()) {
+				if (pathToTake[pathToTake.length-1].getUnit().isPhantom()) {
+					pathToTake[pathToTake.length-1].setUnit(null);
+				}
+			}
 		}
 	}
 	

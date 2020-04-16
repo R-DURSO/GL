@@ -206,7 +206,7 @@ public class PowerManager {
 				killed.getResourceProductionPerTurn(ResourceTypes.RESOURCE_GOLD));
 		killer.addResourcesProductionPerTurn(ResourceTypes.RESOURCE_STONE,
 				killed.getResourceProductionPerTurn(ResourceTypes.RESOURCE_STONE));
-		// reveive half of his current ressource
+		// receive half of his current ressource
 		killer.getResource(ResourceTypes.RESOURCE_FOOD)
 				.addValue(killed.getResource(ResourceTypes.RESOURCE_FOOD).getAmount() / 2);
 		killer.getResource(ResourceTypes.RESOURCE_WOOD)
@@ -215,14 +215,24 @@ public class PowerManager {
 				.addValue(killed.getResource(ResourceTypes.RESOURCE_GOLD).getAmount() / 2);
 		killer.getResource(ResourceTypes.RESOURCE_STONE)
 				.addValue(killed.getResource(ResourceTypes.RESOURCE_STONE).getAmount() / 2);
+		//stock are empty
+		killed.getResource(ResourceTypes.RESOURCE_FOOD).subValue(killed.getResourceAmount(ResourceTypes.RESOURCE_FOOD));
+		killed.getResource(ResourceTypes.RESOURCE_WOOD).subValue(killed.getResourceAmount(ResourceTypes.RESOURCE_WOOD));
+		killed.getResource(ResourceTypes.RESOURCE_GOLD).subValue(killed.getResourceAmount(ResourceTypes.RESOURCE_GOLD));
+		killed.getResource(ResourceTypes.RESOURCE_STONE).subValue(killed.getResourceAmount(ResourceTypes.RESOURCE_STONE));
+		//none production
+		killer.getResource(ResourceTypes.RESOURCE_FOOD).subProductionPerTurn(killed.getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD));
+		killer.getResource(ResourceTypes.RESOURCE_WOOD).subProductionPerTurn(killed.getResourceProductionPerTurn(ResourceTypes.RESOURCE_WOOD));
+		killer.getResource(ResourceTypes.RESOURCE_GOLD).subProductionPerTurn(killed.getResourceProductionPerTurn(ResourceTypes.RESOURCE_GOLD));
+		killer.getResource(ResourceTypes.RESOURCE_STONE).subProductionPerTurn(killed.getResourceProductionPerTurn(ResourceTypes.RESOURCE_STONE));
 		// Receive score from the dead
 		killer.addScore(killed.getResource(ResourceTypes.RESOURCE_ACTIONS).getAmount() / 4);
 		killer.addScore(ScoreValue.SCORE_VALUE_POWER);
 		Logger.info(killer.getName()+" has kill "+killed.getName());
 		Logger.info("== "+killed.getName()+" is DEAD ==");
-
-
+		
 		killed.die();
+		
 	}
 	
 	public Power[] recreatePowerList(Power[] powerList) {

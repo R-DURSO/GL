@@ -128,7 +128,7 @@ public class GameLoop {
 		for(int i = 0; i < powers.length; i++){
 			if(powers[i].isAI()) {
 				if (powers[i].isAlive()) {
-					Action listAction[] = AIManager.doActions(powers[i]); 
+					Action listAction[] = AIManager.doActions(powers[i]);
 					for (int j = 0; j < listAction.length; j++) {
 						if (listAction[j] != null) {
 							addAction(listAction[j].getActionType(), listAction[j]);
@@ -334,16 +334,18 @@ public class GameLoop {
 	private void applyProduction() {
 		Logger.info("== Application de la production ==");
 		for (int i = 0; i < getPlayerNumber(); i++) {
-			powers[i].applyProductionOfTurn();
-			Logger.debug(powers[i].getName()+" receive "+powers[i].getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_FOOD)+" this turn");
-			Logger.debug(powers[i].getName()+" has now "+powers[i].getResourceAmount(ResourceTypes.RESOURCE_FOOD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_FOOD));
-			Logger.debug(powers[i].getName()+" receive "+powers[i].getResourceProductionPerTurn(ResourceTypes.RESOURCE_WOOD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_WOOD)+" this turn");
-			Logger.debug(powers[i].getName()+" has now "+powers[i].getResourceAmount(ResourceTypes.RESOURCE_WOOD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_WOOD));
-			Logger.debug(powers[i].getName()+" receive "+powers[i].getResourceProductionPerTurn(ResourceTypes.RESOURCE_GOLD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_GOLD)+" this turn");
-			Logger.debug(powers[i].getName()+" has now "+powers[i].getResourceAmount(ResourceTypes.RESOURCE_GOLD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_GOLD));
-			Logger.debug(powers[i].getName()+" receive "+powers[i].getResourceProductionPerTurn(ResourceTypes.RESOURCE_STONE)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_STONE)+" this turn");
-			Logger.debug(powers[i].getName()+" has now "+powers[i].getResourceAmount(ResourceTypes.RESOURCE_STONE)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_STONE));
-			Logger.debug(powers[i].getName()+" has "+powers[i].getResourceAmount(ResourceTypes.RESOURCE_SCORE)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_SCORE)+"\n");
+			if (powers[i].isAlive()) {
+				powers[i].applyProductionOfTurn();
+				Logger.debug(powers[i].getName()+" receive "+powers[i].getResourceProductionPerTurn(ResourceTypes.RESOURCE_FOOD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_FOOD)+" this turn");
+				Logger.debug(powers[i].getName()+" has now "+powers[i].getResourceAmount(ResourceTypes.RESOURCE_FOOD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_FOOD));
+				Logger.debug(powers[i].getName()+" receive "+powers[i].getResourceProductionPerTurn(ResourceTypes.RESOURCE_WOOD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_WOOD)+" this turn");
+				Logger.debug(powers[i].getName()+" has now "+powers[i].getResourceAmount(ResourceTypes.RESOURCE_WOOD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_WOOD));
+				Logger.debug(powers[i].getName()+" receive "+powers[i].getResourceProductionPerTurn(ResourceTypes.RESOURCE_GOLD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_GOLD)+" this turn");
+				Logger.debug(powers[i].getName()+" has now "+powers[i].getResourceAmount(ResourceTypes.RESOURCE_GOLD)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_GOLD));
+				Logger.debug(powers[i].getName()+" receive "+powers[i].getResourceProductionPerTurn(ResourceTypes.RESOURCE_STONE)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_STONE)+" this turn");
+				Logger.debug(powers[i].getName()+" has now "+powers[i].getResourceAmount(ResourceTypes.RESOURCE_STONE)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_STONE));
+				Logger.debug(powers[i].getName()+" has "+powers[i].getResourceAmount(ResourceTypes.RESOURCE_SCORE)+" "+Resource.getResourceType(ResourceTypes.RESOURCE_SCORE)+"\n");
+			}
 		}
 	}
 	
