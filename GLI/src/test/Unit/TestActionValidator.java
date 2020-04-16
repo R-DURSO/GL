@@ -138,7 +138,7 @@ public class TestActionValidator {
 	@Test 
 	public void testMoveAlly() throws IllegalArgumentException{
 		Position from = new Position(mapSize - 1, mapSize - 2);
-		Position target = new Position(mapSize - 4, mapSize - 3);
+		Position target = new Position(mapSize - 3, mapSize - 3);
 		//deplacer le cavalier chez l'allie
 		actionValidator.createActionMove(powers[1], from, target);
 		assertEquals(new PhantomUnit(powers[1], map.getBox(from).getUnit().getTypes()).getTypes(), map.getBox(target).getUnit().getTypes());

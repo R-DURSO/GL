@@ -65,13 +65,12 @@ public class TestUnits {
 	
 	@Before
 	public void makeAlliance() {
-		if (!powers[0].isAllied()) {
-			if (powers[1].isAllied()) {
-				PowerManager.getInstance().breakAlliance(powers[1]);
-			}
-			PowerManager.getInstance().makeAlliance(powers[1], powers[2]);
+		for (int p = 0; p < powers.length; p++) {
+			PowerManager.getInstance().breakAlliance(powers[p]);
 		}
+		PowerManager.getInstance().makeAlliance(powers[1], powers[2]);
 	}
+	
 	
 	@Test(expected = AssertionError.class)
 	public void createUnitTooMuch() {
@@ -129,6 +128,8 @@ public class TestUnits {
 	public void createUnitMovementAllied() {
 		power = powers[0];
 		Power powerAllied = powers[1];
+		PowerManager.getInstance().breakAlliance(power);
+		PowerManager.getInstance().breakAlliance(powerAllied);
 		PowerManager.getInstance().makeAlliance(power, powerAllied);
 
 		from = new Position(0, 1);
