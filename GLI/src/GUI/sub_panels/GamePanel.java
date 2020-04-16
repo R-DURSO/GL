@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ import data.GameMap;
 import data.Position;
 import data.Power;
 import data.actions.Action;
+import data.actions.ActionMakeAlliance;
 import data.boxes.Box;
 import data.boxes.GroundBox;
 import data.building.Building;
@@ -134,6 +136,13 @@ public class GamePanel extends JPanel {
 	public void endPlayerTurn() {
 		resetPositions();
 		gameButtonsPanel.getActionsBoutonsPanel().setMajorButtonsVisibility(false);
+		
+		gameLoop.preEndTurn();
+		
+		//handle make alliance and break alliance
+		handleAlliances();
+		
+		
 		gameLoop.endTurn();
 		infosPanel.refreshStatsPanel();
 		refreshMap();
@@ -144,6 +153,30 @@ public class GamePanel extends JPanel {
 		int victoryType = gameLoop.checkVictoryConditions();
 		if(victoryType != GameConstants.NO_VICTORY) {
 			setVictoryScreen(victoryType);
+		}
+	}
+
+	private void handleAlliances() {
+		ArrayList<ActionMakeAlliance> allianceslist = gameLoop.getFutureAlliances();
+		for(ActionMakeAlliance alliance : allianceslist){
+			Power powerAsking = alliance.getPowerConcerned();
+			Power powerAsked = alliance.getPotentialAllied();
+			boolean wantAlliance = false;
+			if (powerAsked == player) { //needs player according in order to do this action
+				int answer = JOptionPane.showConfirmDialog(this, powerAsking.getName() + " demmande à faire une alliance avec vous. Acceptez-vous?", "Demmande d'alliance", JOptionPane.YES_NO_OPTION);
+				if(answer == JOptionPane.YES_OPTION) {
+					wantAlliance = true;
+				}
+			}else {
+				wantAlliance = gameLoop.checkAllianceWithAI(powerAsking, powerAsked);
+			}
+			
+			if (wantAlliance) {
+				gameLoop.doActionMakeAlliance(powerAsking, powerAsked);
+				JOptionPane.showMessageDialog(this, powerAsked.getName() + " et " + powerAsking.getName() + " sont alliés maintenant.");
+			}else {
+				JOptionPane.showMessageDialog(this, powerAsked.getName() + " décide de ne pas s'allier avec " + powerAsking.getName());
+			}
 		}
 	}
 
