@@ -198,26 +198,26 @@ public class GameLoop {
 			case ActionTypes.ACTION_BREAK_ALLIANCE:
 				executeActionsBreakAlliance(actions[i]);
 				break;
-			case ActionTypes.ACTION_ATTACK:
-				executeActionsAttack(actions[i]);
-				break;
-			case ActionTypes.ACTION_MOVE:
-				executeActionsMove(actions[i]);
-				break;
-			case ActionTypes.ACTION_CONSTRUCT:
-				executeActionsConstruct(actions[i]);
-				break;
 			case ActionTypes.ACTION_UPGRADE_CAPITAL:
 				executeActionsUpgradeCapital(actions[i]);
-				break;
-			case ActionTypes.ACTION_CREATE_UNITS:
-				executeActionsCreateUnits(actions[i]);
 				break;
 			case ActionTypes.ACTION_DESTROY_BUILDING:
 				executeActionsDestroyBuilding(actions[i]);
 				break;
 			case ActionTypes.ACTION_DESTROY_UNITS:
 				executeActionsDestroyUnits(actions[i]);
+				break;
+			case ActionTypes.ACTION_CONSTRUCT:
+				executeActionsConstruct(actions[i]);
+				break;
+			case ActionTypes.ACTION_CREATE_UNITS:
+				executeActionsCreateUnits(actions[i]);
+				break;
+			case ActionTypes.ACTION_ATTACK:
+				executeActionsAttack(actions[i]);
+				break;
+			case ActionTypes.ACTION_MOVE:
+				executeActionsMove(actions[i]);
 				break;
 			}
 		}

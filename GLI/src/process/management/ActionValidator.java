@@ -288,7 +288,7 @@ public class ActionValidator {
 		if (targetBox.hasUnit()) {
 			Units unitsOnTarget = targetBox.getUnit();
 			//check if units already want to go to target, which means checking if a PhantomUnit is on targetBox
-			if(unitsOnTarget.getTypes() < 0) {
+			if (unitsOnTarget.getTypes() < 0) {
 				logger.warn(powerConcerned.getName()+" move an unit where another unit is already going");
 				throw new IllegalArgumentException("Une unite compte se rendre a cette position");
 			}
@@ -315,9 +315,12 @@ public class ActionValidator {
 					throw new IllegalArgumentException("Des unites d'un type different sont sur le lieu cible");
 				}
 				//But, make sure you dont exceed the limit
+				//Exception, the Trebuchet that move on himself
 				else if (movingUnits.getNumber() + unitsOnTarget.getNumber() > movingUnits.getMaxNumber()) {
-					logger.warn(powerConcerned.getName()+" try to overload an unit with more unit");
-					throw new IllegalArgumentException("Le deplacement fait depasser la limite d'unite");
+					if (movingUnits.getTypes() != UnitTypes.UNIT_TREBUCHET) {
+						logger.warn(powerConcerned.getName()+" try to overload an unit with more unit");
+						throw new IllegalArgumentException("Le deplacement fait depasser la limite d'unite");
+					}
 				}
 			}
 			else {
@@ -440,8 +443,8 @@ public class ActionValidator {
 								if (buildingType == BuildingTypes.BUILDING_WALL) {
 									//Cannot go through Wall
 								}
-								else if (buildingType == BuildingTypes.BUILDING_DOOR || buildingType == BuildingTypes.BUILDING_TEMPLE) {
-									//Does the Door / temple belong to us
+								else if (buildingType == BuildingTypes.BUILDING_DOOR) {
+									//Does the Door belong to us
 									if (visitGBox.getOwner() == powerConcerned) {
 										checkBoat = true;
 									}
