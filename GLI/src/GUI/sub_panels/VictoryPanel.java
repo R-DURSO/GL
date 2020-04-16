@@ -133,6 +133,10 @@ public class VictoryPanel extends JPanel {
 	}
 	
 	private void removeAllPanels() {
+		topPanel.removeAll();
+		buttonsPanel.removeAll();
+		imagePanel.removeAll();
+		scorePanel.removeAll();
 		remove(buttonsPanel);
 		remove(topPanel);
 		remove(imagePanel);

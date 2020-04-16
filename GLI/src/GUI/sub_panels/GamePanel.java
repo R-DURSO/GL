@@ -173,9 +173,9 @@ public class GamePanel extends JPanel {
 			
 			if (wantAlliance) {
 				gameLoop.doActionMakeAlliance(powerAsking, powerAsked);
-				JOptionPane.showMessageDialog(this, powerAsked.getName() + " et " + powerAsking.getName() + " are allied now.");
+				JOptionPane.showMessageDialog(this, powerAsked.getName() + " et " + powerAsking.getName() + " sont alliés maintenant.");
 			}else {
-				JOptionPane.showMessageDialog(this, powerAsked.getName() + " decides to not make alliance with " + powerAsking.getName());
+				JOptionPane.showMessageDialog(this, powerAsked.getName() + " décide de ne pas s'allier avec " + powerAsking.getName());
 			}
 		}
 	}

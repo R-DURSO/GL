@@ -968,9 +968,9 @@ public class AIManager {
 		int unitsIndex = random.nextInt(numberUnits);
 		Units unitSelected = unitsList.get(unitsIndex);
 		
-		if (!unitSelected.getIsMoving()) {
-			throw new WrongActionException("This Unit is Already moving");
-		}
+//		if (!unitSelected.getIsMoving()) {
+//			throw new WrongActionException("This Unit is Already moving");
+//		}
 		
 		Position unitPosition = getUnitsPosition(unitSelected);
 		if (unitPosition == null) {
