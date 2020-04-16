@@ -345,7 +345,7 @@ public class AIManager {
 			return numberUnitsCreated;
 		} else if (aiLevel == GameConstants.AI_HARD) {
 			/*
-			 * Hard ai will want to create either all units, or half, or 1. production per
+			 * Hard ai will want to create either all units, or half, or 3. production per
 			 * turn can be negative (he will seek for producing food after), food production
 			 * per turn after buying units should just be over -Windmill.PROD_PER_TURN and
 			 * obvoiusly, he don't want to buy more units than he can
@@ -362,8 +362,8 @@ public class AIManager {
 				unitsCostMax = numberMaxUnits * unitsCost;
 				unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
 				break;
-			case 2: // wants to create a single unit
-				numberUnitsCreated = 1;
+			case 2: // wants to create 3 units (if possible)
+				numberUnitsCreated = numberMaxUnits < 3 ? 1 : 3;
 				unitsCostMax = numberMaxUnits * unitsCost;
 				unitsCostPerTurnMax = numberMaxUnits * unitsCostPerTurn;
 				break;
@@ -680,6 +680,14 @@ public class AIManager {
 					visitBox = map.getBox(visitPosition);
 					//initial score
 					scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 5) );
+					//add bonus if we go near a Capital
+					for (int i = 0; i < powers.length; i++) {
+						if (powers[i].isAlive()) {
+							checkPosition = getBuildingPosition(powers[i].getCapital());
+							scoreGivenToPosition += ( (20 * (powers[i].getResourceAmount(ResourceTypes.RESOURCE_SCORE) / 100))
+														- (map.getDistance(checkPosition, visitPosition) * 2) );
+						}
+					}
 					//less malus if there is a Unit nearby
 					if (visitBox.hasUnit()) {
 						scoreGivenToPosition -= (map.getBox(visitPosition).getUnit().getNumber() * 5);
@@ -786,6 +794,35 @@ public class AIManager {
 							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) - (map.getDistance(visitPosition, ourCapitalPosition) * 60) );
 							if (scoreGivenToPosition > 0) {
 								//we are near Capital, check for nearby ennemy
+								for (int d=0; d<=4; d++) {
+									switch(d) {
+									case 0:
+										checkPosition = visitPosition;
+										break;
+									case 1:
+										checkPosition = map.getUpPos(visitPosition);
+										break;
+									case 2:
+										checkPosition = map.getLeftPos(visitPosition);
+										break;
+									case 3:
+										checkPosition = map.getRightPos(visitPosition);
+										break;
+									case 4:
+										checkPosition = map.getDownPos(visitPosition);
+										break;
+									default:
+										checkPosition = null;
+										break;
+									}
+									if (checkPosition != null) {
+										checkBox = map.getBox(checkPosition);
+										if (checkBox.hasUnit()) {
+											//defend our Capital, dont chicken out
+											scoreGivenToPosition += ((unitSelected.getHealth() * unitSelected.getNumber() * 5) - (checkBox.getUnit().getHealth() * checkBox.getUnit().getNumber() * 2));
+										}
+									}
+								}
 							}
 							else {
 								//we need to go closer to Capital
@@ -875,11 +912,81 @@ public class AIManager {
 										//there is nearby Box that aren't controlled
 										scoreGivenToPosition += 50;
 									}
+									if (checkBox instanceof GroundBox) {
+										GroundBox checkGBox = (GroundBox)checkBox;
+										if (checkGBox.getResourceType() != ResourceTypes.NO_RESOURCE) {
+											//Resource are on this Box
+											scoreGivenToPosition += 50;
+											if (checkGBox.getResourceType() == ResourceTypes.RESOURCE_ARTIFACT) {
+												//The most important objective is nearby
+												scoreGivenToPosition += 500 - (50 * map.getDistance(checkPosition, visitPosition));
+											}
+										}
+									}
 								}
 							}
 							break;
 						case UnitTypes.UNIT_TREBUCHET:
 							//stay at bay, and far from war to provide maximum efficiency
+							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) - (map.getDistance(visitPosition, ourCapitalPosition) * 8) );
+							for (int d=0; d<=4; d++) {
+								switch(d) {
+								case 0:
+									checkPosition = visitPosition;
+									break;
+								case 1:
+									checkPosition = map.getUpPos(visitPosition);
+									break;
+								case 2:
+									checkPosition = map.getLeftPos(visitPosition);
+									break;
+								case 3:
+									checkPosition = map.getRightPos(visitPosition);
+									break;
+								case 4:
+									checkPosition = map.getDownPos(visitPosition);
+									break;
+								default:
+									checkPosition = null;
+									break;
+								}
+								if (checkPosition != null) {
+									checkBox = map.getBox(checkPosition);
+									if (checkBox.hasUnit()) {
+										//Strong unit are scary (total health)
+										scoreGivenToPosition -= (checkBox.getUnit().getHealth() * checkBox.getUnit().getNumber() * 5);
+									}
+									if (checkBox instanceof GroundBox) {
+										GroundBox checkGBox = (GroundBox)checkBox;
+										if (checkGBox.hasBuilding()) {
+											scoreGivenToPosition += 50;
+											if (checkGBox.getBuilding() instanceof BuildingSpecial) {
+												scoreGivenToPosition += 200;
+											}
+										}
+									}
+									else {
+										//Near water, there is less danger
+										scoreGivenToPosition += 20;
+									}
+								}
+							}
+							if (visitPosition.equals(unitPosition)) {
+								//Position where Trebuchet is, try to transform 
+								if ((scoreGivenToPosition > 0) && (((Trebuchet)unitSelected).getState() == Trebuchet.STATE_MOVING)) {
+									try {
+										return actionValidator.createActionMove(power, unitPosition, visitPosition);
+									}
+									catch (IllegalArgumentException e) {
+										//If it didn't work, log it
+										logger.error(power.getName()+" try to transform his Trebuchet, only to fail");
+									}
+								}
+							}
+							
+							break;
+						case UnitTypes.UNIT_BATTERING_RAM:
+							//go attack, trebuchet will do the same if a power is frail
 							scoreGivenToPosition = ( (((15 + map.getSize()) * map.getSize()) * (20 + map.getSize())) / (map.getDistance(visitPosition, ourCapitalPosition)) );
 							for (int d=0; d<=4; d++) {
 								switch(d) {
@@ -924,23 +1031,6 @@ public class AIManager {
 									}
 								}
 							}
-							if (visitPosition.equals(unitPosition)) {
-								//Position where Trebuchet is, try to transform 
-								if ((scoreGivenToPosition > 0) && (((Trebuchet)unitSelected).getState() == Trebuchet.STATE_MOVING)) {
-									try {
-										return actionValidator.createActionMove(power, unitPosition, visitPosition);
-									}
-									catch (IllegalArgumentException e) {
-										//If it didn't work, log it
-										logger.error(power.getName()+" try to transform his Trebuchet, only to fail");
-									}
-								}
-							}
-							
-							break;
-						case UnitTypes.UNIT_BATTERING_RAM:
-							//go attack, trebuchet will do the same if a power is frail
-							
 							break;
 						case UnitTypes.UNIT_BOAT:
 							//like to be near Water
@@ -996,6 +1086,21 @@ public class AIManager {
 							}
 							break;
 					}
+					//more bonus if BuildingProduct or Artefact
+					if (visitBox instanceof GroundBox) {
+						GroundBox visitGBox = (GroundBox) visitBox;
+						if (visitGBox.hasBuilding()) {
+							if (visitGBox.getBuilding() instanceof BuildingProduct) {
+								scoreGivenToPosition += 40;
+							}
+							else if (visitGBox.getBuilding() instanceof BuildingSpecial) {
+								scoreGivenToPosition += 80;
+							}
+						}
+						if (visitGBox.getResourceType() == ResourceTypes.RESOURCE_ARTIFACT) {
+							scoreGivenToPosition += 200;
+						}
+					}
 					//a note, Hard AI can try other action and return it if succesful, making sure to do the most effecient choice
 					
 					
@@ -1036,18 +1141,10 @@ public class AIManager {
 						listToGoPosition.remove(highestScore);
 					}
 				}
+				
 				//at this Point, stop
 				throw new WrongActionException("invalid unit movement");
 				
-				
-				
-				/*
-				 * keep Infantry near Capital, intercept nearby ennemy
-				 * send cavalry & pikeman conquer territory
-				 * if there is Artefact, try to control it and defend it
-				 * 
-				 * 
-				 */
 		}
 		
 	}
