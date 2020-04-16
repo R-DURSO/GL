@@ -140,7 +140,7 @@ public class AIManager {
 
 		while (numberActionsTried < numberActionsToTry) { // until actionsTried not completed
 			// first, we want to know which action can he try
-			int actionThreshold = random.nextInt(MAKE_ALLIANCE_THRESHOLD + 1);
+			int actionThreshold = random.nextInt(MAKE_ALLIANCE_THRESHOLD) + 1;
 
 			try {
 				if (actionThreshold < ATTACK_THRESHOLD) {
@@ -544,7 +544,7 @@ public class AIManager {
 		int unitsIndex = random.nextInt(numberUnits);
 		Units unitSelected = unitsList.get(unitsIndex);
 		
-		if (!unitSelected.getIsMoving()) {
+		if (unitSelected.getIsMoving()) {
 			throw new WrongActionException("This Unit is Already moving");
 		}
 		
@@ -782,10 +782,12 @@ public class AIManager {
 					visitBox = map.getBox(visitPosition);
 					//score change depending on Units we try to move
 					switch (unitSelected.getTypes()) {
-						case UnitTypes.UNIT_INFANTRY: //stay at the Capitale
-							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) - (map.getDistance(visitPosition, ourCapitalPosition) * 8) );
+						case UnitTypes.UNIT_INFANTRY:
+							//stay at the Capitale
+							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) - (map.getDistance(visitPosition, ourCapitalPosition) * 12) );
 							break;
-						case UnitTypes.UNIT_ARCHER: //stay far from other, only to attack if it's profitable
+						case UnitTypes.UNIT_ARCHER:
+							//stay far from other, only to attack if it's profitable
 							scoreGivenToPosition = ( (((15 + map.getSize()) * map.getSize()) * (20 + map.getSize())) / (map.getDistance(visitPosition, ourCapitalPosition)) );
 							for (int d=0; d<=4; d++) {
 								switch(d) {
@@ -811,18 +813,20 @@ public class AIManager {
 								if (checkPosition != null) {
 									checkBox = map.getBox(checkPosition);
 									if (checkBox.hasUnit()) {
-										scoreGivenToPosition -= visitBox.getUnit().getDefense() * visitBox.getUnit().getNumber() * 2;
+										//total health divide by distance
+										scoreGivenToPosition -= ( (checkBox.getUnit().getHealth() * checkBox.getUnit().getNumber() * 5)
+												/ ( (map.getDistance(checkPosition, visitPosition) * 2) + 1) );
 									}
 								}
 							}
 							if (scoreGivenToPosition > 0) {
-								//positive scoring, if there is a Unit, try to see if we can attack it
+								//positive scoring, we are safe, try to see if we can attack
 								if (visitBox.hasUnit()) {
 									try {
 										//force to take only this Unit
 										ArrayList<Units> forceArrayUnit = new ArrayList<Units>();
 										forceArrayUnit.add(unitSelected);
-										tryCreateActionAttack(power, forceArrayUnit, buildingList, territory);
+										return tryCreateActionAttack(power, forceArrayUnit, buildingList, territory);
 									}
 									catch (WrongActionException e) {
 										//If it didn't work, forget it
@@ -830,8 +834,10 @@ public class AIManager {
 								}
 							}
 							break;
-						case UnitTypes.UNIT_PIKEMAN: //act the same as Cavalry
-						case UnitTypes.UNIT_CAVALRY: //they will go and conquer
+						case UnitTypes.UNIT_PIKEMAN:
+							//act the same as Cavalry
+						case UnitTypes.UNIT_CAVALRY:
+							//they will go and conquer
 							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 8) );
 							for (int d=1; d<=4; d++) {
 								switch(d) {
@@ -852,61 +858,64 @@ public class AIManager {
 									break;
 								}
 								if (checkPosition != null) {
-									if (map.getBox(checkPosition).hasUnit()) {
-										scoreGivenToPosition -= visitBox.getUnit().getDefense() * visitBox.getUnit().getNumber() * 2;
+									checkBox = map.getBox(checkPosition);
+									if (checkBox.hasUnit()) {
+										scoreGivenToPosition -= checkBox.getUnit().getNumber() * 2;
 									}
 								}
 							}
 							break;
-						case UnitTypes.UNIT_TREBUCHET: //stay at bay, and far from war to provide maximum efficiency
+						case UnitTypes.UNIT_TREBUCHET:
+							//stay at bay, and far from war to provide maximum efficiency
 							
-							break;
-						case UnitTypes.UNIT_BATTERING_RAM: //go attack, trebuchet will do the same if a power is frail
+//							break;
+						case UnitTypes.UNIT_BATTERING_RAM:
+							//go attack, trebuchet will do the same if a power is frail
 							
-							break;
-					}
-					//a note, Hard AI can try other action and return it if succesful, making the most effecient choice
-					
-					
-					scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 5) );
-					//less malus if there is a Unit nearby
-					if (visitBox.hasUnit()) {
-						scoreGivenToPosition -= (map.getBox(visitPosition).getUnit().getNumber() * 5);
-					}
-					else {
-						scoreGivenToPosition -= 100;
-					}
-					//will search for conquer
-					if (visitBox.hasOwner()) {
-						if (visitBox.getOwner() != power) {
-							scoreGivenToPosition += 40;
-						}
-					}
-					else {
-						scoreGivenToPosition += 120;
-					}
-					//avoid being near water
-					if (map.isNearWater(visitPosition)) {
-						scoreGivenToPosition -= 20;
-					}
-					//Added Bonus if there is a Building
-					if (visitBox instanceof GroundBox) {
-						if (((GroundBox)visitBox).hasBuilding()) {
-							scoreGivenToPosition += 20;
-							if (((GroundBox)visitBox).getBuilding() instanceof BuildingSpecial) {
-								scoreGivenToPosition += 40;
+//							break;
+						default:
+							//if it isn't here, act like a Normal AI
+							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 5) );
+							//less malus if there is a Unit nearby
+							if (visitBox.hasUnit()) {
+								scoreGivenToPosition -= (map.getBox(visitPosition).getUnit().getNumber() * 5);
 							}
-						}
+							else {
+								scoreGivenToPosition -= 100;
+							}
+							//will search for conquer
+							if (visitBox.hasOwner()) {
+								if (visitBox.getOwner() != power) {
+									scoreGivenToPosition += 40;
+								}
+							}
+							else {
+								scoreGivenToPosition += 120;
+							}
+							//avoid being near water
+							if (map.isNearWater(visitPosition)) {
+								scoreGivenToPosition -= 20;
+							}
+							//Added Bonus if there is a Building
+							if (visitBox instanceof GroundBox) {
+								if (((GroundBox)visitBox).hasBuilding()) {
+									scoreGivenToPosition += 20;
+									if (((GroundBox)visitBox).getBuilding() instanceof BuildingSpecial) {
+										scoreGivenToPosition += 40;
+									}
+								}
+							}
+							break;
 					}
+					//a note, Hard AI can try other action and return it if succesful, making sure to do the most effecient choice
+					
+					
 					//now that the scoring is done, add it to the HashMap
 					if (!listToGoPosition.containsKey(scoreGivenToPosition)) {
 						listToGoPosition.put(scoreGivenToPosition, new ArrayList<Position>());
 					}
 					listToGoPosition.get(scoreGivenToPosition).add(visitPosition);
 				}
-				
-				
-				
 				
 				while (!listToGoPosition.isEmpty()) {
 					//get the highest score stored
@@ -948,7 +957,7 @@ public class AIManager {
 				 * send cavalry & pikeman conquer territory
 				 * if there is Artefact, try to control it and defend it
 				 * 
-				 * 
+				 * Question, pour THRESHHOLD doit être limité à 100
 				 */
 		}
 		
@@ -967,7 +976,7 @@ public class AIManager {
 		int unitsIndex = random.nextInt(numberUnits);
 		Units unitSelected = unitsList.get(unitsIndex);
 		
-		if (!unitSelected.getIsMoving()) {
+		if (unitSelected.getIsMoving()) {
 			throw new WrongActionException("This Unit is Already moving");
 		}
 		
