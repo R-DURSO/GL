@@ -61,7 +61,7 @@ public abstract class Building implements Serializable {
 	
 	/**
 	 * Receive damage from an attack
-	 * @param damage, the number of damage taken
+	 * @param damage the number of damage taken
 	 */
 	public void applyDamage(int damage) {
 		this.health -= damage;

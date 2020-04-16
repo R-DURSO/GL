@@ -11,9 +11,9 @@ import data.building.BuildingTypes;
  */
 
 public class Temple extends BuildingSpecial implements Serializable {
-	private static final int BUILD_TIME = 7;
-	private static final int BASE_HEALTH = 3;
-	public static final int COST = 100;
+	private static final int BUILD_TIME = 12;
+	private static final int BASE_HEALTH = 12;
+	public static final int COST = 400;
 	
 	public Temple() {
 		super(BUILD_TIME, BASE_HEALTH);
