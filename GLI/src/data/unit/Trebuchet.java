@@ -6,20 +6,20 @@ import data.Power;
 
 public class Trebuchet  extends Units implements Serializable{
 	
-	private static final int BASE_HEALTH = 10;
+	private static final int BASE_HEALTH = 5;
 	
 	private static final int RANGE_MOVING = 0;
 	private static final int MOVEMENT_MOVING = 2;
 	private static final int DAMAGE_MOVING = 0;
 	
-	private static final int RANGE_INSTALLED = 3;
+	private static final int RANGE_INSTALLED = 4;
 	private static final int MOVEMENT_INSTALLED = 0;
-	private static final int DAMAGE_INSTALLED = 5;
+	private static final int DAMAGE_INSTALLED = 20;
 	private static final int DAMAGE_SIEGE = 40;
 	
 	private static final int DEFENSE = 0;
-	public static final int COST = 60;
-	public static final int COST_PER_TURN = 20;
+	public static final int COST = 80;
+	public static final int COST_PER_TURN = 25;
 	public static final int NUMBER_MAX_UNITS = 1;
 	
 	
