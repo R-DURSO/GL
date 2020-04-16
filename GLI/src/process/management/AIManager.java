@@ -1212,13 +1212,18 @@ public class AIManager {
 				}
 			}
 		}
-		
+
+		//we will move according to our most precious Building, the capital
+		Position ourCapitalPosition = getBuildingPosition(power.getCapital());
 		//declaration of our Iterator
 		Iterator<Position> it;
 		//declaration for checking all Position
 		Position visitPosition;
-		//declaration of the Box
+		//Position for quick change/verification
+		Position checkPosition;
+		//associated Box
 		Box visitBox;
+		Box checkBox;
 		//declaration for score to give
 		int scoreGivenToPosition = 0;
 		int highestScore = scoreGivenToPosition;
@@ -1274,6 +1279,85 @@ public class AIManager {
 				throw new WrongActionException("invalid attack");
 			case GameConstants.AI_NORMAL:
 			case GameConstants.AI_HARD:
+				//HashMap that score a List of Position
+				HashMap<Integer, ArrayList<Position>> listToGoPosition = new HashMap<Integer, ArrayList<Position>>();
+				for (it = validPosition.iterator(); it.hasNext(); ) {
+					visitPosition = it.next();
+					visitBox = map.getBox(visitPosition);
+					//score change depending on Units we try to move
+					switch (unitSelected.getTypes()) {
+						case UnitTypes.UNIT_INFANTRY:
+							//check all nearby Box if there is someone, else move
+							
+							break;
+						case UnitTypes.UNIT_ARCHER:
+							//re-check if attack is profitable, else move out of here
+							
+							break;
+						case UnitTypes.UNIT_PIKEMAN:
+							//act the same as Cavalry
+						case UnitTypes.UNIT_CAVALRY:
+							//attack for conquer
+							
+							break;
+						case UnitTypes.UNIT_TREBUCHET:
+							//try to snipe other
+							
+							break;
+						case UnitTypes.UNIT_BATTERING_RAM:
+							//go toward others Capital, to blow them out (that pun is intended)
+							
+							break;
+						case UnitTypes.UNIT_BOAT:
+							//why would you try to make a Boat attack ??
+							
+							break;
+						default:
+							//if it hasn't been resolved, act like a Normal AI
+							
+							break;
+					}
+					
+					//now that the scoring is done, add it to the HashMap
+					if (!listToGoPosition.containsKey(scoreGivenToPosition)) {
+						listToGoPosition.put(scoreGivenToPosition, new ArrayList<Position>());
+					}
+					listToGoPosition.get(scoreGivenToPosition).add(visitPosition);
+				}
+				
+				while (!listToGoPosition.isEmpty()) {
+					//get the highest score stored
+					highestScore = 0;
+					for (Iterator<Integer> ite = listToGoPosition.keySet().iterator(); ite.hasNext(); ) {
+						int checkingScore = ite.next();
+						if (checkingScore > highestScore) {
+							highestScore = checkingScore;
+						}
+					}
+					//we have the highest score stored
+					if (highestScore <= 0) {
+						listToGoPosition.clear();
+					}
+					if (listToGoPosition.containsKey(highestScore)) {
+						for (it = listToGoPosition.get(highestScore).iterator(); it.hasNext(); ) {
+							visitPosition = it.next();
+							//we try to move to this position
+							if (validPosition.contains(visitPosition)) {
+								try {
+									return actionValidator.createActionAttack(power, unitPosition, visitPosition);
+								} catch (IllegalArgumentException e) {
+									logger.warn("IA tried to move to an invalid position");
+									validPosition.remove(visitPosition);
+								}
+							}
+						}
+						//remove highest score
+						listToGoPosition.remove(highestScore);
+					}
+				}
+
+				//at this Point, stop
+				throw new WrongActionException("invalid unit movement");
 		}
 		
 		/*
@@ -1290,24 +1374,6 @@ public class AIManager {
 				take advantage of water?
 		}
 		*/
-		//unless error, unreachable code
-		// for now, add a random Box
-		int numberValidBox = validPosition.size();
-		Position positionSelected;
-		if (numberValidBox < 1) {
-			throw new WrongActionException("Designed Unit doesn't have any Box to attack");
-		}
-		else {
-			int BoxIndex = random.nextInt(numberValidBox);
-			positionSelected = validPosition.get(BoxIndex);
-		}
-
-		try {
-			return actionValidator.createActionAttack(power, unitPosition, positionSelected);
-		} catch (IllegalArgumentException e) {
-			throw new WrongActionException("invalid unit movement");
-		}
-
 	}
 
 	/**
