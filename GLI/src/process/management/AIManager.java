@@ -544,7 +544,8 @@ public class AIManager {
 		int unitsIndex = random.nextInt(numberUnits);
 		Units unitSelected = unitsList.get(unitsIndex);
 		
-		if (!unitSelected.getIsMoving()) {
+		//if unit is moving, cancel action
+		if (unitSelected.getIsMoving()) {
 			throw new WrongActionException("This Unit is Already moving");
 		}
 		

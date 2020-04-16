@@ -272,6 +272,7 @@ public class UnitManager {
 					 */
 				}
 				movingUnits.resetIsMoving();
+				Logger.debug("units is not moving anymore");
 			}
 			else {
 				Logger.error(powerConcerned.getName()+" try to move another Power Units");
