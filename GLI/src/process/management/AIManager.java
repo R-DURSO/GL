@@ -831,7 +831,7 @@ public class AIManager {
 							break;
 						case UnitTypes.UNIT_ARCHER:
 							//stay far from other, only to attack if it's profitable
-							scoreGivenToPosition = ( (((15 + map.getSize()) * map.getSize()) * (20 + map.getSize())) / (map.getDistance(visitPosition, ourCapitalPosition)) );
+							scoreGivenToPosition = ( (((15 + map.getSize()) * map.getSize()) * (20 + map.getSize())) / (map.getDistance(visitPosition, ourCapitalPosition) + 1) );
 							for (int d=0; d<=4; d++) {
 								switch(d) {
 								case 0:
@@ -858,7 +858,7 @@ public class AIManager {
 									if (checkBox.hasUnit()) {
 										//total health divide by distance
 										scoreGivenToPosition -= ( (checkBox.getUnit().getHealth() * checkBox.getUnit().getNumber() * 5)
-												/ ( (map.getDistance(checkPosition, visitPosition) * 2) + 1) );
+												/ ((map.getDistance(checkPosition, visitPosition) * 2) + 1) );
 									}
 								}
 							}
@@ -986,7 +986,7 @@ public class AIManager {
 							break;
 						case UnitTypes.UNIT_BATTERING_RAM:
 							//go attack, trebuchet will do the same if a power is frail
-							scoreGivenToPosition = ( (((15 + map.getSize()) * map.getSize()) * (20 + map.getSize())) / (map.getDistance(visitPosition, ourCapitalPosition)) );
+							scoreGivenToPosition = ( (((15 + map.getSize()) * map.getSize()) * (20 + map.getSize())) / (map.getDistance(visitPosition, ourCapitalPosition) + 1) );
 							for (int d=0; d<=4; d++) {
 								switch(d) {
 								case 0:
