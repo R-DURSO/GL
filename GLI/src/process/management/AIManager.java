@@ -661,15 +661,13 @@ public class AIManager {
 				}
 				
 				it = toTryPosition.iterator();
-				boolean canMove = false;
-				while (it.hasNext() && !canMove) {
+				while (it.hasNext()) {
 					visitPosition = it.next();
-					canMove = true;
 					try {
 						return actionValidator.createActionMove(power, unitPosition, visitPosition);
 					}
 					catch (IllegalArgumentException e) {
-						canMove = false;
+						//lets try until the end
 					}
 				}
 				//if we end here, movement has Failed
@@ -784,8 +782,15 @@ public class AIManager {
 					//score change depending on Units we try to move
 					switch (unitSelected.getTypes()) {
 						case UnitTypes.UNIT_INFANTRY:
-							//stay at the Capitale
-							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) - (map.getDistance(visitPosition, ourCapitalPosition) * 12) );
+							//stay near the Capitale
+							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) - (map.getDistance(visitPosition, ourCapitalPosition) * 60) );
+							if (scoreGivenToPosition > 0) {
+								//we are near Capital, check for nearby ennemy
+							}
+							else {
+								//we need to go closer to Capital
+								scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) - (map.getDistance(visitPosition, ourCapitalPosition) * 12) );
+							}
 							break;
 						case UnitTypes.UNIT_ARCHER:
 							//stay far from other, only to attack if it's profitable
@@ -860,22 +865,105 @@ public class AIManager {
 								}
 								if (checkPosition != null) {
 									checkBox = map.getBox(checkPosition);
-									if (checkBox.hasUnit()) {
-										scoreGivenToPosition -= checkBox.getUnit().getNumber() * 2;
+									if (checkBox.hasOwner()) {
+										if (checkBox.hasUnit()) {
+											//minus score if there are strong unit, but for those more frail
+											scoreGivenToPosition -= checkBox.getUnit().getNumber() * (2 + (checkBox.getUnit().getDefense() - 2));
+										}
+									}
+									else {
+										//there is nearby Box that aren't controlled
+										scoreGivenToPosition += 50;
 									}
 								}
 							}
 							break;
 						case UnitTypes.UNIT_TREBUCHET:
 							//stay at bay, and far from war to provide maximum efficiency
+							scoreGivenToPosition = ( (((15 + map.getSize()) * map.getSize()) * (20 + map.getSize())) / (map.getDistance(visitPosition, ourCapitalPosition)) );
+							for (int d=0; d<=4; d++) {
+								switch(d) {
+								case 0:
+									checkPosition = visitPosition;
+									break;
+								case 1:
+									checkPosition = map.getUpPos(visitPosition);
+									break;
+								case 2:
+									checkPosition = map.getLeftPos(visitPosition);
+									break;
+								case 3:
+									checkPosition = map.getRightPos(visitPosition);
+									break;
+								case 4:
+									checkPosition = map.getDownPos(visitPosition);
+									break;
+								default:
+									checkPosition = null;
+									break;
+								}
+								if (checkPosition != null) {
+									checkBox = map.getBox(checkPosition);
+									if (checkBox.hasUnit()) {
+										//total health divide by distance
+										scoreGivenToPosition -= ( (checkBox.getUnit().getHealth() * checkBox.getUnit().getNumber() * 5)
+												/ ( (map.getDistance(checkPosition, visitPosition) * 2) + 1) );
+									}
+									if (checkBox instanceof GroundBox) {
+										GroundBox checkGBox = (GroundBox)checkBox;
+										if (checkGBox.hasBuilding()) {
+											scoreGivenToPosition +=20;
+											if (checkGBox.getBuilding() instanceof BuildingSpecial) {
+												scoreGivenToPosition += 50;
+											}
+										}
+									}
+									else {
+										//Near water, there is less danger
+										scoreGivenToPosition += 20;
+									}
+								}
+							}
+							if (visitPosition.equals(unitPosition)) {
+								//Position where Trebuchet is, try to transform 
+								if ((scoreGivenToPosition > 0) && (((Trebuchet)unitSelected).getState() == Trebuchet.STATE_MOVING)) {
+									try {
+										return actionValidator.createActionMove(power, unitPosition, visitPosition);
+									}
+									catch (IllegalArgumentException e) {
+										//If it didn't work, log it
+										logger.error(power.getName()+" try to transform his Trebuchet, only to fail");
+									}
+								}
+							}
 							
-//							break;
+							break;
 						case UnitTypes.UNIT_BATTERING_RAM:
 							//go attack, trebuchet will do the same if a power is frail
 							
-//							break;
+							break;
+						case UnitTypes.UNIT_BOAT:
+							//like to be near Water
+							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 5) );
+							//malus if there is a Unit nearby, Boat dont search to fight
+							if (visitBox.hasUnit()) {
+								scoreGivenToPosition -= (map.getBox(visitPosition).getUnit().getNumber() * 5);
+							}
+							if (visitBox.hasOwner()) {
+								if (visitBox.getOwner() != power) {
+									scoreGivenToPosition += 40;
+								}
+							}
+							else {
+								scoreGivenToPosition += 120;
+							}
+							//like being near water
+							if (map.isNearWater(visitPosition)) {
+								scoreGivenToPosition += 20;
+							}
+							break;
 						default:
-							//if it isn't here, act like a Normal AI
+							//if it hasn't been resolved, act like a Normal AI
 							scoreGivenToPosition = ( ((20 + map.getSize()) * map.getSize()) + (map.getDistance(visitPosition, ourCapitalPosition) * 5) );
 							//less malus if there is a Unit nearby
 							if (visitBox.hasUnit()) {
@@ -1079,7 +1167,7 @@ public class AIManager {
 				while (it.hasNext()) {
 					visitPosition = it.next();
 					try {
-						return actionValidator.createActionMove(power, unitPosition, visitPosition);
+						return actionValidator.createActionAttack(power, unitPosition, visitPosition);
 					}
 					catch (IllegalArgumentException e) {
 						logger.warn("IA tried to attack an invalid position");
